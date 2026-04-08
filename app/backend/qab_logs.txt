@@ -8,3 +8,7 @@
 2026-04-08 13:39:28,331 | INFO | utils.helpers | Login request received from work4rajan@gmail.com
 2026-04-08 13:39:28,606 | INFO | utils.helpers | JWT tokens generated
 2026-04-08 13:39:31,897 | INFO | utils.helpers | Email sent successfully to: [NameEmail(name='work4rajan', email='work4rajan@gmail.com')]
+2026-04-08 14:01:18,833 | INFO | uvicorn.error | Shutting down
+2026-04-08 14:01:18,999 | INFO | uvicorn.error | Waiting for application shutdown.
+2026-04-08 14:01:19,013 | INFO | uvicorn.error | Application shutdown complete.
+2026-04-08 14:01:19,022 | INFO | uvicorn.error | Finished server process [9672]

@@ -5,4 +5,3 @@ node_modules/
 .git
 .env
 .venv
-\app\backend\qab_logs.txt

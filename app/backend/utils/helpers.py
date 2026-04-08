@@ -4,6 +4,13 @@ from dotenv import load_dotenv
 from pydantic import EmailStr
 from database.db import users_collection
 from fastapi_mail import ConnectionConfig, FastMail, MessageSchema, MessageType
+from fastapi import Depends, HTTPException, status
+from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
+from jwt import ExpiredSignatureError, InvalidTokenError
+
+
+security = HTTPBearer()
+load_dotenv()
 
 
 #- Logger
@@ -37,15 +44,6 @@ def strip_string(s: str):
         return s.strip()
     return s
 
-
-#- User
-async def get_user_by_email(email: EmailStr):
-    user_data = await users_collection.find_one({'email': email})
-    if user_data:
-        return user_data
-    else:
-        return False
-    
 
 
 #- JWT Password
@@ -121,3 +119,40 @@ async def send_email(subject: str, email_to, body: str, attachments=None):
         return False
 
 
+
+#- User
+async def get_user_by_email(email: EmailStr):
+    user_data = await users_collection.find_one({'email': email})
+    if user_data:
+        return user_data
+    else:
+        return False
+
+
+async def get_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
+    try:
+        payload = jwt.decode(credentials.credentials, SECRET_KEY, algorithms=["HS256"])
+        return payload
+    except ExpiredSignatureError:
+        raise HTTPException(status_code=401, detail={"message": "Token has expired, please login again."})
+    except InvalidTokenError:
+        raise HTTPException(status_code=401, detail={"message": "Invalid token."})
+    
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+    
