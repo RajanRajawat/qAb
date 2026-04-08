@@ -113,7 +113,7 @@ async def send_email(subject: str, email_to, body: str, attachments=None):
         fm = FastMail(conf)
         await fm.send_message(message)
 
-        logger.info(f"Email sent successfully to: {message.recipients}")
+        logger.info(f"Email sent successfully to: {message.recipients} | Subject: {message.subject}")
         return True
 
     except Exception as e:
