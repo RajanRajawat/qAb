@@ -121,7 +121,6 @@ compatibility_map: dict[LLMProvider, set[LLMModel]] = {
         LLMModel.LLAMA_3_3_70B,
         LLMModel.LLAMA_4_SCOUT,
         LLMModel.LLAMA_3_1_8B,
-        LLMModel.MIXTRAL_8X7B,
     },
     LLMProvider.GEMINI: {
         LLMModel.GEMINI_2_FLASH,

@@ -1,0 +1,653 @@
+2026-04-08 17:44:56,108 | INFO | uvicorn.error | Started server process [14736]
+2026-04-08 17:44:56,109 | INFO | uvicorn.error | Waiting for application startup.
+2026-04-08 17:44:56,111 | INFO | uvicorn.error | Application startup complete.
+2026-04-08 17:44:56,113 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-04-08 17:45:49,427 | INFO | utils.helpers | New user registration request received from work4rajan@gmail.com
+2026-04-08 17:45:50,487 | INFO | utils.helpers | Registration successful for work4rajan@gmail.com with id: 69d646f6fd221f9723b8e2d0
+2026-04-08 17:45:54,356 | INFO | utils.helpers | Email sent successfully to: [NameEmail(name='work4rajan', email='work4rajan@gmail.com')] | Subject: QAB - Registration Successful
+2026-04-08 17:46:46,189 | INFO | uvicorn.error | Shutting down
+2026-04-08 17:46:46,297 | INFO | uvicorn.error | Waiting for application shutdown.
+2026-04-08 17:46:46,299 | INFO | uvicorn.error | Application shutdown complete.
+2026-04-08 17:46:46,300 | INFO | uvicorn.error | Finished server process [14736]
+2026-04-08 17:47:10,513 | INFO | uvicorn.error | Started server process [23884]
+2026-04-08 17:47:10,516 | INFO | uvicorn.error | Waiting for application startup.
+2026-04-08 17:47:10,518 | INFO | uvicorn.error | Application startup complete.
+2026-04-08 17:47:10,520 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-04-08 17:49:36,167 | INFO | utils.helpers | New user registration request received from work4rajan@gmail.com
+2026-04-08 17:49:36,987 | WARNING | utils.helpers | Duplicate registration attempt from work4rajan@gmail.com
+2026-04-08 17:50:00,661 | INFO | utils.helpers | Login request received from work4rajan@gmail.com
+2026-04-08 17:50:00,972 | INFO | utils.helpers | JWT tokens generated
+2026-04-08 17:50:04,516 | INFO | utils.helpers | Email sent successfully to: [NameEmail(name='work4rajan', email='work4rajan@gmail.com')] | Subject: QAB - Login Successful
+2026-04-08 17:54:51,103 | INFO | uvicorn.error | Shutting down
+2026-04-08 17:54:51,212 | INFO | uvicorn.error | Waiting for application shutdown.
+2026-04-08 17:54:51,218 | INFO | uvicorn.error | Application shutdown complete.
+2026-04-08 17:54:51,224 | INFO | uvicorn.error | Finished server process [23884]
+2026-04-08 17:55:16,372 | INFO | uvicorn.error | Started server process [11980]
+2026-04-08 17:55:16,374 | INFO | uvicorn.error | Waiting for application startup.
+2026-04-08 17:55:16,377 | INFO | uvicorn.error | Application startup complete.
+2026-04-08 17:55:16,379 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-04-08 17:59:46,219 | INFO | utils.helpers | New user registration request received from work4rajan+tu@gmail.com
+2026-04-08 17:59:46,581 | INFO | utils.helpers | Registration successful for work4rajan+tu@gmail.com with id: 69d64a3af4995e5ef59215c8
+2026-04-08 17:59:49,892 | INFO | utils.helpers | Email sent successfully to: [NameEmail(name='work4rajan+tu', email='work4rajan+tu@gmail.com')] | Subject: QAB - Registration Successful
+2026-04-08 17:59:51,425 | INFO | utils.helpers | Login request received from work4rajan+tu@gmail.com
+2026-04-08 17:59:51,749 | INFO | utils.helpers | JWT tokens generated
+2026-04-08 17:59:55,120 | INFO | utils.helpers | Email sent successfully to: [NameEmail(name='work4rajan+tu', email='work4rajan+tu@gmail.com')] | Subject: QAB - Login Successful
+2026-04-08 18:01:21,612 | INFO | uvicorn.error | Shutting down
+2026-04-08 18:01:21,719 | INFO | uvicorn.error | Waiting for application shutdown.
+2026-04-08 18:01:21,722 | INFO | uvicorn.error | Application shutdown complete.
+2026-04-08 18:01:21,723 | INFO | uvicorn.error | Finished server process [11980]
+2026-04-08 18:01:45,372 | INFO | uvicorn.error | Started server process [11336]
+2026-04-08 18:01:45,390 | INFO | uvicorn.error | Waiting for application startup.
+2026-04-08 18:01:45,392 | INFO | uvicorn.error | Application startup complete.
+2026-04-08 18:01:45,393 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-04-08 18:04:50,209 | INFO | uvicorn.error | Shutting down
+2026-04-08 18:04:50,319 | INFO | uvicorn.error | Waiting for application shutdown.
+2026-04-08 18:04:50,320 | INFO | uvicorn.error | Application shutdown complete.
+2026-04-08 18:04:50,323 | INFO | uvicorn.error | Finished server process [11336]
+2026-04-08 18:05:08,648 | INFO | uvicorn.error | Started server process [18160]
+2026-04-08 18:05:08,650 | INFO | uvicorn.error | Waiting for application startup.
+2026-04-08 18:05:08,653 | INFO | uvicorn.error | Application startup complete.
+2026-04-08 18:05:08,655 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-04-08 18:05:09,161 | ERROR | uvicorn.error | Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\agent\agent.py", line 43, in get_agents
+    return success_response(200, data=agents, message="Agents fetched successfully!")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\utils\responses.py", line 5, in success_response
+    return JSONResponse(
+           ^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\responses.py", line 189, in __init__
+    super().__init__(content, status_code, headers, media_type, background)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\responses.py", line 46, in __init__
+    self.body = self.render(content)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\responses.py", line 192, in render
+    return json.dumps(
+           ^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type datetime is not JSON serializable
+2026-04-08 18:05:10,671 | ERROR | uvicorn.error | Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\agent\agent.py", line 43, in get_agents
+    return success_response(200, data=agents, message="Agents fetched successfully!")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\utils\responses.py", line 5, in success_response
+    return JSONResponse(
+           ^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\responses.py", line 189, in __init__
+    super().__init__(content, status_code, headers, media_type, background)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\responses.py", line 46, in __init__
+    self.body = self.render(content)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\responses.py", line 192, in render
+    return json.dumps(
+           ^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type datetime is not JSON serializable
+2026-04-08 18:06:24,424 | INFO | uvicorn.error | Shutting down
+2026-04-08 18:06:24,534 | INFO | uvicorn.error | Waiting for application shutdown.
+2026-04-08 18:06:24,536 | INFO | uvicorn.error | Application shutdown complete.
+2026-04-08 18:06:24,537 | INFO | uvicorn.error | Finished server process [18160]
+2026-04-08 18:06:52,122 | INFO | uvicorn.error | Started server process [13320]
+2026-04-08 18:06:52,123 | INFO | uvicorn.error | Waiting for application startup.
+2026-04-08 18:06:52,124 | INFO | uvicorn.error | Application startup complete.
+2026-04-08 18:06:52,126 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-04-08 18:08:40,915 | INFO | utils.helpers | New user registration request received from wir@gau.com
+2026-04-08 18:08:42,853 | INFO | utils.helpers | Registration successful for wir@gau.com with id: 69d64c52cff7ce609425164c
+2026-04-08 18:08:46,078 | INFO | utils.helpers | Email sent successfully to: [NameEmail(name='wir', email='wir@gau.com')] | Subject: QAB - Registration Successful
+2026-04-08 18:08:47,119 | INFO | utils.helpers | Login request received from wir@gau.com
+2026-04-08 18:08:47,596 | INFO | utils.helpers | JWT tokens generated
+2026-04-08 18:08:50,720 | INFO | utils.helpers | Email sent successfully to: [NameEmail(name='wir', email='wir@gau.com')] | Subject: QAB - Login Successful
+2026-04-08 18:09:16,521 | ERROR | uvicorn.error | Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\agent\agent.py", line 43, in get_agents
+    return success_response(200, data=agents, message="Agents fetched successfully!")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\utils\responses.py", line 5, in success_response
+    return JSONResponse(
+           ^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\responses.py", line 189, in __init__
+    super().__init__(content, status_code, headers, media_type, background)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\responses.py", line 46, in __init__
+    self.body = self.render(content)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\responses.py", line 192, in render
+    return json.dumps(
+           ^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type datetime is not JSON serializable
+2026-04-08 18:10:34,544 | INFO | uvicorn.error | Shutting down
+2026-04-08 18:10:34,652 | INFO | uvicorn.error | Waiting for application shutdown.
+2026-04-08 18:10:34,654 | INFO | uvicorn.error | Application shutdown complete.
+2026-04-08 18:10:34,659 | INFO | uvicorn.error | Finished server process [13320]
+2026-04-08 18:10:50,712 | INFO | uvicorn.error | Started server process [12352]
+2026-04-08 18:10:50,714 | INFO | uvicorn.error | Waiting for application startup.
+2026-04-08 18:10:50,718 | INFO | uvicorn.error | Application startup complete.
+2026-04-08 18:10:50,719 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-04-08 18:12:06,526 | INFO | uvicorn.error | Shutting down
+2026-04-08 18:12:06,635 | INFO | uvicorn.error | Waiting for application shutdown.
+2026-04-08 18:12:06,639 | INFO | uvicorn.error | Application shutdown complete.
+2026-04-08 18:12:06,642 | INFO | uvicorn.error | Finished server process [12352]
+2026-04-08 18:12:28,594 | INFO | uvicorn.error | Started server process [20160]
+2026-04-08 18:12:28,596 | INFO | uvicorn.error | Waiting for application startup.
+2026-04-08 18:12:28,599 | INFO | uvicorn.error | Application startup complete.
+2026-04-08 18:12:28,605 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-04-08 18:13:24,021 | INFO | uvicorn.error | Shutting down
+2026-04-08 18:13:24,130 | INFO | uvicorn.error | Waiting for application shutdown.
+2026-04-08 18:13:24,131 | INFO | uvicorn.error | Application shutdown complete.
+2026-04-08 18:13:24,132 | INFO | uvicorn.error | Finished server process [20160]
+2026-04-08 18:13:40,076 | INFO | uvicorn.error | Started server process [16632]
+2026-04-08 18:13:40,079 | INFO | uvicorn.error | Waiting for application startup.
+2026-04-08 18:13:40,082 | INFO | uvicorn.error | Application startup complete.
+2026-04-08 18:13:40,086 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-04-08 18:16:15,209 | INFO | utils.helpers | New user registration request received from kittu@gmail.com
+2026-04-08 18:16:16,037 | INFO | utils.helpers | Registration successful for kittu@gmail.com with id: 69d64e185bfccef986536d49
+2026-04-08 18:16:19,659 | INFO | utils.helpers | Email sent successfully to: [NameEmail(name='kittu', email='kittu@gmail.com')] | Subject: QAB - Registration Successful
+2026-04-08 18:17:27,783 | INFO | utils.helpers | Login request received from kittu@gmail.com
+2026-04-08 18:17:28,541 | INFO | utils.helpers | JWT tokens generated
+2026-04-08 18:17:31,648 | INFO | utils.helpers | Email sent successfully to: [NameEmail(name='kittu', email='kittu@gmail.com')] | Subject: QAB - Login Successful
+2026-04-08 18:18:14,295 | ERROR | uvicorn.error | Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\agent\agent.py", line 71, in update_agent
+    return success_response(200, data=updated, message="Agent updated successfully!")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\utils\responses.py", line 5, in success_response
+    return JSONResponse(
+           ^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\responses.py", line 189, in __init__
+    super().__init__(content, status_code, headers, media_type, background)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\responses.py", line 46, in __init__
+    self.body = self.render(content)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\responses.py", line 192, in render
+    return json.dumps(
+           ^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type datetime is not JSON serializable
+2026-04-08 18:18:52,100 | INFO | uvicorn.error | Shutting down
+2026-04-08 18:18:52,220 | INFO | uvicorn.error | Waiting for application shutdown.
+2026-04-08 18:18:52,226 | INFO | uvicorn.error | Application shutdown complete.
+2026-04-08 18:18:52,230 | INFO | uvicorn.error | Finished server process [16632]
+2026-04-08 18:19:04,187 | INFO | uvicorn.error | Started server process [5744]
+2026-04-08 18:19:04,194 | INFO | uvicorn.error | Waiting for application startup.
+2026-04-08 18:19:04,195 | INFO | uvicorn.error | Application startup complete.
+2026-04-08 18:19:04,197 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-04-08 18:19:07,948 | ERROR | uvicorn.error | Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\agent\agent.py", line 72, in update_agent
+    return success_response(200, data=updated, message="Agent updated successfully!")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\utils\responses.py", line 5, in success_response
+    return JSONResponse(
+           ^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\responses.py", line 189, in __init__
+    super().__init__(content, status_code, headers, media_type, background)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\responses.py", line 46, in __init__
+    self.body = self.render(content)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\responses.py", line 192, in render
+    return json.dumps(
+           ^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type datetime is not JSON serializable
+2026-04-08 18:21:01,168 | INFO | uvicorn.error | Shutting down
+2026-04-08 18:21:01,280 | INFO | uvicorn.error | Waiting for application shutdown.
+2026-04-08 18:21:01,282 | INFO | uvicorn.error | Application shutdown complete.
+2026-04-08 18:21:01,283 | INFO | uvicorn.error | Finished server process [5744]
+2026-04-08 18:22:47,760 | INFO | uvicorn.error | Started server process [3284]
+2026-04-08 18:22:47,762 | INFO | uvicorn.error | Waiting for application startup.
+2026-04-08 18:22:47,763 | INFO | uvicorn.error | Application startup complete.
+2026-04-08 18:22:47,766 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-04-08 18:24:11,413 | INFO | utils.helpers | New user registration request received from veeenoooo@gmail.com
+2026-04-08 18:24:12,310 | INFO | utils.helpers | Registration successful for veeenoooo@gmail.com with id: 69d64ff4dd91c365200da8cc
+2026-04-08 18:24:14,104 | INFO | utils.helpers | Login request received from veeenoooo@gmail.com
+2026-04-08 18:24:14,415 | INFO | utils.helpers | JWT tokens generated
+2026-04-08 18:24:15,731 | INFO | utils.helpers | Email sent successfully to: [NameEmail(name='veeenoooo', email='veeenoooo@gmail.com')] | Subject: QAB - Registration Successful
+2026-04-08 18:24:17,435 | INFO | utils.helpers | Email sent successfully to: [NameEmail(name='veeenoooo', email='veeenoooo@gmail.com')] | Subject: QAB - Login Successful
+2026-04-08 18:25:29,854 | ERROR | uvicorn.error | Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\agent\agent.py", line 44, in get_agents
+    return success_response(200, data=agents, message="Agents fetched successfully!")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\utils\responses.py", line 5, in success_response
+    return JSONResponse(
+           ^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\responses.py", line 189, in __init__
+    super().__init__(content, status_code, headers, media_type, background)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\responses.py", line 46, in __init__
+    self.body = self.render(content)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\responses.py", line 192, in render
+    return json.dumps(
+           ^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type datetime is not JSON serializable
+2026-04-08 18:25:31,715 | ERROR | uvicorn.error | Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\agent\agent.py", line 44, in get_agents
+    return success_response(200, data=agents, message="Agents fetched successfully!")
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\utils\responses.py", line 5, in success_response
+    return JSONResponse(
+           ^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\responses.py", line 189, in __init__
+    super().__init__(content, status_code, headers, media_type, background)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\responses.py", line 46, in __init__
+    self.body = self.render(content)
+                ^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\responses.py", line 192, in render
+    return json.dumps(
+           ^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\__init__.py", line 238, in dumps
+    **kw).encode(obj)
+          ^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 200, in encode
+    chunks = self.iterencode(o, _one_shot=True)
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 258, in iterencode
+    return _iterencode(o, 0)
+           ^^^^^^^^^^^^^^^^^
+  File "C:\Users\Rajan\AppData\Local\Programs\Python\Python311\Lib\json\encoder.py", line 180, in default
+    raise TypeError(f'Object of type {o.__class__.__name__} '
+TypeError: Object of type datetime is not JSON serializable
+2026-04-08 18:26:22,421 | INFO | uvicorn.error | Shutting down
+2026-04-08 18:26:22,531 | INFO | uvicorn.error | Waiting for application shutdown.
+2026-04-08 18:26:22,532 | INFO | uvicorn.error | Application shutdown complete.
+2026-04-08 18:26:22,533 | INFO | uvicorn.error | Finished server process [3284]
+2026-04-08 18:26:33,387 | INFO | uvicorn.error | Started server process [21360]
+2026-04-08 18:26:33,389 | INFO | uvicorn.error | Waiting for application startup.
+2026-04-08 18:26:33,390 | INFO | uvicorn.error | Application startup complete.
+2026-04-08 18:26:33,391 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-04-08 18:28:29,152 | INFO | uvicorn.error | Shutting down
+2026-04-08 18:28:29,261 | INFO | uvicorn.error | Waiting for application shutdown.
+2026-04-08 18:28:29,263 | INFO | uvicorn.error | Application shutdown complete.
+2026-04-08 18:28:29,264 | INFO | uvicorn.error | Finished server process [21360]
