@@ -1,5 +1,6 @@
 from dotenv import load_dotenv
 from motor.motor_asyncio import AsyncIOMotorClient
+from pymongo import MongoClient
 
 import os, logging
 
@@ -30,3 +31,10 @@ client = AsyncIOMotorClient(uri)
 db = client['qab']
 
 users_collection = db['users']
+agents_collection = db['agents']
+
+# SYNC CLIENT
+vec_client = MongoClient(os.getenv("MONGO_URI"))
+vec_db = vec_client["qab"]
+vector_collection = vec_db["vector_store"]  # sync (for LangChain)
+

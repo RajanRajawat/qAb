@@ -4,8 +4,8 @@ from fastapi.middleware.cors import CORSMiddleware
 from fastapi.responses import FileResponse
 import os
 from contextlib import asynccontextmanager
-from api.auth.register import register_router
-from api.auth.login import login_router
+from auth.register import register_router
+from auth.login import login_router
 load_dotenv()
 
 

@@ -21,10 +21,10 @@ async def register_user(user:UserRegister, bt:BackgroundTasks):
     user_data = user.model_dump(exclude={"password"})
     user_data.update({
         'password' : hash_password(user.password),
-        'agent_credits' : {
-            'max' : 3,
-            'used' : 0
-        },
+        # 'agent_credits' : {
+        #     'max' : 3,
+        #     'used' : 0
+        # },
         'created_at' : datetime.datetime.now(datetime.timezone.utc)
 
     })

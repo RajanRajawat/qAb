@@ -12,7 +12,7 @@ from jwt import ExpiredSignatureError, InvalidTokenError
 security = HTTPBearer()
 load_dotenv()
 
-
+    
 #- Logger
 logging.basicConfig(
     filename="qab_logs.txt",
@@ -57,7 +57,7 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
 SECRET_KEY = load_jwt_secret_key()
 def generate_token(user_data, token_type: str, time):
     payload = {
-        'id': str(user_data['_id']),  
+        '_id': str(user_data['_id']),  
         'name': user_data['name'],
         'email': user_data['email'],
         'token_type': token_type,
@@ -129,7 +129,7 @@ async def get_user_by_email(email: EmailStr):
         return False
 
 
-async def get_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
+async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
     try:
         payload = jwt.decode(credentials.credentials, SECRET_KEY, algorithms=["HS256"])
         return payload
