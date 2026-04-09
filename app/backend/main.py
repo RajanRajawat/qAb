@@ -7,6 +7,7 @@ from contextlib import asynccontextmanager
 from auth.register import register_router
 from auth.login import login_router
 from agent.agent import agent_router
+from agent.runner import runner_router
 from utils.helpers import logger
 load_dotenv()
 
@@ -25,6 +26,7 @@ app.add_middleware(
 app.include_router(login_router)
 app.include_router(register_router)
 app.include_router(agent_router)
+app.include_router(runner_router)
 
 @app.get("/")
 def root():
