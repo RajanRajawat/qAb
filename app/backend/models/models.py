@@ -105,16 +105,13 @@ class LLMModel(str, Enum):
 
 class AgentTool(str, Enum):
     WEB_SEARCH = "web_search"
-    NEWS_SEARCH = "news_search"
-    WEATHER = "weather"
-    CALCULATOR = "calculator"
-    DATETIME = "datetime"
-    URL_READER = "url_reader"
-    CODE_EXECUTOR = "code_executor"
-    WIKIPEDIA = "wikipedia"
+    WEATHER    = "weather"
+    DATETIME   = "datetime"
+    WIKIPEDIA  = "wikipedia"
 
 
-#- Compatibility Map
+
+#- LLM Compatibility Map
 
 compatibility_map: dict[LLMProvider, set[LLMModel]] = {
     LLMProvider.GROQ: {

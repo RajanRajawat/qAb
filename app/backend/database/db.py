@@ -23,18 +23,22 @@ def load_mongo_uri():
         logger.error(f"MongoDB connection string not found in .env file")
         return None
     
+    logger.info(f"MongoDB connection string loaded successfully")
     return uri
 
 uri = load_mongo_uri()
 
 client = AsyncIOMotorClient(uri)
 db = client['qab']
+logger.info(f"Async MongoDB client initialized for database: qab")
 
 users_collection = db['users']
 agents_collection = db['agents']
+logger.info(f"MongoDB collections initialized: users, agents")
 
 # SYNC CLIENT
 vec_client = MongoClient(os.getenv("MONGO_URI"))
 vec_db = vec_client["qab"]
 vector_collection = vec_db["vector_store"]  # sync (for LangChain)
+logger.info(f"Sync MongoDB vector collection initialized: vector_store")
 

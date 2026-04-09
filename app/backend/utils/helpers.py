@@ -34,6 +34,7 @@ def load_jwt_secret_key():
     if not secret_key:
         logger.error(f"JWT secret key not found in .env file")
         return None
+    logger.info(f"JWT secret key loaded successfully")
     return secret_key
 
 
@@ -48,14 +49,17 @@ def strip_string(s: str):
 
 #- JWT Password
 def hash_password(password: str) -> str:
+    logger.info(f"Password hashing started")
     return bcrypt.hashpw(password.encode('utf-8'), bcrypt.gensalt()).decode('utf-8')
 
 def verify_password(plain_password: str, hashed_password: str) -> bool:
+    logger.info(f"Password verification started")
     return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
 
 
 SECRET_KEY = load_jwt_secret_key()
 def generate_token(user_data, token_type: str, time):
+    logger.info(f"{token_type.capitalize()} token generation started for {user_data['email']}")
     payload = {
         '_id': str(user_data['_id']),  
         'name': user_data['name'],
@@ -63,6 +67,7 @@ def generate_token(user_data, token_type: str, time):
         'token_type': token_type,
         'exp': (datetime.datetime.now(datetime.timezone.utc) + datetime.timedelta(hours=time))
     }
+    logger.info(f"{token_type.capitalize()} token generated successfully for {user_data['email']}")
     return jwt.encode(payload, SECRET_KEY, algorithm="HS256")
 
 
@@ -122,20 +127,27 @@ async def send_email(subject: str, email_to, body: str, attachments=None):
 
 #- User
 async def get_user_by_email(email: EmailStr):
+    logger.info(f"Fetching user by email: {email}")
     user_data = await users_collection.find_one({'email': email})
     if user_data:
+        logger.info(f"User found for email: {email}")
         return user_data
     else:
+        logger.warning(f"User not found for email: {email}")
         return False
 
 
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
     try:
+        logger.info(f"Current user token validation started")
         payload = jwt.decode(credentials.credentials, SECRET_KEY, algorithms=["HS256"])
+        logger.info(f"Current user token validated successfully for {payload['email']}")
         return payload
     except ExpiredSignatureError:
+        logger.warning(f"Current user token validation failed because token expired")
         raise HTTPException(status_code=401, detail={"message": "Token has expired, please login again."})
     except InvalidTokenError:
+        logger.warning(f"Current user token validation failed because token was invalid")
         raise HTTPException(status_code=401, detail={"message": "Invalid token."})
     
 

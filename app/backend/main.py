@@ -7,6 +7,7 @@ from contextlib import asynccontextmanager
 from auth.register import register_router
 from auth.login import login_router
 from agent.agent import agent_router
+from utils.helpers import logger
 load_dotenv()
 
 
@@ -27,9 +28,11 @@ app.include_router(agent_router)
 
 @app.get("/")
 def root():
+    logger.info(f"Root route accessed")
     return FileResponse("index.html")
 
 
 @app.get("/health")
 def health():
+    logger.info(f"Health check route accessed")
     return {"status": "ok"}
