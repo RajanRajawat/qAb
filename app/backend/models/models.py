@@ -87,18 +87,18 @@ class LLMProvider(str, Enum):
 
 
 class LLMModel(str, Enum):
-    LLAMA_3_3_70B = "llama-3.3-70b-versatile"
-    LLAMA_4_SCOUT = "llama-4-scout-17b-16e-instruct"
-    LLAMA_3_1_8B = "llama-3.1-8b-instant"
-    MIXTRAL_8X7B = "mixtral-8x7b-32768"
 
-    GEMINI_2_FLASH = "gemini-2.0-flash"
-    GEMINI_FLASH_LITE = "gemini-2.0-flash-lite"
-    GEMINI_1_5_FLASH = "gemini-1.5-flash"
+        LLAMA_3_3_70B = "llama-3.3-70b-versatile"
+        LLAMA_4_SCOUT = "llama-4-scout-17b-16e-instruct"
+        LLAMA_3_1_8B = "llama-3.1-8b-instant"
 
-    HF_LLAMA_3_3_70B = "meta-llama/Llama-3.3-70B-Instruct"
-    HF_MISTRAL_7B = "mistralai/Mistral-7B-Instruct-v0.3"
-    HF_QWEN_72B = "Qwen/Qwen2.5-72B-Instruct"
+        GEMINI_2_FLASH = "gemini-2.0-flash"
+        GEMINI_FLASH_LITE = "gemini-2.0-flash-lite"
+        GEMINI_1_5_FLASH = "gemini-1.5-flash"
+
+        HF_LLAMA_3_3_70B = "meta-llama/Llama-3.3-70B-Instruct"
+        HF_MISTRAL_7B = "mistralai/Mistral-7B-Instruct-v0.3"
+        HF_QWEN_72B = "Qwen/Qwen2.5-72B-Instruct"
 
 
 #- Tool
