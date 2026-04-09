@@ -125,6 +125,22 @@ TOOL_REGISTRY: dict[AgentTool, BaseTool] = {
 }
 
 
-def get_tools_for_agent(agent_tools: list[AgentTool]) -> list[BaseTool]:
-    logger.info(f"Resolving tools for agent: {[tool.value for tool in agent_tools]}")
-    return [TOOL_REGISTRY[t] for t in agent_tools]
+def normalize_agent_tool(tool: AgentTool | str) -> AgentTool:
+    if isinstance(tool, AgentTool):
+        return tool
+
+    if isinstance(tool, str):
+        try:
+            return AgentTool(tool)
+        except ValueError as exc:
+            logger.error(f"Unknown tool configured for agent: {tool}")
+            raise ValueError(f"Unsupported tool configured for agent: {tool}") from exc
+
+    logger.error(f"Invalid tool type configured for agent: {type(tool).__name__}")
+    raise TypeError(f"Invalid tool type configured for agent: {type(tool).__name__}")
+
+
+def get_tools_for_agent(agent_tools: list[AgentTool | str]) -> list[BaseTool]:
+    normalized_tools = [normalize_agent_tool(tool) for tool in agent_tools]
+    logger.info(f"Resolving tools for agent: {[tool.value for tool in normalized_tools]}")
+    return [TOOL_REGISTRY[tool] for tool in normalized_tools]

@@ -83,22 +83,16 @@ class UserLogin(BaseModel):
 class LLMProvider(str, Enum):
     GROQ = "groq"
     GEMINI = "gemini"
-    HUGGINGFACE = "huggingface"
+    # HUGGINGFACE = "huggingface"
 
 
 class LLMModel(str, Enum):
 
-        LLAMA_3_3_70B = "llama-3.3-70b-versatile"
-        LLAMA_4_SCOUT = "llama-4-scout-17b-16e-instruct"
+        
         LLAMA_3_1_8B = "llama-3.1-8b-instant"
 
-        GEMINI_2_FLASH = "gemini-2.0-flash"
-        GEMINI_FLASH_LITE = "gemini-2.0-flash-lite"
-        GEMINI_1_5_FLASH = "gemini-1.5-flash"
-
-        HF_LLAMA_3_3_70B = "meta-llama/Llama-3.3-70B-Instruct"
-        HF_MISTRAL_7B = "mistralai/Mistral-7B-Instruct-v0.3"
-        HF_QWEN_72B = "Qwen/Qwen2.5-72B-Instruct"
+        GEMINI_2_5_FLASH = "gemini-2.5-flash"
+        
 
 
 #- Tool
@@ -115,20 +109,11 @@ class AgentTool(str, Enum):
 
 compatibility_map: dict[LLMProvider, set[LLMModel]] = {
     LLMProvider.GROQ: {
-        LLMModel.LLAMA_3_3_70B,
-        LLMModel.LLAMA_4_SCOUT,
         LLMModel.LLAMA_3_1_8B,
     },
     LLMProvider.GEMINI: {
-        LLMModel.GEMINI_2_FLASH,
-        LLMModel.GEMINI_FLASH_LITE,
-        LLMModel.GEMINI_1_5_FLASH,
-    },
-    LLMProvider.HUGGINGFACE: {
-        LLMModel.HF_LLAMA_3_3_70B,
-        LLMModel.HF_MISTRAL_7B,
-        LLMModel.HF_QWEN_72B,
-    },
+        LLMModel.GEMINI_2_5_FLASH,
+    }
 }
 
 
