@@ -6,17 +6,17 @@
   <title>QAB Backend Tester</title>
   <style>
     :root {
-      --bg: #f3ede4;
-      --panel: rgba(255, 250, 242, 0.94);
-      --border: #d9c7b1;
-      --text: #241b15;
-      --muted: #715f4d;
-      --accent: #b5512f;
-      --accent-dark: #8d3e24;
-      --soft: #efe1d1;
-      --ok: #1f6a38;
-      --error: #992f2f;
-      --shadow: 0 20px 50px rgba(67, 39, 20, 0.12);
+      --bg: #eef5ff;
+      --panel: rgba(255, 255, 255, 0.96);
+      --border: #c8d8ee;
+      --text: #10233f;
+      --muted: #58708f;
+      --accent: #2563eb;
+      --accent-dark: #1d4ed8;
+      --soft: #dbeafe;
+      --ok: #15803d;
+      --error: #b91c1c;
+      --shadow: 0 18px 48px rgba(37, 99, 235, 0.12);
     }
 
     * {
@@ -26,11 +26,11 @@
     body {
       margin: 0;
       min-height: 100vh;
-      font-family: Georgia, "Times New Roman", serif;
+      font-family: Arial, Helvetica, sans-serif;
       color: var(--text);
       background:
-        radial-gradient(circle at top left, rgba(181, 81, 47, 0.14), transparent 22%),
-        linear-gradient(135deg, #f8f2e8 0%, #ebdfcc 100%);
+        radial-gradient(circle at top left, rgba(37, 99, 235, 0.12), transparent 24%),
+        linear-gradient(180deg, #f8fbff 0%, #eaf2ff 100%);
     }
 
     .page {
@@ -44,9 +44,9 @@
     .panel {
       background: var(--panel);
       border: 1px solid var(--border);
-      border-radius: 22px;
+      border-radius: 20px;
       box-shadow: var(--shadow);
-      backdrop-filter: blur(10px);
+      backdrop-filter: blur(8px);
     }
 
     .hero {
@@ -55,14 +55,15 @@
 
     .hero h1 {
       margin: 0 0 10px;
-      font-size: clamp(2rem, 4vw, 3rem);
-      line-height: 1;
+      font-size: clamp(2rem, 4vw, 2.8rem);
+      line-height: 1.05;
     }
 
     .hero p {
       margin: 0;
       max-width: 850px;
       color: var(--muted);
+      line-height: 1.55;
     }
 
     .grid {
@@ -77,7 +78,7 @@
 
     .panel h2 {
       margin: 0 0 14px;
-      font-size: 1.2rem;
+      font-size: 1.15rem;
     }
 
     .panel h3 {
@@ -107,7 +108,7 @@
     select {
       margin-top: 6px;
       padding: 12px 14px;
-      background: #fff;
+      background: #ffffff;
       color: var(--text);
     }
 
@@ -120,9 +121,10 @@
       border: none;
       padding: 12px 14px;
       background: var(--accent);
-      color: #fff8f2;
+      color: #ffffff;
       cursor: pointer;
-      transition: transform 0.16s ease, background 0.16s ease;
+      transition: transform 0.16s ease, background 0.16s ease, box-shadow 0.16s ease;
+      box-shadow: 0 10px 24px rgba(37, 99, 235, 0.18);
     }
 
     button:hover {
@@ -134,10 +136,11 @@
       background: var(--soft);
       color: var(--text);
       border: 1px solid var(--border);
+      box-shadow: none;
     }
 
     .secondary:hover {
-      background: #e5d1bb;
+      background: #cfe2ff;
     }
 
     .button-row {
@@ -178,25 +181,30 @@
     }
 
     .status {
-      background: #f6ecdf;
+      background: #edf4ff;
       color: var(--muted);
       min-height: 48px;
+      border: 1px solid #d9e7fb;
     }
 
     .status.ok {
-      background: #e9f5ec;
+      background: #ebf8ef;
       color: var(--ok);
+      border-color: #c9e9d1;
     }
 
     .status.error {
-      background: #fdeaea;
+      background: #fef0f0;
       color: var(--error);
+      border-color: #f5c9c9;
     }
 
     .note {
-      background: #f5ede1;
+      background: #f8fbff;
       color: var(--muted);
       font-size: 0.92rem;
+      border: 1px solid #dde8f8;
+      line-height: 1.55;
     }
 
     .mono {
@@ -204,7 +212,7 @@
     }
 
     code {
-      background: rgba(36, 27, 21, 0.06);
+      background: rgba(37, 99, 235, 0.08);
       padding: 2px 6px;
       border-radius: 6px;
     }
@@ -225,8 +233,8 @@
     <section class="hero">
       <h1>QAB Backend Tester</h1>
       <p>
-        This page matches your current backend setup: register, login, agent create, agent list, and agent delete.
-        It also shows a couple of backend notes so you can test safely while building the rest of the project.
+        This test page is aligned with the current backend routes and payloads for register, login, agent create,
+        agent list, agent update, and agent delete. It also stores your base URL and tokens locally so repeated testing is faster.
       </p>
     </section>
 
@@ -244,8 +252,9 @@
         <div id="statusBox" class="status">Waiting for action.</div>
         <div class="note" style="margin-top:12px;">
           Current backend notes:
-          <br>1. <code>main.py</code> does not include <code>agent_router</code> yet.
-          <br>2. <code>update_agent</code> exists in <code>agent.py</code> but does not have a route decorator right now.
+          <br>1. <code>/agent/create</code>, <code>/agent/all</code>, <code>/agent/update/{agent_id}</code>, and <code>/agent/delete/{agent_id}</code> are active.
+          <br>2. Supported tools currently are <code>web_search</code>, <code>weather</code>, <code>datetime</code>, and <code>wikipedia</code>.
+          <br>3. The current provider-to-model mapping follows the validation in <code>models.py</code>.
         </div>
       </div>
 
@@ -331,12 +340,8 @@
           <h3>Tools</h3>
           <div class="check-grid">
             <label class="check-item"><input type="checkbox" name="tools" value="web_search">web_search</label>
-            <label class="check-item"><input type="checkbox" name="tools" value="news_search">news_search</label>
             <label class="check-item"><input type="checkbox" name="tools" value="weather">weather</label>
-            <label class="check-item"><input type="checkbox" name="tools" value="calculator">calculator</label>
             <label class="check-item"><input type="checkbox" name="tools" value="datetime">datetime</label>
-            <label class="check-item"><input type="checkbox" name="tools" value="url_reader">url_reader</label>
-            <label class="check-item"><input type="checkbox" name="tools" value="code_executor">code_executor</label>
             <label class="check-item"><input type="checkbox" name="tools" value="wikipedia">wikipedia</label>
           </div>
           <button type="submit">Create Agent</button>
@@ -389,18 +394,18 @@
             Temperature
             <input name="temperature" type="number" step="0.1" min="0" max="1" placeholder="Keep existing">
           </label>
-          <label class="check-item">
-            <input id="updateKnowledgeBase" name="knowledge_base" type="checkbox">
-            Set Knowledge Base To True
+          <label>
+            Knowledge Base
+            <select id="updateKnowledgeBase" name="knowledge_base">
+              <option value="">Keep existing</option>
+              <option value="true">true</option>
+              <option value="false">false</option>
+            </select>
           </label>
           <div class="check-grid">
             <label class="check-item"><input type="checkbox" name="update_tools" value="web_search">web_search</label>
-            <label class="check-item"><input type="checkbox" name="update_tools" value="news_search">news_search</label>
             <label class="check-item"><input type="checkbox" name="update_tools" value="weather">weather</label>
-            <label class="check-item"><input type="checkbox" name="update_tools" value="calculator">calculator</label>
             <label class="check-item"><input type="checkbox" name="update_tools" value="datetime">datetime</label>
-            <label class="check-item"><input type="checkbox" name="update_tools" value="url_reader">url_reader</label>
-            <label class="check-item"><input type="checkbox" name="update_tools" value="code_executor">code_executor</label>
             <label class="check-item"><input type="checkbox" name="update_tools" value="wikipedia">wikipedia</label>
           </div>
           <button type="submit">Update Agent</button>
@@ -429,8 +434,7 @@
       groq: [
         "llama-3.3-70b-versatile",
         "llama-4-scout-17b-16e-instruct",
-        "llama-3.1-8b-instant",
-        "mixtral-8x7b-32768"
+        "llama-3.1-8b-instant"
       ],
       gemini: [
         "gemini-2.0-flash",
@@ -595,8 +599,8 @@
       }
     }
 
-    function getToolsFromForm(form) {
-      return Array.from(form.querySelectorAll('input[name="tools"]:checked')).map((item) => item.value);
+    function getToolsFromForm(form, inputName) {
+      return Array.from(form.querySelectorAll('input[name="' + inputName + '"]:checked')).map((item) => item.value);
     }
 
     document.getElementById("saveConfigBtn").addEventListener("click", saveBaseUrl);
@@ -652,7 +656,7 @@
         llm_model: (formData.get("llm_model") || "").toString(),
         temperature: Number(formData.get("temperature")),
         knowledge_base: form.querySelector('input[name="knowledge_base"]').checked,
-        tools: getToolsFromForm(form)
+        tools: getToolsFromForm(form, "tools")
       };
 
       await sendRequest("POST", "/agent/create", payload, true);
@@ -685,7 +689,8 @@
       const llmProviderValue = (formData.get("llm_provider") || "").toString().trim();
       const llmModelValue = (formData.get("llm_model") || "").toString().trim();
       const temperatureValue = (formData.get("temperature") || "").toString().trim();
-      const selectedTools = Array.from(form.querySelectorAll('input[name="update_tools"]:checked')).map((item) => item.value);
+      const knowledgeBaseValue = (formData.get("knowledge_base") || "").toString().trim();
+      const selectedTools = getToolsFromForm(form, "update_tools");
 
       if (name) payload.name = name;
       if (description) payload.description = description;
@@ -695,7 +700,8 @@
       if (llmModelValue) payload.llm_model = llmModelValue;
       if (temperatureValue !== "") payload.temperature = Number(temperatureValue);
       if (selectedTools.length > 0) payload.tools = selectedTools;
-      if (document.getElementById("updateKnowledgeBase").checked) payload.knowledge_base = true;
+      if (knowledgeBaseValue === "true") payload.knowledge_base = true;
+      if (knowledgeBaseValue === "false") payload.knowledge_base = false;
 
       if (Object.keys(payload).length === 0) {
         setStatus("Please fill at least one field to update.", "error");
