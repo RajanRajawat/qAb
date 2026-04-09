@@ -25,6 +25,7 @@ runner_router = APIRouter(prefix="/chat" , tags=["Agent Runner"])
 load_dotenv()
 
 
+#: move to models later
 class AgentRunRequest(BaseModel):
     query: str
     thread_id: str | None = None
