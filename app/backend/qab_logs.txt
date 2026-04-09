@@ -693,3 +693,105 @@ TypeError: Object of type datetime is not JSON serializable
 2026-04-09 11:29:33,330 | INFO | uvicorn.error | Waiting for application shutdown.
 2026-04-09 11:29:33,337 | INFO | uvicorn.error | Application shutdown complete.
 2026-04-09 11:29:33,341 | INFO | uvicorn.error | Finished server process [8940]
+2026-04-09 11:33:55,687 | INFO | database.db | MongoDB connection string loaded successfully
+2026-04-09 11:33:55,834 | INFO | database.db | Async MongoDB client initialized for database: qab
+2026-04-09 11:33:55,835 | INFO | database.db | MongoDB collections initialized: users, agents
+2026-04-09 11:33:56,769 | INFO | database.db | Sync MongoDB vector collection initialized: vector_store
+2026-04-09 11:33:57,460 | INFO | utils.helpers | JWT secret key loaded successfully
+2026-04-09 11:33:58,291 | INFO | uvicorn.error | Started server process [15284]
+2026-04-09 11:33:58,293 | INFO | uvicorn.error | Waiting for application startup.
+2026-04-09 11:33:58,296 | INFO | uvicorn.error | Application startup complete.
+2026-04-09 11:33:58,297 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-04-09 11:34:04,856 | INFO | utils.helpers | Current user token validation started
+2026-04-09 11:34:04,857 | INFO | utils.helpers | Current user token validated successfully for rajan@gmail.com
+2026-04-09 11:34:04,857 | INFO | utils.helpers | Agent creation request received from rajan@gmail.com
+2026-04-09 11:34:05,415 | INFO | utils.helpers | Agent created successfully for rajan@gmail.com with id: 69d741541dd8b05181dd38ac
+2026-04-09 11:34:05,416 | INFO | utils.helpers | Success response generated with status code: 201 | Message: Agent Created!
+2026-04-09 11:36:00,653 | INFO | utils.helpers | Current user token validation started
+2026-04-09 11:36:00,654 | INFO | utils.helpers | Current user token validated successfully for rajan@gmail.com
+2026-04-09 11:36:00,654 | INFO | utils.helpers | Fetch all agents request received from rajan@gmail.com
+2026-04-09 11:36:00,683 | ERROR | uvicorn.error | Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\agent\agent.py", line 47, in get_agents
+    if agent['updated_at']:
+       ~~~~~^^^^^^^^^^^^^^
+KeyError: 'updated_at'
+2026-04-09 11:37:55,671 | INFO | uvicorn.error | Shutting down
+2026-04-09 11:37:55,782 | INFO | uvicorn.error | Waiting for application shutdown.
+2026-04-09 11:37:55,783 | INFO | uvicorn.error | Application shutdown complete.
+2026-04-09 11:37:55,784 | INFO | uvicorn.error | Finished server process [15284]
+2026-04-09 11:37:59,927 | INFO | database.db | MongoDB connection string loaded successfully
+2026-04-09 11:37:59,933 | INFO | database.db | Async MongoDB client initialized for database: qab
+2026-04-09 11:37:59,933 | INFO | database.db | MongoDB collections initialized: users, agents
+2026-04-09 11:38:00,245 | INFO | database.db | Sync MongoDB vector collection initialized: vector_store
+2026-04-09 11:38:00,397 | INFO | utils.helpers | JWT secret key loaded successfully
+2026-04-09 11:38:00,644 | INFO | uvicorn.error | Started server process [23328]
+2026-04-09 11:38:00,645 | INFO | uvicorn.error | Waiting for application startup.
+2026-04-09 11:38:00,646 | INFO | uvicorn.error | Application startup complete.
+2026-04-09 11:38:00,647 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-04-09 11:39:35,770 | INFO | utils.helpers | Current user token validation started
+2026-04-09 11:39:35,771 | INFO | utils.helpers | Current user token validated successfully for rajan@gmail.com
+2026-04-09 11:39:35,771 | INFO | utils.helpers | Fetch all agents request received from rajan@gmail.com
+2026-04-09 11:39:36,201 | INFO | utils.helpers | Fetched 1 agents for rajan@gmail.com
+2026-04-09 11:39:36,201 | INFO | utils.helpers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-09 11:40:03,855 | INFO | utils.helpers | Current user token validation started
+2026-04-09 11:40:03,855 | INFO | utils.helpers | Current user token validated successfully for rajan@gmail.com
+2026-04-09 11:40:03,894 | INFO | utils.helpers | Agent update request received for agent id: 69d741541dd8b05181dd38ac from rajan@gmail.com
+2026-04-09 11:40:03,929 | INFO | utils.helpers | Agent updated successfully for agent id: 69d741541dd8b05181dd38ac by rajan@gmail.com
+2026-04-09 11:40:03,929 | INFO | utils.helpers | Success response generated with status code: 200 | Message: Agent updated successfully!
+2026-04-09 11:40:06,636 | INFO | utils.helpers | Current user token validation started
+2026-04-09 11:40:06,637 | INFO | utils.helpers | Current user token validated successfully for rajan@gmail.com
+2026-04-09 11:40:06,637 | INFO | utils.helpers | Fetch all agents request received from rajan@gmail.com
+2026-04-09 11:40:06,668 | INFO | utils.helpers | Fetched 1 agents for rajan@gmail.com
+2026-04-09 11:40:06,668 | INFO | utils.helpers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-09 11:46:45,511 | INFO | uvicorn.error | Shutting down
+2026-04-09 11:46:45,637 | INFO | uvicorn.error | Waiting for application shutdown.
+2026-04-09 11:46:45,638 | INFO | uvicorn.error | Application shutdown complete.
+2026-04-09 11:46:45,640 | INFO | uvicorn.error | Finished server process [23328]

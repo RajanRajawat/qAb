@@ -44,7 +44,7 @@ async def get_agents(current_user: dict = Depends(get_current_user)):
         agent["_id"] = str(agent["_id"])
         agent["owner_id"] = str(agent["owner_id"])
         agent["created_at"] = str(agent["created_at"])
-        if agent['updated_at']:
+        if agent.get("updated_at"):
             agent["updated_at"] = str(agent["updated_at"])
 
     logger.info(f"Fetched {len(agents)} agents for {current_user['email']}")
