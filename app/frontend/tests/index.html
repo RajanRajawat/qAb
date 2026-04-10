@@ -234,7 +234,7 @@
       <h1>QAB Backend Tester</h1>
       <p>
         This test page is aligned with the current backend routes and payloads for register, login, agent create,
-        agent list, agent update, and agent delete. It also stores your base URL and tokens locally so repeated testing is faster.
+        agent list, agent update, agent delete, and agent chat runner. It also stores your base URL and tokens locally so repeated testing is faster.
       </p>
     </section>
 
@@ -252,7 +252,7 @@
         <div id="statusBox" class="status">Waiting for action.</div>
         <div class="note" style="margin-top:12px;">
           Current backend notes:
-          <br>1. <code>/agent/create</code>, <code>/agent/all</code>, <code>/agent/update/{agent_id}</code>, and <code>/agent/delete/{agent_id}</code> are active.
+          <br>1. <code>/agent/create</code>, <code>/agent/all</code>, <code>/agent/update/{agent_id}</code>, <code>/agent/delete/{agent_id}</code>, and <code>/chat/run/{agent_id}</code> are active.
           <br>2. Supported tools currently are <code>web_search</code>, <code>weather</code>, <code>datetime</code>, and <code>wikipedia</code>.
           <br>3. The current provider-to-model mapping follows the validation in <code>models.py</code>.
         </div>
@@ -415,6 +415,25 @@
           <input id="deleteAgentId" type="text" placeholder="Paste agent _id here">
         </label>
         <button id="deleteAgentBtn" type="button">Delete Agent</button>
+      </div>
+
+      <div class="panel">
+        <h2>Run Agent Chat</h2>
+        <form id="runAgentForm">
+          <label>
+            Agent ID
+            <input name="agent_id" type="text" placeholder="Paste agent _id here" required>
+          </label>
+          <label>
+            Thread ID
+            <input name="thread_id" type="text" placeholder="Optional: reuse an earlier thread id">
+          </label>
+          <label>
+            Query
+            <textarea name="query" placeholder="Ask your agent something..." required></textarea>
+          </label>
+          <button type="submit">Run Agent</button>
+        </form>
       </div>
 
       <div class="panel wide">
@@ -722,6 +741,37 @@
       }
 
       await sendRequest("DELETE", "/agent/delete/" + agentId, undefined, true);
+    });
+
+    document.getElementById("runAgentForm").addEventListener("submit", async (event) => {
+      event.preventDefault();
+      saveBaseUrl();
+
+      const form = event.currentTarget;
+      const formData = new FormData(form);
+      const agentId = (formData.get("agent_id") || "").toString().trim();
+      const threadId = (formData.get("thread_id") || "").toString().trim();
+      const query = (formData.get("query") || "").toString().trim();
+
+      if (!agentId) {
+        setStatus("Please enter an agent id before running chat.", "error");
+        return;
+      }
+
+      if (!query) {
+        setStatus("Please enter a query before running chat.", "error");
+        return;
+      }
+
+      const payload = {
+        query
+      };
+
+      if (threadId) {
+        payload.thread_id = threadId;
+      }
+
+      await sendRequest("POST", "/chat/run/" + agentId, payload, true);
     });
   </script>
 </body>
