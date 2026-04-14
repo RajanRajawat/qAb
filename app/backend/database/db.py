@@ -38,6 +38,6 @@ logger.info(f"MongoDB collections initialized: users, agents")
 # SYNC CLIENT
 vec_client = MongoClient(os.getenv("MONGO_URI"))
 vec_db = vec_client["qab"]
-vector_collection = vec_db["vector_store"]  # sync (for LangChain)
+vector_collection = vec_db["embeddings"]  # sync (for LangChain)
 logger.info(f"Sync MongoDB vector collection initialized: vector_store")
 

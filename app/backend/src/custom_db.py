@@ -12,6 +12,7 @@ from utils.emails import send_email
 from utils.response import success_response, error_response
 from utils.loggers import logger
 import datetime
+from bson import ObjectId
 
 
 db_router = APIRouter(prefix="/custom-db", tags=["DB"])
@@ -21,7 +22,7 @@ db_router = APIRouter(prefix="/custom-db", tags=["DB"])
 async def link_db(db: MongoDBLink, bt: BackgroundTasks, current_user: dict = Depends(get_current_user)):
     logger.info(f"New DB Link registration request received from {current_user['email']}")
     
-    user_data = await users_collection.find_one({'_id': current_user['_id']})
+    user_data = await users_collection.find_one({'_id': ObjectId(current_user['_id'])})
     if not user_data:
         return error_response(400, message="User not found")  
 
@@ -37,7 +38,7 @@ async def link_db(db: MongoDBLink, bt: BackgroundTasks, current_user: dict = Dep
     }
 
     await users_collection.update_one(
-        {'_id': current_user['_id']},
+        {'_id': ObjectId(current_user['_id'])},
         {'$set': update_fields}
     )
 
@@ -46,4 +47,7 @@ async def link_db(db: MongoDBLink, bt: BackgroundTasks, current_user: dict = Dep
     logger.info(f"MongoDB linked successfully for {current_user['email']}")
 
     return success_response(status_code=201, message=f"MongoDB has been linked successfully.")
+
+
+
 

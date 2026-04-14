@@ -16,10 +16,14 @@ from utils.env_loaders import load_groq_api, load_gemini_api
 from utils.loggers import logger
 from utils.users import get_current_user
 from utils.response import success_response, error_response
-from database.db import agents_collection
+from database.db import agents_collection, users_collection, vector_collection
 from src.tools import get_tools_for_agent
 from database.models import AgentRunRequest
 from pydantic import SecretStr
+
+from langchain_mongodb import MongoDBAtlasVectorSearch
+from langchain_huggingface import HuggingFaceEmbeddings
+from pymongo import MongoClient
 
 
 runner_router = APIRouter(prefix="/chat" , tags=["Agent Runner"])
@@ -133,6 +137,70 @@ def agent_builder(agent_config: dict):
     return agent
 
 
+
+
+
+#- RAG: Fetch relevant context from vector store
+#  Fallback chain: custom_db → default vector_collection → None (skip gracefully)
+def fetch_rag_context(query: str, owner_id: str, custom_db_settings: dict = None):
+
+    embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+
+    #- Determine target collection
+    target_collection = None
+
+    if custom_db_settings and custom_db_settings.get('linked') is True:
+        mongo_settings = custom_db_settings.get('mongo_db', {})
+        connection_string = mongo_settings.get('connection_string')
+        db_name = mongo_settings.get('db_name')
+        collection_name = mongo_settings.get('collection_name')
+
+        if connection_string and db_name and collection_name:
+            try:
+                custom_client = MongoClient(connection_string)
+                target_collection = custom_client[db_name][collection_name]
+                logger.info(f"RAG: Using custom DB for owner: {owner_id}")
+            except Exception as e:
+                logger.error(f"RAG: Failed to connect to custom DB for owner {owner_id}: {e}")
+                target_collection = None
+
+    if target_collection is None:
+        target_collection = vector_collection
+        logger.info(f"RAG: Using default vector collection for owner: {owner_id}")
+
+    #- Check collection has data for this owner before querying
+    try:
+        doc_count = target_collection.count_documents({'owner_id': ObjectId(owner_id)})
+        if doc_count == 0:
+            logger.info(f"RAG: No documents found for owner: {owner_id}, skipping KB injection")
+            return ""
+    except Exception as e:
+        logger.error(f"RAG: Count check failed for owner {owner_id}: {e}")
+        return ""
+
+    vector_store = MongoDBAtlasVectorSearch(
+        collection=target_collection,
+        embedding=embeddings,
+        index_name="vector_index_qab"
+    )
+
+    retriever = vector_store.as_retriever(
+        search_type="similarity",
+        search_kwargs={
+            "k": 3,
+            "pre_filter": {
+                "owner_id": {"$eq": ObjectId(owner_id)}
+            }
+        }
+    )
+
+    docs = retriever.invoke(query)
+    if docs:
+        return "\n\n".join([doc.page_content for doc in docs])
+
+    return ""
+
+
 @runner_router.post("/run/{agent_id}")
 async def run_agent(agent_id: str, request: AgentRunRequest, current_user: dict = Depends(get_current_user)):
     try:
@@ -158,9 +226,33 @@ async def run_agent(agent_id: str, request: AgentRunRequest, current_user: dict 
         agent = agent_builder(agent_data)
         thread_id = request.thread_id or str(uuid4())
 
+        #- RAG: Inject context if knowledge_base is enabled
+        rag_message = request.query
+
+        if agent_data.get('knowledge_base') is True:
+            try:
+                user_data = await users_collection.find_one({'_id': ObjectId(current_user['_id'])})
+                custom_db = user_data.get('custom_db', {}) if user_data else {}
+
+                context = fetch_rag_context(request.query, str(current_user['_id']), custom_db)
+
+                if context:
+                    rag_message = f"""Use the following context to answer if needed:
+{context}
+
+User question:
+{request.query}"""
+                    logger.info(f"RAG context injected for agent id: {agent_id}")
+                else:
+                    logger.info(f"No KB context found, running agent without RAG for agent id: {agent_id}")
+
+            except Exception as e:
+                logger.error(f"Knowledge base retrieval failed for agent id: {agent_id} | Error: {str(e)}")
+                # Fallback: run agent without KB context — do not crash the request
+
         logger.info(f"Running agent id: {agent_id} with thread id: {thread_id}")
         result = await agent.ainvoke(
-            {"messages": [{"role": "user", "content": request.query}]},
+            {"messages": [{"role": "user", "content": rag_message}]},
             config={"configurable": {"thread_id": thread_id}}
         )
 
@@ -185,8 +277,3 @@ async def run_agent(agent_id: str, request: AgentRunRequest, current_user: dict 
     except Exception as e:
         logger.error(f"Agent run failed for agent id: {agent_id} | Error: {str(e)}")
         return error_response(status_code=500, message="Internal server error")
-
-
-
-
-
