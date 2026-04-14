@@ -2,7 +2,7 @@ from pydantic import BaseModel, EmailStr, Field, ConfigDict, field_validator, mo
 from bson import ObjectId
 from typing import Optional
 from enum import Enum
-from utils.helpers import strip_string
+from utils.general import strip_string
 
 
 #- User
@@ -178,9 +178,18 @@ class AgentUpdate(BaseModel):
                 )
         return self
     
+class AgentRunRequest(BaseModel):
+    query: str
+    thread_id: str | None = None
 
 
+#DB
 
+class MongoDBLink(BaseModel):
+    connection_uri: str
+    db_name :str
+    collection_name: str
+    
 
 
 

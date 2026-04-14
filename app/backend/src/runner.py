@@ -12,59 +12,16 @@ from langchain_huggingface import HuggingFaceEndpoint
 from fastapi import APIRouter, Depends, HTTPException
 from bson import ObjectId
 from bson.errors import InvalidId
-from utils.helpers import logger, get_current_user
-from utils.responses import success_response, error_response
+from utils.env_loaders import load_groq_api, load_gemini_api
+from utils.loggers import logger
+from utils.users import get_current_user
+from utils.response import success_response, error_response
 from database.db import agents_collection
-from agent.tools import get_tools_for_agent
+from src.tools import get_tools_for_agent
+from database.models import AgentRunRequest
 
 
 runner_router = APIRouter(prefix="/chat" , tags=["Agent Runner"])
-
-
-#- .env LOADERS
-load_dotenv()
-
-
-#: move to models later
-class AgentRunRequest(BaseModel):
-    query: str
-    thread_id: str | None = None
-
-
-def load_secret_key():
-    secret_key = os.getenv("SECRET_VALUE")
-    if not secret_key:
-        logger.error("JWT secret key not found in .env file")
-        raise ValueError("Missing SECRET_VALUE in .env")
-    logger.info("JWT secret key loaded successfully")
-    return secret_key
-
-
-def load_groq_api():
-    api = os.getenv("GROQ_API_KEY")
-    if not api:
-        logger.error("GROQ API key not found in .env file")
-        raise ValueError("Missing GROQ_API_KEY in .env")
-    logger.info("GROQ API key loaded successfully")
-    return api
-
-
-def load_gemini_api():
-    api = os.getenv("GOOGLE_API_KEY")
-    if not api:
-        logger.error("GOOGLE API key not found in .env file")
-        raise ValueError("Missing GOOGLE_API_KEY in .env")
-    logger.info("GOOGLE API key loaded successfully")
-    return api
-
-
-def load_hf_api():
-    api = os.getenv("HUGGINGFACEHUB_API_TOKEN")
-    if not api:
-        logger.error("HF API key not found in .env file")
-        raise ValueError("Missing HUGGINGFACEHUB_API_TOKEN in .env")
-    logger.info("HF API key loaded successfully")
-    return api
 
 
 #- Agent Runner Functions
@@ -86,14 +43,6 @@ def get_llm(provider: str, model: str, temp):
             temperature=temp,
             google_api_key=load_gemini_api()
         )
-
-    # elif provider == "huggingface":
-    #     logger.info(f"Initializing HuggingFace LLM with model: {model}")
-    #     return HuggingFaceEndpoint(
-    #         repo_id=model,
-    #         temperature=temp,
-    #         huggingfacehub_api_token=load_hf_api()
-    #     )
 
     else:
         logger.error(f"Unsupported LLM provider: {provider}")

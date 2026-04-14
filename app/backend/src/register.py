@@ -1,14 +1,18 @@
+
+#~  Register 
+
+#- Imports
 from fastapi import APIRouter, BackgroundTasks
 from database.db import users_collection
-from models.models import UserRegister
+from database.models import UserRegister
 from utils.helpers import hash_password, get_user_by_email, send_email, logger
-from utils.responses import success_response, error_response
+from utils.helpers import success_response, error_response
 import datetime
 
-
+#- Router
 register_router = APIRouter(prefix="/auth", tags=["Auth"])
 
-
+#- Register Endpoint
 @register_router.post('/register')
 async def register_user(user:UserRegister, bt:BackgroundTasks):
 
@@ -21,21 +25,17 @@ async def register_user(user:UserRegister, bt:BackgroundTasks):
     user_data = user.model_dump(exclude={"password"})
     user_data.update({
         'password' : hash_password(user.password),
-        # 'agent_credits' : {
-        #     'max' : 3,
-        #     'used' : 0
-        # },
-        'created_at' : datetime.datetime.now(datetime.timezone.utc)
-
+        'created_at' : datetime.datetime.now(datetime.timezone.utc),
+        'custom_db' : {
+            'linked' : False
+        }
     })
 
     created_user = await users_collection.insert_one(user_data)
 
     #: beautify emails.
     bt.add_task(send_email, "QAB - Registration Successful", user.email, "You have successfully registered!")
-
     logger.info(f"Registration successful for {user.email} with id: {str(created_user.inserted_id)}")
-    
     return success_response(status_code=201, message=f'{user.name} is now registered.')
 
 
