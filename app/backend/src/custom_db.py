@@ -1,8 +1,3 @@
-#ask for Connection STR,
-#DB NAME
-#Collection_name
-#> Create Vector Index search
-
 
 from fastapi import APIRouter, BackgroundTasks, Depends
 from database.db import users_collection

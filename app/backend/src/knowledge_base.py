@@ -40,7 +40,6 @@ def process_file_and_embed(file_path: str, file_name: str, owner_id: str, custom
     try:
         logger.info(f"Processing file: {file_name} for owner: {owner_id}")
 
-        # Load
         if file_name.endswith('.pdf'):
             loader = PyPDFLoader(file_path)
         else:
@@ -48,24 +47,19 @@ def process_file_and_embed(file_path: str, file_name: str, owner_id: str, custom
 
         documents = loader.load()
 
-        # Split
         splitter = RecursiveCharacterTextSplitter(
             chunk_size=500,      
             chunk_overlap=50,
         )
         chunks = splitter.split_documents(documents)
 
-        # Tag each chunk with owner_id as ObjectId
         for chunk in chunks:
             chunk.metadata['owner_id'] = ObjectId(owner_id)
 
-        # Embeddings
         embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
-        # DB Connection
         target_collection = get_target_collection(custom_db_settings, owner_id)
 
-        # Store
         MongoDBAtlasVectorSearch.from_documents(
             documents=chunks,
             embedding=embeddings,
@@ -106,7 +100,6 @@ async def upload_document(
         shutil.copyfileobj(file.file, buffer)
         
     custom_db = user_data.get('custom_db', {})
-   
    
     bt.add_task(
         process_file_and_embed,

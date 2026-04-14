@@ -6,9 +6,10 @@ from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_groq import ChatGroq
 from langchain.agents import create_agent
 from langchain.agents.middleware import wrap_tool_call
-from langchain.messages import ToolMessage
+# from langchain.messages import ToolMessage     #ye dekh lena
+from langchain_core.messages import ToolMessage
+
 from langgraph.checkpoint.memory import MemorySaver
-from langchain_huggingface import HuggingFaceEndpoint
 from fastapi import APIRouter, Depends, HTTPException
 from bson import ObjectId
 from bson.errors import InvalidId
@@ -141,7 +142,6 @@ def agent_builder(agent_config: dict):
 
 
 #- RAG: Fetch relevant context from vector store
-#  Fallback chain: custom_db → default vector_collection → None (skip gracefully)
 def fetch_rag_context(query: str, owner_id: str, custom_db_settings: dict = None):
 
     embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
@@ -248,7 +248,7 @@ User question:
 
             except Exception as e:
                 logger.error(f"Knowledge base retrieval failed for agent id: {agent_id} | Error: {str(e)}")
-                # Fallback: run agent without KB context — do not crash the request
+                #fallback
 
         logger.info(f"Running agent id: {agent_id} with thread id: {thread_id}")
         result = await agent.ainvoke(
