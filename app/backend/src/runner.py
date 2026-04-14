@@ -19,6 +19,7 @@ from utils.response import success_response, error_response
 from database.db import agents_collection
 from src.tools import get_tools_for_agent
 from database.models import AgentRunRequest
+from pydantic import SecretStr
 
 
 runner_router = APIRouter(prefix="/chat" , tags=["Agent Runner"])
@@ -33,7 +34,7 @@ def get_llm(provider: str, model: str, temp):
         return ChatGroq(
             model=model,
             temperature=temp,
-            api_key=load_groq_api()
+            api_key= SecretStr(load_groq_api())
         )
 
     elif provider == "gemini":

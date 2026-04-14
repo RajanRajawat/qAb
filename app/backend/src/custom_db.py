@@ -7,7 +7,8 @@
 from fastapi import APIRouter, BackgroundTasks, Depends
 from database.db import users_collection
 from database.models import MongoDBLink
-from utils.helpers import hash_password, get_user_by_email, send_email, get_current_user
+from utils.users import get_current_user
+from utils.emails import send_email
 from utils.response import success_response, error_response
 from utils.loggers import logger
 import datetime

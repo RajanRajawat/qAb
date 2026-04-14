@@ -5,8 +5,11 @@
 from fastapi import APIRouter, BackgroundTasks
 from database.db import users_collection
 from database.models import UserRegister
-from utils.helpers import hash_password, get_user_by_email, send_email, logger
-from utils.helpers import success_response, error_response
+from utils.security import hash_password
+from utils.users import get_user_by_email
+from utils.emails import send_email
+from utils.loggers import logger
+from utils.response import success_response, error_response
 import datetime
 
 #- Router
