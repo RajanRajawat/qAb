@@ -1,4 +1,4 @@
-const BASE_URL = 'http://localhost:8500';
+const BASE_URL = 'http://192.168.45.98:8000';
 
 function getHeaders(requireAuth = true) {
     const headers = {
