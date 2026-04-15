@@ -9,9 +9,9 @@ function showAlert(message, type = 'success') {
     
     container.appendChild(alertEl);
     setTimeout(() => {
-        alertEl.style.animation = 'slideOutRight 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275) forwards';
-        setTimeout(() => alertEl.remove(), 400);
-    }, 4000);
+        alertEl.style.animation = 'slideOut 0.3s ease-in forwards';
+        setTimeout(() => alertEl.remove(), 300);
+    }, 3000);
 }
 
 // Wait function
@@ -39,13 +39,7 @@ class App {
         document.querySelectorAll('.nav-item').forEach(btn => {
             btn.addEventListener('click', (e) => {
                 document.querySelectorAll('.nav-item').forEach(b => b.classList.remove('active'));
-                document.querySelectorAll('.view-section').forEach(s => {
-                    s.classList.remove('active');
-                    // Retrigger animation
-                    s.style.animation = 'none';
-                    s.offsetHeight; /* trigger reflow */
-                    s.style.animation = null; 
-                });
+                document.querySelectorAll('.view-section').forEach(s => s.classList.remove('active'));
                 
                 const targetId = btn.getAttribute('data-target');
                 btn.classList.add('active');
@@ -106,7 +100,6 @@ class App {
     }
 
     setLoading(btn, isLoading) {
-        if (!btn) return;
         const text = btn.querySelector('.btn-text');
         const loader = btn.querySelector('.loader');
         
@@ -253,7 +246,7 @@ class App {
         if (!this.isAuthenticated()) return;
         
         const listContainer = document.getElementById('agents-list');
-        listContainer.innerHTML = '<div class="agent-empty-state"><div class="loader mb-1" style="border-top-color:var(--primary)"></div><p>Gathering intel on your agents...</p></div>';
+        listContainer.innerHTML = '<div class="agent-empty-state"><div class="loader m-auto"></div><p>Loading...</p></div>';
         
         try {
             const res = await api.agents.getAll();
@@ -262,7 +255,7 @@ class App {
             this.populateChatSelect();
         } catch (error) {
             showAlert('Failed to load agents: ' + error.message, 'error');
-            listContainer.innerHTML = '<div class="agent-empty-state"><i class="fa-solid fa-triangle-exclamation text-danger"></i><p>Error loading agents.</p></div>';
+            listContainer.innerHTML = '<div class="agent-empty-state"><p>Error loading agents.</p></div>';
         }
     }
 
@@ -289,14 +282,14 @@ class App {
                     <h3 class="m-0">${agent.name}</h3>
                     <span class="agent-badge">${agent.llm_provider}</span>
                 </div>
-                <div class="text-xs text-muted">ID: <span class="fw-500">${agent._id}</span></div>
-                <div class="fw-bold text-accent text-sm mt-05"><i class="fa-solid fa-briefcase"></i> ${agent.role}</div>
-                <p>${agent.description}</p>
-                <div class="mt-auto pt-3 d-flex gap-1" style="display:flex; gap:0.5rem">
-                    <button class="btn btn-outline flex-1 edit-agent-btn shadow-hover w-100" data-id="${agent._id}">
+                <div class="text-xs text-muted">ID: ${agent._id}</div>
+                <div class="fw-bold text-accent text-xs">${agent.role}</div>
+                <p class="text-sm m-0">${agent.description}</p>
+                <div class="mt-1 d-flex gap-1">
+                    <button class="btn btn-outline flex-1 edit-agent-btn" data-id="${agent._id}">
                         <i class="fa-solid fa-pen"></i> Edit
                     </button>
-                    <button class="btn btn-danger-outline btn-icon delete-agent-btn shadow-hover" data-id="${agent._id}" title="Delete Agent">
+                    <button class="btn btn-danger btn-icon delete-agent-btn" data-id="${agent._id}">
                         <i class="fa-solid fa-trash"></i>
                     </button>
                 </div>
@@ -329,6 +322,7 @@ class App {
         document.getElementById('agent-instruction').value = agent.instruction;
         document.getElementById('agent-provider').value = agent.llm_provider;
         
+        // Timeout to allow model options to reflect provider if we had dynamic loading (for now it's static)
         document.getElementById('agent-model').value = agent.llm_model;
         document.getElementById('agent-temperature').value = agent.temperature;
         document.getElementById('agent-knowledge').checked = agent.knowledge_base;
@@ -360,81 +354,44 @@ class App {
 
     // --- Custom DB View ---
     bindCustomDb() {
+        if (!document.getElementById('custom-db-form')) return;
         const form = document.getElementById('custom-db-form');
-        if (form) {
-            form.addEventListener('submit', async (e) => {
-                e.preventDefault();
-                if(!this.isAuthenticated()){
-                    showAlert("Please login first.", "error"); return;
-                }
-                const btn = form.querySelector('button[type="submit"]');
-                this.setLoading(btn, true);
+        form.addEventListener('submit', async (e) => {
+            e.preventDefault();
+            if(!this.isAuthenticated()){
+                showAlert("Please login first.", "error"); return;
+            }
+            const btn = form.querySelector('button[type="submit"]');
+            this.setLoading(btn, true);
+            
+            try {
+                const data = {
+                    connection_uri: document.getElementById('db-uri').value,
+                    db_name: document.getElementById('db-name').value,
+                    collection_name: document.getElementById('db-collection').value
+                };
                 
-                try {
-                    const provider = document.getElementById('db-provider').value;
-                    const data = {
-                        connection_uri: document.getElementById('db-uri').value
-                    };
-                    
-                    if (provider === 'postgres') {
-                        await api.customDb.linkPostgres(data);
-                        showAlert('PostgreSQL linked successfully!');
-                    } else {
-                        await api.customDb.linkMongo(data);
-                        showAlert('MongoDB linked successfully!');
-                    }
-                    form.reset();
-                } catch (error) {
-                    showAlert(error.message, 'error');
-                } finally {
-                    this.setLoading(btn, false);
-                }
-            });
-        }
-
-        const deleteBtn = document.getElementById('delete-db-btn');
-        if (deleteBtn) {
-            deleteBtn.addEventListener('click', async () => {
-                if(!this.isAuthenticated()){
-                    showAlert("Please login first.", "error"); return;
-                }
-                if (!confirm("Are you sure you want to remove your linked database?")) return;
-
-                this.setLoading(deleteBtn, true);
-                try {
-                    await api.customDb.delete();
-                    showAlert('Database unlinked successfully.');
-                } catch (error) {
-                    showAlert(error.message, 'error');
-                } finally {
-                    this.setLoading(deleteBtn, false);
-                }
-            });
-        }
+                await api.customDb.linkMongo(data);
+                showAlert('MongoDB linked successfully!');
+                form.reset();
+            } catch (error) {
+                showAlert(error.message, 'error');
+            } finally {
+                this.setLoading(btn, false);
+            }
+        });
     }
 
     // --- Knowledge Base View ---
     bindKnowledgeBase() {
         const form = document.getElementById('kb-upload-form');
-        const fileInput = document.getElementById('kb-file');
-        const fileNameDisplay = document.getElementById('file-name-display');
-
-        if (fileInput && fileNameDisplay) {
-            fileInput.addEventListener('change', () => {
-                if (fileInput.files.length > 0) {
-                    fileNameDisplay.textContent = fileInput.files[0].name;
-                } else {
-                    fileNameDisplay.textContent = 'Choose a .txt or .pdf file';
-                }
-            });
-        }
-
         if (!form) return;
         form.addEventListener('submit', async (e) => {
             e.preventDefault();
             if(!this.isAuthenticated()){
                 showAlert("Please login first.", "error"); return;
             }
+            const fileInput = document.getElementById('kb-file');
             if(!fileInput.files.length) {
                 showAlert("Please select a file.", "error"); return;
             }
@@ -449,7 +406,6 @@ class App {
                 await api.knowledgeBase.upload(formData);
                 showAlert('File uploaded! Processing in background...');
                 form.reset();
-                if(fileNameDisplay) fileNameDisplay.textContent = 'Choose a .txt or .pdf file';
             } catch (error) {
                 showAlert(error.message, 'error');
             } finally {
@@ -478,17 +434,6 @@ class App {
                 document.getElementById('info-agent-name').textContent = agent.name;
                 document.getElementById('info-agent-role').textContent = agent.role;
                 infoCard.style.display = 'block';
-                
-                // Clear chat system message
-                const msgContainer = document.getElementById('chat-messages');
-                msgContainer.innerHTML = `
-                    <div class="system-msg default-msg">
-                        <div class="icon-pulse"><i class="fa-solid fa-microphone-lines"></i></div>
-                        <h4>Talking to ${agent.name}</h4>
-                        <p>Your thread is active. Keep answers concise.</p>
-                    </div>`;
-            } else {
-                infoCard.style.display = 'none';
             }
         });
     }
@@ -499,7 +444,7 @@ class App {
         const messagesContainer = document.getElementById('chat-messages');
         
         clearBtn.addEventListener('click', () => {
-            messagesContainer.innerHTML = '<div class="system-msg">Chat cleared. Start a new topic.</div>';
+            messagesContainer.innerHTML = '<div class="message system-msg">Chat cleared.</div>';
         });
 
         chatForm.addEventListener('submit', async (e) => {
@@ -527,7 +472,7 @@ class App {
             
             const btn = document.getElementById('chat-send-btn');
             const originalIcon = btn.innerHTML;
-            btn.innerHTML = '<div class="loader m-auto" style="width:16px; height:16px; border-width: 2px; border-top-color: white"></div>';
+            btn.innerHTML = '<div class="loader"></div>';
             btn.disabled = true;
 
             try {
@@ -561,8 +506,8 @@ class App {
         const container = document.getElementById('chat-messages');
         
         // Remove system placeholder if it exists initially
-        const placeholder = container.querySelector('.system-msg.default-msg');
-        if (placeholder) {
+        const placeholder = container.querySelector('.system-msg');
+        if (placeholder && placeholder.textContent.includes('Select an agent')) {
             placeholder.remove();
         }
 
@@ -579,11 +524,7 @@ class App {
         msgEl.innerHTML = text.replace(/\n/g, '<br>');
         
         container.appendChild(msgEl);
-        
-        // Ensure smooth scroll to bottom
-        setTimeout(() => {
-            container.scrollTo({ top: container.scrollHeight, behavior: 'smooth' });
-        }, 50);
+        container.scrollTop = container.scrollHeight;
     }
 }
 

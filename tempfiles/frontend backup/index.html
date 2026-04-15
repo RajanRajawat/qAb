@@ -7,21 +7,17 @@
     <title>QAB Platform</title>
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600&family=Outfit:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700&display=swap" rel="stylesheet">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css" rel="stylesheet">
     <link rel="stylesheet" href="css/style.css">
 </head>
 
 <body>
-    <!-- Premium minimal bright background -->
-    <div class="bg-shape shadow-primary"></div>
-    <div class="bg-shape shadow-secondary"></div>
-
     <div class="app-container">
         <!-- Sidebar -->
         <aside class="sidebar">
             <div class="sidebar-header">
-                <h2><div class="icon-cube"><i class="fa-solid fa-cube"></i></div> QAB</h2>
+                <h2><i class="fa-solid fa-cube"></i> QAB</h2>
                 <div id="auth-status" class="auth-status offline">
                     <span class="status-dot"></span> <span id="auth-status-text">Not Logged In</span>
                 </div>
@@ -29,24 +25,24 @@
 
             <nav class="sidebar-nav">
                 <button class="nav-item active" data-target="auth-section">
-                    <i class="fa-solid fa-lock"></i> <span>Authentication</span>
+                    <i class="fa-solid fa-lock"></i> Authentication
                 </button>
                 <button class="nav-item" data-target="agents-section">
-                    <i class="fa-solid fa-robot"></i> <span>Agents Management</span>
+                    <i class="fa-solid fa-robot"></i> Agents Management
                 </button>
                 <button class="nav-item" data-target="custom-db-section">
-                    <i class="fa-solid fa-database"></i> <span>Custom DB</span>
+                    <i class="fa-solid fa-database"></i> Custom DB
                 </button>
                 <button class="nav-item" data-target="kb-section">
-                    <i class="fa-solid fa-book"></i> <span>Knowledge Base</span>
+                    <i class="fa-solid fa-book"></i> Knowledge Base
                 </button>
                 <button class="nav-item" data-target="chat-section">
-                    <i class="fa-solid fa-comment-dots"></i> <span>Agent Runner</span>
+                    <i class="fa-solid fa-comment-dots"></i> Agent Runner
                 </button>
             </nav>
 
             <div class="sidebar-footer">
-                <button id="logout-btn" class="btn btn-outline w-100" style="display: none;">
+                <button id="logout-btn" class="btn btn-outline" style="display: none; width: 100%;">
                     <i class="fa-solid fa-arrow-right-from-bracket"></i> Logout
                 </button>
             </div>
@@ -54,19 +50,20 @@
 
         <!-- Main Content -->
         <main class="main-content">
+
             <!-- Alert Container -->
             <div id="alert-container" class="alert-container"></div>
 
             <!-- Auth Section -->
             <section id="auth-section" class="view-section active">
-                <div class="section-header fade-in">
+                <div class="section-header">
                     <h1>Authentication</h1>
                     <p>Register or Login to get started and retrieve your JWT token.</p>
                 </div>
 
-                <div class="auth-layout fade-in delay-1">
+                <div class="glass-panel d-flex gap-2">
                     <!-- Login Form -->
-                    <div class="card auth-box">
+                    <div class="auth-box flex-1">
                         <h3>Login</h3>
                         <form id="login-form">
                             <div class="form-group">
@@ -77,17 +74,17 @@
                                 <label>Password</label>
                                 <input type="password" id="login-password" placeholder="••••••••" required>
                             </div>
-                            <button type="submit" class="btn btn-primary w-100 mt-2">
+                            <button type="submit" class="btn btn-primary w-100">
                                 <span class="btn-text">Login</span>
                                 <div class="loader" style="display: none;"></div>
                             </button>
                         </form>
                     </div>
 
-                    <div class="divider-text">OR</div>
+                    <div class="divider-vertical"></div>
 
                     <!-- Register Form -->
-                    <div class="card auth-box">
+                    <div class="auth-box flex-1">
                         <h3>Register</h3>
                         <form id="register-form">
                             <div class="form-group">
@@ -100,14 +97,16 @@
                             </div>
                             <div class="form-group">
                                 <label>Mobile (10 digits)</label>
-                                <input type="text" id="reg-mobile" placeholder="9876543210" required pattern="[0-9]{10}">
+                                <input type="text" id="reg-mobile" placeholder="9876543210" required
+                                    pattern="[0-9]{10}">
                             </div>
                             <div class="form-group">
                                 <label>Password</label>
                                 <input type="password" id="reg-password" placeholder="Strong password" required>
-                                <small class="text-muted">Min 8 chars, uppercase, lowercase, number, special char.</small>
+                                <small class="text-muted">Min 8 chars, uppercase, lowercase, number, special
+                                    char.</small>
                             </div>
-                            <button type="submit" class="btn btn-outline w-100 mt-2">
+                            <button type="submit" class="btn btn-secondary w-100">
                                 <span class="btn-text">Register</span>
                                 <div class="loader" style="display: none;"></div>
                             </button>
@@ -115,7 +114,7 @@
                     </div>
                 </div>
 
-                <div class="card mt-2 fade-in delay-2" id="token-display-box" style="display: none;">
+                <div class="glass-panel mt-2" id="token-display-box" style="display: none;">
                     <h3>Your Credentials</h3>
                     <div class="token-wrap">
                         <label>Access Token</label>
@@ -130,23 +129,23 @@
 
             <!-- Agents Section -->
             <section id="agents-section" class="view-section">
-                <div class="section-header fade-in">
-                    <div class="header-split">
+                <div class="section-header">
+                    <div class="d-flex justify-between align-items-center w-100">
                         <div>
                             <h1>Agent Management</h1>
                             <p>Create, update, and manage your AI Agents.</p>
                         </div>
-                        <button id="show-create-agent-btn" class="btn btn-primary shadow-hover">
+                        <button id="show-create-agent-btn" class="btn btn-primary">
                             <i class="fa-solid fa-plus"></i> New Agent
                         </button>
                     </div>
                 </div>
 
                 <!-- Create/Update Agent Form (Hidden by default) -->
-                <div id="agent-form-container" class="card shadow-md mt-2 fade-in" style="display: none;">
-                    <div class="card-title-bar">
+                <div id="agent-form-container" class="glass-panel blur-in" style="display: none;">
+                    <div class="d-flex justify-between align-items-center mb-1">
                         <h3 id="agent-form-title">Create New Agent</h3>
-                        <button class="btn-icon circle" id="close-agent-form"><i class="fa-solid fa-times"></i></button>
+                        <button class="btn-icon" id="close-agent-form">&times;</button>
                     </div>
                     <form id="agent-form">
                         <input type="hidden" id="agent-id">
@@ -161,11 +160,13 @@
                             </div>
                             <div class="form-group form-span-2">
                                 <label>Description</label>
-                                <input type="text" id="agent-description" placeholder="A bot that helps customers..." required>
+                                <input type="text" id="agent-description" placeholder="A bot that helps customers..."
+                                    required>
                             </div>
                             <div class="form-group form-span-2">
                                 <label>System Instructions</label>
-                                <textarea id="agent-instruction" rows="3" placeholder="You are a helpful assistant..." required></textarea>
+                                <textarea id="agent-instruction" rows="3" placeholder="You are a helpful assistant..."
+                                    required></textarea>
                             </div>
                             <div class="form-group">
                                 <label>LLM Provider</label>
@@ -183,28 +184,29 @@
                             </div>
                             <div class="form-group">
                                 <label>Temperature</label>
-                                <input type="number" id="agent-temperature" step="0.1" min="0" max="1" value="0.7" required>
+                                <input type="number" id="agent-temperature" step="0.1" min="0" max="1" value="0.7"
+                                    required>
                             </div>
-                            <div class="form-group check-group mt-2">
-                                <label class="checkbox-container">
-                                    <input type="checkbox" id="agent-knowledge" value="true">
-                                    <span class="checkmark"></span>
-                                    Enable Knowledge Base Access
-                                </label>
+                            <div class="form-group d-flex align-items-center gap-1"
+                                style="flex-direction: row; margin-top: 2rem;">
+                                <input type="checkbox" id="agent-knowledge" value="true">
+                                <label for="agent-knowledge" style="margin-bottom: 0;">Knowledge Base</label>
                             </div>
-                            <div class="form-group form-span-2 mt-1">
+                            <div class="form-group form-span-2">
                                 <label>Tools (Optional)</label>
                                 <div class="tools-grid">
-                                    <label class="checkbox-container"><input type="checkbox" name="agent-tools" value="web_search"><span class="checkmark"></span> Web Search</label>
-                                    <label class="checkbox-container"><input type="checkbox" name="agent-tools" value="weather"><span class="checkmark"></span> Weather</label>
-                                    <label class="checkbox-container"><input type="checkbox" name="agent-tools" value="datetime"><span class="checkmark"></span> Datetime</label>
-                                    <label class="checkbox-container"><input type="checkbox" name="agent-tools" value="wikipedia"><span class="checkmark"></span> Wikipedia</label>
+                                    <label><input type="checkbox" name="agent-tools" value="web_search"> Web
+                                        Search</label>
+                                    <label><input type="checkbox" name="agent-tools" value="weather"> Weather</label>
+                                    <label><input type="checkbox" name="agent-tools" value="datetime"> Datetime</label>
+                                    <label><input type="checkbox" name="agent-tools" value="wikipedia">
+                                        Wikipedia</label>
                                 </div>
                             </div>
                         </div>
-                        <div class="form-actions mt-3">
+                        <div class="d-flex justify-end gap-1 mt-2">
                             <button type="button" class="btn btn-outline" id="cancel-agent-btn">Cancel</button>
-                            <button type="submit" class="btn btn-primary shadow-hover" id="save-agent-btn">
+                            <button type="submit" class="btn btn-primary" id="save-agent-btn">
                                 <span class="btn-text">Save Agent</span>
                                 <div class="loader" style="display: none;"></div>
                             </button>
@@ -213,66 +215,59 @@
                 </div>
 
                 <!-- Existing Agents List -->
-                <div id="agents-list" class="agents-grid mt-3"></div>
+                <div id="agents-list" class="agents-grid mt-2">
+                    <div class="agent-empty-state">
+                        <i class="fa-solid fa-robot"></i>
+                        <p>No agents found. Create one to get started.</p>
+                    </div>
+                </div>
             </section>
 
             <!-- Custom DB Section -->
             <section id="custom-db-section" class="view-section">
-                <div class="section-header fade-in">
+                <div class="section-header">
                     <h1>Custom Database</h1>
-                    <p>Link your MongoDB or PostgreSQL to the platform.</p>
+                    <p>Link your MongoDB to the platform.</p>
                 </div>
 
-                <div class="card form-max-width mx-auto mt-2 fade-in delay-1">
-                    <h3><i class="fa-solid fa-link text-accent me-1"></i> Link Database</h3>
-                    <form id="custom-db-form" class="mt-2">
-                        <div class="form-group">
-                            <label>Database Provider</label>
-                            <select id="db-provider" required>
-                                <option value="mongo">MongoDB</option>
-                                <option value="postgres">PostgreSql (Supabase)</option>
-                            </select>
-                        </div>
+                <div class="glass-panel" style="max-width: 600px; margin: 0 auto;">
+                    <h3>Link MongoDB</h3>
+                    <form id="custom-db-form" class="mt-1">
                         <div class="form-group">
                             <label>Connection URI</label>
-                            <input type="text" id="db-uri" placeholder="mongodb+srv://... or postgres://..." required>
+                            <input type="text" id="db-uri" placeholder="mongodb+srv://..." required>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100 mt-2 shadow-hover">
+                        <div class="form-group">
+                            <label>Database Name</label>
+                            <input type="text" id="db-name" placeholder="my_database" required>
+                        </div>
+                        <div class="form-group">
+                            <label>Collection Name</label>
+                            <input type="text" id="db-collection" placeholder="my_collection" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary w-100 mt-1">
                             <span class="btn-text">Link Database</span>
                             <div class="loader" style="display: none;"></div>
                         </button>
                     </form>
-
-                    <div class="mt-3 pt-3" style="border-top: 1px solid var(--border-color);">
-                        <h3 class="text-danger"><i class="fa-solid fa-triangle-exclamation me-1"></i> Unlink Database</h3>
-                        <p class="text-sm text-muted mt-05 mb-1">Remove the currently connected database configuration to allow a new connection.</p>
-                        <button id="delete-db-btn" class="btn btn-danger-outline w-100 shadow-hover">
-                            <span class="btn-text">Remove Linked DB</span>
-                            <div class="loader" style="display: none;"></div>
-                        </button>
-                    </div>
                 </div>
             </section>
 
             <!-- Knowledge Base Section -->
             <section id="kb-section" class="view-section">
-                <div class="section-header fade-in">
+                <div class="section-header">
                     <h1>Knowledge Base</h1>
                     <p>Upload a .txt or .pdf document to your personal vector database.</p>
                 </div>
 
-                <div class="card form-max-width mx-auto mt-2 fade-in delay-1 upload-card">
-                    <div class="upload-icon"><i class="fa-solid fa-cloud-arrow-up"></i></div>
+                <div class="glass-panel" style="max-width: 600px; margin: 0 auto;">
                     <h3>Upload Document</h3>
-                    <form id="kb-upload-form" class="mt-2 text-center">
-                        <div class="form-group file-group">
-                            <input type="file" id="kb-file" accept=".txt,.pdf" required class="file-input">
-                            <label for="kb-file" class="file-label">
-                                <span id="file-name-display">Choose a .txt or .pdf file</span>
-                                <div class="btn btn-outline btn-sm">Browse</div>
-                            </label>
+                    <form id="kb-upload-form" class="mt-1">
+                        <div class="form-group">
+                            <label>File (txt or pdf)</label>
+                            <input type="file" id="kb-file" accept=".txt,.pdf" required>
                         </div>
-                        <button type="submit" class="btn btn-primary w-100 mt-2 shadow-hover">
+                        <button type="submit" class="btn btn-primary w-100 mt-1">
                             <span class="btn-text">Upload to Database</span>
                             <div class="loader" style="display: none;"></div>
                         </button>
@@ -281,55 +276,46 @@
             </section>
 
             <!-- Agent Runner (Chat) Section -->
-            <section id="chat-section" class="view-section h-100-view">
-                <div class="section-header fade-in chat-header">
-                    <div>
-                        <h1>Agent Runner</h1>
-                        <p>Test your agents in a real-time conversational interface.</p>
-                    </div>
+            <section id="chat-section" class="view-section">
+                <div class="section-header mb-1">
+                    <h1>Agent Runner</h1>
+                    <p>Test your agents in a chat interface.</p>
                 </div>
 
-                <div class="chat-container wrap-shadow fade-in delay-1">
-                    <div class="chat-sidebar">
-                        <h3>Session Settings</h3>
-                        <div class="form-group mt-2">
-                            <label>Select Agent</label>
-                            <select id="chat-agent-select" class="stylish-select">
+                <div class="chat-container">
+                    <div class="chat-sidebar glass-panel">
+                        <h3>Select Agent</h3>
+                        <div class="form-group mt-1">
+                            <select id="chat-agent-select">
                                 <option value="" disabled selected>Loading agents...</option>
                             </select>
                         </div>
 
-                        <div class="form-group mt-2">
-                            <label>Thread Context (Optional)</label>
-                            <input type="text" id="chat-thread-id" placeholder="Enter Thread ID...">
+                        <h3 class="mt-2">Thread Context</h3>
+                        <div class="form-group mt-1">
+                            <input type="text" id="chat-thread-id" placeholder="Optional Thread ID">
+                            <small class="text-muted">Leave blank for a new thread.</small>
                         </div>
-                        
+                        <button class="btn btn-outline w-100 mt-1" id="clear-chat-btn">Clear Chat View</button>
+
                         <div class="agent-info-card mt-2" id="chat-agent-info" style="display: none;">
-                            <div class="info-badge">Target</div>
-                            <div class="fw-bold text-dark fs-lg mt-1" id="info-agent-name">-</div>
-                            <div class="text-sm text-accent fw-500 mt-05" id="info-agent-role">-</div>
-                        </div>
-                        
-                        <div class="mt-auto pt-3">
-                            <button class="btn btn-danger-outline w-100" id="clear-chat-btn">
-                                <i class="fa-solid fa-eraser"></i> Clear Chat
-                            </button>
+                            <div class="text-xs text-muted mb-05">SELECTED AGENT</div>
+                            <div class="fw-bold text-accent" id="info-agent-name">-</div>
+                            <div class="text-xs mt-05" id="info-agent-role">-</div>
                         </div>
                     </div>
 
-                    <div class="chat-main">
+                    <div class="chat-main glass-panel">
                         <div class="chat-messages" id="chat-messages">
-                            <!-- Messages will appear here -->
-                            <div class="system-msg default-msg">
-                                <div class="icon-pulse"><i class="fa-solid fa-robot"></i></div>
-                                <h4>Ready to chat</h4>
-                                <p>Select an agent from the sidebar and start your conversation.</p>
+                            <div class="message system-msg">
+                                Select an agent on the left and start typing.
                             </div>
                         </div>
                         <div class="chat-input-area">
-                            <form id="chat-form" class="chat-input-box">
-                                <input type="text" id="chat-input" placeholder="Ask your agent anything..." required autocomplete="off">
-                                <button type="submit" class="btn btn-primary btn-icon circle shadow-hover" id="chat-send-btn">
+                            <form id="chat-form" class="w-100 d-flex gap-1">
+                                <input type="text" id="chat-input" class="flex-1" placeholder="Type a message..."
+                                    required autocomplete="off">
+                                <button type="submit" class="btn btn-primary btn-icon" id="chat-send-btn">
                                     <i class="fa-solid fa-paper-plane"></i>
                                 </button>
                             </form>

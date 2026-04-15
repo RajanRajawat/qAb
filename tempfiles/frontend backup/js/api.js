@@ -103,21 +103,6 @@ const api = {
                 body: JSON.stringify(data)
             });
             return handleResponse(res);
-        },
-        linkPostgres: async (data) => {
-            const res = await fetch(`${BASE_URL}/custom-db/add/postgres`, {
-                method: 'POST',
-                headers: getHeaders(true),
-                body: JSON.stringify(data)
-            });
-            return handleResponse(res);
-        },
-        delete: async () => {
-            const res = await fetch(`${BASE_URL}/custom-db/delete`, {
-                method: 'POST',
-                headers: getHeaders(true)
-            });
-            return handleResponse(res);
         }
     },
     knowledgeBase: {

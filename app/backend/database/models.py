@@ -185,15 +185,5 @@ class AgentRunRequest(BaseModel):
 
 #DB
 
-class MongoDBLink(BaseModel):
-    connection_uri: str
-    db_name :str
-    collection_name: str
-    
-
-
-
-
-
-
-    
+class URILink(BaseModel):
+    connection_uri: str 

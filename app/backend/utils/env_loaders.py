@@ -31,4 +31,14 @@ def load_gemini_api():
     return api
 
 
+def load_tavily_api():
+    api = os.getenv("TAVILY_API_KEY")
+    if not api:
+        logger.error("Tavily API key not found in .env file")
+        raise ValueError("Missing TAVILY_API_KEY in .env")
+    logger.info("Tavily API key loaded successfully")
+    return api
+
+
+
 

@@ -5,32 +5,35 @@ from utils.users import get_current_user
 from utils.response import success_response, error_response
 from utils.loggers import logger
 from bson import ObjectId
-
 from langchain_community.document_loaders import TextLoader, PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_mongodb import MongoDBAtlasVectorSearch
+from langchain_postgres import PGVector
 from pymongo import MongoClient
 
 
 kb_router = APIRouter(prefix="/knowledge-base", tags=["Knowledge Base"])
 
 
-#- Helper: Resolve target vector collection
+#- Helper: Resolve target vector collection (Mongo only — Postgres handled separately)
 def get_target_collection(custom_db_settings: dict = None, owner_id: str = ""):
     if custom_db_settings and custom_db_settings.get('linked') is True:
-        mongo_settings = custom_db_settings.get('mongo_db', {})
-        connection_string = mongo_settings.get('connection_string')
-        db_name = mongo_settings.get('db_name')
-        collection_name = mongo_settings.get('collection_name')
+        provider = custom_db_settings.get('provider')
+        config = custom_db_settings.get('config', {})
+        connection_string = config.get('connection_string')
 
-        if connection_string and db_name and collection_name:
-            try:
-                custom_client = MongoClient(connection_string)
-                logger.info(f"Using custom DB for owner {owner_id}")
-                return custom_client[db_name][collection_name]
-            except Exception as e:
-                logger.error(f"Failed to connect to custom DB for owner {owner_id}: {e}")
+        if provider == 'mongo':
+            db_name = config.get('db_name')
+            collection_name = config.get('collection_name')
+
+            if connection_string and db_name and collection_name:
+                try:
+                    custom_client = MongoClient(connection_string)
+                    logger.info(f"Using custom MongoDB for owner {owner_id}")
+                    return custom_client[db_name][collection_name]
+                except Exception as e:
+                    logger.error(f"Failed to connect to custom MongoDB for owner {owner_id}: {e}")
 
     return vector_collection
 
@@ -48,32 +51,62 @@ def process_file_and_embed(file_path: str, file_name: str, owner_id: str, custom
         documents = loader.load()
 
         splitter = RecursiveCharacterTextSplitter(
-            chunk_size=500,      
+            chunk_size=500,
             chunk_overlap=50,
         )
         chunks = splitter.split_documents(documents)
 
         for chunk in chunks:
-            chunk.metadata['owner_id'] = ObjectId(owner_id)
+            chunk.metadata['owner_id'] = str(owner_id)
 
         embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
-        target_collection = get_target_collection(custom_db_settings, owner_id)
+        provider = custom_db_settings.get('provider') if custom_db_settings else None
+        config = custom_db_settings.get('config', {}) if custom_db_settings else {}
 
+        if custom_db_settings and custom_db_settings.get('linked') is True and provider == 'postgres':
+            connection_string = config.get('connection_string')
+            if not connection_string:
+                logger.error(f"Postgres connection string missing for owner {owner_id}. Falling back to default collection.")
+                _embed_mongo(chunks, embeddings, owner_id, file_name)
+            else:
+                try:
+                    logger.info(f"Using custom Postgres (pgvector) for owner {owner_id}")
+                    PGVector.from_documents(
+                        documents=chunks,
+                        embedding=embeddings,
+                        collection_name=f"embeddings_{owner_id}",
+                        connection=connection_string,
+                        use_jsonb=True,
+                    )
+                    logger.info(f"Successfully embedded {len(chunks)} chunks into Postgres for file: {file_name} (Owner: {owner_id})")
+                except Exception as e:
+                    logger.error(f"Failed to embed into Postgres for owner {owner_id}: {e}")
+        else:
+            target_collection = get_target_collection(custom_db_settings, owner_id)
+            _embed_mongo(chunks, embeddings, owner_id, file_name, target_collection)
+
+    except Exception as e:
+        logger.error(f"Error processing file {file_name} for owner {owner_id}: {e}")
+    finally:
+        if os.path.exists(file_path):
+            os.remove(file_path)
+
+
+#- Helper: Embed into a MongoDB Atlas vector collection
+def _embed_mongo(chunks, embeddings, owner_id, file_name, target_collection=None):
+    if target_collection is None:
+        target_collection = vector_collection
+    try:
         MongoDBAtlasVectorSearch.from_documents(
             documents=chunks,
             embedding=embeddings,
             collection=target_collection,
             index_name="vector_index_qab"
         )
-        
-        logger.info(f"Successfully embedded {len(chunks)} chunks for file: {file_name} (Owner: {owner_id})")
-    
+        logger.info(f"Successfully embedded {len(chunks)} chunks into MongoDB for file: {file_name} (Owner: {owner_id})")
     except Exception as e:
-        logger.error(f"Error processing document {file_name}: {e}")
-    finally:
-        if os.path.exists(file_path):
-            os.remove(file_path)
+        logger.error(f"Failed to embed into MongoDB for owner {owner_id}: {e}")
 
 
 @kb_router.post("/upload")
@@ -82,25 +115,23 @@ async def upload_document(
     file: UploadFile = File(...),
     current_user: dict = Depends(get_current_user)
 ):
-    logger.info(f"Knowledge Base upload request from {current_user['email']}")
-    
+    logger.info(f"Knowledge Base upload request received from {current_user['email']}")
+
     if not file.filename.endswith(('.txt', '.pdf')):
-        return error_response(400, message="Only .txt and .pdf files are supported")
-        
+        return error_response(400, message="Only .txt and .pdf files are supported.")
+
     user_data = await users_collection.find_one({'_id': ObjectId(current_user['_id'])})
     if not user_data:
-        return error_response(404, message="User not found")
-        
-    
-    
+        return error_response(404, message="User not found.")
+
     os.makedirs("uploads", exist_ok=True)
     file_path = os.path.join("uploads", f"{current_user['_id']}_{file.filename}")
-    
+
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
-        
+
     custom_db = user_data.get('custom_db', {})
-   
+
     bt.add_task(
         process_file_and_embed,
         file_path,
@@ -108,6 +139,6 @@ async def upload_document(
         str(current_user['_id']),
         custom_db
     )
-    
-    logger.info(f"File {file.filename} queued for processing (Owner: {current_user['email']})")
+
+    logger.info(f"File '{file.filename}' queued for processing (Owner: {current_user['email']})")
     return success_response(202, message="File uploaded successfully. Processing in background.")
