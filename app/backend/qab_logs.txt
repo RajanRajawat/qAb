@@ -1,465 +1,502 @@
-2026-04-15 12:28:43,037 | INFO | uvicorn.error | Shutting down
-2026-04-15 12:28:43,144 | INFO | uvicorn.error | Waiting for application shutdown.
-2026-04-15 12:28:43,147 | INFO | uvicorn.error | Application shutdown complete.
-2026-04-15 12:28:43,149 | INFO | uvicorn.error | Finished server process [14300]
-2026-04-15 12:29:43,459 | INFO | database.db | MongoDB connection string loaded successfully
-2026-04-15 12:29:43,602 | INFO | database.db | Async MongoDB client initialized for database: qab
-2026-04-15 12:29:43,603 | INFO | database.db | MongoDB collections initialized: users, agents
-2026-04-15 12:29:44,397 | INFO | database.db | Sync MongoDB vector collection initialized: vector_store
-2026-04-15 12:29:44,565 | INFO | utils.loggers | JWT secret key loaded successfully
-2026-04-15 12:29:44,567 | INFO | utils.loggers | JWT secret key loaded successfully
-2026-04-15 12:30:55,438 | INFO | uvicorn.error | Started server process [11704]
-2026-04-15 12:30:55,440 | INFO | uvicorn.error | Waiting for application startup.
-2026-04-15 12:30:55,442 | INFO | uvicorn.error | Application startup complete.
-2026-04-15 12:30:55,443 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-2026-04-15 12:31:39,915 | INFO | utils.loggers | Current user token validation started
-2026-04-15 12:31:39,920 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
-2026-04-15 12:31:39,929 | INFO | utils.loggers | Agent run request received for agent id: 69df2d4131bc89af8b08c009 from work4rajan@gmail.com
-2026-04-15 12:31:40,634 | INFO | utils.loggers | Agent builder started for agent: Steve Jobs
-2026-04-15 12:31:40,634 | INFO | utils.loggers | Initializing Gemini LLM with model: gemini-2.5-flash
-2026-04-15 12:31:40,635 | INFO | utils.loggers | GOOGLE API key loaded successfully
-2026-04-15 12:31:41,750 | INFO | utils.loggers | Resolving tools for agent: ['web_search']
-2026-04-15 12:31:41,812 | INFO | utils.loggers | Agent built successfully for agent: Steve Jobs
-2026-04-15 12:31:41,812 | INFO | utils.loggers | Running agent id: 69df2d4131bc89af8b08c009 with thread id: fbe4f3-4d6f-4b91-a344-a51719bf0032
-2026-04-15 12:31:44,573 | INFO | utils.loggers | Web search tool invoked for query: football matches tonight
-2026-04-15 12:31:44,574 | INFO | utils.loggers | Tavily API key loaded successfully
-2026-04-15 12:31:46,456 | INFO | utils.loggers | Web search tool executed successfully for query: football matches tonight
-2026-04-15 12:31:50,837 | INFO | utils.loggers | Agent run completed successfully for agent id: 69df2d4131bc89af8b08c009
-2026-04-15 12:31:50,838 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent response generated successfully!
-2026-04-15 12:32:05,209 | INFO | utils.loggers | Current user token validation started
-2026-04-15 12:32:05,210 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
-2026-04-15 12:32:05,210 | INFO | utils.loggers | Agent run request received for agent id: 69df2d4131bc89af8b08c009 from work4rajan@gmail.com
-2026-04-15 12:32:05,219 | INFO | utils.loggers | Agent builder started for agent: Steve Jobs
-2026-04-15 12:32:05,219 | INFO | utils.loggers | Initializing Gemini LLM with model: gemini-2.5-flash
-2026-04-15 12:32:05,219 | INFO | utils.loggers | GOOGLE API key loaded successfully
-2026-04-15 12:32:06,320 | INFO | utils.loggers | Resolving tools for agent: ['web_search']
-2026-04-15 12:32:06,328 | INFO | utils.loggers | Agent built successfully for agent: Steve Jobs
-2026-04-15 12:32:06,329 | INFO | utils.loggers | Running agent id: 69df2d4131bc89af8b08c009 with thread id: fbe4f3-4d6f-4b91-a344-a51719bf0032
-2026-04-15 12:32:08,227 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 1.9 seconds as it raised ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}.
-2026-04-15 12:32:11,925 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 2.71 seconds as it raised ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}.
-2026-04-15 12:32:16,987 | INFO | utils.loggers | Web search tool invoked for query: who is playing champions league today
-2026-04-15 12:32:16,988 | INFO | utils.loggers | Tavily API key loaded successfully
-2026-04-15 12:32:18,990 | INFO | utils.loggers | Web search tool executed successfully for query: who is playing champions league today
-2026-04-15 12:32:21,096 | INFO | utils.loggers | Agent run completed successfully for agent id: 69df2d4131bc89af8b08c009
-2026-04-15 12:32:21,096 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent response generated successfully!
-2026-04-15 12:34:48,599 | INFO | utils.loggers | Current user token validation started
-2026-04-15 12:34:48,599 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
-2026-04-15 12:34:48,599 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
-2026-04-15 12:34:48,721 | INFO | utils.loggers | Fetched 1 agents for work4rajan@gmail.com
-2026-04-15 12:34:48,722 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
-2026-04-15 12:40:08,416 | INFO | utils.loggers | Current user token validation started
-2026-04-15 12:40:08,416 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
-2026-04-15 12:40:08,416 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
-2026-04-15 12:40:08,548 | INFO | utils.loggers | Fetched 1 agents for work4rajan@gmail.com
-2026-04-15 12:40:08,550 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
-2026-04-15 12:41:07,720 | INFO | uvicorn.error | Shutting down
-2026-04-15 12:41:07,828 | INFO | uvicorn.error | Waiting for application shutdown.
-2026-04-15 12:41:07,830 | INFO | uvicorn.error | Application shutdown complete.
-2026-04-15 12:41:07,833 | INFO | uvicorn.error | Finished server process [11704]
-2026-04-15 15:28:37,541 | INFO | database.db | MongoDB connection string loaded successfully
-2026-04-15 15:28:38,052 | INFO | database.db | Async MongoDB client initialized for database: qab
-2026-04-15 15:28:38,053 | INFO | database.db | MongoDB collections initialized: users, agents
-2026-04-15 15:28:39,152 | INFO | database.db | Sync MongoDB vector collection initialized: vector_store
-2026-04-15 15:28:39,950 | INFO | utils.loggers | JWT secret key loaded successfully
-2026-04-15 15:28:40,003 | INFO | utils.loggers | JWT secret key loaded successfully
-2026-04-15 15:33:27,580 | INFO | uvicorn.error | Started server process [2800]
-2026-04-15 15:33:27,588 | INFO | uvicorn.error | Waiting for application startup.
-2026-04-15 15:33:27,594 | INFO | uvicorn.error | Application startup complete.
-2026-04-15 15:33:27,600 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
-2026-04-15 15:33:30,314 | INFO | utils.loggers | New user registration request received from work4rajan+default_mongo@gmail.com
-2026-04-15 15:33:30,319 | INFO | utils.loggers | Fetching user by email: work4rajan+default_mongo@gmail.com
-2026-04-15 15:33:31,558 | WARNING | utils.loggers | User not found for email: work4rajan+default_mongo@gmail.com
-2026-04-15 15:33:31,623 | INFO | utils.loggers | Password hashing started
-2026-04-15 15:33:32,491 | INFO | utils.loggers | Registration successful for work4rajan+default_mongo@gmail.com with id: 69df6274122c0389243140ba
-2026-04-15 15:33:32,491 | INFO | utils.loggers | Success response generated with status code: 201 | Message: Rajan is now registered.
-2026-04-15 15:33:41,937 | INFO | utils.loggers | Login request received from work4rajan+default_mongo@gmail.com
-2026-04-15 15:33:41,940 | INFO | utils.loggers | Fetching user by email: work4rajan+default_mongo@gmail.com
-2026-04-15 15:33:42,214 | INFO | utils.loggers | User found for email: work4rajan+default_mongo@gmail.com
-2026-04-15 15:33:42,216 | INFO | utils.loggers | Password verification started
-2026-04-15 15:33:42,853 | INFO | utils.loggers | Access token generation started for work4rajan+default_mongo@gmail.com
-2026-04-15 15:33:42,853 | INFO | utils.loggers | Access token generated successfully for work4rajan+default_mongo@gmail.com
-2026-04-15 15:33:42,853 | INFO | utils.loggers | Refresh token generation started for work4rajan+default_mongo@gmail.com
-2026-04-15 15:33:42,853 | INFO | utils.loggers | Refresh token generated successfully for work4rajan+default_mongo@gmail.com
-2026-04-15 15:33:42,854 | INFO | utils.loggers | JWT tokens generated
-2026-04-15 15:33:42,854 | INFO | utils.loggers | Success response generated with status code: 200 | Message: You are now logged in.
-2026-04-15 15:33:42,917 | INFO | utils.loggers | Current user token validation started
-2026-04-15 15:33:42,918 | INFO | utils.loggers | Current user token validated successfully for work4rajan+default_mongo@gmail.com
-2026-04-15 15:33:42,918 | INFO | utils.loggers | Fetch all agents request received from work4rajan+default_mongo@gmail.com
-2026-04-15 15:33:43,202 | INFO | utils.loggers | Fetched 0 agents for work4rajan+default_mongo@gmail.com
-2026-04-15 15:33:43,202 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
-2026-04-15 15:33:43,818 | ERROR | utils.loggers | Failed to send email to [NameEmail(name='work4rajan+default_mongo', email='work4rajan+default_mongo@gmail.com')] | Error: Exception raised Error connecting to smtp.gmail.com on port 587: [Errno 11001] getaddrinfo failed, check your credentials or email service configuration
-2026-04-15 15:33:43,818 | ERROR | utils.loggers | Failed to send email to [NameEmail(name='work4rajan+default_mongo', email='work4rajan+default_mongo@gmail.com')] | Error: Exception raised Error connecting to smtp.gmail.com on port 587: [Errno 11001] getaddrinfo failed, check your credentials or email service configuration
-2026-04-15 15:36:07,461 | INFO | utils.loggers | Current user token validation started
-2026-04-15 15:36:07,462 | INFO | utils.loggers | Current user token validated successfully for work4rajan+default_mongo@gmail.com
-2026-04-15 15:36:07,480 | INFO | utils.loggers | Agent creation request received from work4rajan+default_mongo@gmail.com
-2026-04-15 15:36:07,538 | INFO | utils.loggers | Agent created successfully for work4rajan+default_mongo@gmail.com with id: 69df630f122c0389243140bb
-2026-04-15 15:36:07,538 | INFO | utils.loggers | Success response generated with status code: 201 | Message: Agent Created!
-2026-04-15 15:36:07,579 | INFO | utils.loggers | Current user token validation started
-2026-04-15 15:36:07,580 | INFO | utils.loggers | Current user token validated successfully for work4rajan+default_mongo@gmail.com
-2026-04-15 15:36:07,580 | INFO | utils.loggers | Fetch all agents request received from work4rajan+default_mongo@gmail.com
-2026-04-15 15:36:07,598 | INFO | utils.loggers | Fetched 1 agents for work4rajan+default_mongo@gmail.com
-2026-04-15 15:36:07,599 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
-2026-04-15 15:41:08,530 | INFO | utils.loggers | Current user token validation started
-2026-04-15 15:41:08,647 | INFO | utils.loggers | Current user token validated successfully for work4rajan+default_mongo@gmail.com
-2026-04-15 15:41:08,661 | INFO | utils.loggers | Fetch all agents request received from work4rajan+default_mongo@gmail.com
-2026-04-15 15:41:08,827 | INFO | utils.loggers | Fetched 1 agents for work4rajan+default_mongo@gmail.com
-2026-04-15 15:41:08,840 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
-2026-04-15 15:41:25,159 | INFO | utils.loggers | Current user token validation started
-2026-04-15 15:41:25,214 | INFO | utils.loggers | Current user token validated successfully for work4rajan+default_mongo@gmail.com
-2026-04-15 15:41:25,216 | INFO | utils.loggers | Fetch all agents request received from work4rajan+default_mongo@gmail.com
-2026-04-15 15:41:25,292 | INFO | utils.loggers | Fetched 1 agents for work4rajan+default_mongo@gmail.com
-2026-04-15 15:41:25,292 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
-2026-04-15 15:42:00,114 | INFO | utils.loggers | Current user token validation started
-2026-04-15 15:42:00,115 | INFO | utils.loggers | Current user token validated successfully for work4rajan+default_mongo@gmail.com
-2026-04-15 15:42:00,129 | INFO | utils.loggers | Agent creation request received from work4rajan+default_mongo@gmail.com
-2026-04-15 15:42:00,305 | INFO | utils.loggers | Agent created successfully for work4rajan+default_mongo@gmail.com with id: 69df6470122c0389243140bc
-2026-04-15 15:42:00,308 | INFO | utils.loggers | Success response generated with status code: 201 | Message: Agent Created!
-2026-04-15 15:42:00,380 | INFO | utils.loggers | Current user token validation started
-2026-04-15 15:42:00,383 | INFO | utils.loggers | Current user token validated successfully for work4rajan+default_mongo@gmail.com
-2026-04-15 15:42:00,384 | INFO | utils.loggers | Fetch all agents request received from work4rajan+default_mongo@gmail.com
-2026-04-15 15:42:00,404 | INFO | utils.loggers | Fetched 2 agents for work4rajan+default_mongo@gmail.com
-2026-04-15 15:42:00,406 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
-2026-04-15 15:42:48,640 | INFO | utils.loggers | Current user token validation started
-2026-04-15 15:42:48,644 | INFO | utils.loggers | Current user token validated successfully for work4rajan+default_mongo@gmail.com
-2026-04-15 15:42:48,724 | INFO | utils.loggers | Agent run request received for agent id: 69df630f122c0389243140bb from work4rajan+default_mongo@gmail.com
-2026-04-15 15:42:48,742 | INFO | utils.loggers | Agent builder started for agent: Modi
-2026-04-15 15:42:48,744 | INFO | utils.loggers | Initializing Gemini LLM with model: gemini-2.5-flash
-2026-04-15 15:42:48,746 | INFO | utils.loggers | GOOGLE API key loaded successfully
-2026-04-15 15:42:51,472 | INFO | utils.loggers | Resolving tools for agent: []
-2026-04-15 15:42:51,770 | INFO | utils.loggers | Agent built successfully for agent: Modi
-2026-04-15 15:42:51,784 | INFO | utils.loggers | Running agent id: 69df630f122c0389243140bb with thread id: 11f659e5-a823-4c23-8ec6-50f7c69b260a
-2026-04-15 15:42:53,361 | INFO | google_genai.models | AFC is enabled with max remote calls: 10.
-2026-04-15 15:42:57,819 | INFO | utils.loggers | Agent run completed successfully for agent id: 69df630f122c0389243140bb
-2026-04-15 15:42:57,820 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent response generated successfully!
-2026-04-15 15:44:29,163 | INFO | utils.loggers | Login request received from work4rajan+default_mongo@gmail.com
-2026-04-15 15:44:29,166 | INFO | utils.loggers | Fetching user by email: work4rajan+default_mongo@gmail.com
-2026-04-15 15:44:29,186 | INFO | utils.loggers | User found for email: work4rajan+default_mongo@gmail.com
-2026-04-15 15:44:29,190 | INFO | utils.loggers | Password verification started
-2026-04-15 15:44:29,974 | INFO | utils.loggers | Access token generation started for work4rajan+default_mongo@gmail.com
-2026-04-15 15:44:29,974 | INFO | utils.loggers | Access token generated successfully for work4rajan+default_mongo@gmail.com
-2026-04-15 15:44:29,980 | INFO | utils.loggers | Refresh token generation started for work4rajan+default_mongo@gmail.com
-2026-04-15 15:44:29,981 | INFO | utils.loggers | Refresh token generated successfully for work4rajan+default_mongo@gmail.com
-2026-04-15 15:44:29,982 | INFO | utils.loggers | JWT tokens generated
-2026-04-15 15:44:29,985 | INFO | utils.loggers | Success response generated with status code: 200 | Message: You are now logged in.
-2026-04-15 15:44:30,131 | INFO | utils.loggers | Current user token validation started
-2026-04-15 15:44:30,132 | INFO | utils.loggers | Current user token validated successfully for work4rajan+default_mongo@gmail.com
-2026-04-15 15:44:30,132 | INFO | utils.loggers | Fetch all agents request received from work4rajan+default_mongo@gmail.com
-2026-04-15 15:44:30,146 | INFO | utils.loggers | Fetched 2 agents for work4rajan+default_mongo@gmail.com
-2026-04-15 15:44:30,146 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
-2026-04-15 15:44:33,793 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='work4rajan+default_mongo', email='work4rajan+default_mongo@gmail.com')] | Subject: QAB - Login Successful
-2026-04-15 15:44:34,890 | INFO | utils.loggers | Current user token validation started
-2026-04-15 15:44:34,892 | INFO | utils.loggers | Current user token validated successfully for work4rajan+default_mongo@gmail.com
-2026-04-15 15:44:34,898 | INFO | utils.loggers | Agent delete request received for agent id: 69df6470122c0389243140bc from work4rajan+default_mongo@gmail.com
-2026-04-15 15:44:34,937 | INFO | utils.loggers | Agent deleted successfully for agent id: 69df6470122c0389243140bc by work4rajan+default_mongo@gmail.com
-2026-04-15 15:44:34,937 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent deleted successfully!
-2026-04-15 15:44:34,952 | INFO | utils.loggers | Current user token validation started
-2026-04-15 15:44:34,955 | INFO | utils.loggers | Current user token validated successfully for work4rajan+default_mongo@gmail.com
-2026-04-15 15:44:34,957 | INFO | utils.loggers | Fetch all agents request received from work4rajan+default_mongo@gmail.com
-2026-04-15 15:44:34,976 | INFO | utils.loggers | Fetched 1 agents for work4rajan+default_mongo@gmail.com
-2026-04-15 15:44:34,976 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
-2026-04-15 15:44:59,433 | INFO | utils.loggers | Current user token validation started
-2026-04-15 15:44:59,435 | INFO | utils.loggers | Current user token validated successfully for work4rajan+default_mongo@gmail.com
-2026-04-15 15:44:59,450 | INFO | utils.loggers | DB link request received from work4rajan+default_mongo@gmail.com for Postgres
-2026-04-15 15:44:59,491 | ERROR | uvicorn.error | Exception in ASGI application
-Traceback (most recent call last):
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
-    result = await app(  # type: ignore[func-returns-value]
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
-    return await self.app(scope, receive, send)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
-    await super().__call__(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
-    await self.middleware_stack(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
-    raise exc
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
-    await self.app(scope, receive, _send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
-    await self.app(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
-    raise exc
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
-    await app(scope, receive, sender)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
-    await self.app(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
-    await self.middleware_stack(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
-    await route.handle(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
-    await self.app(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
-    raise exc
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
-    await app(scope, receive, sender)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
-    response = await f(request)
-               ^^^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
-    raw_response = await run_endpoint_function(
-                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
-    return await dependant.call(**values)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\custom_db.py", line 209, in link_postgres_db
-    if uri.startswith("postgres://") or uri.startswith("postgresql://"):
-       ^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\pydantic\main.py", line 1026, in __getattr__
-    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
-AttributeError: 'URILink' object has no attribute 'startswith'
-2026-04-15 15:45:02,830 | INFO | utils.loggers | Current user token validation started
-2026-04-15 15:45:02,830 | INFO | utils.loggers | Current user token validated successfully for work4rajan+default_mongo@gmail.com
-2026-04-15 15:45:02,831 | INFO | utils.loggers | DB link request received from work4rajan+default_mongo@gmail.com for Postgres
-2026-04-15 15:45:02,888 | ERROR | uvicorn.error | Exception in ASGI application
-Traceback (most recent call last):
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
-    result = await app(  # type: ignore[func-returns-value]
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
-    return await self.app(scope, receive, send)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
-    await super().__call__(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
-    await self.middleware_stack(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
-    raise exc
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
-    await self.app(scope, receive, _send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
-    await self.app(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
-    raise exc
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
-    await app(scope, receive, sender)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
-    await self.app(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
-    await self.middleware_stack(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
-    await route.handle(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
-    await self.app(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
-    raise exc
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
-    await app(scope, receive, sender)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
-    response = await f(request)
-               ^^^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
-    raw_response = await run_endpoint_function(
-                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
-    return await dependant.call(**values)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\custom_db.py", line 209, in link_postgres_db
-    if uri.startswith("postgres://") or uri.startswith("postgresql://"):
-       ^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\pydantic\main.py", line 1026, in __getattr__
-    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
-AttributeError: 'URILink' object has no attribute 'startswith'
-2026-04-15 15:45:05,158 | INFO | utils.loggers | Current user token validation started
-2026-04-15 15:45:05,158 | INFO | utils.loggers | Current user token validated successfully for work4rajan+default_mongo@gmail.com
-2026-04-15 15:45:05,159 | INFO | utils.loggers | DB link request received from work4rajan+default_mongo@gmail.com for Postgres
-2026-04-15 15:45:05,180 | ERROR | uvicorn.error | Exception in ASGI application
-Traceback (most recent call last):
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
-    result = await app(  # type: ignore[func-returns-value]
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
-    return await self.app(scope, receive, send)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
-    await super().__call__(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
-    await self.middleware_stack(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
-    raise exc
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
-    await self.app(scope, receive, _send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
-    await self.app(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
-    raise exc
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
-    await app(scope, receive, sender)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
-    await self.app(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
-    await self.middleware_stack(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
-    await route.handle(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
-    await self.app(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
-    raise exc
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
-    await app(scope, receive, sender)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
-    response = await f(request)
-               ^^^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
-    raw_response = await run_endpoint_function(
-                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
-    return await dependant.call(**values)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\custom_db.py", line 209, in link_postgres_db
-    if uri.startswith("postgres://") or uri.startswith("postgresql://"):
-       ^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\pydantic\main.py", line 1026, in __getattr__
-    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
-AttributeError: 'URILink' object has no attribute 'startswith'
-2026-04-15 15:45:06,323 | INFO | utils.loggers | Current user token validation started
-2026-04-15 15:45:06,323 | INFO | utils.loggers | Current user token validated successfully for work4rajan+default_mongo@gmail.com
-2026-04-15 15:45:06,324 | INFO | utils.loggers | DB link request received from work4rajan+default_mongo@gmail.com for Postgres
-2026-04-15 15:45:06,346 | ERROR | uvicorn.error | Exception in ASGI application
-Traceback (most recent call last):
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
-    result = await app(  # type: ignore[func-returns-value]
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
-    return await self.app(scope, receive, send)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
-    await super().__call__(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
-    await self.middleware_stack(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
-    raise exc
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
-    await self.app(scope, receive, _send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
-    await self.app(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
-    raise exc
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
-    await app(scope, receive, sender)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
-    await self.app(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
-    await self.middleware_stack(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
-    await route.handle(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
-    await self.app(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
-    raise exc
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
-    await app(scope, receive, sender)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
-    response = await f(request)
-               ^^^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
-    raw_response = await run_endpoint_function(
-                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
-    return await dependant.call(**values)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\custom_db.py", line 209, in link_postgres_db
-    if uri.startswith("postgres://") or uri.startswith("postgresql://"):
-       ^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\pydantic\main.py", line 1026, in __getattr__
-    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
-AttributeError: 'URILink' object has no attribute 'startswith'
-2026-04-15 15:45:07,280 | INFO | utils.loggers | Current user token validation started
-2026-04-15 15:45:07,280 | INFO | utils.loggers | Current user token validated successfully for work4rajan+default_mongo@gmail.com
-2026-04-15 15:45:07,281 | INFO | utils.loggers | DB link request received from work4rajan+default_mongo@gmail.com for Postgres
-2026-04-15 15:45:07,306 | ERROR | uvicorn.error | Exception in ASGI application
-Traceback (most recent call last):
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
-    result = await app(  # type: ignore[func-returns-value]
-             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
-    return await self.app(scope, receive, send)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
-    await super().__call__(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
-    await self.middleware_stack(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
-    raise exc
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
-    await self.app(scope, receive, _send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
-    await self.simple_response(scope, receive, send, request_headers=headers)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
-    await self.app(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
-    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
-    raise exc
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
-    await app(scope, receive, sender)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
-    await self.app(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
-    await self.middleware_stack(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
-    await route.handle(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
-    await self.app(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
-    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
-    raise exc
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
-    await app(scope, receive, sender)
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
-    response = await f(request)
-               ^^^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
-    raw_response = await run_endpoint_function(
-                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
-    return await dependant.call(**values)
-           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\custom_db.py", line 209, in link_postgres_db
-    if uri.startswith("postgres://") or uri.startswith("postgresql://"):
-       ^^^^^^^^^^^^^^
-  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\pydantic\main.py", line 1026, in __getattr__
-    raise AttributeError(f'{type(self).__name__!r} object has no attribute {item!r}')
-AttributeError: 'URILink' object has no attribute 'startswith'
-2026-04-15 15:46:14,348 | INFO | uvicorn.error | Shutting down
-2026-04-15 15:46:14,458 | INFO | uvicorn.error | Waiting for application shutdown.
-2026-04-15 15:46:14,465 | INFO | uvicorn.error | Application shutdown complete.
-2026-04-15 15:46:14,470 | INFO | uvicorn.error | Finished server process [2800]
-2026-04-15 15:47:44,105 | INFO | database.db | MongoDB connection string loaded successfully
-2026-04-15 15:47:44,816 | INFO | database.db | Async MongoDB client initialized for database: qab
-2026-04-15 15:47:44,816 | INFO | database.db | MongoDB collections initialized: users, agents
-2026-04-15 15:47:47,980 | INFO | database.db | Sync MongoDB vector collection initialized: vector_store
-2026-04-15 15:47:48,660 | INFO | utils.loggers | JWT secret key loaded successfully
-2026-04-15 15:47:48,761 | INFO | utils.loggers | JWT secret key loaded successfully
-2026-04-15 15:53:27,995 | INFO | database.db | MongoDB connection string loaded successfully
-2026-04-15 15:53:29,331 | INFO | database.db | Async MongoDB client initialized for database: qab
-2026-04-15 15:53:29,332 | INFO | database.db | MongoDB collections initialized: users, agents
-2026-04-15 15:53:34,353 | INFO | database.db | Sync MongoDB vector collection initialized: vector_store
-2026-04-15 15:53:36,406 | INFO | utils.loggers | JWT secret key loaded successfully
-2026-04-15 15:53:36,737 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-15 16:21:13,539 | INFO | uvicorn.error | Shutting down
+2026-04-15 16:21:13,873 | INFO | uvicorn.error | Waiting for application shutdown.
+2026-04-15 16:21:13,902 | INFO | uvicorn.error | Application shutdown complete.
+2026-04-15 16:21:13,910 | INFO | uvicorn.error | Finished server process [15976]
+2026-04-15 18:11:01,560 | INFO | database.db | MongoDB connection string loaded successfully
+2026-04-15 18:11:01,783 | INFO | database.db | Async MongoDB client initialized for database: qab
+2026-04-15 18:11:01,783 | INFO | database.db | MongoDB collections initialized: users, agents
+2026-04-15 18:11:02,525 | INFO | database.db | Sync MongoDB vector collection initialized: vector_store
+2026-04-15 18:11:02,740 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-15 18:11:02,743 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-15 18:12:01,855 | INFO | uvicorn.error | Started server process [15372]
+2026-04-15 18:12:01,858 | INFO | uvicorn.error | Waiting for application startup.
+2026-04-15 18:12:01,860 | INFO | uvicorn.error | Application startup complete.
+2026-04-15 18:12:01,861 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-04-15 18:13:10,156 | INFO | utils.loggers | New user registration request received from work4rajan@gmail.com
+2026-04-15 18:13:10,158 | INFO | utils.loggers | Fetching user by email: work4rajan@gmail.com
+2026-04-15 18:13:10,863 | WARNING | utils.loggers | User not found for email: work4rajan@gmail.com
+2026-04-15 18:13:10,886 | INFO | utils.loggers | Password hashing started
+2026-04-15 18:13:11,278 | INFO | utils.loggers | Registration successful for work4rajan@gmail.com with id: 69df87df78d07ad92faa6dae
+2026-04-15 18:13:11,278 | INFO | utils.loggers | Success response generated with status code: 201 | Message: Rajan Dev is now registered.
+2026-04-15 18:13:14,945 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='work4rajan', email='work4rajan@gmail.com')] | Subject: QAB - Registration Successful
+2026-04-15 18:13:17,606 | INFO | utils.loggers | Login request received from work4rajan@gmail.com
+2026-04-15 18:13:17,606 | INFO | utils.loggers | Fetching user by email: work4rajan@gmail.com
+2026-04-15 18:13:17,619 | INFO | utils.loggers | User found for email: work4rajan@gmail.com
+2026-04-15 18:13:17,621 | INFO | utils.loggers | Password verification started
+2026-04-15 18:13:17,969 | INFO | utils.loggers | Access token generation started for work4rajan@gmail.com
+2026-04-15 18:13:17,971 | INFO | utils.loggers | Access token generated successfully for work4rajan@gmail.com
+2026-04-15 18:13:17,972 | INFO | utils.loggers | Refresh token generation started for work4rajan@gmail.com
+2026-04-15 18:13:17,972 | INFO | utils.loggers | Refresh token generated successfully for work4rajan@gmail.com
+2026-04-15 18:13:17,972 | INFO | utils.loggers | JWT tokens generated
+2026-04-15 18:13:17,973 | INFO | utils.loggers | Success response generated with status code: 200 | Message: You are now logged in.
+2026-04-15 18:13:18,039 | INFO | utils.loggers | Current user token validation started
+2026-04-15 18:13:18,040 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-15 18:13:18,041 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-15 18:13:18,051 | INFO | utils.loggers | Fetched 0 agents for work4rajan@gmail.com
+2026-04-15 18:13:18,053 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-15 18:13:21,112 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='work4rajan', email='work4rajan@gmail.com')] | Subject: QAB - Login Successful
+2026-04-15 18:13:32,395 | INFO | utils.loggers | Current user token validation started
+2026-04-15 18:13:32,397 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-15 18:13:32,398 | INFO | utils.loggers | DB link request received from work4rajan@gmail.com for MongoDB
+2026-04-15 18:13:33,844 | INFO | utils.loggers | MongoDB linked successfully for work4rajan@gmail.com
+2026-04-15 18:13:33,844 | INFO | utils.loggers | Success response generated with status code: 201 | Message: MongoDB has been linked successfully.
+2026-04-15 18:13:37,039 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='work4rajan', email='work4rajan@gmail.com')] | Subject: QAB - DB Link Successful
+2026-04-15 18:13:55,875 | INFO | utils.loggers | Current user token validation started
+2026-04-15 18:13:55,877 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-15 18:13:55,877 | INFO | utils.loggers | DB delete request received from work4rajan@gmail.com
+2026-04-15 18:13:55,923 | INFO | utils.loggers | DB deleted successfully for work4rajan@gmail.com
+2026-04-15 18:13:55,923 | INFO | utils.loggers | Success response generated with status code: 201 | Message: DB has been deleted successfully.
+2026-04-15 18:13:59,040 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='work4rajan', email='work4rajan@gmail.com')] | Subject: QAB - DB Delete Successful
+2026-04-15 18:14:09,610 | INFO | utils.loggers | Current user token validation started
+2026-04-15 18:14:09,610 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-15 18:14:09,610 | INFO | utils.loggers | DB link request received from work4rajan@gmail.com for MongoDB
+2026-04-15 18:14:10,201 | INFO | utils.loggers | MongoDB linked successfully for work4rajan@gmail.com
+2026-04-15 18:14:10,203 | INFO | utils.loggers | Success response generated with status code: 201 | Message: MongoDB has been linked successfully.
+2026-04-15 18:14:13,707 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='work4rajan', email='work4rajan@gmail.com')] | Subject: QAB - DB Link Successful
+2026-04-15 18:14:26,472 | INFO | utils.loggers | Current user token validation started
+2026-04-15 18:14:26,474 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-15 18:14:26,475 | INFO | utils.loggers | Knowledge Base upload request received from work4rajan@gmail.com
+2026-04-15 18:14:26,523 | INFO | utils.loggers | File 'gopi_hotel.txt' queued for processing (Owner: work4rajan@gmail.com)
+2026-04-15 18:14:26,525 | INFO | utils.loggers | Success response generated with status code: 202 | Message: File uploaded successfully. Processing in background.
+2026-04-15 18:14:26,598 | INFO | utils.loggers | Processing file: gopi_hotel.txt for owner: 69df87df78d07ad92faa6dae
+2026-04-15 18:14:26,691 | INFO | sentence_transformers.SentenceTransformer | Use pytorch device_name: cpu
+2026-04-15 18:14:26,693 | INFO | sentence_transformers.SentenceTransformer | Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-04-15 18:14:27,721 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:14:27,726 | WARNING | huggingface_hub.utils._http | Warning: You are sending unauthenticated requests to the HF Hub. Please set a HF_TOKEN to enable higher rate limits and faster downloads.
+2026-04-15 18:14:27,740 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
+2026-04-15 18:14:28,042 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:14:28,056 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-04-15 18:14:28,346 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:14:28,362 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-04-15 18:14:28,627 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:14:28,642 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/README.md "HTTP/1.1 200 OK"
+2026-04-15 18:14:28,944 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:14:28,961 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
+2026-04-15 18:14:29,230 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:14:29,247 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/sentence_bert_config.json "HTTP/1.1 200 OK"
+2026-04-15 18:14:29,542 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+2026-04-15 18:14:29,789 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:14:29,806 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+2026-04-15 18:14:32,250 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:14:32,271 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+2026-04-15 18:14:32,520 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:14:32,536 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-04-15 18:14:33,197 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-15 18:14:33,440 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-15 18:14:34,309 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:14:34,320 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+2026-04-15 18:14:34,574 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2 "HTTP/1.1 200 OK"
+2026-04-15 18:14:34,986 | INFO | utils.loggers | Using custom MongoDB for owner 69df87df78d07ad92faa6dae
+2026-04-15 18:14:40,920 | INFO | utils.loggers | Successfully embedded 4 chunks into MongoDB for file: gopi_hotel.txt (Owner: 69df87df78d07ad92faa6dae)
+2026-04-15 18:15:30,322 | INFO | utils.loggers | Current user token validation started
+2026-04-15 18:15:30,338 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-15 18:15:30,339 | INFO | utils.loggers | Knowledge Base upload request received from work4rajan@gmail.com
+2026-04-15 18:15:30,356 | INFO | utils.loggers | File 'raju_sabji.txt' queued for processing (Owner: work4rajan@gmail.com)
+2026-04-15 18:15:30,356 | INFO | utils.loggers | Success response generated with status code: 202 | Message: File uploaded successfully. Processing in background.
+2026-04-15 18:15:30,366 | INFO | utils.loggers | Processing file: raju_sabji.txt for owner: 69df87df78d07ad92faa6dae
+2026-04-15 18:15:30,432 | INFO | sentence_transformers.SentenceTransformer | Use pytorch device_name: cpu
+2026-04-15 18:15:30,432 | INFO | sentence_transformers.SentenceTransformer | Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-04-15 18:15:30,716 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:15:30,731 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
+2026-04-15 18:15:31,008 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:15:31,031 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-04-15 18:15:31,289 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:15:31,302 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-04-15 18:15:31,546 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:15:31,560 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/README.md "HTTP/1.1 200 OK"
+2026-04-15 18:15:31,805 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:15:31,816 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
+2026-04-15 18:15:32,054 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:15:32,070 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/sentence_bert_config.json "HTTP/1.1 200 OK"
+2026-04-15 18:15:32,319 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+2026-04-15 18:15:32,567 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:15:32,577 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+2026-04-15 18:15:32,917 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:15:32,941 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+2026-04-15 18:15:33,187 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:15:33,201 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-04-15 18:15:33,451 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-15 18:15:33,704 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-15 18:15:34,060 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:15:34,073 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+2026-04-15 18:15:34,323 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2 "HTTP/1.1 200 OK"
+2026-04-15 18:15:34,477 | INFO | utils.loggers | Using custom MongoDB for owner 69df87df78d07ad92faa6dae
+2026-04-15 18:15:34,779 | INFO | utils.loggers | Successfully embedded 3 chunks into MongoDB for file: raju_sabji.txt (Owner: 69df87df78d07ad92faa6dae)
+2026-04-15 18:15:44,999 | INFO | utils.loggers | Current user token validation started
+2026-04-15 18:15:45,001 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-15 18:15:45,003 | INFO | utils.loggers | DB delete request received from work4rajan@gmail.com
+2026-04-15 18:15:45,047 | INFO | utils.loggers | DB deleted successfully for work4rajan@gmail.com
+2026-04-15 18:15:45,049 | INFO | utils.loggers | Success response generated with status code: 201 | Message: DB has been deleted successfully.
+2026-04-15 18:15:48,093 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='work4rajan', email='work4rajan@gmail.com')] | Subject: QAB - DB Delete Successful
+2026-04-15 18:15:59,805 | INFO | utils.loggers | Current user token validation started
+2026-04-15 18:15:59,805 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-15 18:15:59,806 | INFO | utils.loggers | Knowledge Base upload request received from work4rajan@gmail.com
+2026-04-15 18:15:59,831 | INFO | utils.loggers | File 'raju_sabji.txt' queued for processing (Owner: work4rajan@gmail.com)
+2026-04-15 18:15:59,833 | INFO | utils.loggers | Success response generated with status code: 202 | Message: File uploaded successfully. Processing in background.
+2026-04-15 18:15:59,841 | INFO | utils.loggers | Processing file: raju_sabji.txt for owner: 69df87df78d07ad92faa6dae
+2026-04-15 18:15:59,947 | INFO | sentence_transformers.SentenceTransformer | Use pytorch device_name: cpu
+2026-04-15 18:15:59,948 | INFO | sentence_transformers.SentenceTransformer | Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-04-15 18:16:00,220 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:16:00,236 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
+2026-04-15 18:16:00,488 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:16:00,522 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-04-15 18:16:00,810 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:16:00,830 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-04-15 18:16:01,078 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:16:01,098 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/README.md "HTTP/1.1 200 OK"
+2026-04-15 18:16:01,356 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:16:01,371 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
+2026-04-15 18:16:01,648 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:16:01,658 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/sentence_bert_config.json "HTTP/1.1 200 OK"
+2026-04-15 18:16:01,910 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+2026-04-15 18:16:02,152 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:16:02,168 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+2026-04-15 18:16:02,497 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:16:02,508 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+2026-04-15 18:16:02,773 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:16:02,783 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-04-15 18:16:03,024 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-15 18:16:03,274 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-15 18:16:03,600 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:16:03,609 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+2026-04-15 18:16:03,862 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2 "HTTP/1.1 200 OK"
+2026-04-15 18:16:04,117 | INFO | utils.loggers | Successfully embedded 3 chunks into MongoDB for file: raju_sabji.txt (Owner: 69df87df78d07ad92faa6dae)
+2026-04-15 18:18:34,488 | INFO | utils.loggers | Current user token validation started
+2026-04-15 18:18:34,488 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-15 18:18:34,488 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-15 18:18:34,510 | INFO | utils.loggers | Fetched 0 agents for work4rajan@gmail.com
+2026-04-15 18:18:34,512 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-15 18:18:57,105 | INFO | utils.loggers | Current user token validation started
+2026-04-15 18:18:57,106 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-15 18:18:57,156 | INFO | utils.loggers | Agent creation request received from work4rajan@gmail.com
+2026-04-15 18:18:57,252 | INFO | utils.loggers | Agent created successfully for work4rajan@gmail.com with id: 69df893978d07ad92faa6dbd
+2026-04-15 18:18:57,252 | INFO | utils.loggers | Success response generated with status code: 201 | Message: Agent Created!
+2026-04-15 18:18:57,287 | INFO | utils.loggers | Current user token validation started
+2026-04-15 18:18:57,289 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-15 18:18:57,290 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-15 18:18:57,315 | INFO | utils.loggers | Fetched 1 agents for work4rajan@gmail.com
+2026-04-15 18:18:57,317 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-15 18:19:06,723 | INFO | utils.loggers | Current user token validation started
+2026-04-15 18:19:06,724 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-15 18:19:06,727 | INFO | utils.loggers | Agent run request received for agent id: 69df893978d07ad92faa6dbd from work4rajan@gmail.com
+2026-04-15 18:19:06,743 | INFO | utils.loggers | Agent builder started for agent: Trala
+2026-04-15 18:19:06,744 | INFO | utils.loggers | Initializing Gemini LLM with model: gemini-2.5-flash
+2026-04-15 18:19:06,744 | INFO | utils.loggers | GOOGLE API key loaded successfully
+2026-04-15 18:19:09,087 | INFO | utils.loggers | Resolving tools for agent: ['web_search']
+2026-04-15 18:19:09,206 | INFO | utils.loggers | Agent built successfully for agent: Trala
+2026-04-15 18:19:09,235 | INFO | sentence_transformers.SentenceTransformer | Use pytorch device_name: cpu
+2026-04-15 18:19:09,235 | INFO | sentence_transformers.SentenceTransformer | Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-04-15 18:19:09,541 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:19:09,563 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
+2026-04-15 18:19:09,875 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:19:09,891 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-04-15 18:19:10,141 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:19:10,156 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-04-15 18:19:10,409 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:19:10,426 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/README.md "HTTP/1.1 200 OK"
+2026-04-15 18:19:10,679 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:19:10,692 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
+2026-04-15 18:19:10,944 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:19:10,959 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/sentence_bert_config.json "HTTP/1.1 200 OK"
+2026-04-15 18:19:11,214 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+2026-04-15 18:19:11,464 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:19:11,480 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+2026-04-15 18:19:11,974 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:19:11,991 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+2026-04-15 18:19:12,247 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:19:12,260 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-04-15 18:19:12,515 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-15 18:19:12,761 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-15 18:19:13,262 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:19:13,276 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+2026-04-15 18:19:13,527 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2 "HTTP/1.1 200 OK"
+2026-04-15 18:19:13,536 | INFO | utils.loggers | RAG: Using default vector collection for owner: 69df87df78d07ad92faa6dae
+2026-04-15 18:19:13,553 | INFO | utils.loggers | RAG: No documents found for owner: 69df87df78d07ad92faa6dae, skipping KB injection
+2026-04-15 18:19:13,553 | INFO | utils.loggers | No KB context found, running agent without RAG for agent id: 69df893978d07ad92faa6dbd
+2026-04-15 18:19:13,553 | INFO | utils.loggers | Running agent id: 69df893978d07ad92faa6dbd with thread id: de165e0e-4a48-423a-9e84-3e7cc94338eb
+2026-04-15 18:19:15,887 | INFO | utils.loggers | Agent run completed successfully for agent id: 69df893978d07ad92faa6dbd
+2026-04-15 18:19:15,887 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent response generated successfully!
+2026-04-15 18:19:31,186 | INFO | utils.loggers | Current user token validation started
+2026-04-15 18:19:31,186 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-15 18:19:31,187 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-15 18:19:31,198 | INFO | utils.loggers | Fetched 1 agents for work4rajan@gmail.com
+2026-04-15 18:19:31,198 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-15 18:19:36,393 | INFO | utils.loggers | Current user token validation started
+2026-04-15 18:19:36,394 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-15 18:19:36,398 | INFO | utils.loggers | Agent update request received for agent id: 69df893978d07ad92faa6dbd from work4rajan@gmail.com
+2026-04-15 18:19:36,416 | INFO | utils.loggers | Agent updated successfully for agent id: 69df893978d07ad92faa6dbd by work4rajan@gmail.com
+2026-04-15 18:19:36,417 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent updated successfully!
+2026-04-15 18:19:36,464 | INFO | utils.loggers | Current user token validation started
+2026-04-15 18:19:36,466 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-15 18:19:36,466 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-15 18:19:36,484 | INFO | utils.loggers | Fetched 1 agents for work4rajan@gmail.com
+2026-04-15 18:19:36,487 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-15 18:20:22,115 | INFO | utils.loggers | Current user token validation started
+2026-04-15 18:20:22,118 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-15 18:20:22,119 | INFO | utils.loggers | Agent run request received for agent id: 69df893978d07ad92faa6dbd from work4rajan@gmail.com
+2026-04-15 18:20:22,135 | INFO | utils.loggers | Agent builder started for agent: Trala
+2026-04-15 18:20:22,137 | INFO | utils.loggers | Initializing Gemini LLM with model: gemini-2.5-flash
+2026-04-15 18:20:22,137 | INFO | utils.loggers | GOOGLE API key loaded successfully
+2026-04-15 18:20:24,141 | INFO | utils.loggers | Resolving tools for agent: ['web_search']
+2026-04-15 18:20:24,154 | INFO | utils.loggers | Agent built successfully for agent: Trala
+2026-04-15 18:20:24,170 | INFO | sentence_transformers.SentenceTransformer | Use pytorch device_name: cpu
+2026-04-15 18:20:24,171 | INFO | sentence_transformers.SentenceTransformer | Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-04-15 18:20:24,475 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:20:24,495 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
+2026-04-15 18:20:24,749 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:20:24,767 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-04-15 18:20:25,019 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:20:25,034 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-04-15 18:20:25,284 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:20:25,301 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/README.md "HTTP/1.1 200 OK"
+2026-04-15 18:20:25,558 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:20:25,573 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
+2026-04-15 18:20:25,820 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:20:25,833 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/sentence_bert_config.json "HTTP/1.1 200 OK"
+2026-04-15 18:20:26,083 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+2026-04-15 18:20:26,327 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:20:26,345 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+2026-04-15 18:20:26,750 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:20:26,765 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+2026-04-15 18:20:27,018 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:20:27,035 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-04-15 18:20:27,294 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-15 18:20:27,549 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-15 18:20:27,998 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:20:28,015 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+2026-04-15 18:20:28,275 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2 "HTTP/1.1 200 OK"
+2026-04-15 18:20:28,285 | INFO | utils.loggers | RAG: Using default vector collection for owner: 69df87df78d07ad92faa6dae
+2026-04-15 18:20:28,299 | INFO | utils.loggers | RAG: No documents found for owner: 69df87df78d07ad92faa6dae, skipping KB injection
+2026-04-15 18:20:28,299 | INFO | utils.loggers | No KB context found, running agent without RAG for agent id: 69df893978d07ad92faa6dbd
+2026-04-15 18:20:28,299 | INFO | utils.loggers | Running agent id: 69df893978d07ad92faa6dbd with thread id: de165e0e-4a48-423a-9e84-3e7cc94338eb
+2026-04-15 18:20:29,303 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 1.83 seconds as it raised ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}.
+2026-04-15 18:20:32,330 | INFO | utils.loggers | Web search tool invoked for query: raju sabji wala
+2026-04-15 18:20:32,330 | INFO | utils.loggers | Tavily API key loaded successfully
+2026-04-15 18:20:34,958 | INFO | utils.loggers | Web search tool executed successfully for query: raju sabji wala
+2026-04-15 18:20:36,693 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 1.94 seconds as it raised ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}.
+2026-04-15 18:20:38,761 | INFO | utils.loggers | Current user token validation started
+2026-04-15 18:20:38,762 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-15 18:20:38,764 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-15 18:20:38,776 | INFO | utils.loggers | Fetched 1 agents for work4rajan@gmail.com
+2026-04-15 18:20:38,776 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-15 18:20:40,544 | INFO | utils.loggers | Agent run completed successfully for agent id: 69df893978d07ad92faa6dbd
+2026-04-15 18:20:40,545 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent response generated successfully!
+2026-04-15 18:21:25,524 | INFO | utils.loggers | Current user token validation started
+2026-04-15 18:21:25,525 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-15 18:21:25,525 | INFO | utils.loggers | Agent update request received for agent id: 69df893978d07ad92faa6dbd from work4rajan@gmail.com
+2026-04-15 18:21:25,561 | INFO | utils.loggers | Agent updated successfully for agent id: 69df893978d07ad92faa6dbd by work4rajan@gmail.com
+2026-04-15 18:21:25,561 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent updated successfully!
+2026-04-15 18:21:25,578 | INFO | utils.loggers | Current user token validation started
+2026-04-15 18:21:25,580 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-15 18:21:25,581 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-15 18:21:25,599 | INFO | utils.loggers | Fetched 1 agents for work4rajan@gmail.com
+2026-04-15 18:21:25,600 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-15 18:21:45,649 | INFO | utils.loggers | Current user token validation started
+2026-04-15 18:21:45,651 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-15 18:21:45,651 | INFO | utils.loggers | Agent run request received for agent id: 69df893978d07ad92faa6dbd from work4rajan@gmail.com
+2026-04-15 18:21:45,664 | INFO | utils.loggers | Agent builder started for agent: Rager
+2026-04-15 18:21:45,665 | INFO | utils.loggers | Initializing Gemini LLM with model: gemini-2.5-flash
+2026-04-15 18:21:45,665 | INFO | utils.loggers | GOOGLE API key loaded successfully
+2026-04-15 18:21:47,314 | INFO | utils.loggers | Resolving tools for agent: ['web_search']
+2026-04-15 18:21:47,319 | INFO | utils.loggers | Agent built successfully for agent: Rager
+2026-04-15 18:21:47,337 | INFO | sentence_transformers.SentenceTransformer | Use pytorch device_name: cpu
+2026-04-15 18:21:47,338 | INFO | sentence_transformers.SentenceTransformer | Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-04-15 18:21:47,635 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:21:47,649 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
+2026-04-15 18:21:47,892 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:21:47,909 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-04-15 18:21:48,156 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:21:48,176 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-04-15 18:21:48,432 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:21:48,447 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/README.md "HTTP/1.1 200 OK"
+2026-04-15 18:21:48,695 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:21:48,715 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
+2026-04-15 18:21:48,964 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:21:48,979 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/sentence_bert_config.json "HTTP/1.1 200 OK"
+2026-04-15 18:21:49,230 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+2026-04-15 18:21:49,491 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:21:49,520 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+2026-04-15 18:21:49,974 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:21:49,996 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+2026-04-15 18:21:50,280 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:21:50,296 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-04-15 18:21:50,547 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-15 18:21:50,797 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-15 18:21:51,271 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:21:51,293 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+2026-04-15 18:21:51,541 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2 "HTTP/1.1 200 OK"
+2026-04-15 18:21:51,552 | INFO | utils.loggers | RAG: Using default vector collection for owner: 69df87df78d07ad92faa6dae
+2026-04-15 18:21:51,570 | INFO | utils.loggers | RAG: No documents found for owner: 69df87df78d07ad92faa6dae, skipping KB injection
+2026-04-15 18:21:51,571 | INFO | utils.loggers | No KB context found, running agent without RAG for agent id: 69df893978d07ad92faa6dbd
+2026-04-15 18:21:51,571 | INFO | utils.loggers | Running agent id: 69df893978d07ad92faa6dbd with thread id: 74d39895-c086-4a41-8a37-adb371f93e9e
+2026-04-15 18:21:53,187 | INFO | utils.loggers | Web search tool invoked for query: age of Raju Sabji Wala
+2026-04-15 18:21:53,187 | INFO | utils.loggers | Tavily API key loaded successfully
+2026-04-15 18:21:56,525 | INFO | utils.loggers | Web search tool executed successfully for query: age of Raju Sabji Wala
+2026-04-15 18:21:58,595 | INFO | utils.loggers | Agent run completed successfully for agent id: 69df893978d07ad92faa6dbd
+2026-04-15 18:21:58,595 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent response generated successfully!
+2026-04-15 18:22:31,924 | INFO | utils.loggers | Current user token validation started
+2026-04-15 18:22:31,926 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-15 18:22:31,926 | INFO | utils.loggers | Agent run request received for agent id: 69df893978d07ad92faa6dbd from work4rajan@gmail.com
+2026-04-15 18:22:31,941 | INFO | utils.loggers | Agent builder started for agent: Rager
+2026-04-15 18:22:31,941 | INFO | utils.loggers | Initializing Gemini LLM with model: gemini-2.5-flash
+2026-04-15 18:22:31,942 | INFO | utils.loggers | GOOGLE API key loaded successfully
+2026-04-15 18:22:33,595 | INFO | utils.loggers | Resolving tools for agent: ['web_search']
+2026-04-15 18:22:33,604 | INFO | utils.loggers | Agent built successfully for agent: Rager
+2026-04-15 18:22:33,620 | INFO | sentence_transformers.SentenceTransformer | Use pytorch device_name: cpu
+2026-04-15 18:22:33,620 | INFO | sentence_transformers.SentenceTransformer | Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-04-15 18:22:33,885 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:22:33,902 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
+2026-04-15 18:22:34,147 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:22:34,165 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-04-15 18:22:34,410 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:22:34,428 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-04-15 18:22:34,685 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:22:34,699 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/README.md "HTTP/1.1 200 OK"
+2026-04-15 18:22:34,946 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:22:34,962 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
+2026-04-15 18:22:35,211 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:22:35,229 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/sentence_bert_config.json "HTTP/1.1 200 OK"
+2026-04-15 18:22:35,479 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+2026-04-15 18:22:35,729 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:22:35,762 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+2026-04-15 18:22:36,192 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:22:36,208 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+2026-04-15 18:22:36,461 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:22:36,486 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-04-15 18:22:36,747 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-15 18:22:36,995 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-15 18:22:37,466 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:22:37,482 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+2026-04-15 18:22:37,727 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2 "HTTP/1.1 200 OK"
+2026-04-15 18:22:37,736 | INFO | utils.loggers | RAG: Using default vector collection for owner: 69df87df78d07ad92faa6dae
+2026-04-15 18:22:37,751 | INFO | utils.loggers | RAG: No documents found for owner: 69df87df78d07ad92faa6dae, skipping KB injection
+2026-04-15 18:22:37,751 | INFO | utils.loggers | No KB context found, running agent without RAG for agent id: 69df893978d07ad92faa6dbd
+2026-04-15 18:22:37,751 | INFO | utils.loggers | Running agent id: 69df893978d07ad92faa6dbd with thread id: 74d39895-c086-4a41-8a37-adb371f93e9e
+2026-04-15 18:22:39,588 | INFO | utils.loggers | Agent run completed successfully for agent id: 69df893978d07ad92faa6dbd
+2026-04-15 18:22:39,588 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent response generated successfully!
+2026-04-15 18:22:57,377 | INFO | utils.loggers | Current user token validation started
+2026-04-15 18:22:57,378 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-15 18:22:57,379 | INFO | utils.loggers | Agent run request received for agent id: 69df893978d07ad92faa6dbd from work4rajan@gmail.com
+2026-04-15 18:22:57,396 | INFO | utils.loggers | Agent builder started for agent: Rager
+2026-04-15 18:22:57,397 | INFO | utils.loggers | Initializing Gemini LLM with model: gemini-2.5-flash
+2026-04-15 18:22:57,397 | INFO | utils.loggers | GOOGLE API key loaded successfully
+2026-04-15 18:22:59,171 | INFO | utils.loggers | Resolving tools for agent: ['web_search']
+2026-04-15 18:22:59,184 | INFO | utils.loggers | Agent built successfully for agent: Rager
+2026-04-15 18:22:59,203 | INFO | sentence_transformers.SentenceTransformer | Use pytorch device_name: cpu
+2026-04-15 18:22:59,204 | INFO | sentence_transformers.SentenceTransformer | Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-04-15 18:22:59,522 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:22:59,537 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
+2026-04-15 18:22:59,796 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:22:59,815 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-04-15 18:23:00,067 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:23:00,083 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-04-15 18:23:00,335 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:23:00,351 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/README.md "HTTP/1.1 200 OK"
+2026-04-15 18:23:00,613 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:23:00,633 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
+2026-04-15 18:23:00,879 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:23:00,901 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/sentence_bert_config.json "HTTP/1.1 200 OK"
+2026-04-15 18:23:01,151 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+2026-04-15 18:23:01,397 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:23:01,417 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+2026-04-15 18:23:05,913 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:23:05,934 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+2026-04-15 18:23:06,212 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:23:06,233 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-04-15 18:23:06,511 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-15 18:23:06,761 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-15 18:23:07,315 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:23:07,340 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+2026-04-15 18:23:07,595 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2 "HTTP/1.1 200 OK"
+2026-04-15 18:23:07,620 | INFO | utils.loggers | RAG: Using default vector collection for owner: 69df87df78d07ad92faa6dae
+2026-04-15 18:23:07,641 | INFO | utils.loggers | RAG: No documents found for owner: 69df87df78d07ad92faa6dae, skipping KB injection
+2026-04-15 18:23:07,642 | INFO | utils.loggers | No KB context found, running agent without RAG for agent id: 69df893978d07ad92faa6dbd
+2026-04-15 18:23:07,642 | INFO | utils.loggers | Running agent id: 69df893978d07ad92faa6dbd with thread id: 74d39895-c086-4a41-8a37-adb371f93e9e
+2026-04-15 18:23:09,099 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 1.9 seconds as it raised ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}.
+2026-04-15 18:23:13,012 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 2.61 seconds as it raised ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}.
+2026-04-15 18:23:17,391 | INFO | utils.loggers | Agent run completed successfully for agent id: 69df893978d07ad92faa6dbd
+2026-04-15 18:23:17,391 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent response generated successfully!
+2026-04-15 18:23:32,226 | INFO | utils.loggers | Current user token validation started
+2026-04-15 18:23:32,232 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-15 18:23:32,234 | INFO | utils.loggers | Agent run request received for agent id: 69df893978d07ad92faa6dbd from work4rajan@gmail.com
+2026-04-15 18:23:32,254 | INFO | utils.loggers | Agent builder started for agent: Rager
+2026-04-15 18:23:32,259 | INFO | utils.loggers | Initializing Gemini LLM with model: gemini-2.5-flash
+2026-04-15 18:23:32,261 | INFO | utils.loggers | GOOGLE API key loaded successfully
+2026-04-15 18:23:34,014 | INFO | utils.loggers | Resolving tools for agent: ['web_search']
+2026-04-15 18:23:34,033 | INFO | utils.loggers | Agent built successfully for agent: Rager
+2026-04-15 18:23:34,054 | INFO | sentence_transformers.SentenceTransformer | Use pytorch device_name: cpu
+2026-04-15 18:23:34,056 | INFO | sentence_transformers.SentenceTransformer | Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-04-15 18:23:34,323 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:23:34,341 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
+2026-04-15 18:23:34,613 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:23:34,641 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-04-15 18:23:34,917 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:23:34,965 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-04-15 18:23:35,224 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:23:35,245 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/README.md "HTTP/1.1 200 OK"
+2026-04-15 18:23:35,513 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:23:35,579 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
+2026-04-15 18:23:35,832 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:23:35,849 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/sentence_bert_config.json "HTTP/1.1 200 OK"
+2026-04-15 18:23:36,107 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+2026-04-15 18:23:36,352 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:23:36,378 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+2026-04-15 18:23:36,763 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:23:36,779 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+2026-04-15 18:23:37,047 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:23:37,071 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-04-15 18:23:37,338 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-15 18:23:37,598 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-15 18:23:38,145 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:23:38,159 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+2026-04-15 18:23:38,413 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2 "HTTP/1.1 200 OK"
+2026-04-15 18:23:38,422 | INFO | utils.loggers | RAG: Using default vector collection for owner: 69df87df78d07ad92faa6dae
+2026-04-15 18:23:38,437 | INFO | utils.loggers | RAG: No documents found for owner: 69df87df78d07ad92faa6dae, skipping KB injection
+2026-04-15 18:23:38,438 | INFO | utils.loggers | No KB context found, running agent without RAG for agent id: 69df893978d07ad92faa6dbd
+2026-04-15 18:23:38,438 | INFO | utils.loggers | Running agent id: 69df893978d07ad92faa6dbd with thread id: 74d39895-c086-4a41-8a37-adb371f93e9e
+2026-04-15 18:23:40,245 | INFO | utils.loggers | Agent run completed successfully for agent id: 69df893978d07ad92faa6dbd
+2026-04-15 18:23:40,246 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent response generated successfully!
+2026-04-15 18:23:58,041 | INFO | utils.loggers | Current user token validation started
+2026-04-15 18:23:58,042 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-15 18:23:58,042 | INFO | utils.loggers | Agent run request received for agent id: 69df893978d07ad92faa6dbd from work4rajan@gmail.com
+2026-04-15 18:23:58,066 | INFO | utils.loggers | Agent builder started for agent: Rager
+2026-04-15 18:23:58,067 | INFO | utils.loggers | Initializing Gemini LLM with model: gemini-2.5-flash
+2026-04-15 18:23:58,067 | INFO | utils.loggers | GOOGLE API key loaded successfully
+2026-04-15 18:24:00,190 | INFO | utils.loggers | Resolving tools for agent: ['web_search']
+2026-04-15 18:24:00,213 | INFO | utils.loggers | Agent built successfully for agent: Rager
+2026-04-15 18:24:00,236 | INFO | sentence_transformers.SentenceTransformer | Use pytorch device_name: cpu
+2026-04-15 18:24:00,238 | INFO | sentence_transformers.SentenceTransformer | Load pretrained SentenceTransformer: all-MiniLM-L6-v2
+2026-04-15 18:24:00,554 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:24:00,575 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
+2026-04-15 18:24:00,826 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:24:00,842 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-04-15 18:24:01,091 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config_sentence_transformers.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:24:01,113 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config_sentence_transformers.json "HTTP/1.1 200 OK"
+2026-04-15 18:24:01,356 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/README.md "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:24:01,375 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/README.md "HTTP/1.1 200 OK"
+2026-04-15 18:24:01,625 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/modules.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:24:01,645 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/modules.json "HTTP/1.1 200 OK"
+2026-04-15 18:24:01,898 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/sentence_bert_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:24:01,914 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/sentence_bert_config.json "HTTP/1.1 200 OK"
+2026-04-15 18:24:02,159 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/adapter_config.json "HTTP/1.1 404 Not Found"
+2026-04-15 18:24:02,411 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:24:02,430 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+2026-04-15 18:24:02,938 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:24:02,960 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/config.json "HTTP/1.1 200 OK"
+2026-04-15 18:24:03,242 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/tokenizer_config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:24:03,261 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/tokenizer_config.json "HTTP/1.1 200 OK"
+2026-04-15 18:24:03,526 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main/additional_chat_templates?recursive=false&expand=false "HTTP/1.1 404 Not Found"
+2026-04-15 18:24:03,782 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2/tree/main?recursive=true&expand=false "HTTP/1.1 200 OK"
+2026-04-15 18:24:04,297 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/sentence-transformers/all-MiniLM-L6-v2/resolve/main/1_Pooling/config.json "HTTP/1.1 307 Temporary Redirect"
+2026-04-15 18:24:04,312 | INFO | httpx | HTTP Request: HEAD https://huggingface.co/api/resolve-cache/models/sentence-transformers/all-MiniLM-L6-v2/c9745ed1d9f207416be6d2e6f8de32d1f16199bf/1_Pooling%2Fconfig.json "HTTP/1.1 200 OK"
+2026-04-15 18:24:04,561 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2 "HTTP/1.1 200 OK"
+2026-04-15 18:24:04,576 | INFO | utils.loggers | RAG: Using default vector collection for owner: 69df87df78d07ad92faa6dae
+2026-04-15 18:24:04,590 | INFO | utils.loggers | RAG: No documents found for owner: 69df87df78d07ad92faa6dae, skipping KB injection
+2026-04-15 18:24:04,591 | INFO | utils.loggers | No KB context found, running agent without RAG for agent id: 69df893978d07ad92faa6dbd
+2026-04-15 18:24:04,591 | INFO | utils.loggers | Running agent id: 69df893978d07ad92faa6dbd with thread id: 74d39895-c086-4a41-8a37-adb371f93e9e
+2026-04-15 18:24:06,111 | INFO | utils.loggers | Agent run completed successfully for agent id: 69df893978d07ad92faa6dbd
+2026-04-15 18:24:06,111 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent response generated successfully!
+2026-04-15 18:24:49,159 | INFO | uvicorn.error | Shutting down
+2026-04-15 18:24:49,282 | INFO | uvicorn.error | Waiting for application shutdown.
+2026-04-15 18:24:49,284 | INFO | uvicorn.error | Application shutdown complete.
+2026-04-15 18:24:49,285 | INFO | uvicorn.error | Finished server process [15372]

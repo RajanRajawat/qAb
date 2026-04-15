@@ -206,18 +206,18 @@ async def link_postgres_db(uri: URILink, bt: BackgroundTasks, current_user: dict
         return error_response(405, message="A DB is already linked. Please remove the current DB before adding a new one.")
     
     #replace standard string with my kinda string
-    if uri.connection_uri.startswith("postgres://") or uri.connection_uri.startswith("postgresql://"):
-        connection_uri = uri.connection_uri.replace("://", "+psycopg://", 1)
+    # if uri.connection_uri.startswith("postgres://") or uri.connection_uri.startswith("postgresql://"):
+    #     connection_uri = uri.connection_uri.replace("://", "+psycopg://", 1)
 
-    if not validate_postgres(uri.connection_uri):
-        return error_response(400, message="Invalid Postgres connection string.")
+    # if not validate_postgres(uri.connection_uri):
+    #     return error_response(400, message="Invalid Postgres connection string.")
 
     update_fields = {
         'custom_db' : {
             'linked' : True,
             'provider' : 'postgres',
             'config' : {    
-                "connection_string" : connection_uri, #can be encrypted
+                "connection_string" : uri.connection_uri, #can be encrypted
             }
         }
     }
