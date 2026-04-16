@@ -1,0 +1,5 @@
+1. Refactor data types for the User ID across the board. Sticking completely to either `str` or `ObjectId` in MongoDB collections prevents lookup errors.
+2. Standardize API responses. `success_response` and `error_response` are great, but ensure you also have structured logging on every request middleware rather than individual logs on every endpoint.
+3. Consider using a state management frontend framework like React, Vue or Svelte for production applications, as Vanilla JS SPAs can become difficult to maintain when dealing with complex reactive states like chat threads and agent builders.
+4. Support Markdown parsing for agent responses out of the box in the Chat interface to render lists and code blocks beautifully.
+5. In `main.py`, update `app.get("/")` to serve the static frontend dynamically, perhaps by mounting the `app/frontend` directory using `StaticFiles`.

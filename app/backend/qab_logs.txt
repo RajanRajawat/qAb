@@ -1,0 +1,115 @@
+2026-04-16 12:25:56,769 | INFO | database.db | MongoDB connection string loaded successfully
+2026-04-16 12:25:57,331 | INFO | database.db | Async MongoDB client initialized for database: qab
+2026-04-16 12:25:57,331 | INFO | database.db | MongoDB collections initialized: users, agents
+2026-04-16 12:25:59,004 | INFO | database.db | Sync MongoDB vector collection initialized: vector_store
+2026-04-16 12:26:00,157 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-16 12:26:00,309 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-16 12:29:53,150 | INFO | uvicorn.error | Started server process [11288]
+2026-04-16 12:29:53,151 | INFO | uvicorn.error | Waiting for application startup.
+2026-04-16 12:29:53,153 | INFO | uvicorn.error | Application startup complete.
+2026-04-16 12:29:53,153 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-04-16 12:29:59,850 | INFO | utils.loggers | Login request received from work4rajan@gmail.com
+2026-04-16 12:29:59,850 | INFO | utils.loggers | Fetching user by email: work4rajan@gmail.com
+2026-04-16 12:30:00,535 | INFO | utils.loggers | User found for email: work4rajan@gmail.com
+2026-04-16 12:30:00,536 | INFO | utils.loggers | Password verification started
+2026-04-16 12:30:00,983 | INFO | utils.loggers | Access token generation started for work4rajan@gmail.com
+2026-04-16 12:30:00,983 | INFO | utils.loggers | Access token generated successfully for work4rajan@gmail.com
+2026-04-16 12:30:00,983 | INFO | utils.loggers | Refresh token generation started for work4rajan@gmail.com
+2026-04-16 12:30:00,983 | INFO | utils.loggers | Refresh token generated successfully for work4rajan@gmail.com
+2026-04-16 12:30:00,983 | INFO | utils.loggers | JWT tokens generated
+2026-04-16 12:30:00,983 | INFO | utils.loggers | Success response generated with status code: 200 | Message: You are now logged in.
+2026-04-16 12:30:04,567 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='work4rajan', email='work4rajan@gmail.com')] | Subject: QAB - Login Successful
+2026-04-16 12:30:10,946 | INFO | utils.loggers | Login request received from work4rajan@gmail.com
+2026-04-16 12:30:10,946 | INFO | utils.loggers | Fetching user by email: work4rajan@gmail.com
+2026-04-16 12:30:10,968 | INFO | utils.loggers | User found for email: work4rajan@gmail.com
+2026-04-16 12:30:10,968 | INFO | utils.loggers | Password verification started
+2026-04-16 12:30:11,433 | INFO | utils.loggers | Access token generation started for work4rajan@gmail.com
+2026-04-16 12:30:11,433 | INFO | utils.loggers | Access token generated successfully for work4rajan@gmail.com
+2026-04-16 12:30:11,434 | INFO | utils.loggers | Refresh token generation started for work4rajan@gmail.com
+2026-04-16 12:30:11,434 | INFO | utils.loggers | Refresh token generated successfully for work4rajan@gmail.com
+2026-04-16 12:30:11,434 | INFO | utils.loggers | JWT tokens generated
+2026-04-16 12:30:11,434 | INFO | utils.loggers | Success response generated with status code: 200 | Message: You are now logged in.
+2026-04-16 12:30:15,071 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='work4rajan', email='work4rajan@gmail.com')] | Subject: QAB - Login Successful
+2026-04-16 12:31:43,002 | INFO | uvicorn.error | Shutting down
+2026-04-16 12:31:43,124 | INFO | uvicorn.error | Waiting for application shutdown.
+2026-04-16 12:31:43,129 | INFO | uvicorn.error | Application shutdown complete.
+2026-04-16 12:31:43,131 | INFO | uvicorn.error | Finished server process [11288]
+2026-04-16 12:37:47,837 | INFO | database.db | MongoDB connection string loaded successfully
+2026-04-16 12:37:48,081 | INFO | database.db | Async MongoDB client initialized for database: qab
+2026-04-16 12:37:48,081 | INFO | database.db | MongoDB collections initialized: users, agents
+2026-04-16 12:37:50,096 | INFO | database.db | Sync MongoDB vector collection initialized: vector_store
+2026-04-16 12:37:50,435 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-16 12:37:50,442 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-16 12:39:17,001 | INFO | uvicorn.error | Started server process [824]
+2026-04-16 12:39:17,005 | INFO | uvicorn.error | Waiting for application startup.
+2026-04-16 12:39:17,007 | INFO | uvicorn.error | Application startup complete.
+2026-04-16 12:39:17,008 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-04-16 12:39:25,935 | INFO | utils.loggers | Login request received from work4rajan@gmail.com
+2026-04-16 12:39:25,938 | INFO | utils.loggers | Fetching user by email: work4rajan@gmail.com
+2026-04-16 12:39:27,307 | INFO | utils.loggers | User found for email: work4rajan@gmail.com
+2026-04-16 12:39:27,308 | INFO | utils.loggers | Password verification started
+2026-04-16 12:39:27,687 | INFO | utils.loggers | Access token generation started for work4rajan@gmail.com
+2026-04-16 12:39:27,689 | INFO | utils.loggers | Access token generated successfully for work4rajan@gmail.com
+2026-04-16 12:39:27,690 | INFO | utils.loggers | Refresh token generation started for work4rajan@gmail.com
+2026-04-16 12:39:27,690 | INFO | utils.loggers | Refresh token generated successfully for work4rajan@gmail.com
+2026-04-16 12:39:27,691 | INFO | utils.loggers | JWT tokens generated
+2026-04-16 12:39:27,691 | INFO | utils.loggers | Success response generated with status code: 200 | Message: You are now logged in.
+2026-04-16 12:39:27,896 | INFO | utils.loggers | Current user token validation started
+2026-04-16 12:39:27,898 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 12:39:27,901 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 12:39:27,959 | INFO | utils.loggers | Fetched 2 agents for work4rajan@gmail.com
+2026-04-16 12:39:27,963 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 12:39:31,602 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='work4rajan', email='work4rajan@gmail.com')] | Subject: QAB - Login Successful
+2026-04-16 12:39:33,468 | INFO | utils.loggers | Current user token validation started
+2026-04-16 12:39:33,469 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 12:39:33,469 | INFO | utils.loggers | Agent delete request received for agent id: 69df893978d07ad92faa6dbd from work4rajan@gmail.com
+2026-04-16 12:39:33,494 | WARNING | utils.loggers | Agent delete failed because agent was not found for agent id: 69df893978d07ad92faa6dbd and user: work4rajan@gmail.com
+2026-04-16 12:39:45,865 | INFO | utils.loggers | Current user token validation started
+2026-04-16 12:39:45,893 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 12:39:45,894 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 12:39:45,915 | INFO | utils.loggers | Fetched 2 agents for work4rajan@gmail.com
+2026-04-16 12:39:45,917 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 12:39:49,479 | INFO | utils.loggers | Current user token validation started
+2026-04-16 12:39:49,482 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 12:39:49,484 | INFO | utils.loggers | Agent delete request received for agent id: 69df893978d07ad92faa6dbd from work4rajan@gmail.com
+2026-04-16 12:39:49,508 | WARNING | utils.loggers | Agent delete failed because agent was not found for agent id: 69df893978d07ad92faa6dbd and user: work4rajan@gmail.com
+2026-04-16 12:40:03,273 | INFO | utils.loggers | Login request received from work4rajan@gmail.com
+2026-04-16 12:40:03,275 | INFO | utils.loggers | Fetching user by email: work4rajan@gmail.com
+2026-04-16 12:40:03,291 | INFO | utils.loggers | User found for email: work4rajan@gmail.com
+2026-04-16 12:40:03,294 | INFO | utils.loggers | Password verification started
+2026-04-16 12:40:03,717 | INFO | utils.loggers | Access token generation started for work4rajan@gmail.com
+2026-04-16 12:40:03,717 | INFO | utils.loggers | Access token generated successfully for work4rajan@gmail.com
+2026-04-16 12:40:03,717 | INFO | utils.loggers | Refresh token generation started for work4rajan@gmail.com
+2026-04-16 12:40:03,717 | INFO | utils.loggers | Refresh token generated successfully for work4rajan@gmail.com
+2026-04-16 12:40:03,717 | INFO | utils.loggers | JWT tokens generated
+2026-04-16 12:40:03,717 | INFO | utils.loggers | Success response generated with status code: 200 | Message: You are now logged in.
+2026-04-16 12:40:03,751 | INFO | utils.loggers | Current user token validation started
+2026-04-16 12:40:03,752 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 12:40:03,752 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 12:40:03,772 | INFO | utils.loggers | Fetched 2 agents for work4rajan@gmail.com
+2026-04-16 12:40:03,775 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 12:40:07,070 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='work4rajan', email='work4rajan@gmail.com')] | Subject: QAB - Login Successful
+2026-04-16 12:40:07,904 | INFO | utils.loggers | Current user token validation started
+2026-04-16 12:40:07,906 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 12:40:07,944 | INFO | utils.loggers | Agent update request received for agent id: 69df893978d07ad92faa6dbd from work4rajan@gmail.com
+2026-04-16 12:40:08,007 | INFO | utils.loggers | Agent updated successfully for agent id: 69df893978d07ad92faa6dbd by work4rajan@gmail.com
+2026-04-16 12:40:08,008 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent updated successfully!
+2026-04-16 12:40:08,032 | INFO | utils.loggers | Current user token validation started
+2026-04-16 12:40:08,032 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 12:40:08,032 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 12:40:08,069 | INFO | utils.loggers | Fetched 2 agents for work4rajan@gmail.com
+2026-04-16 12:40:08,069 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 12:40:12,239 | INFO | utils.loggers | Current user token validation started
+2026-04-16 12:40:12,240 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 12:40:12,241 | INFO | utils.loggers | Agent delete request received for agent id: 69df893978d07ad92faa6dbd from work4rajan@gmail.com
+2026-04-16 12:40:12,460 | WARNING | utils.loggers | Agent delete failed because agent was not found for agent id: 69df893978d07ad92faa6dbd and user: work4rajan@gmail.com
+2026-04-16 12:41:08,931 | INFO | uvicorn.error | Shutting down
+2026-04-16 12:41:09,038 | INFO | uvicorn.error | Waiting for application shutdown.
+2026-04-16 12:41:09,039 | INFO | uvicorn.error | Application shutdown complete.
+2026-04-16 12:41:09,041 | INFO | uvicorn.error | Finished server process [824]
+2026-04-16 12:41:20,344 | INFO | database.db | MongoDB connection string loaded successfully
+2026-04-16 12:41:20,470 | INFO | database.db | Async MongoDB client initialized for database: qab
+2026-04-16 12:41:20,471 | INFO | database.db | MongoDB collections initialized: users, agents
+2026-04-16 12:41:23,204 | INFO | database.db | Sync MongoDB vector collection initialized: vector_store
+2026-04-16 12:41:23,384 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-16 12:41:23,393 | INFO | utils.loggers | JWT secret key loaded successfully
