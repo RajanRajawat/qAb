@@ -113,3 +113,42 @@
 2026-04-16 12:41:23,204 | INFO | database.db | Sync MongoDB vector collection initialized: vector_store
 2026-04-16 12:41:23,384 | INFO | utils.loggers | JWT secret key loaded successfully
 2026-04-16 12:41:23,393 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-16 12:42:39,895 | INFO | uvicorn.error | Started server process [21524]
+2026-04-16 12:42:39,896 | INFO | uvicorn.error | Waiting for application startup.
+2026-04-16 12:42:39,899 | INFO | uvicorn.error | Application startup complete.
+2026-04-16 12:42:39,901 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-04-16 12:42:46,769 | INFO | utils.loggers | Current user token validation started
+2026-04-16 12:42:46,772 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 12:42:46,790 | INFO | utils.loggers | Agent delete request received for agent id: 69df893978d07ad92faa6dbd from work4rajan@gmail.com
+2026-04-16 12:42:47,305 | INFO | utils.loggers | Agent deleted successfully for agent id: 69df893978d07ad92faa6dbd by work4rajan@gmail.com
+2026-04-16 12:42:47,306 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent deleted successfully!
+2026-04-16 12:42:47,330 | INFO | utils.loggers | Current user token validation started
+2026-04-16 12:42:47,331 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 12:42:47,331 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 12:42:47,345 | INFO | utils.loggers | Fetched 1 agents for work4rajan@gmail.com
+2026-04-16 12:42:47,345 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 12:42:50,945 | INFO | utils.loggers | Current user token validation started
+2026-04-16 12:42:50,945 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 12:42:50,945 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 12:42:50,957 | INFO | utils.loggers | Fetched 1 agents for work4rajan@gmail.com
+2026-04-16 12:42:50,959 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 12:42:53,328 | INFO | utils.loggers | Current user token validation started
+2026-04-16 12:42:53,328 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 12:42:53,328 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 12:42:53,342 | INFO | utils.loggers | Fetched 1 agents for work4rajan@gmail.com
+2026-04-16 12:42:53,342 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 12:44:17,646 | INFO | utils.loggers | Current user token validation started
+2026-04-16 12:44:17,649 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 12:44:17,649 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 12:44:17,741 | INFO | utils.loggers | Fetched 1 agents for work4rajan@gmail.com
+2026-04-16 12:44:17,741 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 12:44:49,969 | INFO | utils.loggers | Current user token validation started
+2026-04-16 12:44:49,971 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 12:44:49,972 | INFO | utils.loggers | Agent run request received for agent id: 69e078f95fdc89ac6f6a6f80 from work4rajan@gmail.com
+2026-04-16 12:44:49,983 | INFO | utils.loggers | Agent builder started for agent: Sabji Wala
+2026-04-16 12:44:49,983 | INFO | utils.loggers | Initializing Gemini LLM with model: gemini-2.5-flash
+2026-04-16 12:44:49,983 | INFO | utils.loggers | GOOGLE API key loaded successfully
+2026-04-16 12:44:51,185 | INFO | utils.loggers | Resolving tools for agent: ['web_search']
+2026-04-16 12:44:51,294 | INFO | utils.loggers | Agent built successfully for agent: Sabji Wala
+2026-04-16 12:44:51,351 | INFO | sentence_transformers.SentenceTransformer | Use pytorch device_name: cpu
+2026-04-16 12:44:51,351 | INFO | sentence_transformers.SentenceTransformer | Load pretrained SentenceTransformer: all-MiniLM-L6-v2
