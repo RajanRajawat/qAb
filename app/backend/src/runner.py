@@ -416,7 +416,6 @@ def agent_builder(agent_config: dict):
                 You are an AI assistant with access to tools.
                 -{provider_specific_prompt}
 
-
 """
 
     memory = MemorySaver()
@@ -451,7 +450,7 @@ def fetch_rag_context(query: str, owner_id: str, custom_db_settings: dict = None
                 logger.info(f"RAG: Using custom Postgres (pgvector) for owner: {owner_id}")
                 vector_store = PGVector(
                     embeddings=embeddings,
-                    collection_name=f"embeddings_{owner_id}",
+                    collection_name=f"embeddings",
                     connection=connection_string,
                     use_jsonb=True,
                 )

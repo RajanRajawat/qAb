@@ -10,6 +10,7 @@ from langchain_text_splitters import RecursiveCharacterTextSplitter
 from langchain_huggingface import HuggingFaceEmbeddings
 from langchain_mongodb import MongoDBAtlasVectorSearch
 from langchain_postgres import PGVector
+
 from pymongo import MongoClient
 
 
@@ -57,7 +58,7 @@ def process_file_and_embed(file_path: str, file_name: str, owner_id: str, custom
         chunks = splitter.split_documents(documents)
 
         for chunk in chunks:
-            chunk.metadata['owner_id'] = str(owner_id)
+            chunk.metadata['owner_id'] = str(owner_id) #storing in STR for Postgres use
 
         embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
@@ -66,22 +67,18 @@ def process_file_and_embed(file_path: str, file_name: str, owner_id: str, custom
 
         if custom_db_settings and custom_db_settings.get('linked') is True and provider == 'postgres':
             connection_string = config.get('connection_string')
-            if not connection_string:
-                logger.error(f"Postgres connection string missing for owner {owner_id}. Falling back to default collection.")
-                _embed_mongo(chunks, embeddings, owner_id, file_name)
-            else:
-                try:
-                    logger.info(f"Using custom Postgres (pgvector) for owner {owner_id}")
-                    PGVector.from_documents(
+            try:
+                logger.info(f"Using custom Postgres (pgvector) for owner {owner_id}")
+                PGVector.from_documents(
                         documents=chunks,
                         embedding=embeddings,
-                        collection_name=f"embeddings_{owner_id}",
+                        collection_name=f"embeddings",
                         connection=connection_string,
                         use_jsonb=True,
                     )
-                    logger.info(f"Successfully embedded {len(chunks)} chunks into Postgres for file: {file_name} (Owner: {owner_id})")
-                except Exception as e:
-                    logger.error(f"Failed to embed into Postgres for owner {owner_id}: {e}")
+                logger.info(f"Successfully embedded {len(chunks)} chunks into Postgres for file: {file_name} (Owner: {owner_id})")
+            except Exception as e:
+                logger.error(f"Failed to embed into Postgres for owner {owner_id}: {e}")
         else:
             target_collection = get_target_collection(custom_db_settings, owner_id)
             _embed_mongo(chunks, embeddings, owner_id, file_name, target_collection)
@@ -125,7 +122,7 @@ async def upload_document(
         return error_response(404, message="User not found.")
 
     os.makedirs("uploads", exist_ok=True)
-    file_path = os.path.join("uploads", f"{current_user['_id']}_{file.filename}")
+    file_path = os.path.join("uploads", f"{file.filename}")
 
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
@@ -142,3 +139,8 @@ async def upload_document(
 
     logger.info(f"File '{file.filename}' queued for processing (Owner: {current_user['email']})")
     return success_response(202, message="File uploaded successfully. Processing in background.")
+
+
+
+
+#need to check pg!

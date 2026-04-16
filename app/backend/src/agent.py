@@ -101,7 +101,7 @@ async def delete_agent(agent_id: str, current_user: dict = Depends(get_current_u
     deleted = await agents_collection.find_one_and_delete(
         {
             "_id": obj_id,
-            "owner_id": ObjectId(current_user["_id"])
+            "owner_id": str(current_user["_id"])
         }
     )
 
