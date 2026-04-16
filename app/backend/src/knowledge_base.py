@@ -2,11 +2,13 @@
 
 #~ Ingest RAG                                           
 #: Todo:                                                
+#:  Embedding Model Inference (Done)                    
 #! Bugs:                                                
 #- Notes:                                               
 
 
 from fastapi import APIRouter, File, UploadFile, Depends, BackgroundTasks
+from pydantic import SecretStr
 import os, shutil
 from database.db import users_collection, vector_collection
 from utils.users import get_current_user
@@ -15,10 +17,11 @@ from utils.loggers import logger
 from bson import ObjectId
 from langchain_community.document_loaders import TextLoader, PyPDFLoader
 from langchain_text_splitters import RecursiveCharacterTextSplitter
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEmbeddings, HuggingFaceEndpointEmbeddings
+# from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
 from langchain_mongodb import MongoDBAtlasVectorSearch
 from langchain_postgres import PGVector
-
+from utils.env_loaders import load_hf_api
 from pymongo import MongoClient
 
 
@@ -68,7 +71,11 @@ def process_file_and_embed(file_path: str, file_name: str, owner_id: str, custom
         for chunk in chunks:
             chunk.metadata['owner_id'] = str(owner_id) #storing in STR for Postgres use
 
-        embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+        # embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2") #replace with hf inference api
+        embeddings = HuggingFaceEndpointEmbeddings(
+            model="sentence-transformers/all-MiniLM-L6-v2",
+            huggingfacehub_api_token=(load_hf_api()),
+        )
 
         provider = custom_db_settings.get('provider') if custom_db_settings else None
         config = custom_db_settings.get('config', {}) if custom_db_settings else {}

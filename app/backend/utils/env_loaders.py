@@ -50,5 +50,13 @@ def load_tavily_api():
     return api
 
 
+def load_hf_api():
+    api = os.getenv("HF_TOKEN")
+    if not api:
+        logger.error("HF API key not found in .env file")
+        raise ValueError("Missing HF_TOKEN in .env")
+    logger.info("HF API key loaded successfully")
+    return api
+
 
 

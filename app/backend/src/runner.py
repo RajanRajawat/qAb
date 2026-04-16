@@ -2,6 +2,7 @@
 
 #~ Agent Runner                                         
 #: Todo:                                                
+#:  Embedding Model Inference                           
 #! Bugs:                                                
 #- Notes:                                               
 
@@ -19,7 +20,7 @@ from langgraph.checkpoint.memory import MemorySaver
 from fastapi import APIRouter, Depends, HTTPException
 from bson import ObjectId
 from bson.errors import InvalidId
-from utils.env_loaders import load_groq_api, load_gemini_api
+from utils.env_loaders import load_groq_api, load_gemini_api, load_hf_api
 from utils.loggers import logger
 from utils.users import get_current_user
 from utils.response import success_response, error_response
@@ -30,7 +31,8 @@ from pydantic import SecretStr
 
 from langchain_mongodb import MongoDBAtlasVectorSearch
 from langchain_postgres import PGVector
-from langchain_huggingface import HuggingFaceEmbeddings
+from langchain_huggingface import HuggingFaceEndpointEmbeddings
+# from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
 from pymongo import MongoClient
 
 
@@ -144,7 +146,11 @@ def agent_builder(agent_config: dict):
 #- RAG: Fetch relevant context from vector store
 def fetch_rag_context(query: str, owner_id: str, custom_db_settings: dict = None):
 
-    embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+    # embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2") #replace with hf inference api
+    embeddings = HuggingFaceEndpointEmbeddings(
+            model="sentence-transformers/all-MiniLM-L6-v2",
+            huggingfacehub_api_token=(load_hf_api()),
+        )
 
     provider = custom_db_settings.get('provider') if custom_db_settings else None
     config = custom_db_settings.get('config', {}) if custom_db_settings else {}
