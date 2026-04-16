@@ -1,3 +1,13 @@
+
+#~ Main                                                 
+#: Todo:                                                
+#! Bugs:                                                
+#- Notes:                                               
+
+
+
+
+
 from fastapi import FastAPI
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
@@ -17,9 +27,9 @@ load_dotenv()
 
 app = FastAPI()
 
-app.add_middleware(
+app.add_middleware(  
     CORSMiddleware,
-    allow_origins=["*"],  # TODO: restrict in production
+    allow_origins=["*"],  #: TODO: restrict in production
     allow_credentials=True,
     allow_methods=["*"],
     allow_headers=["*"],

@@ -1,3 +1,15 @@
+
+
+#~ Response                                             
+#: Todo:                                                
+#! Bugs:                                                
+#- Notes:                                               
+
+
+
+
+
+
 from fastapi import HTTPException
 from fastapi.responses import JSONResponse
 from utils.loggers import logger

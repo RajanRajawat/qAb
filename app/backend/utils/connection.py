@@ -1,3 +1,11 @@
+
+
+#~ Connections                                          
+#: Todo:                                                
+#! Bugs:                                                
+#- Notes:                                               
+
+
 from pymongo import MongoClient
 
 def validate_mongo(uri):

@@ -1,5 +1,10 @@
 
 
+#~ General                                              
+#: Todo:                                                
+#! Bugs:                                                
+#- Notes:                                               
+
 
 #- String Operations
 def strip_string(s: str):

@@ -1,3 +1,11 @@
+
+
+#~ Ingest RAG                                           
+#: Todo:                                                
+#! Bugs:                                                
+#- Notes:                                               
+
+
 from fastapi import APIRouter, File, UploadFile, Depends, BackgroundTasks
 import os, shutil
 from database.db import users_collection, vector_collection

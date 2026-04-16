@@ -1,4 +1,12 @@
 
+
+#~ Tools                                                
+#: Todo:                                                
+#! Bugs:                                                
+#- Notes:                                               
+
+
+
 import asyncio
 import os
 import wikipedia

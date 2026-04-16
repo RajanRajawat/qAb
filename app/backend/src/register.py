@@ -1,5 +1,10 @@
 
-#~  Register 
+
+#~ Register                                             
+#: Todo:                                                
+#! Bugs:                                                
+#- Notes:                                               
+
 
 #- Imports
 from fastapi import APIRouter, BackgroundTasks

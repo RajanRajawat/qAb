@@ -1,3 +1,15 @@
+
+
+#~ Emails                                               
+#: Todo:                                                
+#! Bugs:                                                
+#- Notes:                                               
+
+
+
+
+
+
 import os
 from dotenv import load_dotenv
 from fastapi_mail import ConnectionConfig, FastMail, MessageSchema, MessageType

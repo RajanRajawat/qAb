@@ -1,3 +1,14 @@
+
+
+
+#~ Models                                               
+#: Todo:                                                
+#! Bugs:                                                
+#- Notes:                                               
+
+
+
+
 from pydantic import BaseModel, EmailStr, Field, ConfigDict, field_validator, model_validator
 from bson import ObjectId
 from typing import Optional
