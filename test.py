@@ -9,17 +9,17 @@
 # print(cur.fetchone())  # Should print ('vector',)
 
 
-from langchain_postgres.vectorstores import PGVector
-from langchain_huggingface import HuggingFaceEmbeddings
+# from langchain_postgres.vectorstores import PGVector
+# from langchain_huggingface import HuggingFaceEmbeddings
 
-connection_string = "postgresql+psycopg2://postgres.bnzahqrwkxkxiritxueq:pwd@aws-1-ap-southeast-2.pooler.supabase.com:5432/postgres"
+# connection_string = "postgresql+psycopg2://postgres.bnzahqrwkxkxiritxueq:pwd@aws-1-ap-southeast-2.pooler.supabase.com:5432/postgres"
 
-embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
+# embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2")
 
-store = PGVector(
-    embeddings=embeddings,
-    collection_name="embeddings",
-    connection=connection_string,
-    use_jsonb=True,
-)
-print("✅ Connected successfully!")
+# store = PGVector(
+#     embeddings=embeddings,
+#     collection_name="embeddings",
+#     connection=connection_string,
+#     use_jsonb=True,
+# )
+# print("Connected successfully!")
