@@ -26,3 +26,34 @@ vector_index_qab
 postgresql+psycopg2://postgres.bnzahq................supabase.com:5432/postgres
 
 
+{
+  "fields": [
+    {
+      "numDimensions": 384,
+      "path": "embedding",
+      "similarity": "cosine",
+      "type": "vector"
+    },
+    {
+      "path": "owner_id",
+      "type": "filter"
+    },
+    {
+      "path": "knowledge_base_id",
+      "type": "filter"
+    }
+  ]
+}
+
+
+
+
+
+
+
+
+
+
+
+
+

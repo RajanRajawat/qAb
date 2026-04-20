@@ -3481,3 +3481,79 @@ NotImplementedError: Collection objects do not implement truth value testing or 
 2026-04-20 15:30:29,003 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 1.81 seconds as it raised ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}.
 2026-04-20 15:30:33,303 | INFO | utils.loggers | Agent run completed successfully for agent id: 69e5f92f22b121c8cd216287
 2026-04-20 15:30:33,303 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent response generated successfully!
+2026-04-20 15:35:08,699 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:35:08,699 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:35:08,700 | INFO | utils.loggers | Agent run request received for agent id: 69e5f92f22b121c8cd216287 from s@s.g
+2026-04-20 15:35:08,711 | INFO | utils.loggers | Agent builder started for agent: Sabji
+2026-04-20 15:35:08,711 | INFO | utils.loggers | Initializing Gemini LLM with model: gemini-2.5-flash
+2026-04-20 15:35:08,711 | INFO | utils.loggers | GOOGLE API key loaded successfully
+2026-04-20 15:35:09,795 | INFO | utils.loggers | Resolving tools for agent: ['web_search']
+2026-04-20 15:35:09,800 | INFO | utils.loggers | Agent built successfully for agent: Sabji
+2026-04-20 15:35:09,814 | INFO | utils.loggers | HF API key loaded successfully
+2026-04-20 15:35:10,037 | INFO | utils.loggers | RAG: Using custom MongoDB for kb 69e5f8dc22b121c8cd216277
+2026-04-20 15:35:10,633 | INFO | httpx | HTTP Request: POST https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2/pipeline/feature-extraction "HTTP/1.1 200 OK"
+2026-04-20 15:35:10,645 | ERROR | utils.loggers | RAG retrieval failed for kb 69e5f8dc22b121c8cd216277: PlanExecutor error during aggregation :: caused by :: Path 'knowledge_base_id' needs to be indexed as filter, full error: {'ok': 0.0, 'errmsg': "PlanExecutor error during aggregation :: caused by :: Path 'knowledge_base_id' needs to be indexed as filter", 'code': 8, 'codeName': 'UnknownError', '$clusterTime': {'clusterTime': Timestamp(1776679509, 3), 'signature': {'hash': b'\xc1)\x07\xfe\xa8e\xa6C9X\x8b\xf5\xa2R\xbe\xd4Z\x95\x00\x84', 'keyId': 7581612344053071876}}, 'operationTime': Timestamp(1776679509, 3)}
+2026-04-20 15:35:10,646 | INFO | utils.loggers | No KB context found, running agent without RAG for agent id: 69e5f92f22b121c8cd216287
+2026-04-20 15:35:10,646 | INFO | utils.loggers | Running agent id: 69e5f92f22b121c8cd216287 with thread id: d9517113-64f6-4782-babb-f0ba6ba08544
+2026-04-20 15:35:15,066 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 1.22 seconds as it raised ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}.
+2026-04-20 15:35:17,530 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 2.08 seconds as it raised ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}.
+2026-04-20 15:35:20,586 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 4.94 seconds as it raised ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}.
+2026-04-20 15:35:28,083 | INFO | utils.loggers | Agent run completed successfully for agent id: 69e5f92f22b121c8cd216287
+2026-04-20 15:35:28,083 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent response generated successfully!
+2026-04-20 15:35:48,114 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:35:48,114 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:35:48,115 | INFO | utils.loggers | Agent run request received for agent id: 69e5f92f22b121c8cd216287 from s@s.g
+2026-04-20 15:35:48,126 | INFO | utils.loggers | Agent builder started for agent: Sabji
+2026-04-20 15:35:48,126 | INFO | utils.loggers | Initializing Gemini LLM with model: gemini-2.5-flash
+2026-04-20 15:35:48,126 | INFO | utils.loggers | GOOGLE API key loaded successfully
+2026-04-20 15:35:49,232 | INFO | utils.loggers | Resolving tools for agent: ['web_search']
+2026-04-20 15:35:49,242 | INFO | utils.loggers | Agent built successfully for agent: Sabji
+2026-04-20 15:35:49,258 | INFO | utils.loggers | HF API key loaded successfully
+2026-04-20 15:35:49,410 | INFO | utils.loggers | RAG: Using custom MongoDB for kb 69e5f8dc22b121c8cd216277
+2026-04-20 15:35:49,894 | INFO | httpx | HTTP Request: POST https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2/pipeline/feature-extraction "HTTP/1.1 200 OK"
+2026-04-20 15:35:49,946 | INFO | utils.loggers | RAG context injected for agent id: 69e5f92f22b121c8cd216287
+2026-04-20 15:35:49,946 | INFO | utils.loggers | Running agent id: 69e5f92f22b121c8cd216287 with thread id: 7223534a-40ff-4897-a807-328936950164
+2026-04-20 15:35:51,865 | INFO | utils.loggers | Agent run completed successfully for agent id: 69e5f92f22b121c8cd216287
+2026-04-20 15:35:51,865 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent response generated successfully!
+2026-04-20 15:36:10,393 | INFO | utils.loggers | Root route accessed
+2026-04-20 15:36:10,451 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:36:10,451 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:36:10,451 | INFO | utils.loggers | Fetching linked DBs for s@s.g
+2026-04-20 15:36:10,451 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:36:10,452 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:36:10,452 | INFO | utils.loggers | Knowledge base list request from s@s.g
+2026-04-20 15:36:10,460 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge bases fetched successfully.
+2026-04-20 15:36:10,464 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:36:10,465 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:36:10,465 | INFO | utils.loggers | Fetch all agents request from s@s.g
+2026-04-20 15:36:10,472 | INFO | utils.loggers | Fetched 1 agents for s@s.g
+2026-04-20 15:36:10,473 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-20 15:36:10,495 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Linked DBs fetched successfully.
+2026-04-20 15:36:17,551 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:36:17,551 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:36:17,551 | INFO | utils.loggers | Agent run request received for agent id: 69e5f92f22b121c8cd216287 from s@s.g
+2026-04-20 15:36:17,561 | INFO | utils.loggers | Agent builder started for agent: Sabji
+2026-04-20 15:36:17,561 | INFO | utils.loggers | Initializing Gemini LLM with model: gemini-2.5-flash
+2026-04-20 15:36:17,561 | INFO | utils.loggers | GOOGLE API key loaded successfully
+2026-04-20 15:36:18,666 | INFO | utils.loggers | Resolving tools for agent: ['web_search']
+2026-04-20 15:36:18,675 | INFO | utils.loggers | Agent built successfully for agent: Sabji
+2026-04-20 15:36:18,692 | INFO | utils.loggers | HF API key loaded successfully
+2026-04-20 15:36:19,192 | INFO | utils.loggers | RAG: Using custom MongoDB for kb 69e5f8dc22b121c8cd216277
+2026-04-20 15:36:19,756 | INFO | httpx | HTTP Request: POST https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2/pipeline/feature-extraction "HTTP/1.1 200 OK"
+2026-04-20 15:36:19,776 | INFO | utils.loggers | RAG context injected for agent id: 69e5f92f22b121c8cd216287
+2026-04-20 15:36:19,776 | INFO | utils.loggers | Running agent id: 69e5f92f22b121c8cd216287 with thread id: 8bdd6147-b91d-4b2f-86c2-b22b29864922
+2026-04-20 15:36:21,652 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 1.02 seconds as it raised ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}.
+2026-04-20 15:36:24,430 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 2.7 seconds as it raised ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}.
+2026-04-20 15:36:28,523 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 4.98 seconds as it raised ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}.
+2026-04-20 15:36:36,130 | INFO | utils.loggers | Agent run completed successfully for agent id: 69e5f92f22b121c8cd216287
+2026-04-20 15:36:36,130 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent response generated successfully!
+2026-04-20 15:36:53,508 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:36:53,509 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:36:53,510 | INFO | utils.loggers | Agent delete request | id: 69e5f92f22b121c8cd216287 | owner: s@s.g
+2026-04-20 15:36:53,577 | INFO | utils.loggers | Agent deleted | id: 69e5f92f22b121c8cd216287 | owner: s@s.g
+2026-04-20 15:36:53,577 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent deleted successfully!
+2026-04-20 15:36:53,585 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:36:53,585 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:36:53,586 | INFO | utils.loggers | Fetch all agents request from s@s.g
+2026-04-20 15:36:53,610 | INFO | utils.loggers | Fetched 0 agents for s@s.g
+2026-04-20 15:36:53,610 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
