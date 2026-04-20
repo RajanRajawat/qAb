@@ -24,7 +24,7 @@ from utils.env_loaders import load_groq_api, load_gemini_api, load_hf_api
 from utils.loggers import logger
 from utils.users import get_current_user
 from utils.response import success_response, error_response
-from database.db import agents_collection, users_collection, vector_collection
+from database.db import agents_collection, users_collection, vector_collection, kb_collection, db_collection
 from src.tools import get_tools_for_agent
 from database.models import AgentRunRequest
 from pydantic import SecretStr
@@ -34,6 +34,7 @@ from langchain_postgres import PGVector
 from langchain_huggingface import HuggingFaceEndpointEmbeddings
 # from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
 from pymongo import MongoClient
+from src.knowledge_base import get_mongo_collection_from_entry
 
 
 runner_router = APIRouter(prefix="/chat", tags=["Agent Runner"])
@@ -146,7 +147,7 @@ def agent_builder(agent_config: dict):
     return agent
 
 
-def fetch_rag_context(query: str, owner_id: str, custom_db_settings: dict = None):
+def fetch_rag_context(query: str, owner_id: str, kb_entry: dict, db_entry: dict | None = None):
 
     #- RAG  Fetch data from vector store
     # embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2") #replace with hf inference api
@@ -155,65 +156,58 @@ def fetch_rag_context(query: str, owner_id: str, custom_db_settings: dict = None
             huggingfacehub_api_token=(load_hf_api()),
         )
 
-    provider = custom_db_settings.get('provider') if custom_db_settings else None
-    config = custom_db_settings.get('config', {}) if custom_db_settings else {}
-    is_linked = custom_db_settings.get('linked', False) if custom_db_settings else False
+    kb_id = str(kb_entry["_id"])
 
-    #- Postgres / Supabase  
-    if is_linked and provider == 'postgres':
-        connection_string = config.get('connection_string')
-        if not connection_string:
-            logger.error(f"RAG: Postgres connection string missing for owner {owner_id}. Falling back to default collection.")
-        else:
-            try:
-                logger.info(f"RAG: Using custom Postgres (pgvector) for owner: {owner_id}")
-                vector_store = PGVector(
-                    embeddings=embeddings,
-                    collection_name=f"embeddings",
-                    connection=connection_string,
-                    use_jsonb=True,
-                )
-                retriever = vector_store.as_retriever(
-                    search_type="similarity",
-                    search_kwargs={"k": 3}
-                )
-                docs = retriever.invoke(query)
-                if docs:
-                    return "\n\n".join([doc.page_content for doc in docs])
-                return ""
-            except Exception as e:
-                logger.error(f"RAG: Postgres retrieval failed for owner {owner_id}: {e}")
-                return ""
+    if db_entry and db_entry.get("provider") == "postgres":
+        try:
+            logger.info(f"RAG: Using custom Postgres for kb {kb_id}")
+            vector_store = PGVector(
+                embeddings=embeddings,
+                collection_name="embeddings",
+                connection=db_entry["config"]["connection_string"],
+                use_jsonb=True,
+            )
+            docs = vector_store.similarity_search(
+                query,
+                k=3,
+                filter={
+                    "owner_id": owner_id,
+                    "knowledge_base_id": kb_id,
+                }
+            )
+            if docs:
+                return "\n\n".join([doc.page_content for doc in docs])
+            return ""
+        except Exception as e:
+            logger.error(f"RAG: Postgres retrieval failed for kb {kb_id}: {e}")
+            return ""
 
     #- MongoDB path (custom or default)
     target_collection = None
 
-    if is_linked and provider == 'mongo':
-        connection_string = config.get('connection_string')
-        db_name = config.get('db_name')
-        collection_name = config.get('collection_name')
-
-        if connection_string and db_name and collection_name:
-            try:
-                custom_client = MongoClient(connection_string)
-                target_collection = custom_client[db_name][collection_name]
-                logger.info(f"RAG: Using custom MongoDB for owner: {owner_id}")
-            except Exception as e:
-                logger.error(f"RAG: Failed to connect to custom MongoDB for owner {owner_id}: {e}")
-                target_collection = None
+    if db_entry and db_entry.get("provider") == "mongo":
+        try:
+            target_collection = get_mongo_collection_from_entry(db_entry)
+            logger.info(f"RAG: Using custom MongoDB for kb {kb_id}")
+        except Exception as e:
+            logger.error(f"RAG: Failed to connect to custom MongoDB for kb {kb_id}: {e}")
+            target_collection = None
 
     if target_collection is None:
         target_collection = vector_collection
-        logger.info(f"RAG: Using default vector collection for owner: {owner_id}")
+        logger.info(f"RAG: Using default vector collection for kb {kb_id}")
 
     #- Check collection has data for this owner before querying
     try:
-        doc_count = target_collection.count_documents({'owner_id': ObjectId(owner_id)})
+        doc_count = target_collection.count_documents({
+            'metadata.owner_id': owner_id,
+            'metadata.knowledge_base_id': kb_id,
+        })
         if doc_count == 0:
-            logger.info(f"RAG: No documents found for owner: {owner_id}, skipping KB injection")
+            logger.info(f"RAG: No documents found for kb {kb_id}, skipping KB injection")
             return ""
     except Exception as e:
-        logger.error(f"RAG: Count check failed for owner {owner_id}: {e}")
+        logger.error(f"RAG: Count check failed for kb {kb_id}: {e}")
         return ""
 
     vector_store = MongoDBAtlasVectorSearch(
@@ -227,7 +221,8 @@ def fetch_rag_context(query: str, owner_id: str, custom_db_settings: dict = None
         search_kwargs={
             "k": 3,
             "pre_filter": {
-                "owner_id": {"$eq": ObjectId(owner_id)}
+                "metadata.owner_id": {"$eq": owner_id},
+                "metadata.knowledge_base_id": {"$eq": kb_id},
             }
         }
     )
@@ -269,10 +264,27 @@ async def run_agent(agent_id: str, request: AgentRunRequest, current_user: dict 
         
         if agent_data.get('knowledge_base') is True:    #- RAG Inject context if kb > True
             try:
-                user_data = await users_collection.find_one({'_id': ObjectId(current_user['_id'])})
-                custom_db = user_data.get('custom_db', {}) if user_data else {}
+                kb_id = agent_data.get("knowledge_base_id")
+                if not kb_id:
+                    return error_response(status_code=400, message="Agent does not have a knowledge base selected.")
 
-                context = fetch_rag_context(request.query, str(current_user['_id']), custom_db)
+                kb_entry = await kb_collection.find_one({
+                    "_id": ObjectId(kb_id),
+                    "owner_id": ObjectId(current_user["_id"])
+                })
+                if not kb_entry:
+                    return error_response(status_code=404, message="Knowledge base not found for this agent.")
+
+                db_entry = None
+                if kb_entry.get("db_id") != "default":
+                    db_entry = await db_collection.find_one({
+                        "_id": ObjectId(kb_entry["db_id"]),
+                        "owner_id": ObjectId(current_user["_id"])
+                    })
+                    if not db_entry:
+                        return error_response(status_code=404, message="Knowledge base DB not found.")
+
+                context = fetch_rag_context(request.query, str(current_user['_id']), kb_entry, db_entry)
 
                 if context:
                     rag_message = f"""Use the following context to answer if needed:

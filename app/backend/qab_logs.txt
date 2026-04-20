@@ -1084,3 +1084,1268 @@ asyncio.exceptions.CancelledError
 2026-04-17 14:56:25,564 | INFO | utils.loggers | Delete KB file request from user@example.com | file: raju_sabji.txt | db_id: None
 2026-04-17 14:56:25,587 | INFO | utils.loggers | Deleted 0 chunks from default DB | file: raju_sabji.txt
 2026-04-17 14:56:25,588 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Deleted 0 chunks for 'raju_sabji.txt' from default DB.
+2026-04-20 14:10:49,666 | INFO | database.db | MongoDB connection string loaded successfully
+2026-04-20 14:10:49,908 | INFO | database.db | Async MongoDB client initialized for database: qab
+2026-04-20 14:10:49,909 | INFO | database.db | MongoDB collections initialized: users, agents
+2026-04-20 14:10:51,023 | INFO | database.db | Sync MongoDB vector collection initialized: vector_store
+2026-04-20 14:10:51,932 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-20 14:10:51,963 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-20 14:13:47,173 | INFO | uvicorn.error | Started server process [4884]
+2026-04-20 14:13:47,186 | INFO | uvicorn.error | Waiting for application startup.
+2026-04-20 14:13:47,188 | INFO | uvicorn.error | Application startup complete.
+2026-04-20 14:13:47,190 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-04-20 14:13:49,617 | INFO | utils.loggers | Root route accessed
+2026-04-20 14:14:04,118 | INFO | utils.loggers | New user registration request received from work4rajan@gmail.com
+2026-04-20 14:14:04,119 | INFO | utils.loggers | Fetching user by email: work4rajan@gmail.com
+2026-04-20 14:14:04,758 | WARNING | utils.loggers | User not found for email: work4rajan@gmail.com
+2026-04-20 14:14:04,804 | INFO | utils.loggers | Password hashing started
+2026-04-20 14:14:05,227 | INFO | utils.loggers | Registration successful for work4rajan@gmail.com with id: 69e5e7559b22648a6b57e326
+2026-04-20 14:14:05,248 | INFO | utils.loggers | Success response generated with status code: 201 | Message: Rajan Rajawat is now registered.
+2026-04-20 14:14:08,445 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='work4rajan', email='work4rajan@gmail.com')] | Subject: QAB - Registration Successful
+2026-04-20 14:14:14,373 | INFO | utils.loggers | Login request received from work4rajan@gmail.com
+2026-04-20 14:14:14,373 | INFO | utils.loggers | Fetching user by email: work4rajan@gmail.com
+2026-04-20 14:14:14,739 | INFO | utils.loggers | User found for email: work4rajan@gmail.com
+2026-04-20 14:14:14,739 | INFO | utils.loggers | Password verification started
+2026-04-20 14:14:15,092 | INFO | utils.loggers | Access token generation started for work4rajan@gmail.com
+2026-04-20 14:14:15,092 | INFO | utils.loggers | Access token generated successfully for work4rajan@gmail.com
+2026-04-20 14:14:15,093 | INFO | utils.loggers | Refresh token generation started for work4rajan@gmail.com
+2026-04-20 14:14:15,093 | INFO | utils.loggers | Refresh token generated successfully for work4rajan@gmail.com
+2026-04-20 14:14:15,093 | INFO | utils.loggers | JWT tokens generated
+2026-04-20 14:14:15,093 | INFO | utils.loggers | Success response generated with status code: 200 | Message: You are now logged in.
+2026-04-20 14:14:15,116 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:14:15,116 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:14:15,116 | INFO | utils.loggers | Fetch all agents request from work4rajan@gmail.com
+2026-04-20 14:14:15,121 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:14:15,123 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:14:15,123 | INFO | utils.loggers | Fetching linked DBs for work4rajan@gmail.com
+2026-04-20 14:14:15,148 | INFO | utils.loggers | Fetched 0 agents for work4rajan@gmail.com
+2026-04-20 14:14:15,148 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-20 14:14:15,198 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:14:15,198 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:14:15,198 | INFO | utils.loggers | Knowledge base list request from work4rajan@gmail.com
+2026-04-20 14:14:15,206 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge bases fetched successfully.
+2026-04-20 14:14:15,264 | INFO | utils.loggers | Success response generated with status code: 200 | Message: No custom DBs linked.
+2026-04-20 14:14:18,454 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:14:18,455 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:14:18,455 | INFO | utils.loggers | Knowledge base list request from work4rajan@gmail.com
+2026-04-20 14:14:18,465 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge bases fetched successfully.
+2026-04-20 14:14:18,546 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='work4rajan', email='work4rajan@gmail.com')] | Subject: QAB - Login Successful
+2026-04-20 14:14:19,996 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:14:19,996 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:14:19,996 | INFO | utils.loggers | Fetch all agents request from work4rajan@gmail.com
+2026-04-20 14:14:20,005 | INFO | utils.loggers | Fetched 0 agents for work4rajan@gmail.com
+2026-04-20 14:14:20,005 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-20 14:14:21,115 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:14:21,116 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:14:21,116 | INFO | utils.loggers | Fetch all agents request from work4rajan@gmail.com
+2026-04-20 14:14:21,128 | INFO | utils.loggers | Fetched 0 agents for work4rajan@gmail.com
+2026-04-20 14:14:21,129 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-20 14:14:21,952 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:14:21,953 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:14:21,953 | INFO | utils.loggers | Fetch all agents request from work4rajan@gmail.com
+2026-04-20 14:14:21,961 | INFO | utils.loggers | Fetched 0 agents for work4rajan@gmail.com
+2026-04-20 14:14:21,961 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-20 14:14:36,742 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:14:36,743 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:14:36,779 | INFO | utils.loggers | DB link request received from work4rajan@gmail.com for ListDB.MongoDB
+2026-04-20 14:14:36,811 | INFO | utils.loggers | ListDB.MongoDB linked successfully for work4rajan@gmail.com
+2026-04-20 14:14:36,811 | INFO | utils.loggers | Success response generated with status code: 201 | Message: MongoDB has been linked successfully.
+2026-04-20 14:14:36,822 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:14:36,823 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:14:36,823 | INFO | utils.loggers | Fetching linked DBs for work4rajan@gmail.com
+2026-04-20 14:14:36,865 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Linked DBs fetched successfully.
+2026-04-20 14:14:39,882 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='work4rajan', email='work4rajan@gmail.com')] | Subject: QAB - DB Link Successful
+2026-04-20 14:14:40,212 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:14:40,212 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:14:40,213 | INFO | utils.loggers | Knowledge base list request from work4rajan@gmail.com
+2026-04-20 14:14:40,236 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge bases fetched successfully.
+2026-04-20 14:14:44,581 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:14:44,582 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:14:44,582 | INFO | utils.loggers | Knowledge base list request from work4rajan@gmail.com
+2026-04-20 14:14:44,588 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge bases fetched successfully.
+2026-04-20 14:14:56,507 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:14:56,508 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:14:56,508 | INFO | utils.loggers | Knowledge base create request from work4rajan@gmail.com
+2026-04-20 14:14:56,560 | INFO | utils.loggers | Success response generated with status code: 201 | Message: Knowledge base created successfully.
+2026-04-20 14:14:56,567 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:14:56,568 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:14:56,568 | INFO | utils.loggers | Knowledge base list request from work4rajan@gmail.com
+2026-04-20 14:14:56,577 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge bases fetched successfully.
+2026-04-20 14:15:05,051 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:15:05,051 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:15:05,097 | INFO | utils.loggers | Add file request for kb 69e5e7889b22648a6b57e328 from work4rajan@gmail.com
+2026-04-20 14:15:05,142 | INFO | utils.loggers | Success response generated with status code: 202 | Message: File added successfully. Processing started.
+2026-04-20 14:15:05,145 | INFO | utils.loggers | Processing file raju_sabji.txt for kb 69e5e7889b22648a6b57e328
+2026-04-20 14:15:05,150 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:15:05,150 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:15:05,150 | INFO | utils.loggers | Knowledge base list request from work4rajan@gmail.com
+2026-04-20 14:15:05,164 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge bases fetched successfully.
+2026-04-20 14:15:05,209 | INFO | utils.loggers | HF API key loaded successfully
+2026-04-20 14:15:06,196 | ERROR | utils.loggers | File embedding failed for kb 69e5e7889b22648a6b57e328: Collection objects do not implement truth value testing or bool(). Please compare with None instead: collection is not None
+2026-04-20 14:15:37,824 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:15:37,825 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:15:37,825 | INFO | utils.loggers | Add file request for kb 69e5e7889b22648a6b57e328 from work4rajan@gmail.com
+2026-04-20 14:15:37,900 | INFO | utils.loggers | Success response generated with status code: 202 | Message: File added successfully. Processing started.
+2026-04-20 14:15:37,903 | INFO | utils.loggers | Processing file gopi_hotel.txt for kb 69e5e7889b22648a6b57e328
+2026-04-20 14:15:37,907 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:15:37,907 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:15:37,908 | INFO | utils.loggers | Knowledge base list request from work4rajan@gmail.com
+2026-04-20 14:15:37,922 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge bases fetched successfully.
+2026-04-20 14:15:37,964 | INFO | utils.loggers | HF API key loaded successfully
+2026-04-20 14:15:38,161 | ERROR | utils.loggers | File embedding failed for kb 69e5e7889b22648a6b57e328: Collection objects do not implement truth value testing or bool(). Please compare with None instead: collection is not None
+2026-04-20 14:15:44,276 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:15:44,277 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:15:44,277 | INFO | utils.loggers | Delete knowledge base request for kb 69e5e7889b22648a6b57e328 from work4rajan@gmail.com
+2026-04-20 14:15:44,862 | ERROR | uvicorn.error | Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 432, in delete_knowledge_base
+    deleted_count = delete_embeddings_for_kb(str(current_user["_id"]), kb_id, db_entry)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 170, in delete_embeddings_for_kb
+    return delete_embeddings_from_custom_mongo(db_entry, owner_id, kb_id, file_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 120, in delete_embeddings_from_custom_mongo
+    if not target_collection:
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\pymongo\synchronous\collection.py", line 311, in __bool__
+    raise NotImplementedError(
+NotImplementedError: Collection objects do not implement truth value testing or bool(). Please compare with None instead: collection is not None
+2026-04-20 14:15:47,044 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:15:47,046 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:15:47,047 | INFO | utils.loggers | Remove file request for kb 69e5e7889b22648a6b57e328 from work4rajan@gmail.com
+2026-04-20 14:15:47,282 | ERROR | uvicorn.error | Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 401, in remove_file_from_knowledge_base
+    deleted_count = delete_embeddings_for_kb(str(current_user["_id"]), kb_id, db_entry, file_name)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 170, in delete_embeddings_for_kb
+    return delete_embeddings_from_custom_mongo(db_entry, owner_id, kb_id, file_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 120, in delete_embeddings_from_custom_mongo
+    if not target_collection:
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\pymongo\synchronous\collection.py", line 311, in __bool__
+    raise NotImplementedError(
+NotImplementedError: Collection objects do not implement truth value testing or bool(). Please compare with None instead: collection is not None
+2026-04-20 14:15:47,621 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:15:47,621 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:15:47,621 | INFO | utils.loggers | Remove file request for kb 69e5e7889b22648a6b57e328 from work4rajan@gmail.com
+2026-04-20 14:15:47,925 | ERROR | uvicorn.error | Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 401, in remove_file_from_knowledge_base
+    deleted_count = delete_embeddings_for_kb(str(current_user["_id"]), kb_id, db_entry, file_name)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 170, in delete_embeddings_for_kb
+    return delete_embeddings_from_custom_mongo(db_entry, owner_id, kb_id, file_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 120, in delete_embeddings_from_custom_mongo
+    if not target_collection:
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\pymongo\synchronous\collection.py", line 311, in __bool__
+    raise NotImplementedError(
+NotImplementedError: Collection objects do not implement truth value testing or bool(). Please compare with None instead: collection is not None
+2026-04-20 14:15:48,470 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:15:48,470 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:15:48,471 | INFO | utils.loggers | Remove file request for kb 69e5e7889b22648a6b57e328 from work4rajan@gmail.com
+2026-04-20 14:15:48,641 | ERROR | uvicorn.error | Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 401, in remove_file_from_knowledge_base
+    deleted_count = delete_embeddings_for_kb(str(current_user["_id"]), kb_id, db_entry, file_name)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 170, in delete_embeddings_for_kb
+    return delete_embeddings_from_custom_mongo(db_entry, owner_id, kb_id, file_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 120, in delete_embeddings_from_custom_mongo
+    if not target_collection:
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\pymongo\synchronous\collection.py", line 311, in __bool__
+    raise NotImplementedError(
+NotImplementedError: Collection objects do not implement truth value testing or bool(). Please compare with None instead: collection is not None
+2026-04-20 14:15:48,685 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:15:48,685 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:15:48,685 | INFO | utils.loggers | Remove file request for kb 69e5e7889b22648a6b57e328 from work4rajan@gmail.com
+2026-04-20 14:15:48,842 | ERROR | uvicorn.error | Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 401, in remove_file_from_knowledge_base
+    deleted_count = delete_embeddings_for_kb(str(current_user["_id"]), kb_id, db_entry, file_name)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 170, in delete_embeddings_for_kb
+    return delete_embeddings_from_custom_mongo(db_entry, owner_id, kb_id, file_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 120, in delete_embeddings_from_custom_mongo
+    if not target_collection:
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\pymongo\synchronous\collection.py", line 311, in __bool__
+    raise NotImplementedError(
+NotImplementedError: Collection objects do not implement truth value testing or bool(). Please compare with None instead: collection is not None
+2026-04-20 14:15:48,849 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:15:48,849 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:15:48,849 | INFO | utils.loggers | Remove file request for kb 69e5e7889b22648a6b57e328 from work4rajan@gmail.com
+2026-04-20 14:15:49,002 | ERROR | uvicorn.error | Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 401, in remove_file_from_knowledge_base
+    deleted_count = delete_embeddings_for_kb(str(current_user["_id"]), kb_id, db_entry, file_name)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 170, in delete_embeddings_for_kb
+    return delete_embeddings_from_custom_mongo(db_entry, owner_id, kb_id, file_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 120, in delete_embeddings_from_custom_mongo
+    if not target_collection:
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\pymongo\synchronous\collection.py", line 311, in __bool__
+    raise NotImplementedError(
+NotImplementedError: Collection objects do not implement truth value testing or bool(). Please compare with None instead: collection is not None
+2026-04-20 14:15:49,008 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:15:49,008 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:15:49,008 | INFO | utils.loggers | Remove file request for kb 69e5e7889b22648a6b57e328 from work4rajan@gmail.com
+2026-04-20 14:15:49,212 | ERROR | uvicorn.error | Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 401, in remove_file_from_knowledge_base
+    deleted_count = delete_embeddings_for_kb(str(current_user["_id"]), kb_id, db_entry, file_name)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 170, in delete_embeddings_for_kb
+    return delete_embeddings_from_custom_mongo(db_entry, owner_id, kb_id, file_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 120, in delete_embeddings_from_custom_mongo
+    if not target_collection:
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\pymongo\synchronous\collection.py", line 311, in __bool__
+    raise NotImplementedError(
+NotImplementedError: Collection objects do not implement truth value testing or bool(). Please compare with None instead: collection is not None
+2026-04-20 14:15:49,222 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:15:49,223 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:15:49,223 | INFO | utils.loggers | Remove file request for kb 69e5e7889b22648a6b57e328 from work4rajan@gmail.com
+2026-04-20 14:15:49,225 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:15:49,225 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:15:49,225 | INFO | utils.loggers | Remove file request for kb 69e5e7889b22648a6b57e328 from work4rajan@gmail.com
+2026-04-20 14:15:49,412 | ERROR | uvicorn.error | Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 401, in remove_file_from_knowledge_base
+    deleted_count = delete_embeddings_for_kb(str(current_user["_id"]), kb_id, db_entry, file_name)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 170, in delete_embeddings_for_kb
+    return delete_embeddings_from_custom_mongo(db_entry, owner_id, kb_id, file_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 120, in delete_embeddings_from_custom_mongo
+    if not target_collection:
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\pymongo\synchronous\collection.py", line 311, in __bool__
+    raise NotImplementedError(
+NotImplementedError: Collection objects do not implement truth value testing or bool(). Please compare with None instead: collection is not None
+2026-04-20 14:15:49,556 | ERROR | uvicorn.error | Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 401, in remove_file_from_knowledge_base
+    deleted_count = delete_embeddings_for_kb(str(current_user["_id"]), kb_id, db_entry, file_name)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 170, in delete_embeddings_for_kb
+    return delete_embeddings_from_custom_mongo(db_entry, owner_id, kb_id, file_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 120, in delete_embeddings_from_custom_mongo
+    if not target_collection:
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\pymongo\synchronous\collection.py", line 311, in __bool__
+    raise NotImplementedError(
+NotImplementedError: Collection objects do not implement truth value testing or bool(). Please compare with None instead: collection is not None
+2026-04-20 14:15:49,560 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:15:49,560 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:15:49,560 | INFO | utils.loggers | Remove file request for kb 69e5e7889b22648a6b57e328 from work4rajan@gmail.com
+2026-04-20 14:15:49,563 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:15:49,563 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:15:49,563 | INFO | utils.loggers | Remove file request for kb 69e5e7889b22648a6b57e328 from work4rajan@gmail.com
+2026-04-20 14:15:49,703 | ERROR | uvicorn.error | Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 401, in remove_file_from_knowledge_base
+    deleted_count = delete_embeddings_for_kb(str(current_user["_id"]), kb_id, db_entry, file_name)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 170, in delete_embeddings_for_kb
+    return delete_embeddings_from_custom_mongo(db_entry, owner_id, kb_id, file_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 120, in delete_embeddings_from_custom_mongo
+    if not target_collection:
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\pymongo\synchronous\collection.py", line 311, in __bool__
+    raise NotImplementedError(
+NotImplementedError: Collection objects do not implement truth value testing or bool(). Please compare with None instead: collection is not None
+2026-04-20 14:15:49,842 | ERROR | uvicorn.error | Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 401, in remove_file_from_knowledge_base
+    deleted_count = delete_embeddings_for_kb(str(current_user["_id"]), kb_id, db_entry, file_name)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 170, in delete_embeddings_for_kb
+    return delete_embeddings_from_custom_mongo(db_entry, owner_id, kb_id, file_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 120, in delete_embeddings_from_custom_mongo
+    if not target_collection:
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\pymongo\synchronous\collection.py", line 311, in __bool__
+    raise NotImplementedError(
+NotImplementedError: Collection objects do not implement truth value testing or bool(). Please compare with None instead: collection is not None
+2026-04-20 14:15:49,849 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:15:49,850 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:15:49,850 | INFO | utils.loggers | Remove file request for kb 69e5e7889b22648a6b57e328 from work4rajan@gmail.com
+2026-04-20 14:15:49,969 | ERROR | uvicorn.error | Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 401, in remove_file_from_knowledge_base
+    deleted_count = delete_embeddings_for_kb(str(current_user["_id"]), kb_id, db_entry, file_name)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 170, in delete_embeddings_for_kb
+    return delete_embeddings_from_custom_mongo(db_entry, owner_id, kb_id, file_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 120, in delete_embeddings_from_custom_mongo
+    if not target_collection:
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\pymongo\synchronous\collection.py", line 311, in __bool__
+    raise NotImplementedError(
+NotImplementedError: Collection objects do not implement truth value testing or bool(). Please compare with None instead: collection is not None
+2026-04-20 14:15:54,027 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:15:54,028 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:15:54,028 | INFO | utils.loggers | Fetch all agents request from work4rajan@gmail.com
+2026-04-20 14:15:54,041 | INFO | utils.loggers | Fetched 0 agents for work4rajan@gmail.com
+2026-04-20 14:15:54,042 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-20 14:15:54,979 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:15:54,980 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:15:54,980 | INFO | utils.loggers | Fetch all agents request from work4rajan@gmail.com
+2026-04-20 14:15:54,998 | INFO | utils.loggers | Fetched 0 agents for work4rajan@gmail.com
+2026-04-20 14:15:54,998 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-20 14:16:03,742 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:16:03,743 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:16:03,743 | INFO | utils.loggers | Knowledge base list request from work4rajan@gmail.com
+2026-04-20 14:16:03,758 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge bases fetched successfully.
+2026-04-20 14:16:06,711 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:16:06,712 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:16:06,712 | INFO | utils.loggers | Fetching linked DBs for work4rajan@gmail.com
+2026-04-20 14:16:06,727 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Linked DBs fetched successfully.
+2026-04-20 14:16:33,879 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:16:33,879 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:16:33,880 | INFO | utils.loggers | Remove file request for kb 69e5e7889b22648a6b57e328 from work4rajan@gmail.com
+2026-04-20 14:16:34,064 | ERROR | uvicorn.error | Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 401, in remove_file_from_knowledge_base
+    deleted_count = delete_embeddings_for_kb(str(current_user["_id"]), kb_id, db_entry, file_name)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 170, in delete_embeddings_for_kb
+    return delete_embeddings_from_custom_mongo(db_entry, owner_id, kb_id, file_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 120, in delete_embeddings_from_custom_mongo
+    if not target_collection:
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\pymongo\synchronous\collection.py", line 311, in __bool__
+    raise NotImplementedError(
+NotImplementedError: Collection objects do not implement truth value testing or bool(). Please compare with None instead: collection is not None
+2026-04-20 14:16:34,324 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:16:34,324 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:16:34,325 | INFO | utils.loggers | Remove file request for kb 69e5e7889b22648a6b57e328 from work4rajan@gmail.com
+2026-04-20 14:16:34,490 | ERROR | uvicorn.error | Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 401, in remove_file_from_knowledge_base
+    deleted_count = delete_embeddings_for_kb(str(current_user["_id"]), kb_id, db_entry, file_name)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 170, in delete_embeddings_for_kb
+    return delete_embeddings_from_custom_mongo(db_entry, owner_id, kb_id, file_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 120, in delete_embeddings_from_custom_mongo
+    if not target_collection:
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\pymongo\synchronous\collection.py", line 311, in __bool__
+    raise NotImplementedError(
+NotImplementedError: Collection objects do not implement truth value testing or bool(). Please compare with None instead: collection is not None
+2026-04-20 14:16:34,858 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:16:34,859 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:16:34,859 | INFO | utils.loggers | Remove file request for kb 69e5e7889b22648a6b57e328 from work4rajan@gmail.com
+2026-04-20 14:16:34,970 | ERROR | uvicorn.error | Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 401, in remove_file_from_knowledge_base
+    deleted_count = delete_embeddings_for_kb(str(current_user["_id"]), kb_id, db_entry, file_name)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 170, in delete_embeddings_for_kb
+    return delete_embeddings_from_custom_mongo(db_entry, owner_id, kb_id, file_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 120, in delete_embeddings_from_custom_mongo
+    if not target_collection:
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\pymongo\synchronous\collection.py", line 311, in __bool__
+    raise NotImplementedError(
+NotImplementedError: Collection objects do not implement truth value testing or bool(). Please compare with None instead: collection is not None
+2026-04-20 14:16:35,091 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:16:35,091 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:16:35,092 | INFO | utils.loggers | Remove file request for kb 69e5e7889b22648a6b57e328 from work4rajan@gmail.com
+2026-04-20 14:16:35,120 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:16:35,121 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:16:35,121 | INFO | utils.loggers | Remove file request for kb 69e5e7889b22648a6b57e328 from work4rajan@gmail.com
+2026-04-20 14:16:35,301 | ERROR | uvicorn.error | Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 401, in remove_file_from_knowledge_base
+    deleted_count = delete_embeddings_for_kb(str(current_user["_id"]), kb_id, db_entry, file_name)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 170, in delete_embeddings_for_kb
+    return delete_embeddings_from_custom_mongo(db_entry, owner_id, kb_id, file_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 120, in delete_embeddings_from_custom_mongo
+    if not target_collection:
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\pymongo\synchronous\collection.py", line 311, in __bool__
+    raise NotImplementedError(
+NotImplementedError: Collection objects do not implement truth value testing or bool(). Please compare with None instead: collection is not None
+2026-04-20 14:16:35,531 | ERROR | uvicorn.error | Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 401, in remove_file_from_knowledge_base
+    deleted_count = delete_embeddings_for_kb(str(current_user["_id"]), kb_id, db_entry, file_name)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 170, in delete_embeddings_for_kb
+    return delete_embeddings_from_custom_mongo(db_entry, owner_id, kb_id, file_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 120, in delete_embeddings_from_custom_mongo
+    if not target_collection:
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\pymongo\synchronous\collection.py", line 311, in __bool__
+    raise NotImplementedError(
+NotImplementedError: Collection objects do not implement truth value testing or bool(). Please compare with None instead: collection is not None
+2026-04-20 14:16:40,321 | INFO | utils.loggers | Current user token validation started
+2026-04-20 14:16:40,322 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 14:16:40,322 | INFO | utils.loggers | Remove file request for kb 69e5e7889b22648a6b57e328 from work4rajan@gmail.com
+2026-04-20 14:16:40,721 | ERROR | uvicorn.error | Exception in ASGI application
+Traceback (most recent call last):
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\protocols\http\httptools_impl.py", line 420, in run_asgi
+    result = await app(  # type: ignore[func-returns-value]
+             ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\uvicorn\middleware\proxy_headers.py", line 60, in __call__
+    return await self.app(scope, receive, send)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\applications.py", line 1163, in __call__
+    await super().__call__(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\applications.py", line 107, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 186, in __call__
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\errors.py", line 164, in __call__
+    await self.app(scope, receive, _send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 95, in __call__
+    await self.simple_response(scope, receive, send, request_headers=headers)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\cors.py", line 153, in simple_response
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\middleware\exceptions.py", line 63, in __call__
+    await wrap_app_handling_exceptions(self.app, conn)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\middleware\asyncexitstack.py", line 18, in __call__
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 716, in __call__
+    await self.middleware_stack(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 736, in app
+    await route.handle(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\routing.py", line 290, in handle
+    await self.app(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 134, in app
+    await wrap_app_handling_exceptions(app, request)(scope, receive, send)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 53, in wrapped_app
+    raise exc
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\starlette\_exception_handler.py", line 42, in wrapped_app
+    await app(scope, receive, sender)
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 120, in app
+    response = await f(request)
+               ^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 674, in app
+    raw_response = await run_endpoint_function(
+                   ^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\fastapi\routing.py", line 328, in run_endpoint_function
+    return await dependant.call(**values)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 401, in remove_file_from_knowledge_base
+    deleted_count = delete_embeddings_for_kb(str(current_user["_id"]), kb_id, db_entry, file_name)
+                    ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 170, in delete_embeddings_for_kb
+    return delete_embeddings_from_custom_mongo(db_entry, owner_id, kb_id, file_name)
+           ^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^^
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\app\backend\src\knowledge_base.py", line 120, in delete_embeddings_from_custom_mongo
+    if not target_collection:
+  File "D:\Rajan_Rajawat\OneDrive - werqlabs.com\Projects\qab\.venv\Lib\site-packages\pymongo\synchronous\collection.py", line 311, in __bool__
+    raise NotImplementedError(
+NotImplementedError: Collection objects do not implement truth value testing or bool(). Please compare with None instead: collection is not None
+2026-04-20 14:23:10,198 | INFO | uvicorn.error | Shutting down
+2026-04-20 14:23:10,322 | INFO | uvicorn.error | Waiting for application shutdown.
+2026-04-20 14:23:10,332 | INFO | uvicorn.error | Application shutdown complete.
+2026-04-20 14:23:10,336 | INFO | uvicorn.error | Finished server process [4884]

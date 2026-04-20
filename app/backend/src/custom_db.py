@@ -12,6 +12,7 @@ import datetime
 from utils.connection import validate_mongo, validate_postgres
 from bson import ObjectId
 from database.models import ListDB
+from src.knowledge_base import delete_all_embeddings_for_custom_db, cleanup_kbs_for_custom_db
 
 
 db_router = APIRouter(prefix="/custom-db", tags=["DB"])
@@ -85,6 +86,12 @@ async def unlink_db(db_id: str, bt: BackgroundTasks, current_user: dict = Depend
     if not db_entry:
         return error_response(404, message="DB not found or you do not have permission to remove it.")
 
+    deleted_embeddings = delete_all_embeddings_for_custom_db(str(current_user["_id"]), db_entry)
+    if deleted_embeddings is None:
+        return error_response(500, message="Could not remove files stored in this DB.")
+
+    cleanup_data = await cleanup_kbs_for_custom_db(str(current_user["_id"]), db_id)
+
     await db_collection.delete_one({'_id': db_object_id})
 
     await users_collection.update_one(
@@ -95,7 +102,15 @@ async def unlink_db(db_id: str, bt: BackgroundTasks, current_user: dict = Depend
     bt.add_task(send_email, "QAB - DB Unlink Successful", current_user['email'], f"You have successfully unlinked your {db_entry['provider']}!")
     logger.info(f"DB {db_id} unlinked successfully for {current_user['email']}")
 
-    return success_response(status_code=200, message="Database has been unlinked successfully.")
+    return success_response(
+        status_code=200,
+        message="Database has been unlinked successfully.",
+        data={
+            "deleted_embeddings": deleted_embeddings,
+            "deleted_kbs": cleanup_data["deleted_kbs"],
+            "deleted_files": cleanup_data["deleted_files"],
+        }
+    )
 
 
 
@@ -122,7 +137,6 @@ async def get_my_dbs(current_user: dict = Depends(get_current_user)):
         })
 
     return success_response(200, message="Linked DBs fetched successfully.", data=dbs)
-
 
 
 

@@ -130,10 +130,16 @@ compatibility_map: dict[LLMProvider, set[LLMModel]] = {
 
 #- Agent
 
-# Add this class above AgentCreation
-class KBFile(BaseModel):
-    file_name: str
-    db_id: str  # "default" or a custom DB ObjectId string
+class CreateKnowledgeBase(BaseModel):
+    name: str = Field(min_length=3, max_length=50)
+    db_id: Optional[str] = None
+
+    model_config = ConfigDict(extra="forbid")
+
+    @field_validator("name", mode="before")
+    @classmethod
+    def strip_kb_name(cls, v):
+        return strip_string(v)
 
 class AgentCreation(BaseModel):
     name: str = Field(min_length=3, max_length=20)
@@ -144,7 +150,7 @@ class AgentCreation(BaseModel):
     llm_model: LLMModel
     temperature: float = Field(ge=0.0, le=1.0)
     knowledge_base: bool
-    kb_files: list[KBFile] = Field(default_factory=list)   # <-- added
+    knowledge_base_id: Optional[str] = None
     tools: list[AgentTool] = Field(default_factory=list)
 
     model_config = ConfigDict(extra="forbid")
@@ -162,6 +168,10 @@ class AgentCreation(BaseModel):
                 f"Model '{self.llm_model.value}' is not supported by provider '{self.llm_provider.value}'. "
                 f"Allowed models: {sorted(m.value for m in allowed_models)}"
             )
+        if self.knowledge_base and not self.knowledge_base_id:
+            raise ValueError("knowledge_base_id is required when knowledge_base is true.")
+        if not self.knowledge_base and self.knowledge_base_id:
+            raise ValueError("knowledge_base_id should be empty when knowledge_base is false.")
         return self
 
 
@@ -174,7 +184,7 @@ class AgentUpdate(BaseModel):
     llm_model: Optional[LLMModel] = None
     temperature: Optional[float] = Field(None, ge=0.0, le=1.0)
     knowledge_base: Optional[bool] = None
-    kb_files: Optional[list[KBFile]] = None                # <-- added
+    knowledge_base_id: Optional[str] = None
     tools: Optional[list[AgentTool]] = None
 
     model_config = ConfigDict(extra="forbid")
@@ -212,4 +222,8 @@ class AddDB(BaseModel):
     connection_uri: str 
     #need to add validations!
 
-    
+
+
+
+
+

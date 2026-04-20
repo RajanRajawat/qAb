@@ -1,7 +1,6 @@
-
-from fastapi import APIRouter, File, UploadFile, Depends, BackgroundTasks, Query
-import os, shutil
-from database.db import users_collection, vector_collection, db_collection
+from fastapi import APIRouter, File, UploadFile, Depends, BackgroundTasks
+from database.db import users_collection, vector_collection, db_collection, kb_collection, agents_collection
+from database.models import CreateKnowledgeBase
 from utils.users import get_current_user
 from utils.response import success_response, error_response
 from utils.loggers import logger
@@ -13,341 +12,432 @@ from langchain_mongodb import MongoDBAtlasVectorSearch
 from langchain_postgres import PGVector
 from utils.env_loaders import load_hf_api
 from pymongo import MongoClient
+import os
+import shutil
+import datetime
 
 
 kb_router = APIRouter(prefix="/knowledge-base", tags=["Knowledge Base"])
 
 
-# ── Helper: build a raw mongo collection from a db_entry document ──────────────
-def get_mongo_collection_from_entry(db_entry: dict, owner_id: str):
-    config = db_entry.get('config', {})
-    connection_string = config.get('connection_string')
-    db_name = config.get('db_name')
-    collection_name = config.get('collection_name')
+def serialize_kb(kb: dict):
+    return {
+        "kb_id": str(kb["_id"]),
+        "name": kb.get("name"),
+        "owner_id": str(kb.get("owner_id")),
+        "db_id": kb.get("db_id"),
+        "db_name": kb.get("db_name"),
+        "files": kb.get("files", []),
+        "created_at": str(kb.get("created_at")),
+        "updated_at": str(kb.get("updated_at")) if kb.get("updated_at") else None,
+    }
+
+
+async def get_user_data(current_user: dict):
+    return await users_collection.find_one({"_id": ObjectId(current_user["_id"])})
+
+
+async def get_user_db_entry(owner_id: str, db_id: str | None):
+    if not db_id or db_id == "default":
+        return None
 
     try:
-        client = MongoClient(connection_string)
-        logger.info(f"Connected to custom MongoDB for owner {owner_id}")
-        return client[db_name][collection_name]
+        db_object_id = ObjectId(db_id)
+    except Exception:
+        return "invalid"
+
+    return await db_collection.find_one({
+        "_id": db_object_id,
+        "owner_id": ObjectId(owner_id)
+    })
+
+
+async def get_kb_entry(kb_id: str, owner_id: str):
+    try:
+        kb_object_id = ObjectId(kb_id)
+    except Exception:
+        return None
+
+    return await kb_collection.find_one({
+        "_id": kb_object_id,
+        "owner_id": ObjectId(owner_id)
+    })
+
+
+def get_db_name(db_entry: dict | None):
+    if not db_entry:
+        return "Default DB"
+    return db_entry.get("name", "Custom DB")
+
+
+def get_mongo_collection_from_entry(db_entry: dict):
+    config = db_entry.get("config", {})
+
+    try:
+        client = MongoClient(config.get("connection_string"))
+        return client[config.get("db_name")][config.get("collection_name")]
     except Exception as e:
-        logger.error(f"Failed to connect to custom MongoDB for owner {owner_id}: {e}")
+        logger.error(f"Could not connect to custom MongoDB: {e}")
         return None
 
 
-# ── Background Task: Process + embed ──────────────────────────────────────────
-def process_file_and_embed(
-    file_path: str,
-    file_name: str,
-    owner_id: str,
-    db_entry: dict | None = None       # None → default DB
-):
-    try:
-        logger.info(f"Processing file: {file_name} for owner: {owner_id}")
+def get_embedding_client():
+    return HuggingFaceEndpointEmbeddings(
+        model="sentence-transformers/all-MiniLM-L6-v2",
+        huggingfacehub_api_token=load_hf_api(),
+    )
 
-        if file_name.endswith('.pdf'):
+
+async def delete_kb_reference_from_agents(kb_id: str, owner_id: str):
+    await agents_collection.update_many(
+        {
+            "owner_id": ObjectId(owner_id),
+            "knowledge_base_id": kb_id
+        },
+        {
+            "$set": {
+                "knowledge_base": False,
+                "knowledge_base_id": None,
+                "updated_at": datetime.datetime.now(datetime.timezone.utc)
+            }
+        }
+    )
+
+
+def delete_embeddings_from_default(owner_id: str, kb_id: str, file_name: str | None = None):
+    query = {
+        "metadata.owner_id": owner_id,
+        "metadata.knowledge_base_id": kb_id,
+    }
+    if file_name:
+        query["metadata.file_name"] = file_name
+    result = vector_collection.delete_many(query)
+    return result.deleted_count
+
+
+def delete_embeddings_from_custom_mongo(db_entry: dict, owner_id: str, kb_id: str, file_name: str | None = None):
+    target_collection = get_mongo_collection_from_entry(db_entry)
+    if not target_collection:
+        return None
+
+    query = {
+        "metadata.owner_id": owner_id,
+        "metadata.knowledge_base_id": kb_id,
+    }
+    if file_name:
+        query["metadata.file_name"] = file_name
+
+    result = target_collection.delete_many(query)
+    return result.deleted_count
+
+
+def delete_embeddings_from_postgres(db_entry: dict, owner_id: str, kb_id: str, file_name: str | None = None):
+    try:
+        from sqlalchemy import create_engine, text
+
+        engine = create_engine(db_entry["config"]["connection_string"])
+        sql = """
+            DELETE FROM langchain_pg_embedding
+            WHERE cmetadata->>'owner_id' = :owner_id
+            AND cmetadata->>'knowledge_base_id' = :kb_id
+        """
+        params = {
+            "owner_id": owner_id,
+            "kb_id": kb_id,
+        }
+
+        if file_name:
+            sql += " AND cmetadata->>'file_name' = :file_name"
+            params["file_name"] = file_name
+
+        with engine.connect() as conn:
+            result = conn.execute(text(sql), params)
+            conn.commit()
+
+        return result.rowcount
+    except Exception as e:
+        logger.error(f"Could not delete embeddings from Postgres: {e}")
+        return None
+
+
+def delete_embeddings_for_kb(owner_id: str, kb_id: str, db_entry: dict | None, file_name: str | None = None):
+    if not db_entry:
+        return delete_embeddings_from_default(owner_id, kb_id, file_name)
+
+    provider = db_entry.get("provider")
+
+    if provider == "mongo":
+        return delete_embeddings_from_custom_mongo(db_entry, owner_id, kb_id, file_name)
+
+    if provider == "postgres":
+        return delete_embeddings_from_postgres(db_entry, owner_id, kb_id, file_name)
+
+    return None
+
+
+def delete_all_embeddings_for_custom_db(owner_id: str, db_entry: dict):
+    provider = db_entry.get("provider")
+
+    if provider == "mongo":
+        target_collection = get_mongo_collection_from_entry(db_entry)
+        if not target_collection:
+            return None
+        result = target_collection.delete_many({
+            "metadata.owner_id": owner_id
+        })
+        return result.deleted_count
+
+    if provider == "postgres":
+        try:
+            from sqlalchemy import create_engine, text
+
+            engine = create_engine(db_entry["config"]["connection_string"])
+            with engine.connect() as conn:
+                result = conn.execute(text("""
+                    DELETE FROM langchain_pg_embedding
+                    WHERE cmetadata->>'owner_id' = :owner_id
+                """), {"owner_id": owner_id})
+                conn.commit()
+            return result.rowcount
+        except Exception as e:
+            logger.error(f"Could not clear custom Postgres DB: {e}")
+            return None
+
+    return None
+
+
+async def cleanup_kbs_for_custom_db(owner_id: str, db_id: str):
+    deleted_files = 0
+    deleted_kbs = 0
+
+    async for kb in kb_collection.find({
+        "owner_id": ObjectId(owner_id),
+        "db_id": db_id
+    }):
+        deleted_files += len(kb.get("files", []))
+        await delete_kb_reference_from_agents(str(kb["_id"]), owner_id)
+        await kb_collection.delete_one({"_id": kb["_id"]})
+        deleted_kbs += 1
+
+    return {
+        "deleted_kbs": deleted_kbs,
+        "deleted_files": deleted_files,
+    }
+
+
+def process_file_and_embed(file_path: str, file_name: str, owner_id: str, kb_id: str, db_entry: dict | None = None):
+    try:
+        logger.info(f"Processing file {file_name} for kb {kb_id}")
+
+        if file_name.endswith(".pdf"):
             loader = PyPDFLoader(file_path)
         else:
             loader = TextLoader(file_path, encoding="utf-8")
 
         documents = loader.load()
-
         splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
         chunks = splitter.split_documents(documents)
 
         for chunk in chunks:
-            chunk.metadata['owner_id'] = owner_id
-            chunk.metadata['file_name'] = file_name      # <-- used for delete later
+            chunk.metadata["owner_id"] = owner_id
+            chunk.metadata["file_name"] = file_name
+            chunk.metadata["knowledge_base_id"] = kb_id
 
-        embeddings = HuggingFaceEndpointEmbeddings(
-            model="sentence-transformers/all-MiniLM-L6-v2",
-            huggingfacehub_api_token=load_hf_api(),
-        )
+        embeddings = get_embedding_client()
 
-        # ── Default DB (our own MongoDB Atlas) ────────────────────────────────
-        if db_entry is None:
-            _embed_mongo(chunks, embeddings, owner_id, file_name, vector_collection)
+        if not db_entry:
+            MongoDBAtlasVectorSearch.from_documents(
+                documents=chunks,
+                embedding=embeddings,
+                collection=vector_collection,
+                index_name="vector_index_qab"
+            )
             return
 
-        provider = db_entry.get('provider')
-        config   = db_entry.get('config', {})
+        if db_entry.get("provider") == "mongo":
+            target_collection = get_mongo_collection_from_entry(db_entry)
+            if not target_collection:
+                raise ValueError("Could not connect to custom MongoDB.")
 
-        # ── Custom Postgres ───────────────────────────────────────────────────
-        if provider == 'postgres':
-            try:
-                logger.info(f"Using custom Postgres (pgvector) for owner {owner_id}")
-                PGVector.from_documents(
-                    documents=chunks,
-                    embedding=embeddings,
-                    collection_name="embeddings",
-                    connection=config.get('connection_string'),
-                    use_jsonb=True,
-                )
-                logger.info(f"Embedded {len(chunks)} chunks into Postgres | file: {file_name}")
-            except Exception as e:
-                logger.error(f"Failed to embed into Postgres for owner {owner_id}: {e}")
+            MongoDBAtlasVectorSearch.from_documents(
+                documents=chunks,
+                embedding=embeddings,
+                collection=target_collection,
+                index_name="vector_index_qab"
+            )
+            return
 
-        # ── Custom MongoDB ────────────────────────────────────────────────────
-        elif provider == 'mongo':
-            target = get_mongo_collection_from_entry(db_entry, owner_id)
-            if target:
-                _embed_mongo(chunks, embeddings, owner_id, file_name, target)
-            else:
-                logger.error(f"Falling back to default DB for owner {owner_id}")
-                _embed_mongo(chunks, embeddings, owner_id, file_name, vector_collection)
+        if db_entry.get("provider") == "postgres":
+            PGVector.from_documents(
+                documents=chunks,
+                embedding=embeddings,
+                collection_name="embeddings",
+                connection=db_entry["config"]["connection_string"],
+                use_jsonb=True,
+            )
+            return
 
-        else:
-            logger.error(f"Unknown provider '{provider}' — falling back to default DB")
-            _embed_mongo(chunks, embeddings, owner_id, file_name, vector_collection)
+        raise ValueError("Unsupported DB provider.")
 
     except Exception as e:
-        logger.error(f"Error processing file {file_name} for owner {owner_id}: {e}")
+        logger.error(f"File embedding failed for kb {kb_id}: {e}")
     finally:
         if os.path.exists(file_path):
             os.remove(file_path)
 
 
-# ── Helper: embed into a MongoDB Atlas vector collection ──────────────────────
-def _embed_mongo(chunks, embeddings, owner_id, file_name, target_collection):
-    try:
-        MongoDBAtlasVectorSearch.from_documents(
-            documents=chunks,
-            embedding=embeddings,
-            collection=target_collection,
-            index_name="vector_index_qab"
-        )
-        logger.info(f"Embedded {len(chunks)} chunks into MongoDB | file: {file_name} | owner: {owner_id}")
-    except Exception as e:
-        logger.error(f"Failed to embed into MongoDB for owner {owner_id}: {e}")
+@kb_router.post("/create")
+async def create_knowledge_base(payload: CreateKnowledgeBase, current_user: dict = Depends(get_current_user)):
+    logger.info(f"Knowledge base create request from {current_user['email']}")
 
-
-# ── POST /upload ───────────────────────────────────────────────────────────────
-@kb_router.post("/upload")
-async def upload_document(
-    bt: BackgroundTasks,
-    file: UploadFile = File(...),
-    db_id: str = Query(default=None, description="Custom DB ObjectId, or omit for default DB"),
-    current_user: dict = Depends(get_current_user)
-):
-    logger.info(f"Upload request from {current_user['email']} | db_id={db_id}")
-
-    if not file.filename.endswith(('.txt', '.pdf')):
-        return error_response(400, message="Only .txt and .pdf files are supported.")
-
-    user_data = await users_collection.find_one({'_id': ObjectId(current_user['_id'])})
+    user_data = await get_user_data(current_user)
     if not user_data:
         return error_response(404, message="User not found.")
 
-    db_entry = None  # default DB
+    db_entry = await get_user_db_entry(current_user["_id"], payload.db_id)
+    if db_entry == "invalid":
+        return error_response(400, message="Invalid db_id format.")
+    if payload.db_id and payload.db_id != "default" and not db_entry:
+        return error_response(404, message="DB not found or does not belong to you.")
 
-    if db_id:
-        # Validate db_id format
-        try:
-            db_object_id = ObjectId(db_id)
-        except Exception:
-            return error_response(400, message="Invalid db_id format.")
+    kb_data = {
+        "name": payload.name,
+        "owner_id": ObjectId(current_user["_id"]),
+        "files": [],
+        "db_id": str(db_entry["_id"]) if db_entry else "default",
+        "db_name": get_db_name(db_entry),
+        "created_at": datetime.datetime.now(datetime.timezone.utc),
+    }
 
-        # Must belong to this user
-        db_entry = await db_collection.find_one({
-            '_id': db_object_id,
-            'owner_id': ObjectId(current_user['_id'])
-        })
-        if not db_entry:
-            return error_response(404, message="DB not found or does not belong to you.")
+    created_kb = await kb_collection.insert_one(kb_data)
+    kb_data["_id"] = created_kb.inserted_id
+
+    return success_response(
+        201,
+        message="Knowledge base created successfully.",
+        data=serialize_kb(kb_data)
+    )
+
+
+@kb_router.get("/all")
+async def get_all_knowledge_bases(current_user: dict = Depends(get_current_user)):
+    logger.info(f"Knowledge base list request from {current_user['email']}")
+
+    kbs = []
+    async for kb in kb_collection.find({"owner_id": ObjectId(current_user["_id"])}).sort("created_at", -1):
+        kbs.append(serialize_kb(kb))
+
+    return success_response(200, message="Knowledge bases fetched successfully.", data=kbs)
+
+
+@kb_router.post("/add-file/{kb_id}")
+async def add_file_to_knowledge_base(
+    kb_id: str,
+    bt: BackgroundTasks,
+    file: UploadFile = File(...),
+    current_user: dict = Depends(get_current_user)
+):
+    logger.info(f"Add file request for kb {kb_id} from {current_user['email']}")
+
+    if not file.filename.endswith((".txt", ".pdf")):
+        return error_response(400, message="Only .txt and .pdf files are supported.")
+
+    kb_entry = await get_kb_entry(kb_id, current_user["_id"])
+    if not kb_entry:
+        return error_response(404, message="Knowledge base not found.")
+
+    if file.filename in kb_entry.get("files", []):
+        return error_response(400, message="This file already exists in the knowledge base.")
+
+    db_entry = await get_user_db_entry(current_user["_id"], kb_entry.get("db_id"))
+    if kb_entry.get("db_id") != "default" and not db_entry:
+        return error_response(404, message="Linked DB not found for this knowledge base.")
 
     os.makedirs("uploads", exist_ok=True)
-    file_path = os.path.join("uploads", f"{current_user['_id']}_{file.filename}")
+    file_path = os.path.join("uploads", f"{current_user['_id']}_{kb_id}_{file.filename}")
 
     with open(file_path, "wb") as buffer:
         shutil.copyfileobj(file.file, buffer)
+
+    await kb_collection.update_one(
+        {"_id": kb_entry["_id"]},
+        {
+            "$push": {"files": file.filename},
+            "$set": {"updated_at": datetime.datetime.now(datetime.timezone.utc)}
+        }
+    )
 
     bt.add_task(
         process_file_and_embed,
         file_path,
         file.filename,
-        str(current_user['_id']),
-        db_entry,          # None = default, dict = custom
+        str(current_user["_id"]),
+        kb_id,
+        db_entry,
     )
 
-    logger.info(f"File '{file.filename}' queued | owner: {current_user['email']}")
-    return success_response(202, message="File uploaded successfully. Processing in background.")
+    return success_response(202, message="File added successfully. Processing started.")
 
 
-# ── DELETE /delete-file ────────────────────────────────────────────────────────
-@kb_router.delete("/delete-file")
-async def delete_file_from_kb(
-    file_name: str = Query(..., description="Exact filename e.g. raju_sabji.txt"),
-    db_id: str = Query(default=None, description="Custom DB ObjectId, or omit for default DB"),
+@kb_router.delete("/remove-file/{kb_id}")
+async def remove_file_from_knowledge_base(
+    kb_id: str,
+    file_name: str,
     current_user: dict = Depends(get_current_user)
 ):
-    logger.info(f"Delete KB file request from {current_user['email']} | file: {file_name} | db_id: {db_id}")
+    logger.info(f"Remove file request for kb {kb_id} from {current_user['email']}")
 
-    user_data = await users_collection.find_one({'_id': ObjectId(current_user['_id'])})
-    if not user_data:
-        return error_response(404, message="User not found.")
+    kb_entry = await get_kb_entry(kb_id, current_user["_id"])
+    if not kb_entry:
+        return error_response(404, message="Knowledge base not found.")
 
-    owner_id = str(current_user['_id'])
+    if file_name not in kb_entry.get("files", []):
+        return error_response(404, message="File not found in this knowledge base.")
 
-    # ── Default DB ─────────────────────────────────────────────────────────────
-    if not db_id:
-        result = vector_collection.delete_many({
-            'metadata.owner_id': owner_id,
-            'metadata.file_name': file_name,
-        })
-        logger.info(f"Deleted {result.deleted_count} chunks from default DB | file: {file_name}")
-        return success_response(200, message=f"Deleted {result.deleted_count} chunks for '{file_name}' from default DB.")
+    db_entry = await get_user_db_entry(current_user["_id"], kb_entry.get("db_id"))
+    if kb_entry.get("db_id") != "default" and not db_entry:
+        return error_response(404, message="Linked DB not found for this knowledge base.")
 
-    # ── Custom DB ──────────────────────────────────────────────────────────────
-    try:
-        db_object_id = ObjectId(db_id)
-    except Exception:
-        return error_response(400, message="Invalid db_id format.")
+    deleted_count = delete_embeddings_for_kb(str(current_user["_id"]), kb_id, db_entry, file_name)
 
-    db_entry = await db_collection.find_one({
-        '_id': db_object_id,
-        'owner_id': ObjectId(current_user['_id'])
-    })
-    if not db_entry:
-        return error_response(404, message="DB not found or does not belong to you.")
+    if deleted_count is None:
+        return error_response(500, message="Could not remove file embeddings.")
 
-    provider = db_entry.get('provider')
-    config   = db_entry.get('config', {})
+    await kb_collection.update_one(
+        {"_id": kb_entry["_id"]},
+        {
+            "$pull": {"files": file_name},
+            "$set": {"updated_at": datetime.datetime.now(datetime.timezone.utc)}
+        }
+    )
 
-    if provider == 'mongo':
-        target = get_mongo_collection_from_entry(db_entry, owner_id)
-        if not target:
-            return error_response(500, message="Could not connect to custom MongoDB.")
-
-        result = target.delete_many({
-            'metadata.owner_id': owner_id,
-            'metadata.file_name': file_name,
-        })
-        logger.info(f"Deleted {result.deleted_count} chunks from custom MongoDB | file: {file_name}")
-        return success_response(200, message=f"Deleted {result.deleted_count} chunks for '{file_name}' from custom MongoDB.")
-
-    elif provider == 'postgres':
-        try:
-            from sqlalchemy import create_engine, text
-            engine = create_engine(config.get('connection_string'))
-            with engine.connect() as conn:
-                result = conn.execute(text("""
-                    DELETE FROM langchain_pg_embedding
-                    WHERE cmetadata->>'owner_id' = :owner_id
-                    AND cmetadata->>'file_name' = :file_name
-                """), {"owner_id": owner_id, "file_name": file_name})
-                conn.commit()
-            logger.info(f"Deleted {result.rowcount} chunks from Postgres | file: {file_name}")
-            return success_response(200, message=f"Deleted {result.rowcount} chunks for '{file_name}' from Postgres.")
-        except Exception as e:
-            logger.error(f"Failed to delete from Postgres for owner {owner_id}: {e}")
-            return error_response(500, message="Failed to delete from Postgres.")
-
-    return error_response(400, message=f"Unsupported provider '{provider}'.")
+    return success_response(
+        200,
+        message=f"File removed successfully. Deleted {deleted_count} embeddings."
+    )
 
 
+@kb_router.delete("/delete/{kb_id}")
+async def delete_knowledge_base(kb_id: str, current_user: dict = Depends(get_current_user)):
+    logger.info(f"Delete knowledge base request for kb {kb_id} from {current_user['email']}")
 
-# ── GET /files ─────────────────────────────────────────────────────────────────
-@kb_router.get("/files")
-async def get_knowledge_base_files(current_user: dict = Depends(get_current_user)):
-    logger.info(f"Fetching KB files for {current_user['email']}")
+    kb_entry = await get_kb_entry(kb_id, current_user["_id"])
+    if not kb_entry:
+        return error_response(404, message="Knowledge base not found.")
 
-    user_data = await users_collection.find_one({'_id': ObjectId(current_user['_id'])})
-    if not user_data:
-        return error_response(404, message="User not found.")
+    db_entry = await get_user_db_entry(current_user["_id"], kb_entry.get("db_id"))
+    if kb_entry.get("db_id") != "default" and not db_entry:
+        return error_response(404, message="Linked DB not found for this knowledge base.")
 
-    owner_id = str(current_user['_id'])
-    all_files = []
+    deleted_count = delete_embeddings_for_kb(str(current_user["_id"]), kb_id, db_entry)
 
-    # ── 1. Default MongoDB Atlas ───────────────────────────────────────────────
-    try:
-        default_files = vector_collection.aggregate([
-            {'$match': {'metadata.owner_id': owner_id}},
-            {'$group': {
-                '_id': '$metadata.file_name',
-                'chunk_count': {'$sum': 1}
-            }}
-        ])
-        for f in default_files:
-            all_files.append({
-                'file_name':   f['_id'],
-                'db_id':       'default',
-                'db_name':     'Default DB',
-                'provider':    'MongoDB',
-                'chunk_count': f['chunk_count'],
-            })
-    except Exception as e:
-        logger.error(f"Failed to fetch files from default DB for owner {owner_id}: {e}")
+    if deleted_count is None:
+        return error_response(500, message="Could not delete knowledge base embeddings.")
 
-    # ── 2. Custom DBs ──────────────────────────────────────────────────────────
-    db_ids = user_data.get('custom_db', [])
+    await delete_kb_reference_from_agents(kb_id, current_user["_id"])
+    await kb_collection.delete_one({"_id": kb_entry["_id"]})
 
-    async for db_entry in db_collection.find({'_id': {'$in': db_ids}}):
-        provider = db_entry.get('provider')
-        config   = db_entry.get('config', {})
-        db_id    = str(db_entry['_id'])
-        db_name  = db_entry.get('name', 'Unnamed DB')
-
-        # ── Custom MongoDB ─────────────────────────────────────────────────────
-        if provider == 'mongo':
-            try:
-                target = get_mongo_collection_from_entry(db_entry, owner_id)
-                if not target:
-                    raise Exception("Could not get collection")
-
-                cursor = target.aggregate([
-                    {'$match': {'metadata.owner_id': owner_id}},
-                    {'$group': {
-                        '_id': '$metadata.file_name',
-                        'chunk_count': {'$sum': 1}
-                    }}
-                ])
-                for f in cursor:
-                    all_files.append({
-                        'file_name':   f['_id'],
-                        'db_id':       db_id,
-                        'db_name':     db_name,
-                        'provider':    'MongoDB',
-                        'chunk_count': f['chunk_count'],
-                    })
-            except Exception as e:
-                logger.error(f"Failed to fetch files from custom MongoDB {db_id}: {e}")
-
-        # ── Custom Postgres ────────────────────────────────────────────────────
-        elif provider == 'postgres':
-            try:
-                from sqlalchemy import create_engine, text
-                engine = create_engine(config.get('connection_string'))
-                with engine.connect() as conn:
-                    rows = conn.execute(text("""
-                        SELECT
-                            cmetadata->>'file_name' AS file_name,
-                            COUNT(*)                AS chunk_count
-                        FROM langchain_pg_embedding
-                        WHERE cmetadata->>'owner_id' = :owner_id
-                        GROUP BY cmetadata->>'file_name'
-                    """), {"owner_id": owner_id}).fetchall()
-
-                for row in rows:
-                    all_files.append({
-                        'file_name':   row.file_name,
-                        'db_id':       db_id,
-                        'db_name':     db_name,
-                        'provider':    'postgres',
-                        'chunk_count': row.chunk_count,
-                    })
-            except Exception as e:
-                logger.error(f"Failed to fetch files from Postgres {db_id}: {e}")
-
-    logger.info(f"Found {len(all_files)} files across all DBs for owner {owner_id}")
-    return success_response(200, message="Knowledge base files fetched.", data=all_files)
-
-
-
-
-
-
-
-
-
-
-
-
+    return success_response(
+        200,
+        message=f"Knowledge base deleted successfully. Deleted {deleted_count} embeddings."
+    )

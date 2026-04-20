@@ -8,7 +8,7 @@ from database.models import AgentCreation, AgentUpdate
 from utils.response import success_response, error_response
 from utils.users import get_current_user
 from utils.loggers import logger
-from database.db import users_collection, agents_collection, db_collection
+from database.db import users_collection, agents_collection, kb_collection
 from bson import ObjectId
 from bson.errors import InvalidId
 import datetime
@@ -27,27 +27,24 @@ def _serialize_agent(agent: dict) -> dict:
     return agent
 
 
-# ── Helper: validate kb_files against user's actual DBs ───────────────────────
-async def _validate_kb_files(kb_files: list, user_data: dict, owner_id: str) -> str | None:
-    """Returns an error message string if invalid, else None."""
-    if not kb_files:
+async def _validate_knowledge_base(knowledge_base: bool, knowledge_base_id: str | None, owner_id: str) -> str | None:
+    if not knowledge_base:
         return None
 
-    user_db_ids = [str(d) for d in user_data.get('custom_db', [])]
+    if not knowledge_base_id:
+        return "Please select a knowledge base."
 
-    for kb in kb_files:
-        if kb.db_id == 'default':
-            continue
-        if kb.db_id not in user_db_ids:
-            return f"DB '{kb.db_id}' does not belong to you."
+    try:
+        kb_object_id = ObjectId(knowledge_base_id)
+    except Exception:
+        return "Invalid knowledge base ID format."
 
-        # Verify the DB doc actually exists and belongs to user
-        db_entry = await db_collection.find_one({
-            '_id': ObjectId(kb.db_id),
-            'owner_id': ObjectId(owner_id)
-        })
-        if not db_entry:
-            return f"DB '{kb.db_id}' not found."
+    kb_entry = await kb_collection.find_one({
+        "_id": kb_object_id,
+        "owner_id": ObjectId(owner_id)
+    })
+    if not kb_entry:
+        return "Knowledge base not found."
 
     return None
 
@@ -61,11 +58,9 @@ async def create_agent(agent: AgentCreation, current_user: dict = Depends(get_cu
     if not user_data:
         return error_response(404, message="User not found.")
 
-    # Validate kb_files if knowledge_base is enabled
-    if agent.knowledge_base and agent.kb_files:
-        err = await _validate_kb_files(agent.kb_files, user_data, current_user['_id'])
-        if err:
-            return error_response(400, message=err)
+    err = await _validate_knowledge_base(agent.knowledge_base, agent.knowledge_base_id, current_user["_id"])
+    if err:
+        return error_response(400, message=err)
 
     agent_data = agent.model_dump()
     agent_data.update({
@@ -134,12 +129,25 @@ async def update_agent(agent_id: str, agent: AgentUpdate, current_user: dict = D
     if not update_data:
         return error_response(400, message="No fields provided to update.")
 
-    # Validate kb_files if being updated
-    if 'kb_files' in update_data:
-        user_data = await users_collection.find_one({'_id': ObjectId(current_user['_id'])})
-        if not user_data:
-            return error_response(404, message="User not found.")
-        err = await _validate_kb_files(agent.kb_files, user_data, current_user['_id'])
+    if "knowledge_base" in update_data or "knowledge_base_id" in update_data:
+        existing_agent = await agents_collection.find_one({
+            "_id": obj_id,
+            "owner_id": ObjectId(current_user["_id"])
+        })
+        if not existing_agent:
+            return error_response(404, message="Agent not found.")
+
+        next_knowledge_base = update_data.get("knowledge_base", existing_agent.get("knowledge_base", False))
+        next_knowledge_base_id = update_data.get("knowledge_base_id", existing_agent.get("knowledge_base_id"))
+
+        if next_knowledge_base is False:
+            update_data["knowledge_base_id"] = None
+
+        err = await _validate_knowledge_base(
+            next_knowledge_base,
+            update_data.get("knowledge_base_id", next_knowledge_base_id),
+            current_user["_id"]
+        )
         if err:
             return error_response(400, message=err)
 
