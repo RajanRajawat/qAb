@@ -134,25 +134,27 @@ def delete_embeddings_from_custom_mongo(db_entry: dict, owner_id: str, kb_id: st
 def delete_embeddings_from_postgres(db_entry: dict, owner_id: str, kb_id: str, file_name: str | None = None):
     try:
         from sqlalchemy import create_engine, text
-
-        engine = create_engine(db_entry["config"]["connection_string"])
+        connection_string = db_entry["config"]["connection_string"].replace("postgres://", "postgresql://")
+        engine = create_engine(connection_string)
+        
+        # Try cmetadata first (confirmed by user)
         sql = """
             DELETE FROM langchain_pg_embedding
             WHERE cmetadata->>'owner_id' = :owner_id
             AND cmetadata->>'knowledge_base_id' = :kb_id
         """
-        params = {
-            "owner_id": owner_id,
-            "kb_id": kb_id,
-        }
+        params = {"owner_id": owner_id, "kb_id": kb_id}
 
         if file_name:
             sql += " AND cmetadata->>'file_name' = :file_name"
             params["file_name"] = file_name
 
+        logger.info(f"Attempting Postgres deletion: {kb_id} for owner {owner_id}")
+        
         with engine.connect() as conn:
             result = conn.execute(text(sql), params)
             conn.commit()
+            logger.info(f"Postgres deletion successful. Rows affected: {result.rowcount}")
 
         return result.rowcount
     except Exception as e:
@@ -190,18 +192,19 @@ def delete_all_embeddings_for_custom_db(owner_id: str, db_entry: dict):
     if provider == "postgres":
         try:
             from sqlalchemy import create_engine, text
-
-            engine = create_engine(db_entry["config"]["connection_string"])
+            connection_string = db_entry["config"]["connection_string"].replace("postgres://", "postgresql://")
+            engine = create_engine(connection_string)
+            sql = "DELETE FROM langchain_pg_embedding WHERE cmetadata->>'owner_id' = :owner_id"
+            
+            logger.info(f"Attempting full Postgres cleanup for owner {owner_id}")
             with engine.connect() as conn:
-                result = conn.execute(text("""
-                    DELETE FROM langchain_pg_embedding
-                    WHERE cmetadata->>'owner_id' = :owner_id
-                """), {"owner_id": owner_id})
+                result = conn.execute(text(sql), {"owner_id": owner_id})
                 conn.commit()
+                logger.info(f"Postgres full cleanup successful. Rows affected: {result.rowcount}")
             return result.rowcount
         except Exception as e:
-            logger.error(f"Could not clear custom Postgres DB: {e}")
-            return None
+            logger.error(f"Could not delete all embeddings from Postgres: {e}")
+            return 0
 
     return None
 

@@ -4383,3 +4383,13 @@ NotImplementedError: Collection objects do not implement truth value testing or 
 2026-04-20 16:09:27,382 | INFO | uvicorn.error | Waiting for application shutdown.
 2026-04-20 16:09:27,387 | INFO | uvicorn.error | Application shutdown complete.
 2026-04-20 16:09:27,393 | INFO | uvicorn.error | Finished server process [20216]
+2026-04-20 16:15:45,969 | INFO | database.db | MongoDB connection string loaded successfully
+2026-04-20 16:15:46,134 | INFO | database.db | Async MongoDB client initialized for database: qab
+2026-04-20 16:15:46,134 | INFO | database.db | MongoDB collections initialized: users, agents
+2026-04-20 16:15:48,197 | INFO | database.db | Sync MongoDB vector collection initialized: vector_store
+2026-04-20 16:15:48,441 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-20 16:15:48,470 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-20 16:16:49,575 | INFO | uvicorn.error | Started server process [4736]
+2026-04-20 16:16:49,578 | INFO | uvicorn.error | Waiting for application startup.
+2026-04-20 16:16:49,581 | INFO | uvicorn.error | Application startup complete.
+2026-04-20 16:16:49,583 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)

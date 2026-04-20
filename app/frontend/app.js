@@ -1,519 +1,758 @@
+import { api } from './api.js';
+
+/**
+ * QAB Frontend Application Logic
+ * Vanila JS SPA with Hash Routing
+ */
+
+// --- Global State ---
 const state = {
-    token: localStorage.getItem("qab_token") || "",
-    user: JSON.parse(localStorage.getItem("qab_user") || "null"),
-    dbs: [],
-    kbs: [],
+    user: JSON.parse(localStorage.getItem('qab_user')) || null,
+    isAuthenticated: !!localStorage.getItem('qab_token'),
+    currentPath: window.location.hash || '#dashboard',
     agents: [],
+    kbs: [],
+    dbs: []
 };
 
-const modelMap = {
-    groq: ["llama-3.1-8b-instant"],
-    gemini: ["gemini-2.5-flash"],
+// --- Utilities ---
+const showToast = (message, type = 'success') => {
+    const root = document.getElementById('toast-root');
+    const toast = document.createElement('div');
+    toast.className = `toast toast-${type}`;
+    const icon = type === 'success' ? 'check-circle' : 'alert-circle';
+    toast.innerHTML = `<i data-lucide="${icon}"></i> <span>${message}</span>`;
+    root.appendChild(toast);
+    window.refreshIcons();
+    setTimeout(() => {
+        toast.style.opacity = '0';
+        setTimeout(() => toast.remove(), 300);
+    }, 3000);
 };
 
-const sessionStatus = document.getElementById("sessionStatus");
-const logoutBtn = document.getElementById("logoutBtn");
-const registerForm = document.getElementById("registerForm");
-const loginForm = document.getElementById("loginForm");
-const dbForm = document.getElementById("dbForm");
-const kbForm = document.getElementById("kbForm");
-const agentForm = document.getElementById("agentForm");
-const dbList = document.getElementById("dbList");
-const kbList = document.getElementById("kbList");
-const agentList = document.getElementById("agentList");
-const kbDbSelect = document.getElementById("kbDbSelect");
-const agentKbSelect = document.getElementById("agentKbSelect");
-const knowledgeBaseToggle = document.getElementById("knowledgeBaseToggle");
-const providerSelect = document.getElementById("providerSelect");
-const modelSelect = document.getElementById("modelSelect");
-const toast = document.getElementById("toast");
+const navigate = (hash) => {
+    window.location.hash = hash;
+};
 
+// --- UI Components ---
+const Sidebar = () => `
+    <div class="sidebar">
+        <div class="sidebar-logo">
+            <i data-lucide="zap"></i> QAB
+        </div>
+        <nav class="sidebar-nav">
+            <a href="#dashboard" class="nav-link ${state.currentPath === '#dashboard' ? 'active' : ''}">
+                <i data-lucide="layout-dashboard"></i> Dashboard
+            </a>
+            <a href="#agents" class="nav-link ${state.currentPath.startsWith('#agents') ? 'active' : ''}">
+                <i data-lucide="users"></i> Agents
+            </a>
+            <a href="#knowledge-bases" class="nav-link ${state.currentPath.startsWith('#knowledge-base') ? 'active' : ''}">
+                <i data-lucide="database"></i> Knowledge Base
+            </a>
+            <a href="#databases" class="nav-link ${state.currentPath === '#databases' ? 'active' : ''}">
+                <i data-lucide="server"></i> Databases
+            </a>
+        </nav>
+        <div class="sidebar-footer">
+            <button id="logout-btn" class="nav-link" style="width: 100%; text-align: left; background: none; border: none; cursor: pointer;">
+                <i data-lucide="log-out"></i> Logout
+            </button>
+        </div>
+    </div>
+`;
 
-function showToast(message, isError = false) {
-    toast.textContent = message;
-    toast.classList.remove("hidden");
-    toast.style.background = isError ? "rgba(163, 49, 49, 0.95)" : "rgba(31, 27, 24, 0.92)";
-    clearTimeout(showToast.timer);
-    showToast.timer = setTimeout(() => toast.classList.add("hidden"), 3200);
-}
+const Layout = (content) => `
+    <div class="main-layout">
+        ${Sidebar()}
+        <main class="content">
+            ${content}
+        </main>
+    </div>
+`;
 
-
-function updateSessionView() {
-    if (state.token && state.user) {
-        sessionStatus.textContent = `Logged in as ${state.user.email}`;
-        return;
-    }
-    sessionStatus.textContent = "Not logged in";
-}
-
-
-function saveSession(data) {
-    state.token = data.jwt_tokens.access_token;
-    state.user = data.user_info;
-    localStorage.setItem("qab_token", state.token);
-    localStorage.setItem("qab_user", JSON.stringify(state.user));
-    updateSessionView();
-}
-
-
-function clearSession() {
-    state.token = "";
-    state.user = null;
-    localStorage.removeItem("qab_token");
-    localStorage.removeItem("qab_user");
-    state.dbs = [];
-    state.kbs = [];
-    state.agents = [];
-    updateSessionView();
-    renderDbList();
-    renderKbList();
-    renderAgentList();
-    fillDbSelects();
-}
-
-
-function fillModelOptions() {
-    const models = modelMap[providerSelect.value] || [];
-    modelSelect.innerHTML = models.map((model) => `<option value="${model}">${model}</option>`).join("");
-}
-
-
-function fillDbSelects() {
-    const dbOptions = [
-        { db_id: "default", name: "Default DB" },
-        ...state.dbs,
-    ];
-
-    kbDbSelect.innerHTML = dbOptions
-        .map((db) => `<option value="${db.db_id}">${db.name}</option>`)
-        .join("");
-
-    agentKbSelect.innerHTML = [
-        '<option value="">Select knowledge base</option>',
-        ...state.kbs.map((kb) => `<option value="${kb.kb_id}">${kb.name} (${kb.db_name})</option>`)
-    ].join("");
-}
-
-
-function parseError(data) {
-    if (!data) return "Request failed";
-    if (data.detail?.message) return data.detail.message;
-    if (data.detail?.detail?.message) return data.detail.detail.message;
-    if (data.message) return data.message;
-    return "Request failed";
-}
-
-
-async function api(path, options = {}) {
-    const headers = new Headers(options.headers || {});
-
-    if (state.token) {
-        headers.set("Authorization", `Bearer ${state.token}`);
-    }
-
-    const response = await fetch(path, {
-        ...options,
-        headers,
-    });
-
-    let data = null;
-    try {
-        data = await response.json();
-    } catch {
-        data = null;
-    }
-
-    if (!response.ok) {
-        throw new Error(parseError(data));
-    }
-
-    return data;
-}
-
-
-async function loadDbs() {
-    if (!state.token) return;
-    const response = await api("/custom-db/mydb");
-    state.dbs = response.data || [];
-    renderDbList();
-    fillDbSelects();
-}
-
-
-async function loadKbs() {
-    if (!state.token) return;
-    const response = await api("/knowledge-base/all");
-    state.kbs = response.data || [];
-    renderKbList();
-    fillDbSelects();
-}
-
-
-async function loadAgents() {
-    if (!state.token) return;
-    const response = await api("/agent/all");
-    state.agents = response.data || [];
-    renderAgentList();
-}
-
-
-async function loadAllProtectedData() {
-    await Promise.all([loadDbs(), loadKbs(), loadAgents()]);
-}
-
-
-function renderDbList() {
-    if (!state.dbs.length) {
-        dbList.innerHTML = '<div class="item-card">No custom DB linked yet.</div>';
-        return;
-    }
-
-    dbList.innerHTML = state.dbs.map((db) => `
-        <div class="item-card">
-            <h3>${db.name}</h3>
-            <div class="meta">${db.provider}</div>
-            <div class="inline-actions">
-                <button class="danger-btn" onclick="deleteDb('${db.db_id}')">Delete</button>
+const Modal = (title, content, id) => {
+    const root = document.getElementById('modal-root');
+    root.innerHTML = `
+        <div class="modal-overlay" id="${id}-overlay">
+            <div class="modal">
+                <div class="modal-header">
+                    <h3>${title}</h3>
+                    <button class="btn-link" onclick="document.getElementById('${id}-overlay').remove()">
+                        <i data-lucide="x"></i>
+                    </button>
+                </div>
+                <div class="modal-body">${content}</div>
             </div>
         </div>
-    `).join("");
-}
+    `;
+    window.refreshIcons();
+};
 
+// --- Page Renderers ---
 
-function renderKbList() {
-    if (!state.kbs.length) {
-        kbList.innerHTML = '<div class="item-card"><div class="meta">No knowledge base created yet.</div></div>';
+const renderLogin = () => {
+    document.getElementById('app').innerHTML = `
+        <div class="auth-container">
+            <div class="auth-card">
+                <h1 class="auth-title">Welcome Back</h1>
+                <p class="auth-subtitle">Login to manage your AI agents</p>
+                <form id="login-form">
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="login-email" required placeholder="name@company.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="login-password" required placeholder="••••••••">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%">Sign In</button>
+                </form>
+                <p style="text-align: center; margin-top: 1.5rem; font-size: 0.875rem; color: var(--text-muted)">
+                    Don't have an account? <a href="#register" class="btn-link">Register here</a>
+                </p>
+            </div>
+        </div>
+    `;
+    document.getElementById('login-form').onsubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await api.login(
+                document.getElementById('login-email').value,
+                document.getElementById('login-password').value
+            );
+            state.isAuthenticated = true;
+            state.user = JSON.parse(localStorage.getItem('qab_user'));
+            showToast('Login successful!');
+            navigate('#dashboard');
+        } catch (err) {
+            showToast(err.message, 'error');
+        }
+    };
+};
+
+const renderRegister = () => {
+    document.getElementById('app').innerHTML = `
+        <div class="auth-container">
+            <div class="auth-card">
+                <h1 class="auth-title">Create Account</h1>
+                <p class="auth-subtitle">Get started with QAB today</p>
+                <form id="register-form">
+                    <div class="form-group">
+                        <label>Full Name</label>
+                        <input type="text" id="reg-name" required placeholder="John Doe">
+                    </div>
+                    <div class="form-group">
+                        <label>Email Address</label>
+                        <input type="email" id="reg-email" required placeholder="john@example.com">
+                    </div>
+                    <div class="form-group">
+                        <label>Mobile Number</label>
+                        <input type="text" id="reg-mobile" required placeholder="10-digit number">
+                    </div>
+                    <div class="form-group">
+                        <label>Password</label>
+                        <input type="password" id="reg-password" required placeholder="At least 8 chars">
+                    </div>
+                    <button type="submit" class="btn btn-primary" style="width: 100%">Create Account</button>
+                </form>
+                <p style="text-align: center; margin-top: 1.5rem; font-size: 0.875rem; color: var(--text-muted)">
+                    Already have an account? <a href="#login" class="btn-link">Login here</a>
+                </p>
+            </div>
+        </div>
+    `;
+    document.getElementById('register-form').onsubmit = async (e) => {
+        e.preventDefault();
+        try {
+            await api.register(
+                document.getElementById('reg-name').value,
+                document.getElementById('reg-email').value,
+                document.getElementById('reg-mobile').value,
+                document.getElementById('reg-password').value
+            );
+            showToast('Registration successful! Please login.');
+            navigate('#login');
+        } catch (err) {
+            showToast(err.message, 'error');
+        }
+    };
+};
+
+const renderDashboard = async () => {
+    const app = document.getElementById('app');
+    app.innerHTML = Layout(`
+        <div class="content-header">
+            <div>
+                <h1 class="heading">Dashboard</h1>
+                <p class="text-muted">Welcome back, ${state.user?.name || 'User'}</p>
+            </div>
+            <div style="display: flex; gap: 1rem;">
+                <button class="btn btn-outline" onclick="window.location.hash = '#knowledge-bases'">
+                    <i data-lucide="plus"></i> New KB
+                </button>
+                <button class="btn btn-primary" onclick="window.location.hash = '#agents'">
+                    <i data-lucide="plus"></i> Create Agent
+                </button>
+            </div>
+        </div>
+        <div class="stats-grid">
+            <div class="stat-card">
+                <div class="stat-icon"><i data-lucide="users"></i></div>
+                <div>
+                    <div class="stat-value" id="stat-agents">-</div>
+                    <div class="stat-label">Total Agents</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i data-lucide="database"></i></div>
+                <div>
+                    <div class="stat-value" id="stat-kbs">-</div>
+                    <div class="stat-label">Knowledge Bases</div>
+                </div>
+            </div>
+            <div class="stat-card">
+                <div class="stat-icon"><i data-lucide="server"></i></div>
+                <div>
+                    <div class="stat-value" id="stat-dbs">-</div>
+                    <div class="stat-label">Linked DBs</div>
+                </div>
+            </div>
+        </div>
+        <div class="card" style="padding: 2rem; border-style: dashed; border-width: 2px; text-align: center;">
+            <h3 style="margin-bottom: 0.5rem;">Getting Started</h3>
+            <p class="text-muted">Connect a database, upload your documents, and launch your first AI agent in minutes.</p>
+        </div>
+    `);
+
+    // Fetch stats
+    try {
+        const [agents, kbs, dbs] = await Promise.all([
+            api.getAgents(),
+            api.getKBs(),
+            api.getDBs()
+        ]);
+        document.getElementById('stat-agents').innerText = agents.data.length;
+        document.getElementById('stat-kbs').innerText = kbs.data.length;
+        document.getElementById('stat-dbs').innerText = dbs.data.length;
+    } catch (e) {
+        console.error('Stats fetch failed', e);
+    }
+};
+
+const renderAgents = async () => {
+    const app = document.getElementById('app');
+    app.innerHTML = Layout(`
+        <div class="content-header">
+            <div>
+                <h1 class="heading">Agents</h1>
+                <p class="text-muted">Manage your AI workforce</p>
+            </div>
+            <button class="btn btn-primary" id="btn-create-agent">
+                <i data-lucide="plus"></i> Create Agent
+            </button>
+        </div>
+        <div class="card-grid" id="agents-list">
+            <div class="text-muted">Loading agents...</div>
+        </div>
+    `);
+
+    const refreshAgents = async () => {
+        const list = document.getElementById('agents-list');
+        try {
+            const res = await api.getAgents();
+            const agents = res.data;
+            if (agents.length === 0) {
+                list.innerHTML = '<div class="text-muted">No agents yet. Create one to get started!</div>';
+                return;
+            }
+            list.innerHTML = agents.map(a => `
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <h3 class="card-title">${a.name}</h3>
+                        <span class="badge badge-blue">${a.llm_provider}</span>
+                    </div>
+                    <p class="card-desc">${a.description}</p>
+                    <div style="font-size: 0.75rem; color: var(--text-muted); margin-bottom: 1rem;">
+                        <strong>Model:</strong> ${a.llm_model} <br>
+                        <strong>KB:</strong> ${a.knowledge_base ? 'Linked' : 'None'}
+                    </div>
+                    <div class="card-footer">
+                        <a href="#chat/${a._id}" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.875rem;">
+                            <i data-lucide="message-square"></i> Chat
+                        </a>
+                        <div style="display: flex; gap: 0.5rem;">
+                            <button class="btn btn-link delete-agent" data-id="${a._id}"><i data-lucide="trash-2" style="color: var(--error)"></i></button>
+                        </div>
+                    </div>
+                </div>
+            `).join('');
+            
+            document.querySelectorAll('.delete-agent').forEach(btn => {
+                btn.onclick = async () => {
+                    if (confirm('Are you sure you want to delete this agent?')) {
+                        try {
+                            await api.deleteAgent(btn.dataset.id);
+                            showToast('Agent deleted');
+                            refreshAgents();
+                        } catch (e) { showToast(e.message, 'error'); }
+                    }
+                };
+            });
+            window.refreshIcons();
+        } catch (e) { list.innerHTML = '<div class="text-error">Failed to load agents</div>'; }
+    };
+
+    refreshAgents();
+
+    document.getElementById('btn-create-agent').onclick = async () => {
+        let kbs = [];
+        try { kbs = (await api.getKBs()).data; } catch(e){}
+
+        const formHtml = `
+            <form id="create-agent-form">
+                <div class="form-group">
+                    <label>Agent Name</label>
+                    <input id="a-name" required placeholder="e.g. Sales Assistant">
+                </div>
+                <div class="form-group">
+                    <label>Description</label>
+                    <input id="a-desc" required placeholder="What does this agent do?">
+                </div>
+                <div class="form-group">
+                    <label>Role</label>
+                    <input id="a-role" required placeholder="e.g. Expert Salesperson">
+                </div>
+                <div class="form-group">
+                    <label>System Instructions</label>
+                    <textarea id="a-instr" required rows="3" placeholder="Be polite and helpful..."></textarea>
+                </div>
+                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                    <div class="form-group">
+                        <label>Provider</label>
+                        <select id="a-prov">
+                            <option value="groq">Groq</option>
+                            <option value="gemini">Gemini</option>
+                        </select>
+                    </div>
+                    <div class="form-group">
+                        <label>Model</label>
+                        <select id="a-model">
+                            <option value="llama-3.1-8b-instant">Llama 3.1 8B (Groq)</option>
+                            <option value="gemini-2.5-flash">Gemini 2.5 Flash</option>
+                        </select>
+                    </div>
+                </div>
+                <div class="form-group">
+                    <label>Temperature (0 to 1)</label>
+                    <input type="number" step="0.1" min="0" max="1" id="a-temp" value="0.7">
+                </div>
+                <div class="form-group">
+                    <label>Knowledge Base</label>
+                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                        <input type="checkbox" id="a-kb-link" style="width: auto;">
+                        <select id="a-kb-id" disabled>
+                            <option value="">Select KB...</option>
+                            ${kbs.map(k => `<option value="${k.kb_id}">${k.name}</option>`).join('')}
+                        </select>
+                    </div>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Create Agent</button>
+            </form>
+        `;
+        Modal('Create New Agent', formHtml, 'agent');
+        
+        const kbLink = document.getElementById('a-kb-link');
+        const kbSelect = document.getElementById('a-kb-id');
+        kbLink.onchange = () => kbSelect.disabled = !kbLink.checked;
+
+        document.getElementById('create-agent-form').onsubmit = async (e) => {
+            e.preventDefault();
+            try {
+                await api.createAgent({
+                    name: document.getElementById('a-name').value,
+                    description: document.getElementById('a-desc').value,
+                    role: document.getElementById('a-role').value,
+                    instruction: document.getElementById('a-instr').value,
+                    llm_provider: document.getElementById('a-prov').value,
+                    llm_model: document.getElementById('a-model').value,
+                    temperature: parseFloat(document.getElementById('a-temp').value),
+                    knowledge_base: kbLink.checked,
+                    knowledge_base_id: kbLink.checked ? kbSelect.value : null,
+                    tools: []
+                });
+                showToast('Agent created!');
+                document.getElementById('agent-overlay').remove();
+                refreshAgents();
+            } catch (err) { showToast(err.message, 'error'); }
+        };
+    };
+};
+
+const renderKnowledgeBases = async () => {
+    const app = document.getElementById('app');
+    app.innerHTML = Layout(`
+        <div class="content-header">
+            <div>
+                <h1 class="heading">Knowledge Base</h1>
+                <p class="text-muted">Manage your documents and data</p>
+            </div>
+            <button class="btn btn-primary" id="btn-create-kb">
+                <i data-lucide="plus"></i> New KB
+            </button>
+        </div>
+        <div class="card-grid" id="kb-list">
+            <div class="text-muted">Loading KBs...</div>
+        </div>
+    `);
+
+    const refreshKBs = async () => {
+        const list = document.getElementById('kb-list');
+        try {
+            const res = await api.getKBs();
+            const kbs = res.data;
+            if (kbs.length === 0) {
+                list.innerHTML = '<div class="text-muted">No knowledge bases yet.</div>';
+                return;
+            }
+            list.innerHTML = kbs.map(k => `
+                <div class="card">
+                    <h3 class="card-title">${k.name}</h3>
+                    <div style="font-size: 0.875rem; color: var(--text-muted); margin-bottom:1rem;">
+                        <strong>DB:</strong> ${k.db_name} <br>
+                        <strong>Files:</strong> ${k.files.length}
+                    </div>
+                    <div id="file-list-${k.kb_id}" style="max-height: 100px; overflow-y: auto; margin-bottom: 1rem; border-top: 1px solid var(--border); padding-top: 0.5rem;">
+                        ${k.files.map(f => `
+                            <div style="font-size: 0.75rem; display: flex; justify-content: space-between; align-items: center; padding: 0.25rem 0;">
+                                ${f} <button class="btn-link rm-file" data-kb="${k.kb_id}" data-file="${f}"><i data-lucide="x" style="width: 12px; color: var(--error)"></i></button>
+                            </div>
+                        `).join('')}
+                    </div>
+                    <div class="card-footer">
+                        <div style="display: flex; gap: 0.5rem;">
+                             <input type="file" id="file-input-${k.kb_id}" style="display: none;" accept=".pdf,.txt">
+                             <button class="btn btn-outline upload-trigger" data-id="${k.kb_id}" style="padding: 0.4rem 0.8rem; font-size: 0.75rem;">
+                                <i data-lucide="upload"></i> Upload
+                             </button>
+                        </div>
+                        <button class="btn btn-link delete-kb" data-id="${k.kb_id}"><i data-lucide="trash-2" style="color: var(--error)"></i></button>
+                    </div>
+                </div>
+            `).join('');
+
+            document.querySelectorAll('.upload-trigger').forEach(btn => {
+                const id = btn.dataset.id;
+                const input = document.getElementById(`file-input-${id}`);
+                btn.onclick = () => input.click();
+                input.onchange = async () => {
+                    if (input.files.length > 0) {
+                        try {
+                            showToast('Uploading file...');
+                            await api.addFileToKB(id, input.files[0]);
+                            showToast('File uploaded successfully');
+                            refreshKBs();
+                        } catch (e) { showToast(e.message, 'error'); }
+                    }
+                };
+            });
+
+            document.querySelectorAll('.rm-file').forEach(btn => {
+                btn.onclick = async () => {
+                    try {
+                        await api.removeFileFromKB(btn.dataset.kb, btn.dataset.file);
+                        showToast('File removed');
+                        refreshKBs();
+                    } catch (e) { showToast(e.message, 'error'); }
+                };
+            });
+
+            document.querySelectorAll('.delete-kb').forEach(btn => {
+                btn.onclick = async () => {
+                    if (confirm('Delete this Knowledge Base and all its embeddings?')) {
+                        try {
+                            await api.deleteKB(btn.dataset.id);
+                            showToast('Knowledge Base deleted');
+                            refreshKBs();
+                        } catch (e) { showToast(e.message, 'error'); }
+                    }
+                };
+            });
+            window.refreshIcons();
+        } catch (e) { list.innerHTML = '<div class="text-error">Failed to load Knowledge Bases</div>'; }
+    };
+
+    refreshKBs();
+
+    document.getElementById('btn-create-kb').onclick = async () => {
+        let dbs = [];
+        try { dbs = (await api.getDBs()).data; } catch(e){}
+        const formHtml = `
+            <form id="create-kb-form">
+                <div class="form-group">
+                    <label>KB Name</label>
+                    <input id="kb-name" required placeholder="e.g. Company Docs">
+                </div>
+                <div class="form-group">
+                    <label>Database Storage</label>
+                    <select id="kb-db">
+                        <option value="default">Default MongoDB</option>
+                        ${dbs.map(d => `<option value="${d.db_id}">${d.name} (${d.provider})</option>`).join('')}
+                    </select>
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Create KB</button>
+            </form>
+        `;
+        Modal('Create New Knowledge Base', formHtml, 'kb');
+        document.getElementById('create-kb-form').onsubmit = async (e) => {
+            e.preventDefault();
+            try {
+                await api.createKB({
+                    name: document.getElementById('kb-name').value,
+                    db_id: document.getElementById('kb-db').value
+                });
+                showToast('KB created!');
+                document.getElementById('kb-overlay').remove();
+                refreshKBs();
+            } catch (err) { showToast(err.message, 'error'); }
+        };
+    };
+};
+
+const renderDatabases = async () => {
+    const app = document.getElementById('app');
+    app.innerHTML = Layout(`
+        <div class="content-header">
+            <div>
+                <h1 class="heading">Databases</h1>
+                <p class="text-muted">Link custom vector stores</p>
+            </div>
+            <button class="btn btn-primary" id="btn-link-db">
+                <i data-lucide="link"></i> Link Database
+            </button>
+        </div>
+        <div class="card-grid" id="db-list">
+            <div class="text-muted">Loading databases...</div>
+        </div>
+    `);
+
+    const refreshDBs = async () => {
+        const list = document.getElementById('db-list');
+        try {
+            const res = await api.getDBs();
+            const dbs = res.data;
+            if (dbs.length === 0) {
+                list.innerHTML = '<div class="text-muted">No custom databases linked. Using default store.</div>';
+                return;
+            }
+            list.innerHTML = dbs.map(d => `
+                <div class="card">
+                    <div style="display: flex; justify-content: space-between; align-items: start; margin-bottom: 1rem;">
+                        <h3 class="card-title">${d.name}</h3>
+                        <span class="badge badge-blue">${d.provider}</span>
+                    </div>
+                    <div class="card-footer">
+                        <button class="btn btn-outline delete-db" data-id="${d.db_id}" style="width: 100%; border-color: var(--error); color: var(--error)">
+                            <i data-lucide="trash-2"></i> Unlink Database
+                        </button>
+                    </div>
+                </div>
+            `).join('');
+
+            document.querySelectorAll('.delete-db').forEach(btn => {
+                btn.onclick = async () => {
+                    if (confirm('Unlinking will also delete all Knowledge Bases stored in this DB. Proceed?')) {
+                        try {
+                            await api.unlinkDB(btn.dataset.id);
+                            showToast('Database unlinked');
+                            refreshDBs();
+                        } catch (e) { showToast(e.message, 'error'); }
+                    }
+                };
+            });
+            window.refreshIcons();
+        } catch (e) { list.innerHTML = '<div class="text-error">Failed to load databases</div>'; }
+    };
+
+    refreshDBs();
+
+    document.getElementById('btn-link-db').onclick = () => {
+        const formHtml = `
+            <form id="link-db-form">
+                <div class="form-group">
+                    <label>DB Name</label>
+                    <input id="db-name" required placeholder="e.g. My Atlas Cluster">
+                </div>
+                <div class="form-group">
+                    <label>Provider</label>
+                    <select id="db-provider">
+                        <option value="mongo">MongoDB</option>
+                        <option value="postgres">PostgreSQL (PGVector)</option>
+                    </select>
+                </div>
+                <div class="form-group">
+                    <label>Connection URI</label>
+                    <input id="db-uri" required placeholder="mongodb+srv://... or postgres://...">
+                </div>
+                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Link Database</button>
+            </form>
+        `;
+        Modal('Link Custom Database', formHtml, 'db');
+        document.getElementById('link-db-form').onsubmit = async (e) => {
+            e.preventDefault();
+            try {
+                await api.linkDB({
+                    name: document.getElementById('db-name').value,
+                    db: document.getElementById('db-provider').value,
+                    connection_uri: document.getElementById('db-uri').value
+                });
+                showToast('Database linked!');
+                document.getElementById('db-overlay').remove();
+                refreshDBs();
+            } catch (err) { showToast(err.message, 'error'); }
+        };
+    };
+};
+
+const renderChat = async (agentId) => {
+    const app = document.getElementById('app');
+    let agent = null;
+    try {
+        agent = (await api.request(`/agent/${agentId}`)).data;
+    } catch(e) {
+        navigate('#agents');
         return;
     }
 
-    kbList.innerHTML = state.kbs.map((kb) => `
-        <div class="item-card">
-            <div style="display: flex; justify-content: space-between; align-items: start;">
+    app.innerHTML = Layout(`
+        <div class="chat-container">
+            <div class="chat-header">
                 <div>
-                    <h3>${kb.name}</h3>
-                    <div class="meta">Store: ${kb.db_name}</div>
-                    <div class="meta">Entries: ${kb.files.length}</div>
+                    <h3 style="margin: 0">${agent.name}</h3>
+                    <small class="text-muted">${agent.llm_model} • ${agent.knowledge_base ? 'RAG Enabled' : 'Standard'}</small>
                 </div>
-                <button class="danger-btn" onclick="deleteKb('${kb.kb_id}')">Delete</button>
+                <a href="#agents" class="btn-link">Close Chat</a>
             </div>
-            
-            <div class="files">
-                ${kb.files.length ? kb.files.map((file) => `
-                    <span class="file-tag">
-                        ${file}
-                        <button style="background:transparent; padding:0; border:none; color:inherit; cursor:pointer;" onclick="removeKbFile('${kb.kb_id}', '${encodeURIComponent(file)}')">×</button>
-                    </span>
-                `).join("") : '<div class="meta" style="margin: 0.5rem 0;">Empty Knowledge Base</div>'}
+            <div class="chat-messages" id="chat-messages">
+                <div class="message message-agent">Hello! I am ${agent.name}. How can I assist you today?</div>
             </div>
-            
-            <form class="stack" onsubmit="uploadKbFile(event, '${kb.kb_id}')" style="margin-top: 1rem; border-top: 1px solid var(--glass-border); padding-top: 1rem;">
-                <div class="meta">Add Source (.txt, .pdf)</div>
-                <div style="display: flex; gap: 0.5rem;">
-                    <input type="file" name="file" accept=".txt,.pdf" required style="flex:1; font-size: 0.8rem;">
-                    <button type="submit" style="padding: 0.5rem 1rem;">Upload</button>
-                </div>
+            <form class="chat-input-area" id="chat-form">
+                <input type="text" id="chat-input" placeholder="Type your message..." autocomplete="off">
+                <button type="submit" class="btn btn-primary" id="chat-submit">
+                    <i data-lucide="send"></i>
+                </button>
             </form>
         </div>
-    `).join("");
-}
+    `);
+    
+    const messagesDiv = document.getElementById('chat-messages');
+    const input = document.getElementById('chat-input');
+    let threadId = localStorage.getItem(`thread_${agentId}`) || null;
 
-
-function renderAgentList() {
-    if (!state.agents.length) {
-        agentList.innerHTML = '<div class="item-card"><div class="meta">No agent deployed yet.</div></div>';
-        return;
-    }
-
-    agentList.innerHTML = state.agents.map((agent) => `
-        <div class="item-card glass">
-            <div style="display: flex; justify-content: space-between; align-items: start;">
-                <div>
-                    <h3>${agent.name}</h3>
-                    <div class="meta">${agent.llm_provider.toUpperCase()} | ${agent.llm_model}</div>
-                    <div class="meta">RAG: ${agent.knowledge_base ? "Enabled" : "Disabled"}</div>
-                </div>
-                <button class="danger-btn" onclick="deleteAgent('${agent._id}')">Terminate</button>
-            </div>
-            
-            <div style="margin: 1rem 0;">
-                <textarea id="query-${agent._id}" placeholder="Type your query for ${agent.name}..." rows="2" style="width:100%; margin-bottom: 0.5rem;"></textarea>
-                <button onclick="runAgent('${agent._id}')" id="btn-${agent._id}" style="width: 100%;">Execute Runner</button>
-            </div>
-            
-            <div id="output-${agent._id}" class="agent-output hidden"></div>
-        </div>
-    `).join("");
-}
-
-async function deleteDb(dbId) {
-    try {
-        const response = await api(`/custom-db/delete/${dbId}`, { method: "DELETE" });
-        showToast(response.message);
-        await loadAllProtectedData();
-    } catch (error) {
-        showToast(error.message, true);
-    }
-}
-
-
-async function deleteKb(kbId) {
-    try {
-        const response = await api(`/knowledge-base/delete/${kbId}`, { method: "DELETE" });
-        showToast(response.message);
-        await loadAllProtectedData();
-    } catch (error) {
-        showToast(error.message, true);
-    }
-}
-
-
-async function removeKbFile(kbId, fileName) {
-    try {
-        const response = await api(`/knowledge-base/remove-file/${kbId}?file_name=${fileName}`, { method: "DELETE" });
-        showToast(response.message);
-        await loadKbs();
-    } catch (error) {
-        showToast(error.message, true);
-    }
-}
-
-
-async function uploadKbFile(event, kbId) {
-    event.preventDefault();
-    const form = event.target;
-    const fileInput = form.querySelector('input[type="file"]');
-
-    if (!fileInput.files.length) {
-        showToast("Please choose a file.", true);
-        return;
-    }
-
-    const formData = new FormData();
-    formData.append("file", fileInput.files[0]);
-
-    const submitBtn = form.querySelector('button[type="submit"]');
-    const originalText = submitBtn.textContent;
-    submitBtn.disabled = true;
-    submitBtn.textContent = "Uploading...";
-
-    try {
-        const response = await api(`/knowledge-base/add-file/${kbId}`, {
-            method: "POST",
-            body: formData,
-        });
-        showToast(response.message);
-        form.reset();
-        await loadKbs();
-    } catch (error) {
-        showToast(error.message, true);
-    } finally {
-        submitBtn.disabled = false;
-        submitBtn.textContent = originalText;
-    }
-}
-
-
-async function deleteAgent(agentId) {
-    try {
-        const response = await api(`/agent/delete/${agentId}`, { method: "DELETE" });
-        showToast(response.message);
-        await loadAgents();
-    } catch (error) {
-        showToast(error.message, true);
-    }
-}
-
-
-async function runAgent(agentId) {
-    const input = document.getElementById(`query-${agentId}`);
-    const output = document.getElementById(`output-${agentId}`);
-    const btn = document.getElementById(`btn-${agentId}`);
-
-    if (!input.value.trim()) {
-        showToast("Please enter a query.", true);
-        return;
-    }
-
-    const originalBtnText = btn.textContent;
-    btn.disabled = true;
-    btn.textContent = "Processing...";
-    output.classList.remove("hidden");
-    output.style.opacity = "0.6";
-    output.textContent = "Thinking...";
-
-    try {
-        const response = await api(`/chat/run/${agentId}`, {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify({ query: input.value }),
-        });
-        output.style.opacity = "1";
-        output.textContent = response.data.response || "No response";
-        showToast(response.message);
-    } catch (error) {
-        output.style.opacity = "1";
-        output.textContent = "Error: " + error.message;
-        showToast(error.message, true);
-    } finally {
-        btn.disabled = false;
-        btn.textContent = originalBtnText;
-    }
-}
-
-
-registerForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const formData = new FormData(registerForm);
-    const payload = Object.fromEntries(formData.entries());
-
-    try {
-        const response = await api("/auth/register", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-        });
-        showToast(response.message);
-        registerForm.reset();
-    } catch (error) {
-        showToast(error.message, true);
-    }
-});
-
-
-loginForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const formData = new FormData(loginForm);
-    const payload = Object.fromEntries(formData.entries());
-
-    try {
-        const response = await api("/auth/login", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-        });
-        saveSession(response.data);
-        showToast(response.message);
-        loginForm.reset();
-        await loadAllProtectedData();
-    } catch (error) {
-        showToast(error.message, true);
-    }
-});
-
-
-dbForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const formData = new FormData(dbForm);
-    const payload = Object.fromEntries(formData.entries());
-
-    try {
-        const response = await api("/custom-db/add", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-        });
-        showToast(response.message);
-        dbForm.reset();
-        await loadDbs();
-    } catch (error) {
-        showToast(error.message, true);
-    }
-});
-
-
-kbForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const formData = new FormData(kbForm);
-    const payload = {
-        name: formData.get("name"),
-        db_id: formData.get("db_id") || "default",
+    const appendMessage = (content, role) => {
+        const msg = document.createElement('div');
+        msg.className = `message message-${role}`;
+        msg.innerText = content;
+        messagesDiv.appendChild(msg);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
     };
 
-    try {
-        const response = await api("/knowledge-base/create", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-        });
-        showToast(response.message);
-        kbForm.reset();
-        fillDbSelects();
-        await loadKbs();
-    } catch (error) {
-        showToast(error.message, true);
-    }
-});
+    document.getElementById('chat-form').onsubmit = async (e) => {
+        e.preventDefault();
+        const query = input.value.trim();
+        if (!query) return;
 
+        appendMessage(query, 'user');
+        input.value = '';
+        input.disabled = true;
+        document.getElementById('chat-submit').disabled = true;
 
-agentForm.addEventListener("submit", async (event) => {
-    event.preventDefault();
-    const formData = new FormData(agentForm);
-    const tools = Array.from(document.querySelectorAll('input[name="tools"]:checked')).map((input) => input.value);
-    const useKb = knowledgeBaseToggle.checked;
+        const loadingMsg = document.createElement('div');
+        loadingMsg.className = 'message message-agent';
+        loadingMsg.innerHTML = '<span class="loader-circle" style="width:20px;height:20px;border-width:2px;display:inline-block"></span>';
+        messagesDiv.appendChild(loadingMsg);
+        messagesDiv.scrollTop = messagesDiv.scrollHeight;
 
-    const payload = {
-        name: formData.get("name"),
-        description: formData.get("description"),
-        role: formData.get("role"),
-        instruction: formData.get("instruction"),
-        llm_provider: formData.get("llm_provider"),
-        llm_model: formData.get("llm_model"),
-        temperature: Number(formData.get("temperature")),
-        knowledge_base: useKb,
-        knowledge_base_id: useKb ? formData.get("knowledge_base_id") || null : null,
-        tools,
+        try {
+            const res = await api.runAgent(agentId, query, threadId);
+            loadingMsg.remove();
+            appendMessage(res.data.response, 'agent');
+            if (res.data.thread_id) {
+                threadId = res.data.thread_id;
+                localStorage.setItem(`thread_${agentId}`, threadId);
+            }
+        } catch (err) {
+            loadingMsg.remove();
+            showToast(err.message, 'error');
+            appendMessage('Error: ' + err.message, 'agent');
+        } finally {
+            input.disabled = false;
+            document.getElementById('chat-submit').disabled = false;
+            input.focus();
+        }
     };
+    window.refreshIcons();
+};
 
-    try {
-        const response = await api("/agent/create", {
-            method: "POST",
-            headers: { "Content-Type": "application/json" },
-            body: JSON.stringify(payload),
-        });
-        showToast(response.message);
-        agentForm.reset();
-        knowledgeBaseToggle.checked = false;
-        agentKbSelect.disabled = true;
-        fillModelOptions();
-        await loadAgents();
-    } catch (error) {
-        showToast(error.message, true);
+// --- Router ---
+const routes = {
+    '#login': renderLogin,
+    '#register': renderRegister,
+    '#dashboard': renderDashboard,
+    '#agents': renderAgents,
+    '#knowledge-bases': renderKnowledgeBases,
+    '#databases': renderDatabases,
+    '#chat': renderChat
+};
+
+const router = async () => {
+    const hash = window.location.hash || '#dashboard';
+    state.currentPath = hash;
+
+    // Protected Routes
+    const publicRoutes = ['#login', '#register'];
+    if (!state.isAuthenticated && !publicRoutes.includes(state.currentPath)) {
+        navigate('#login');
+        return;
     }
+    if (state.isAuthenticated && publicRoutes.includes(state.currentPath)) {
+        navigate('#dashboard');
+        return;
+    }
+
+    // Dynamic Route for Chat
+    if (hash.startsWith('#chat/')) {
+        const id = hash.split('/')[1];
+        await renderChat(id);
+    } else if (routes[hash]) {
+        await routes[hash]();
+    } else {
+        navigate('#dashboard');
+    }
+
+    // Logout handling
+    const logoutBtn = document.getElementById('logout-btn');
+    if (logoutBtn) {
+        logoutBtn.onclick = () => {
+            api.clearToken();
+            localStorage.removeItem('qab_user');
+            state.isAuthenticated = false;
+            state.user = null;
+            showToast('Logged out');
+            navigate('#login');
+        };
+    }
+    window.refreshIcons();
+};
+
+// --- Initialization ---
+window.addEventListener('hashchange', router);
+window.addEventListener('qab-unauthorized', () => {
+    api.clearToken();
+    state.isAuthenticated = false;
+    navigate('#login');
+    showToast('Session expired. Please login again.', 'error');
 });
 
-
-knowledgeBaseToggle.addEventListener("change", () => {
-    agentKbSelect.disabled = !knowledgeBaseToggle.checked;
-});
-
-
-providerSelect.addEventListener("change", fillModelOptions);
-
-
-document.getElementById("refreshDbBtn").addEventListener("click", loadDbs);
-document.getElementById("refreshKbBtn").addEventListener("click", loadKbs);
-document.getElementById("refreshAgentBtn").addEventListener("click", loadAgents);
-logoutBtn.addEventListener("click", () => {
-    clearSession();
-    showToast("Logged out.");
-});
-
-
-window.deleteDb = deleteDb;
-window.deleteKb = deleteKb;
-window.removeKbFile = removeKbFile;
-window.uploadKbFile = uploadKbFile;
-window.deleteAgent = deleteAgent;
-window.runAgent = runAgent;
-
-
-fillModelOptions();
-updateSessionView();
-fillDbSelects();
-
-if (state.token) {
-    loadAllProtectedData().catch((error) => {
-        clearSession();
-        showToast(error.message, true);
-    });
-}
+// Start the app
+router();
