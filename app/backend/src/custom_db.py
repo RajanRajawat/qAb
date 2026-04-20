@@ -31,9 +31,17 @@ async def link_db(db: AddDB, bt: BackgroundTasks, current_user: dict = Depends(g
     # if user_data['custom_db']['linked']:
     #     return error_response(405, message="A DB is already linked. Please remove the current DB before adding a new one.")
 
-    # if not validate_mongo(uri.connection_uri):
-    #     return error_response(400, message="Invalid MongoDB connection string.")
-    #: Check and verify db here only, before adding it to the db!!! (later)
+
+
+    #- Verifing Connection
+
+    if db.db == "mongo":
+        if not validate_mongo(db.connection_uri):
+            return error_response(400, message="Invalid MongoDB connection string.")
+    elif db.db == 'postgres':
+        if not validate_postgres(db.connection_uri):
+            return error_response(400, message="Invalid PostgreSQL connection string.")
+
 
     database_fields = {
         'name' : db.name,
@@ -62,7 +70,7 @@ async def link_db(db: AddDB, bt: BackgroundTasks, current_user: dict = Depends(g
     bt.add_task(send_email, "QAB - DB Link Successful", current_user['email'], f"You have successfully linked your {db.db}!")
     logger.info(f"{db.db} linked successfully for {current_user['email']}")
 
-    return success_response(status_code=201, message=f"MongoDB has been linked successfully.")
+    return success_response(status_code=201, message=f"{db.db.capitalize()} has been linked successfully.")
 
 
 

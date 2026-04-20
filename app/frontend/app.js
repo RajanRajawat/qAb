@@ -281,13 +281,14 @@ const renderAgents = async () => {
                         <a href="#chat/${a._id}" class="btn btn-outline" style="padding: 0.5rem 1rem; font-size: 0.875rem;">
                             <i data-lucide="message-square"></i> Chat
                         </a>
-                        <div style="display: flex; gap: 0.5rem;">
-                            <button class="btn btn-link delete-agent" data-id="${a._id}"><i data-lucide="trash-2" style="color: var(--error)"></i></button>
+                        <div style="display: flex; gap: 0.25rem;">
+                            <button class="btn btn-link edit-agent" data-id="${a._id}" title="Edit Agent"><i data-lucide="edit-3" style="color: var(--primary)"></i></button>
+                            <button class="btn btn-link delete-agent" data-id="${a._id}" title="Delete Agent"><i data-lucide="trash-2" style="color: var(--error)"></i></button>
                         </div>
                     </div>
                 </div>
             `).join('');
-            
+
             document.querySelectorAll('.delete-agent').forEach(btn => {
                 btn.onclick = async () => {
                     if (confirm('Are you sure you want to delete this agent?')) {
@@ -299,6 +300,95 @@ const renderAgents = async () => {
                     }
                 };
             });
+
+            document.querySelectorAll('.edit-agent').forEach(btn => {
+                btn.onclick = async () => {
+                    const id = btn.dataset.id;
+                    try {
+                        const res = await api.request(`/agent/${id}`);
+                        const agent = res.data;
+                        let kbs = [];
+                        try { kbs = (await api.getKBs()).data; } catch (e) { }
+
+                        const formHtml = `
+                            <form id="edit-agent-form">
+                                <div class="form-group">
+                                    <label>Agent Name</label>
+                                    <input id="e-name" required value="${agent.name}">
+                                </div>
+                                <div class="form-group">
+                                    <label>Description</label>
+                                    <input id="e-desc" required value="${agent.description}">
+                                </div>
+                                <div class="form-group">
+                                    <label>Role</label>
+                                    <input id="e-role" required value="${agent.role}">
+                                </div>
+                                <div class="form-group">
+                                    <label>System Instructions</label>
+                                    <textarea id="e-instr" required rows="3">${agent.instruction}</textarea>
+                                </div>
+                                <div style="display: grid; grid-template-columns: 1fr 1fr; gap: 1rem;">
+                                    <div class="form-group">
+                                        <label>Provider</label>
+                                        <select id="e-prov">
+                                            <option value="groq" ${agent.llm_provider === 'groq' ? 'selected' : ''}>Groq</option>
+                                            <option value="gemini" ${agent.llm_provider === 'gemini' ? 'selected' : ''}>Gemini</option>
+                                        </select>
+                                    </div>
+                                    <div class="form-group">
+                                        <label>Model</label>
+                                        <select id="e-model">
+                                            <option value="llama-3.1-8b-instant" ${agent.llm_model === 'llama-3.1-8b-instant' ? 'selected' : ''}>Llama 3.1 8B (Groq)</option>
+                                            <option value="gemini-2.5-flash" ${agent.llm_model === 'gemini-2.5-flash' ? 'selected' : ''}>Gemini 2.5 Flash</option>
+                                        </select>
+                                    </div>
+                                </div>
+                                <div class="form-group">
+                                    <label>Temperature (${agent.temperature})</label>
+                                    <input type="number" step="0.1" min="0" max="1" id="e-temp" value="${agent.temperature}">
+                                </div>
+                                <div class="form-group">
+                                    <label>Knowledge Base</label>
+                                    <div style="display: flex; gap: 0.5rem; align-items: center;">
+                                        <input type="checkbox" id="e-kb-link" style="width: auto;" ${agent.knowledge_base ? 'checked' : ''}>
+                                        <select id="e-kb-id" ${!agent.knowledge_base ? 'disabled' : ''}>
+                                            <option value="">Select KB...</option>
+                                            ${kbs.map(k => `<option value="${k.kb_id}" ${agent.knowledge_base_id === k.kb_id ? 'selected' : ''}>${k.name}</option>`).join('')}
+                                        </select>
+                                    </div>
+                                </div>
+                                <button type="submit" class="btn btn-primary" style="width: 100%; margin-top: 1rem;">Save Changes</button>
+                            </form>
+                        `;
+                        Modal('Edit Agent', formHtml, 'edit-agent');
+
+                        const kbLink = document.getElementById('e-kb-link');
+                        const kbSelect = document.getElementById('e-kb-id');
+                        kbLink.onchange = () => kbSelect.disabled = !kbLink.checked;
+
+                        document.getElementById('edit-agent-form').onsubmit = async (e) => {
+                            e.preventDefault();
+                            try {
+                                await api.updateAgent(id, {
+                                    name: document.getElementById('e-name').value,
+                                    description: document.getElementById('e-desc').value,
+                                    role: document.getElementById('e-role').value,
+                                    instruction: document.getElementById('e-instr').value,
+                                    llm_provider: document.getElementById('e-prov').value,
+                                    llm_model: document.getElementById('e-model').value,
+                                    temperature: parseFloat(document.getElementById('e-temp').value),
+                                    knowledge_base: kbLink.checked,
+                                    knowledge_base_id: kbLink.checked ? kbSelect.value : null
+                                });
+                                showToast('Agent updated!');
+                                document.getElementById('edit-agent-overlay').remove();
+                                refreshAgents();
+                            } catch (err) { showToast(err.message, 'error'); }
+                        };
+                    } catch (e) { showToast(e.message, 'error'); }
+                };
+            });
             window.refreshIcons();
         } catch (e) { list.innerHTML = '<div class="text-error">Failed to load agents</div>'; }
     };
@@ -307,7 +397,7 @@ const renderAgents = async () => {
 
     document.getElementById('btn-create-agent').onclick = async () => {
         let kbs = [];
-        try { kbs = (await api.getKBs()).data; } catch(e){}
+        try { kbs = (await api.getKBs()).data; } catch (e) { }
 
         const formHtml = `
             <form id="create-agent-form">
@@ -361,7 +451,7 @@ const renderAgents = async () => {
             </form>
         `;
         Modal('Create New Agent', formHtml, 'agent');
-        
+
         const kbLink = document.getElementById('a-kb-link');
         const kbSelect = document.getElementById('a-kb-id');
         kbLink.onchange = () => kbSelect.disabled = !kbLink.checked;
@@ -486,7 +576,7 @@ const renderKnowledgeBases = async () => {
 
     document.getElementById('btn-create-kb').onclick = async () => {
         let dbs = [];
-        try { dbs = (await api.getDBs()).data; } catch(e){}
+        try { dbs = (await api.getDBs()).data; } catch (e) { }
         const formHtml = `
             <form id="create-kb-form">
                 <div class="form-group">
@@ -600,7 +690,13 @@ const renderDatabases = async () => {
         Modal('Link Custom Database', formHtml, 'db');
         document.getElementById('link-db-form').onsubmit = async (e) => {
             e.preventDefault();
+            const btn = e.target.querySelector('button[type="submit"]');
+            const originalText = btn.innerHTML;
+
             try {
+                btn.disabled = true;
+                btn.innerHTML = `<span class="loader-circle" style="width:16px; height:16px; border-width:2px;"></span> Verifying & Linking...`;
+
                 await api.linkDB({
                     name: document.getElementById('db-name').value,
                     db: document.getElementById('db-provider').value,
@@ -609,7 +705,11 @@ const renderDatabases = async () => {
                 showToast('Database linked!');
                 document.getElementById('db-overlay').remove();
                 refreshDBs();
-            } catch (err) { showToast(err.message, 'error'); }
+            } catch (err) {
+                showToast(err.message, 'error');
+                btn.disabled = false;
+                btn.innerHTML = originalText;
+            }
         };
     };
 };
@@ -619,7 +719,7 @@ const renderChat = async (agentId) => {
     let agent = null;
     try {
         agent = (await api.request(`/agent/${agentId}`)).data;
-    } catch(e) {
+    } catch (e) {
         navigate('#agents');
         return;
     }
@@ -644,7 +744,7 @@ const renderChat = async (agentId) => {
             </form>
         </div>
     `);
-    
+
     const messagesDiv = document.getElementById('chat-messages');
     const input = document.getElementById('chat-input');
     let threadId = localStorage.getItem(`thread_${agentId}`) || null;

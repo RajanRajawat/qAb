@@ -1,0 +1,17 @@
+/Tools
+Need to add more Tools
+
+
+/Memory 
+Add Memory to chatbot (temp / db) - Short Term Memory
+
+
+/Embedding Model
+Give at least 2 embedding models
+(setup accordingly)
+
+
+/Link User's existing DB, and that be used by agent as well.
+
+
+

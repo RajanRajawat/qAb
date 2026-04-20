@@ -1,7 +1,3 @@
-#~ Agent
-#: Todo:
-#! Bugs:
-#- Notes:
 
 from fastapi import APIRouter, HTTPException, Depends
 from database.models import AgentCreation, AgentUpdate
