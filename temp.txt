@@ -1,0 +1,110 @@
+
+╔══════════════════════════════════════════════════════════════════════════════╗
+║  QAB — BUGS & SUGGESTIONS (temp.txt)                                       ║
+║  Generated: 2026-04-17                                                      ║
+╚══════════════════════════════════════════════════════════════════════════════╝
+
+
+═══════════════════════════════════════════════════════════════════════════════
+ BUGS FOUND (Backend)
+═══════════════════════════════════════════════════════════════════════════════
+
+[BUG-01] CRITICAL — knowledge_base.py → upload endpoint (line ~158)
+    File:    app/backend/src/knowledge_base.py
+    Issue:   `owner_id` variable is used but never defined in `upload_document()`.
+             Code: `file_path = os.path.join("uploads", f"{owner_id}_{file.filename}")`
+             This crashes the upload endpoint with a NameError.
+    Fix:     Replaced with `current_user['_id']`.  ✅ FIXED
+
+[BUG-02] CRITICAL — knowledge_base.py → provider string mismatch (lines ~90, 215, 290)
+    File:    app/backend/src/knowledge_base.py
+    Issue:   Custom MongoDB provider is compared as `'MongoDB'` (capitalized),
+             but in `custom_db.py` it is stored using `ListDB.MongoDB` enum whose
+             value is `'mongo'` (lowercase). This silently breaks all custom
+             MongoDB KB operations (embed, delete, list).
+    Fix:     Changed all comparisons to `'mongo'`.  ✅ FIXED
+
+[BUG-03] MEDIUM — runner.py → custom_db passed incorrectly to fetch_rag_context (line ~273)
+    File:    app/backend/src/runner.py
+    Issue:   `user_data.get('custom_db', {})` returns a LIST of ObjectIds (the
+             user's linked DB references), not a dict with provider/config/linked.
+             When passed to `fetch_rag_context()` as `custom_db_settings`, calling
+             `.get('provider')` on a list throws AttributeError.
+             Currently, this doesn't crash because the `if custom_db_settings`
+             check passes but the `.get()` calls fail silently or return None,
+             so `is_linked` defaults to False and it always falls through to
+             the default vector collection. This means custom DB RAG retrieval
+             never actually works from the runner.
+    Impact:  Agents with knowledge_base=True only ever use the default MongoDB
+             vector collection, even if the user has linked a custom DB.
+    Fix:     The runner should look up the agent's `kb_files` list, extract unique
+             `db_id` values, fetch the corresponding db_collection documents, and
+             pass those to `fetch_rag_context`. NOT FIXED (non-trivial refactor).
+
+[BUG-04] LOW — knowledge_base.py → owner_id stored as str, queried as ObjectId
+    File:    app/backend/src/knowledge_base.py (line ~58) & runner.py (line ~211, 230)
+    Issue:   `chunk.metadata['owner_id']` is stored as `str(owner_id)` during
+             embedding, but in runner.py the retrieval pre_filter uses
+             `ObjectId(owner_id)`. Type mismatch means no chunks match.
+    Note:    The `str()` wrapper was removed in the fix (BUG-01 area), so now
+             the owner_id type depends on what `current_user['_id']` is (str from JWT).
+             This should now match runner.py's `str(current_user['_id'])` if
+             runner.py also stores/queries as str. Runner uses ObjectId at line 211
+             and 230 which may still cause mismatch.
+    Fix:     Ensure both sides use the same type. The metadata should store str
+             and the query should use str, or both should use ObjectId.
+
+[BUG-05] LOW — runner.py → `from langchain.agents import create_agent` (line 16)
+    File:    app/backend/src/runner.py
+    Issue:   `create_agent` is not a standard export from `langchain.agents`.
+             The standard LangGraph function is `create_react_agent` from
+             `langgraph.prebuilt`. This import may work if you have a specific
+             LangChain version or compatibility layer installed, but will fail
+             on standard installations.
+    Fix:     Consider using `from langgraph.prebuilt import create_react_agent`.
+             NOT FIXED (user may have a custom/compatible version).
+
+
+═══════════════════════════════════════════════════════════════════════════════
+ SUGGESTIONS
+═══════════════════════════════════════════════════════════════════════════════
+
+[SUG-01] Standardize owner_id type across the entire codebase.
+         Pick either `str` or `ObjectId` and use it consistently in:
+         - JWT payload (_id is str)
+         - MongoDB queries (need ObjectId)
+         - Embedding metadata (currently mixed)
+         This is the #1 source of subtle bugs in the project.
+
+[SUG-02] The runner.py `fetch_rag_context` needs a proper refactor to:
+         - Accept agent-level KB file info (db_id per file)
+         - Look up the actual db_collection document for each unique db_id
+         - Fetch context from the correct DB per file
+         Currently it only works with the default vector collection.
+
+[SUG-03] Add input validation for the DB connection URI in custom_db.py.
+         The `validate_mongo()` and `validate_postgres()` functions exist in
+         `utils/connection.py` but are never called (commented out in custom_db.py).
+         Enabling these would prevent storing invalid connection strings.
+
+[SUG-04] Add rate limiting to the `/chat/run` endpoint to prevent abuse.
+         Currently any authenticated user can make unlimited LLM calls.
+
+[SUG-05] Add connection string encryption before storing in MongoDB.
+         The `security.py` file has a TODO comment about this.
+         Connection URIs with passwords are stored in plaintext.
+
+[SUG-06] Consider adding a "thinking" / streaming response for the chat.
+         The current implementation waits for the full response before showing
+         anything. Server-Sent Events (SSE) or WebSocket streaming would
+         provide a much better UX.
+
+[SUG-07] The tools system has 4 tools defined in the enum (web_search, weather,
+         datetime, wikipedia) but only web_search is implemented. The others
+         are commented out. Consider either removing them from the enum or
+         implementing them.
+
+[SUG-08] Add file size limits to the knowledge base upload endpoint.
+         Currently there's no max file size check, which could lead to
+         memory issues with very large files.
+

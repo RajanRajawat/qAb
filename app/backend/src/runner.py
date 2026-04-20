@@ -39,7 +39,10 @@ from pymongo import MongoClient
 runner_router = APIRouter(prefix="/chat", tags=["Agent Runner"])
 
 
-#- Agent Runner Functions
+#- Agent Runner 
+
+
+#llm selectr
 def get_llm(provider: str, model: str, temp):
     provider = provider.lower()
 
@@ -64,7 +67,7 @@ def get_llm(provider: str, model: str, temp):
         raise ValueError(f"Unsupported provider: {provider}")
 
 
-def extract_agent_response_content(result):
+def extract_agent_response_content(result): #extrating only msgs
     messages = result.get("messages", [])
 
     for message in reversed(messages):
@@ -143,9 +146,9 @@ def agent_builder(agent_config: dict):
     return agent
 
 
-#- RAG: Fetch relevant context from vector store
 def fetch_rag_context(query: str, owner_id: str, custom_db_settings: dict = None):
 
+    #- RAG  Fetch data from vector store
     # embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2") #replace with hf inference api
     embeddings = HuggingFaceEndpointEmbeddings(
             model="sentence-transformers/all-MiniLM-L6-v2",
@@ -156,7 +159,7 @@ def fetch_rag_context(query: str, owner_id: str, custom_db_settings: dict = None
     config = custom_db_settings.get('config', {}) if custom_db_settings else {}
     is_linked = custom_db_settings.get('linked', False) if custom_db_settings else False
 
-    #- Postgres / Supabase (pgvector) path
+    #- Postgres / Supabase  
     if is_linked and provider == 'postgres':
         connection_string = config.get('connection_string')
         if not connection_string:
@@ -261,10 +264,10 @@ async def run_agent(agent_id: str, request: AgentRunRequest, current_user: dict 
         agent = agent_builder(agent_data)
         thread_id = request.thread_id or str(uuid4())
 
-        #- RAG: Inject context if knowledge_base is enabled
-        rag_message = request.query
 
-        if agent_data.get('knowledge_base') is True:
+        rag_message = request.query
+        
+        if agent_data.get('knowledge_base') is True:    #- RAG Inject context if kb > True
             try:
                 user_data = await users_collection.find_one({'_id': ObjectId(current_user['_id'])})
                 custom_db = user_data.get('custom_db', {}) if user_data else {}
@@ -273,10 +276,11 @@ async def run_agent(agent_id: str, request: AgentRunRequest, current_user: dict 
 
                 if context:
                     rag_message = f"""Use the following context to answer if needed:
-{context}
+                    {context}
 
-User question:
-{request.query}"""
+                    User question:
+                    {request.query}"""
+
                     logger.info(f"RAG context injected for agent id: {agent_id}")
                 else:
                     logger.info(f"No KB context found, running agent without RAG for agent id: {agent_id}")

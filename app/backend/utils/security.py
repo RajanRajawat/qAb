@@ -1,13 +1,5 @@
 
 
-
-#~ Security                                             
-#: Todo:                                                
-#! Bugs:                                                
-#- Notes:                                               
-
-
-
 from utils.loggers import logger
 import os, bcrypt, jwt, datetime
 from utils.env_loaders import load_jwt_secret_key
@@ -35,4 +27,4 @@ def generate_token(user_data, token_type: str, time):
     logger.info(f"{token_type.capitalize()} token generated successfully for {user_data['email']}")
     return jwt.encode(payload, SECRET_KEY, algorithm="HS256")
 
-
+#: Create one function to encrypt DB strings, also decrypt!

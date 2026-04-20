@@ -544,3 +544,543 @@ asyncio.exceptions.CancelledError
 2026-04-16 15:01:30,055 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
 2026-04-16 15:01:43,089 | INFO | utils.loggers | Current user token validation started
 2026-04-16 15:01:43,090 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 15:01:43,090 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 15:01:43,113 | INFO | utils.loggers | Fetched 1 agents for work4rajan@gmail.com
+2026-04-16 15:01:43,113 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 15:28:13,128 | INFO | uvicorn.error | Shutting down
+2026-04-16 15:28:13,355 | INFO | uvicorn.error | Waiting for application shutdown.
+2026-04-16 15:28:13,382 | INFO | uvicorn.error | Application shutdown complete.
+2026-04-16 15:28:13,391 | INFO | uvicorn.error | Finished server process [8296]
+2026-04-16 15:31:00,216 | INFO | database.db | MongoDB connection string loaded successfully
+2026-04-16 15:31:00,595 | INFO | database.db | Async MongoDB client initialized for database: qab
+2026-04-16 15:31:00,595 | INFO | database.db | MongoDB collections initialized: users, agents
+2026-04-16 15:31:01,761 | INFO | database.db | Sync MongoDB vector collection initialized: vector_store
+2026-04-16 15:31:02,248 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-16 15:31:02,316 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-16 15:33:27,827 | INFO | uvicorn.error | Started server process [13924]
+2026-04-16 15:33:27,831 | INFO | uvicorn.error | Waiting for application startup.
+2026-04-16 15:33:27,833 | INFO | uvicorn.error | Application startup complete.
+2026-04-16 15:33:27,835 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-04-16 15:33:49,143 | INFO | utils.loggers | Login request received from work4rajan@gmail.com
+2026-04-16 15:33:49,145 | INFO | utils.loggers | Fetching user by email: work4rajan@gmail.com
+2026-04-16 15:33:50,330 | INFO | utils.loggers | User found for email: work4rajan@gmail.com
+2026-04-16 15:33:50,331 | INFO | utils.loggers | Password verification started
+2026-04-16 15:33:50,602 | INFO | utils.loggers | Access token generation started for work4rajan@gmail.com
+2026-04-16 15:33:50,605 | INFO | utils.loggers | Access token generated successfully for work4rajan@gmail.com
+2026-04-16 15:33:50,607 | INFO | utils.loggers | Refresh token generation started for work4rajan@gmail.com
+2026-04-16 15:33:50,607 | INFO | utils.loggers | Refresh token generated successfully for work4rajan@gmail.com
+2026-04-16 15:33:50,608 | INFO | utils.loggers | JWT tokens generated
+2026-04-16 15:33:50,609 | INFO | utils.loggers | Success response generated with status code: 200 | Message: You are now logged in.
+2026-04-16 15:33:50,790 | INFO | utils.loggers | Current user token validation started
+2026-04-16 15:33:50,790 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 15:33:50,790 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 15:33:50,807 | INFO | utils.loggers | Fetched 1 agents for work4rajan@gmail.com
+2026-04-16 15:33:50,808 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 15:33:54,211 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='work4rajan', email='work4rajan@gmail.com')] | Subject: QAB - Login Successful
+2026-04-16 15:34:03,447 | INFO | utils.loggers | Current user token validation started
+2026-04-16 15:34:03,447 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 15:34:03,466 | INFO | utils.loggers | Agent creation request received from work4rajan@gmail.com
+2026-04-16 15:34:03,552 | INFO | utils.loggers | Agent created successfully for work4rajan@gmail.com with id: 69e0b413112b4ac05a364b93
+2026-04-16 15:34:03,554 | INFO | utils.loggers | Success response generated with status code: 201 | Message: Agent Created!
+2026-04-16 15:34:03,600 | INFO | utils.loggers | Current user token validation started
+2026-04-16 15:34:03,606 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 15:34:03,611 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 15:34:03,627 | INFO | utils.loggers | Fetched 2 agents for work4rajan@gmail.com
+2026-04-16 15:34:03,628 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 15:34:07,785 | INFO | utils.loggers | Current user token validation started
+2026-04-16 15:34:07,786 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 15:34:07,786 | INFO | utils.loggers | Agent delete request received for agent id: 69e0b413112b4ac05a364b93 from work4rajan@gmail.com
+2026-04-16 15:34:07,840 | INFO | utils.loggers | Agent deleted successfully for agent id: 69e0b413112b4ac05a364b93 by work4rajan@gmail.com
+2026-04-16 15:34:07,840 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent deleted successfully!
+2026-04-16 15:34:07,847 | INFO | utils.loggers | Current user token validation started
+2026-04-16 15:34:07,847 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 15:34:07,847 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 15:34:07,857 | INFO | utils.loggers | Fetched 1 agents for work4rajan@gmail.com
+2026-04-16 15:34:07,858 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 15:35:23,670 | INFO | uvicorn.error | Shutting down
+2026-04-16 15:35:23,778 | INFO | uvicorn.error | Waiting for application shutdown.
+2026-04-16 15:35:23,778 | INFO | uvicorn.error | Application shutdown complete.
+2026-04-16 15:35:23,779 | INFO | uvicorn.error | Finished server process [13924]
+2026-04-16 15:35:53,026 | INFO | database.db | MongoDB connection string loaded successfully
+2026-04-16 15:35:53,204 | INFO | database.db | Async MongoDB client initialized for database: qab
+2026-04-16 15:35:53,204 | INFO | database.db | MongoDB collections initialized: users, agents
+2026-04-16 15:35:56,649 | INFO | database.db | Sync MongoDB vector collection initialized: vector_store
+2026-04-16 15:35:57,266 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-16 15:35:57,282 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-16 15:37:42,741 | INFO | uvicorn.error | Started server process [14140]
+2026-04-16 15:37:42,746 | INFO | uvicorn.error | Waiting for application startup.
+2026-04-16 15:37:42,750 | INFO | uvicorn.error | Application startup complete.
+2026-04-16 15:37:42,751 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-04-16 15:38:01,870 | INFO | utils.loggers | Current user token validation started
+2026-04-16 15:38:01,872 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 15:38:01,900 | INFO | utils.loggers | Agent creation request received from work4rajan@gmail.com
+2026-04-16 15:38:03,069 | INFO | utils.loggers | Agent created successfully for work4rajan@gmail.com with id: 69e0b50191e4fdcf73d24bec
+2026-04-16 15:38:03,069 | INFO | utils.loggers | Success response generated with status code: 201 | Message: Agent Created!
+2026-04-16 15:38:03,136 | INFO | utils.loggers | Current user token validation started
+2026-04-16 15:38:03,140 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 15:38:03,143 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 15:38:03,163 | INFO | utils.loggers | Fetched 2 agents for work4rajan@gmail.com
+2026-04-16 15:38:03,163 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 15:38:07,537 | INFO | utils.loggers | Current user token validation started
+2026-04-16 15:38:07,539 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 15:38:07,541 | INFO | utils.loggers | Agent delete request received for agent id: 69e0b50191e4fdcf73d24bec from work4rajan@gmail.com
+2026-04-16 15:38:07,584 | INFO | utils.loggers | Agent deleted successfully for agent id: 69e0b50191e4fdcf73d24bec by work4rajan@gmail.com
+2026-04-16 15:38:07,585 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent deleted successfully!
+2026-04-16 15:38:07,627 | INFO | utils.loggers | Current user token validation started
+2026-04-16 15:38:07,628 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 15:38:07,628 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 15:38:07,649 | INFO | utils.loggers | Fetched 1 agents for work4rajan@gmail.com
+2026-04-16 15:38:07,652 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 15:38:41,610 | INFO | utils.loggers | Current user token validation started
+2026-04-16 15:38:41,611 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 15:38:41,611 | INFO | utils.loggers | Agent creation request received from work4rajan@gmail.com
+2026-04-16 15:38:41,651 | INFO | utils.loggers | Agent created successfully for work4rajan@gmail.com with id: 69e0b52991e4fdcf73d24bed
+2026-04-16 15:38:41,652 | INFO | utils.loggers | Success response generated with status code: 201 | Message: Agent Created!
+2026-04-16 15:38:41,673 | INFO | utils.loggers | Current user token validation started
+2026-04-16 15:38:41,676 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 15:38:41,677 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 15:38:41,721 | INFO | utils.loggers | Fetched 2 agents for work4rajan@gmail.com
+2026-04-16 15:38:41,723 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 15:38:50,806 | INFO | utils.loggers | Current user token validation started
+2026-04-16 15:38:50,807 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 15:38:50,807 | INFO | utils.loggers | Agent delete request received for agent id: 69e0b52991e4fdcf73d24bed from work4rajan@gmail.com
+2026-04-16 15:38:50,883 | INFO | utils.loggers | Agent deleted successfully for agent id: 69e0b52991e4fdcf73d24bed by work4rajan@gmail.com
+2026-04-16 15:38:50,884 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent deleted successfully!
+2026-04-16 15:38:50,930 | INFO | utils.loggers | Current user token validation started
+2026-04-16 15:38:50,932 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 15:38:50,932 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 15:38:50,981 | INFO | utils.loggers | Fetched 1 agents for work4rajan@gmail.com
+2026-04-16 15:38:50,981 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 15:44:36,117 | INFO | utils.loggers | Current user token validation started
+2026-04-16 15:44:36,152 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 15:44:36,160 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 15:44:36,224 | INFO | utils.loggers | Fetched 1 agents for work4rajan@gmail.com
+2026-04-16 15:44:36,226 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 15:45:10,626 | INFO | utils.loggers | Current user token validation started
+2026-04-16 15:45:10,631 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 15:45:10,714 | INFO | utils.loggers | Agent run request received for agent id: 69e078f95fdc89ac6f6a6f80 from work4rajan@gmail.com
+2026-04-16 15:45:10,731 | INFO | utils.loggers | Agent builder started for agent: Sabji Wala
+2026-04-16 15:45:10,750 | INFO | utils.loggers | Initializing Gemini LLM with model: gemini-2.5-flash
+2026-04-16 15:45:10,753 | INFO | utils.loggers | GOOGLE API key loaded successfully
+2026-04-16 15:45:12,678 | INFO | utils.loggers | Resolving tools for agent: ['web_search']
+2026-04-16 15:45:12,913 | INFO | utils.loggers | Agent built successfully for agent: Sabji Wala
+2026-04-16 15:45:13,080 | INFO | utils.loggers | HF API key loaded successfully
+2026-04-16 15:45:13,902 | INFO | utils.loggers | RAG: Using custom Postgres (pgvector) for owner: 69df87df78d07ad92faa6dae
+2026-04-16 15:45:20,456 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2?expand=inferenceProviderMapping "HTTP/1.1 200 OK"
+2026-04-16 15:45:20,711 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2 "HTTP/1.1 200 OK"
+2026-04-16 15:45:21,099 | INFO | httpx | HTTP Request: POST https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2/pipeline/feature-extraction "HTTP/1.1 200 OK"
+2026-04-16 15:45:22,428 | INFO | utils.loggers | RAG context injected for agent id: 69e078f95fdc89ac6f6a6f80
+2026-04-16 15:45:22,428 | INFO | utils.loggers | Running agent id: 69e078f95fdc89ac6f6a6f80 with thread id: 21043e9d-c6cb-4491-8f96-0e7dc7d2423c
+2026-04-16 15:45:24,461 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 1.93 seconds as it raised ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}.
+2026-04-16 15:45:28,215 | INFO | utils.loggers | Web search tool invoked for query: who won ipl last night
+2026-04-16 15:45:28,216 | INFO | utils.loggers | Tavily API key loaded successfully
+2026-04-16 15:45:30,085 | INFO | utils.loggers | Web search tool executed successfully for query: who won ipl last night
+2026-04-16 15:45:33,361 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 1.87 seconds as it raised ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}.
+2026-04-16 15:45:37,836 | INFO | utils.loggers | Agent run completed successfully for agent id: 69e078f95fdc89ac6f6a6f80
+2026-04-16 15:45:37,837 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent response generated successfully!
+2026-04-16 15:46:33,534 | INFO | utils.loggers | Current user token validation started
+2026-04-16 15:46:33,541 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 15:46:33,546 | INFO | utils.loggers | Agent run request received for agent id: 69e078f95fdc89ac6f6a6f80 from work4rajan@gmail.com
+2026-04-16 15:46:33,562 | INFO | utils.loggers | Agent builder started for agent: Sabji Wala
+2026-04-16 15:46:33,564 | INFO | utils.loggers | Initializing Gemini LLM with model: gemini-2.5-flash
+2026-04-16 15:46:33,565 | INFO | utils.loggers | GOOGLE API key loaded successfully
+2026-04-16 15:46:34,483 | INFO | utils.loggers | Resolving tools for agent: ['web_search']
+2026-04-16 15:46:34,498 | INFO | utils.loggers | Agent built successfully for agent: Sabji Wala
+2026-04-16 15:46:34,511 | INFO | utils.loggers | HF API key loaded successfully
+2026-04-16 15:46:34,511 | INFO | utils.loggers | RAG: Using custom Postgres (pgvector) for owner: 69df87df78d07ad92faa6dae
+2026-04-16 15:46:39,346 | INFO | httpx | HTTP Request: POST https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2/pipeline/feature-extraction "HTTP/1.1 200 OK"
+2026-04-16 15:46:40,307 | INFO | utils.loggers | RAG context injected for agent id: 69e078f95fdc89ac6f6a6f80
+2026-04-16 15:46:40,308 | INFO | utils.loggers | Running agent id: 69e078f95fdc89ac6f6a6f80 with thread id: 21043e9d-c6cb-4491-8f96-0e7dc7d2423c
+2026-04-16 15:46:42,137 | INFO | utils.loggers | Agent run completed successfully for agent id: 69e078f95fdc89ac6f6a6f80
+2026-04-16 15:46:42,138 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent response generated successfully!
+2026-04-16 15:46:54,970 | INFO | utils.loggers | Current user token validation started
+2026-04-16 15:46:54,971 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 15:46:54,971 | INFO | utils.loggers | Agent run request received for agent id: 69e078f95fdc89ac6f6a6f80 from work4rajan@gmail.com
+2026-04-16 15:46:54,999 | INFO | utils.loggers | Agent builder started for agent: Sabji Wala
+2026-04-16 15:46:55,001 | INFO | utils.loggers | Initializing Gemini LLM with model: gemini-2.5-flash
+2026-04-16 15:46:55,001 | INFO | utils.loggers | GOOGLE API key loaded successfully
+2026-04-16 15:46:56,039 | INFO | utils.loggers | Resolving tools for agent: ['web_search']
+2026-04-16 15:46:56,047 | INFO | utils.loggers | Agent built successfully for agent: Sabji Wala
+2026-04-16 15:46:56,058 | INFO | utils.loggers | HF API key loaded successfully
+2026-04-16 15:46:56,058 | INFO | utils.loggers | RAG: Using custom Postgres (pgvector) for owner: 69df87df78d07ad92faa6dae
+2026-04-16 15:47:00,759 | INFO | httpx | HTTP Request: POST https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2/pipeline/feature-extraction "HTTP/1.1 200 OK"
+2026-04-16 15:47:01,592 | INFO | utils.loggers | RAG context injected for agent id: 69e078f95fdc89ac6f6a6f80
+2026-04-16 15:47:01,592 | INFO | utils.loggers | Running agent id: 69e078f95fdc89ac6f6a6f80 with thread id: 21043e9d-c6cb-4491-8f96-0e7dc7d2423c
+2026-04-16 15:47:03,674 | INFO | utils.loggers | Agent run completed successfully for agent id: 69e078f95fdc89ac6f6a6f80
+2026-04-16 15:47:03,675 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent response generated successfully!
+2026-04-16 15:47:19,907 | INFO | utils.loggers | Current user token validation started
+2026-04-16 15:47:19,907 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 15:47:19,908 | INFO | utils.loggers | Agent run request received for agent id: 69e078f95fdc89ac6f6a6f80 from work4rajan@gmail.com
+2026-04-16 15:47:19,919 | INFO | utils.loggers | Agent builder started for agent: Sabji Wala
+2026-04-16 15:47:19,920 | INFO | utils.loggers | Initializing Gemini LLM with model: gemini-2.5-flash
+2026-04-16 15:47:19,920 | INFO | utils.loggers | GOOGLE API key loaded successfully
+2026-04-16 15:47:20,954 | INFO | utils.loggers | Resolving tools for agent: ['web_search']
+2026-04-16 15:47:20,968 | INFO | utils.loggers | Agent built successfully for agent: Sabji Wala
+2026-04-16 15:47:20,987 | INFO | utils.loggers | HF API key loaded successfully
+2026-04-16 15:47:20,989 | INFO | utils.loggers | RAG: Using custom Postgres (pgvector) for owner: 69df87df78d07ad92faa6dae
+2026-04-16 15:47:26,007 | INFO | httpx | HTTP Request: POST https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2/pipeline/feature-extraction "HTTP/1.1 200 OK"
+2026-04-16 15:47:27,059 | INFO | utils.loggers | RAG context injected for agent id: 69e078f95fdc89ac6f6a6f80
+2026-04-16 15:47:27,059 | INFO | utils.loggers | Running agent id: 69e078f95fdc89ac6f6a6f80 with thread id: 21043e9d-c6cb-4491-8f96-0e7dc7d2423c
+2026-04-16 15:47:29,111 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 1.89 seconds as it raised ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}.
+2026-04-16 15:47:33,038 | INFO | utils.loggers | Agent run completed successfully for agent id: 69e078f95fdc89ac6f6a6f80
+2026-04-16 15:47:33,039 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent response generated successfully!
+2026-04-16 15:47:52,378 | INFO | utils.loggers | Current user token validation started
+2026-04-16 15:47:52,380 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 15:47:52,382 | INFO | utils.loggers | Agent run request received for agent id: 69e078f95fdc89ac6f6a6f80 from work4rajan@gmail.com
+2026-04-16 15:47:52,402 | INFO | utils.loggers | Agent builder started for agent: Sabji Wala
+2026-04-16 15:47:52,405 | INFO | utils.loggers | Initializing Gemini LLM with model: gemini-2.5-flash
+2026-04-16 15:47:52,406 | INFO | utils.loggers | GOOGLE API key loaded successfully
+2026-04-16 15:47:54,729 | INFO | utils.loggers | Resolving tools for agent: ['web_search']
+2026-04-16 15:47:54,748 | INFO | utils.loggers | Agent built successfully for agent: Sabji Wala
+2026-04-16 15:47:54,763 | INFO | utils.loggers | HF API key loaded successfully
+2026-04-16 15:47:54,766 | INFO | utils.loggers | RAG: Using custom Postgres (pgvector) for owner: 69df87df78d07ad92faa6dae
+2026-04-16 15:47:59,259 | INFO | httpx | HTTP Request: POST https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2/pipeline/feature-extraction "HTTP/1.1 200 OK"
+2026-04-16 15:48:00,064 | INFO | utils.loggers | RAG context injected for agent id: 69e078f95fdc89ac6f6a6f80
+2026-04-16 15:48:00,067 | INFO | utils.loggers | Running agent id: 69e078f95fdc89ac6f6a6f80 with thread id: 21043e9d-c6cb-4491-8f96-0e7dc7d2423c
+2026-04-16 15:48:02,459 | INFO | utils.loggers | Agent run completed successfully for agent id: 69e078f95fdc89ac6f6a6f80
+2026-04-16 15:48:02,461 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent response generated successfully!
+2026-04-16 15:48:21,276 | INFO | utils.loggers | Current user token validation started
+2026-04-16 15:48:21,279 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 15:48:21,284 | INFO | utils.loggers | Agent run request received for agent id: 69e078f95fdc89ac6f6a6f80 from work4rajan@gmail.com
+2026-04-16 15:48:21,306 | INFO | utils.loggers | Agent builder started for agent: Sabji Wala
+2026-04-16 15:48:21,308 | INFO | utils.loggers | Initializing Gemini LLM with model: gemini-2.5-flash
+2026-04-16 15:48:21,308 | INFO | utils.loggers | GOOGLE API key loaded successfully
+2026-04-16 15:48:25,816 | INFO | utils.loggers | Resolving tools for agent: ['web_search']
+2026-04-16 15:48:25,836 | INFO | utils.loggers | Agent built successfully for agent: Sabji Wala
+2026-04-16 15:48:25,866 | INFO | utils.loggers | HF API key loaded successfully
+2026-04-16 15:48:25,869 | INFO | utils.loggers | RAG: Using custom Postgres (pgvector) for owner: 69df87df78d07ad92faa6dae
+2026-04-16 15:48:30,196 | INFO | httpx | HTTP Request: POST https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2/pipeline/feature-extraction "HTTP/1.1 200 OK"
+2026-04-16 15:48:31,003 | INFO | utils.loggers | RAG context injected for agent id: 69e078f95fdc89ac6f6a6f80
+2026-04-16 15:48:31,003 | INFO | utils.loggers | Running agent id: 69e078f95fdc89ac6f6a6f80 with thread id: 21043e9d-c6cb-4491-8f96-0e7dc7d2423c
+2026-04-16 15:48:32,868 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 1.63 seconds as it raised ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}.
+2026-04-16 15:48:35,807 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 2.66 seconds as it raised ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}.
+2026-04-16 15:48:43,497 | INFO | utils.loggers | Web search tool invoked for query: Mumbai to Bangalore flights
+2026-04-16 15:48:43,498 | INFO | utils.loggers | Tavily API key loaded successfully
+2026-04-16 15:48:45,458 | INFO | utils.loggers | Web search tool executed successfully for query: Mumbai to Bangalore flights
+2026-04-16 15:48:47,780 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 1.2 seconds as it raised ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}.
+2026-04-16 15:48:53,747 | INFO | utils.loggers | Agent run completed successfully for agent id: 69e078f95fdc89ac6f6a6f80
+2026-04-16 15:48:53,749 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent response generated successfully!
+2026-04-16 15:55:07,949 | INFO | utils.loggers | Login request received from work4rajan@gmail.com
+2026-04-16 15:55:07,951 | INFO | utils.loggers | Fetching user by email: work4rajan@gmail.com
+2026-04-16 15:55:07,981 | INFO | utils.loggers | User found for email: work4rajan@gmail.com
+2026-04-16 15:55:07,982 | INFO | utils.loggers | Password verification started
+2026-04-16 15:55:08,621 | INFO | utils.loggers | Access token generation started for work4rajan@gmail.com
+2026-04-16 15:55:08,624 | INFO | utils.loggers | Access token generated successfully for work4rajan@gmail.com
+2026-04-16 15:55:08,632 | INFO | utils.loggers | Refresh token generation started for work4rajan@gmail.com
+2026-04-16 15:55:08,633 | INFO | utils.loggers | Refresh token generated successfully for work4rajan@gmail.com
+2026-04-16 15:55:08,635 | INFO | utils.loggers | JWT tokens generated
+2026-04-16 15:55:08,640 | INFO | utils.loggers | Success response generated with status code: 200 | Message: You are now logged in.
+2026-04-16 15:55:08,920 | INFO | utils.loggers | Current user token validation started
+2026-04-16 15:55:08,927 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 15:55:08,929 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 15:55:08,969 | INFO | utils.loggers | Fetched 1 agents for work4rajan@gmail.com
+2026-04-16 15:55:08,973 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 15:55:14,451 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='work4rajan', email='work4rajan@gmail.com')] | Subject: QAB - Login Successful
+2026-04-16 15:55:17,717 | INFO | utils.loggers | Current user token validation started
+2026-04-16 15:55:17,720 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 15:55:17,723 | INFO | utils.loggers | Agent run request received for agent id: 69e078f95fdc89ac6f6a6f80 from work4rajan@gmail.com
+2026-04-16 15:55:17,824 | INFO | utils.loggers | Agent builder started for agent: Sabji Wala
+2026-04-16 15:55:17,825 | INFO | utils.loggers | Initializing Gemini LLM with model: gemini-2.5-flash
+2026-04-16 15:55:17,825 | INFO | utils.loggers | GOOGLE API key loaded successfully
+2026-04-16 15:55:20,273 | INFO | utils.loggers | Resolving tools for agent: ['web_search']
+2026-04-16 15:55:20,290 | INFO | utils.loggers | Agent built successfully for agent: Sabji Wala
+2026-04-16 15:55:20,322 | INFO | utils.loggers | HF API key loaded successfully
+2026-04-16 15:55:20,323 | INFO | utils.loggers | RAG: Using custom Postgres (pgvector) for owner: 69df87df78d07ad92faa6dae
+2026-04-16 15:55:26,870 | INFO | httpx | HTTP Request: POST https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2/pipeline/feature-extraction "HTTP/1.1 200 OK"
+2026-04-16 15:55:29,817 | INFO | utils.loggers | RAG context injected for agent id: 69e078f95fdc89ac6f6a6f80
+2026-04-16 15:55:29,818 | INFO | utils.loggers | Running agent id: 69e078f95fdc89ac6f6a6f80 with thread id: 29f01be8-4d2e-4cc8-a233-4869172b0172
+2026-04-16 15:55:31,446 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 1.34 seconds as it raised ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 29.328272366s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '29s'}]}}.
+2026-04-16 15:55:33,917 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 2.32 seconds as it raised ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}.
+2026-04-16 15:55:39,150 | INFO | utils.loggers | Agent run completed successfully for agent id: 69e078f95fdc89ac6f6a6f80
+2026-04-16 15:55:39,150 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent response generated successfully!
+2026-04-16 15:57:50,192 | INFO | utils.loggers | Current user token validation started
+2026-04-16 15:57:50,194 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 15:57:50,194 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 15:57:50,325 | INFO | utils.loggers | Fetched 1 agents for work4rajan@gmail.com
+2026-04-16 15:57:50,326 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 15:58:57,255 | INFO | utils.loggers | Current user token validation started
+2026-04-16 15:58:57,256 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 15:58:57,257 | INFO | utils.loggers | Agent run request received for agent id: 69e078f95fdc89ac6f6a6f80 from work4rajan@gmail.com
+2026-04-16 15:58:57,285 | INFO | utils.loggers | Agent builder started for agent: Sabji Wala
+2026-04-16 15:58:57,285 | INFO | utils.loggers | Initializing Gemini LLM with model: gemini-2.5-flash
+2026-04-16 15:58:57,285 | INFO | utils.loggers | GOOGLE API key loaded successfully
+2026-04-16 15:58:58,580 | INFO | utils.loggers | Resolving tools for agent: ['web_search']
+2026-04-16 15:58:58,600 | INFO | utils.loggers | Agent built successfully for agent: Sabji Wala
+2026-04-16 15:58:58,620 | INFO | utils.loggers | HF API key loaded successfully
+2026-04-16 15:58:58,620 | INFO | utils.loggers | RAG: Using custom Postgres (pgvector) for owner: 69df87df78d07ad92faa6dae
+2026-04-16 15:59:04,807 | INFO | httpx | HTTP Request: POST https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2/pipeline/feature-extraction "HTTP/1.1 200 OK"
+2026-04-16 15:59:05,780 | INFO | utils.loggers | RAG context injected for agent id: 69e078f95fdc89ac6f6a6f80
+2026-04-16 15:59:05,780 | INFO | utils.loggers | Running agent id: 69e078f95fdc89ac6f6a6f80 with thread id: 29f01be8-4d2e-4cc8-a233-4869172b0172
+2026-04-16 15:59:06,558 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 1.58 seconds as it raised ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 54.129711707s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'model': 'gemini-2.5-flash', 'location': 'global'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '54s'}]}}.
+2026-04-16 15:59:08,646 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 2.16 seconds as it raised ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 52.031524423s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '52s'}]}}.
+2026-04-16 15:59:11,296 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 4.36 seconds as it raised ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 49.339979869s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '49s'}]}}.
+2026-04-16 15:59:16,777 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 8.65 seconds as it raised ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 43.894471134s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '43s'}]}}.
+2026-04-16 15:59:25,850 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 16.1 seconds as it raised ClientError: 429 RESOURCE_EXHAUSTED. {'error': {'code': 429, 'message': 'You exceeded your current quota, please check your plan and billing details. For more information on this error, head to: https://ai.google.dev/gemini-api/docs/rate-limits. To monitor your current usage, head to: https://ai.dev/rate-limit. \n* Quota exceeded for metric: generativelanguage.googleapis.com/generate_content_free_tier_requests, limit: 20, model: gemini-2.5-flash\nPlease retry in 34.812504665s.', 'status': 'RESOURCE_EXHAUSTED', 'details': [{'@type': 'type.googleapis.com/google.rpc.Help', 'links': [{'description': 'Learn more about Gemini API quotas', 'url': 'https://ai.google.dev/gemini-api/docs/rate-limits'}]}, {'@type': 'type.googleapis.com/google.rpc.QuotaFailure', 'violations': [{'quotaMetric': 'generativelanguage.googleapis.com/generate_content_free_tier_requests', 'quotaId': 'GenerateRequestsPerDayPerProjectPerModel-FreeTier', 'quotaDimensions': {'location': 'global', 'model': 'gemini-2.5-flash'}, 'quotaValue': '20'}]}, {'@type': 'type.googleapis.com/google.rpc.RetryInfo', 'retryDelay': '34s'}]}}.
+2026-04-16 15:59:45,126 | INFO | utils.loggers | Agent run completed successfully for agent id: 69e078f95fdc89ac6f6a6f80
+2026-04-16 15:59:45,126 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent response generated successfully!
+2026-04-16 16:00:58,276 | INFO | utils.loggers | Current user token validation started
+2026-04-16 16:00:58,277 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 16:00:58,278 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 16:00:58,322 | INFO | utils.loggers | Fetched 1 agents for work4rajan@gmail.com
+2026-04-16 16:00:58,322 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 16:01:01,715 | INFO | utils.loggers | Current user token validation started
+2026-04-16 16:01:01,717 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 16:01:01,721 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 16:01:01,735 | INFO | utils.loggers | Fetched 1 agents for work4rajan@gmail.com
+2026-04-16 16:01:01,737 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 16:01:05,089 | INFO | utils.loggers | Current user token validation started
+2026-04-16 16:01:05,089 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 16:01:05,090 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 16:01:05,110 | INFO | utils.loggers | Fetched 1 agents for work4rajan@gmail.com
+2026-04-16 16:01:05,113 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 16:02:25,421 | INFO | utils.loggers | Current user token validation started
+2026-04-16 16:02:25,423 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 16:02:25,433 | INFO | utils.loggers | Agent creation request received from work4rajan@gmail.com
+2026-04-16 16:02:25,508 | INFO | utils.loggers | Agent created successfully for work4rajan@gmail.com with id: 69e0bab991e4fdcf73d24bee
+2026-04-16 16:02:25,509 | INFO | utils.loggers | Success response generated with status code: 201 | Message: Agent Created!
+2026-04-16 16:02:25,524 | INFO | utils.loggers | Current user token validation started
+2026-04-16 16:02:25,526 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 16:02:25,527 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 16:02:25,586 | INFO | utils.loggers | Fetched 2 agents for work4rajan@gmail.com
+2026-04-16 16:02:25,586 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 16:02:38,765 | INFO | utils.loggers | Current user token validation started
+2026-04-16 16:02:38,767 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 16:02:38,769 | INFO | utils.loggers | Agent run request received for agent id: 69e0bab991e4fdcf73d24bee from work4rajan@gmail.com
+2026-04-16 16:02:38,791 | INFO | utils.loggers | Agent builder started for agent: WerQLabs
+2026-04-16 16:02:38,791 | INFO | utils.loggers | Initializing Groq LLM with model: llama-3.1-8b-instant
+2026-04-16 16:02:38,812 | INFO | utils.loggers | GROQ API key loaded successfully
+2026-04-16 16:02:42,307 | INFO | utils.loggers | Resolving tools for agent: []
+2026-04-16 16:02:42,335 | INFO | utils.loggers | Agent built successfully for agent: WerQLabs
+2026-04-16 16:02:42,336 | INFO | utils.loggers | Running agent id: 69e0bab991e4fdcf73d24bee with thread id: 29f01be8-4d2e-4cc8-a233-4869172b0172
+2026-04-16 16:02:42,758 | INFO | httpx | HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-16 16:02:42,862 | INFO | utils.loggers | Agent run completed successfully for agent id: 69e0bab991e4fdcf73d24bee
+2026-04-16 16:02:42,862 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent response generated successfully!
+2026-04-16 16:02:59,068 | INFO | utils.loggers | Current user token validation started
+2026-04-16 16:02:59,068 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 16:02:59,068 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 16:02:59,083 | INFO | utils.loggers | Fetched 2 agents for work4rajan@gmail.com
+2026-04-16 16:02:59,083 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 16:03:25,326 | INFO | utils.loggers | Current user token validation started
+2026-04-16 16:03:25,328 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 16:03:25,333 | INFO | utils.loggers | Agent update request received for agent id: 69e0bab991e4fdcf73d24bee from work4rajan@gmail.com
+2026-04-16 16:03:25,367 | INFO | utils.loggers | Agent updated successfully for agent id: 69e0bab991e4fdcf73d24bee by work4rajan@gmail.com
+2026-04-16 16:03:25,367 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent updated successfully!
+2026-04-16 16:03:25,384 | INFO | utils.loggers | Current user token validation started
+2026-04-16 16:03:25,385 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 16:03:25,385 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 16:03:25,399 | INFO | utils.loggers | Fetched 2 agents for work4rajan@gmail.com
+2026-04-16 16:03:25,399 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 16:03:58,138 | INFO | utils.loggers | Current user token validation started
+2026-04-16 16:03:58,139 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 16:03:58,140 | INFO | utils.loggers | Agent run request received for agent id: 69e0bab991e4fdcf73d24bee from work4rajan@gmail.com
+2026-04-16 16:03:58,173 | INFO | utils.loggers | Agent builder started for agent: WerQLabs
+2026-04-16 16:03:58,174 | INFO | utils.loggers | Initializing Groq LLM with model: llama-3.1-8b-instant
+2026-04-16 16:03:58,174 | INFO | utils.loggers | GROQ API key loaded successfully
+2026-04-16 16:03:59,819 | INFO | utils.loggers | Resolving tools for agent: ['web_search']
+2026-04-16 16:03:59,859 | INFO | utils.loggers | Agent built successfully for agent: WerQLabs
+2026-04-16 16:03:59,859 | INFO | utils.loggers | Running agent id: 69e0bab991e4fdcf73d24bee with thread id: 29f01be8-4d2e-4cc8-a233-4869172b0172
+2026-04-16 16:04:00,180 | INFO | httpx | HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-16 16:04:00,205 | INFO | utils.loggers | Web search tool invoked for query: average salary of Python Developer at WerqLabs
+2026-04-16 16:04:00,206 | INFO | utils.loggers | Tavily API key loaded successfully
+2026-04-16 16:04:02,658 | INFO | utils.loggers | Web search tool executed successfully for query: average salary of Python Developer at WerqLabs
+2026-04-16 16:04:03,267 | INFO | httpx | HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-16 16:04:03,280 | INFO | utils.loggers | Web search tool invoked for query: average salary of Python Developer in mumbai
+2026-04-16 16:04:03,281 | INFO | utils.loggers | Tavily API key loaded successfully
+2026-04-16 16:04:05,531 | INFO | utils.loggers | Web search tool executed successfully for query: average salary of Python Developer in mumbai
+2026-04-16 16:04:05,939 | INFO | httpx | HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-16 16:04:05,955 | INFO | utils.loggers | Web search tool invoked for query: Werq Labs Python Developer interview process
+2026-04-16 16:04:05,955 | INFO | utils.loggers | Tavily API key loaded successfully
+2026-04-16 16:04:08,337 | INFO | utils.loggers | Web search tool executed successfully for query: Werq Labs Python Developer interview process
+2026-04-16 16:04:08,688 | INFO | httpx | HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-16 16:04:08,698 | INFO | utils.loggers | Web search tool invoked for query: Werq Labs Python developer job description
+2026-04-16 16:04:08,698 | INFO | utils.loggers | Tavily API key loaded successfully
+2026-04-16 16:04:11,415 | INFO | utils.loggers | Web search tool executed successfully for query: Werq Labs Python developer job description
+2026-04-16 16:04:12,101 | INFO | httpx | HTTP Request: POST https://api.groq.com/openai/v1/chat/completions "HTTP/1.1 200 OK"
+2026-04-16 16:04:12,105 | INFO | utils.loggers | Agent run completed successfully for agent id: 69e0bab991e4fdcf73d24bee
+2026-04-16 16:04:12,105 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent response generated successfully!
+2026-04-16 16:14:18,664 | INFO | utils.loggers | Current user token validation started
+2026-04-16 16:14:18,666 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 16:14:18,667 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 16:14:18,731 | INFO | utils.loggers | Fetched 2 agents for work4rajan@gmail.com
+2026-04-16 16:14:18,733 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 16:14:40,597 | INFO | utils.loggers | Login request received from work4rajan@gmail.com
+2026-04-16 16:14:40,598 | INFO | utils.loggers | Fetching user by email: work4rajan@gmail.com
+2026-04-16 16:14:40,622 | INFO | utils.loggers | User found for email: work4rajan@gmail.com
+2026-04-16 16:14:40,624 | INFO | utils.loggers | Password verification started
+2026-04-16 16:14:41,320 | INFO | utils.loggers | Access token generation started for work4rajan@gmail.com
+2026-04-16 16:14:41,321 | INFO | utils.loggers | Access token generated successfully for work4rajan@gmail.com
+2026-04-16 16:14:41,321 | INFO | utils.loggers | Refresh token generation started for work4rajan@gmail.com
+2026-04-16 16:14:41,321 | INFO | utils.loggers | Refresh token generated successfully for work4rajan@gmail.com
+2026-04-16 16:14:41,322 | INFO | utils.loggers | JWT tokens generated
+2026-04-16 16:14:41,322 | INFO | utils.loggers | Success response generated with status code: 200 | Message: You are now logged in.
+2026-04-16 16:14:41,389 | INFO | utils.loggers | Current user token validation started
+2026-04-16 16:14:41,390 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 16:14:41,390 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 16:14:41,438 | INFO | utils.loggers | Fetched 2 agents for work4rajan@gmail.com
+2026-04-16 16:14:41,439 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 16:14:45,321 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='work4rajan', email='work4rajan@gmail.com')] | Subject: QAB - Login Successful
+2026-04-16 16:18:07,692 | INFO | utils.loggers | Current user token validation started
+2026-04-16 16:18:07,693 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 16:18:07,696 | INFO | utils.loggers | DB link request received from work4rajan@gmail.com for Postgres
+2026-04-16 16:18:07,821 | WARNING | utils.loggers | Error response generated with status code: 405 | Message: A DB is already linked. Please remove the current DB before adding a new one.
+2026-04-16 16:18:19,638 | INFO | utils.loggers | Current user token validation started
+2026-04-16 16:18:19,639 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 16:18:19,640 | INFO | utils.loggers | DB link request received from work4rajan@gmail.com for Postgres
+2026-04-16 16:18:19,671 | WARNING | utils.loggers | Error response generated with status code: 405 | Message: A DB is already linked. Please remove the current DB before adding a new one.
+2026-04-16 16:20:14,703 | INFO | utils.loggers | Current user token validation started
+2026-04-16 16:20:14,704 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-16 16:20:14,704 | INFO | utils.loggers | Fetch all agents request received from work4rajan@gmail.com
+2026-04-16 16:20:14,713 | INFO | utils.loggers | Fetched 2 agents for work4rajan@gmail.com
+2026-04-16 16:20:14,713 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-16 16:23:10,964 | INFO | uvicorn.error | Shutting down
+2026-04-16 16:23:11,087 | INFO | uvicorn.error | Waiting for application shutdown.
+2026-04-16 16:23:11,098 | INFO | uvicorn.error | Application shutdown complete.
+2026-04-16 16:23:11,103 | INFO | uvicorn.error | Finished server process [14140]
+2026-04-17 13:35:07,251 | INFO | database.db | MongoDB connection string loaded successfully
+2026-04-17 13:35:07,944 | INFO | database.db | Async MongoDB client initialized for database: qab
+2026-04-17 13:35:07,944 | INFO | database.db | MongoDB collections initialized: users, agents
+2026-04-17 13:35:09,953 | INFO | database.db | Sync MongoDB vector collection initialized: vector_store
+2026-04-17 13:35:10,643 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-17 13:35:10,674 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-17 13:39:18,693 | INFO | uvicorn.error | Started server process [7824]
+2026-04-17 13:39:18,695 | INFO | uvicorn.error | Waiting for application startup.
+2026-04-17 13:39:18,699 | INFO | uvicorn.error | Application startup complete.
+2026-04-17 13:39:18,701 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-04-17 14:05:10,762 | INFO | uvicorn.error | Shutting down
+2026-04-17 14:05:10,971 | INFO | uvicorn.error | Waiting for application shutdown.
+2026-04-17 14:05:10,998 | INFO | uvicorn.error | Application shutdown complete.
+2026-04-17 14:05:11,002 | INFO | uvicorn.error | Finished server process [7824]
+2026-04-17 14:20:19,900 | INFO | database.db | MongoDB connection string loaded successfully
+2026-04-17 14:20:21,885 | INFO | database.db | Async MongoDB client initialized for database: qab
+2026-04-17 14:20:21,885 | INFO | database.db | MongoDB collections initialized: users, agents
+2026-04-17 14:20:27,602 | INFO | database.db | Sync MongoDB vector collection initialized: vector_store
+2026-04-17 14:20:28,920 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-17 14:20:29,046 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-17 14:23:40,455 | INFO | database.db | MongoDB connection string loaded successfully
+2026-04-17 14:23:41,148 | INFO | database.db | Async MongoDB client initialized for database: qab
+2026-04-17 14:23:41,148 | INFO | database.db | MongoDB collections initialized: users, agents
+2026-04-17 14:23:44,433 | INFO | database.db | Sync MongoDB vector collection initialized: vector_store
+2026-04-17 14:23:45,123 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-17 14:23:45,175 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-17 14:28:37,673 | INFO | utils.loggers | Root route accessed
+2026-04-17 14:42:54,149 | INFO | database.db | MongoDB connection string loaded successfully
+2026-04-17 14:42:54,665 | INFO | database.db | Async MongoDB client initialized for database: qab
+2026-04-17 14:42:54,665 | INFO | database.db | MongoDB collections initialized: users, agents
+2026-04-17 14:42:58,032 | INFO | database.db | Sync MongoDB vector collection initialized: vector_store
+2026-04-17 14:42:58,400 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-17 14:42:58,434 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-17 14:44:57,161 | INFO | uvicorn.error | Started server process [6136]
+2026-04-17 14:44:57,163 | INFO | uvicorn.error | Waiting for application startup.
+2026-04-17 14:44:57,164 | INFO | uvicorn.error | Application startup complete.
+2026-04-17 14:44:57,166 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-04-17 14:48:31,704 | INFO | utils.loggers | New user registration request received from user@example.com
+2026-04-17 14:48:31,705 | INFO | utils.loggers | Fetching user by email: user@example.com
+2026-04-17 14:48:34,216 | WARNING | utils.loggers | User not found for email: user@example.com
+2026-04-17 14:48:34,216 | INFO | utils.loggers | Password hashing started
+2026-04-17 14:48:34,510 | INFO | utils.loggers | Registration successful for user@example.com with id: 69e1faeaa69c6fb195a9f077
+2026-04-17 14:48:34,511 | INFO | utils.loggers | Success response generated with status code: 201 | Message: Rajan Rajawat is now registered.
+2026-04-17 14:48:38,109 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='user', email='user@example.com')] | Subject: QAB - Registration Successful
+2026-04-17 14:48:53,134 | INFO | utils.loggers | Login request received from user@example.com
+2026-04-17 14:48:53,135 | INFO | utils.loggers | Fetching user by email: user@example.com
+2026-04-17 14:48:53,145 | INFO | utils.loggers | User found for email: user@example.com
+2026-04-17 14:48:53,145 | INFO | utils.loggers | Password verification started
+2026-04-17 14:48:53,381 | INFO | utils.loggers | Access token generation started for user@example.com
+2026-04-17 14:48:53,381 | INFO | utils.loggers | Access token generated successfully for user@example.com
+2026-04-17 14:48:53,382 | INFO | utils.loggers | Refresh token generation started for user@example.com
+2026-04-17 14:48:53,421 | INFO | utils.loggers | Refresh token generated successfully for user@example.com
+2026-04-17 14:48:53,421 | INFO | utils.loggers | JWT tokens generated
+2026-04-17 14:48:53,421 | INFO | utils.loggers | Success response generated with status code: 200 | Message: You are now logged in.
+2026-04-17 14:48:56,489 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='user', email='user@example.com')] | Subject: QAB - Login Successful
+2026-04-17 14:49:19,005 | INFO | utils.loggers | Current user token validation started
+2026-04-17 14:49:19,005 | INFO | utils.loggers | Current user token validated successfully for user@example.com
+2026-04-17 14:49:19,005 | INFO | utils.loggers | Fetch all agents request from user@example.com
+2026-04-17 14:49:19,013 | INFO | utils.loggers | Fetched 0 agents for user@example.com
+2026-04-17 14:49:19,014 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-17 14:50:04,502 | INFO | utils.loggers | Current user token validation started
+2026-04-17 14:50:04,503 | INFO | utils.loggers | Current user token validated successfully for user@example.com
+2026-04-17 14:50:04,504 | INFO | utils.loggers | DB link request received from user@example.com for ListDB.MongoDB
+2026-04-17 14:50:04,555 | INFO | utils.loggers | ListDB.MongoDB linked successfully for user@example.com
+2026-04-17 14:50:04,556 | INFO | utils.loggers | Success response generated with status code: 201 | Message: MongoDB has been linked successfully.
+2026-04-17 14:50:07,629 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='user', email='user@example.com')] | Subject: QAB - DB Link Successful
+2026-04-17 14:50:15,036 | INFO | utils.loggers | Current user token validation started
+2026-04-17 14:50:15,037 | INFO | utils.loggers | Current user token validated successfully for user@example.com
+2026-04-17 14:50:15,037 | INFO | utils.loggers | Fetching linked DBs for user@example.com
+2026-04-17 14:50:15,054 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Linked DBs fetched successfully.
+2026-04-17 14:50:34,711 | INFO | utils.loggers | Current user token validation started
+2026-04-17 14:50:34,711 | INFO | utils.loggers | Current user token validated successfully for user@example.com
+2026-04-17 14:50:34,711 | INFO | utils.loggers | DB unlink request received from user@example.com for db_id: 69e1fb44a69c6fb195a9f078
+2026-04-17 14:50:34,748 | INFO | utils.loggers | DB 69e1fb44a69c6fb195a9f078 unlinked successfully for user@example.com
+2026-04-17 14:50:34,748 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Database has been unlinked successfully.
+2026-04-17 14:50:37,847 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='user', email='user@example.com')] | Subject: QAB - DB Unlink Successful
+2026-04-17 14:50:47,974 | INFO | utils.loggers | Current user token validation started
+2026-04-17 14:50:47,974 | INFO | utils.loggers | Current user token validated successfully for user@example.com
+2026-04-17 14:50:47,974 | INFO | utils.loggers | Fetching linked DBs for user@example.com
+2026-04-17 14:50:47,984 | INFO | utils.loggers | Success response generated with status code: 200 | Message: No custom DBs linked.
+2026-04-17 14:50:55,975 | INFO | utils.loggers | Current user token validation started
+2026-04-17 14:50:55,976 | INFO | utils.loggers | Current user token validated successfully for user@example.com
+2026-04-17 14:50:55,976 | INFO | utils.loggers | DB link request received from user@example.com for ListDB.MongoDB
+2026-04-17 14:50:56,010 | INFO | utils.loggers | ListDB.MongoDB linked successfully for user@example.com
+2026-04-17 14:50:56,010 | INFO | utils.loggers | Success response generated with status code: 201 | Message: MongoDB has been linked successfully.
+2026-04-17 14:50:59,188 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='user', email='user@example.com')] | Subject: QAB - DB Link Successful
+2026-04-17 14:51:22,325 | INFO | utils.loggers | Current user token validation started
+2026-04-17 14:51:22,325 | INFO | utils.loggers | Current user token validated successfully for user@example.com
+2026-04-17 14:51:22,326 | INFO | utils.loggers | Fetching linked DBs for user@example.com
+2026-04-17 14:51:22,342 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Linked DBs fetched successfully.
+2026-04-17 14:51:45,157 | INFO | utils.loggers | Current user token validation started
+2026-04-17 14:51:45,157 | INFO | utils.loggers | Current user token validated successfully for user@example.com
+2026-04-17 14:51:45,158 | INFO | utils.loggers | Upload request from user@example.com | db_id=69e1fb77a69c6fb195a9f079
+2026-04-17 14:51:45,211 | INFO | utils.loggers | File 'raju_sabji.txt' queued | owner: user@example.com
+2026-04-17 14:51:45,211 | INFO | utils.loggers | Success response generated with status code: 202 | Message: File uploaded successfully. Processing in background.
+2026-04-17 14:51:45,266 | INFO | utils.loggers | Processing file: raju_sabji.txt for owner: 69e1faeaa69c6fb195a9f077
+2026-04-17 14:51:45,283 | INFO | utils.loggers | HF API key loaded successfully
+2026-04-17 14:51:45,948 | INFO | utils.loggers | Connected to custom MongoDB for owner 69e1faeaa69c6fb195a9f077
+2026-04-17 14:51:45,948 | ERROR | utils.loggers | Error processing file raju_sabji.txt for owner 69e1faeaa69c6fb195a9f077: Collection objects do not implement truth value testing or bool(). Please compare with None instead: collection is not None
+2026-04-17 14:53:20,128 | INFO | utils.loggers | Current user token validation started
+2026-04-17 14:53:20,129 | INFO | utils.loggers | Current user token validated successfully for user@example.com
+2026-04-17 14:53:20,130 | INFO | utils.loggers | Upload request from user@example.com | db_id=None
+2026-04-17 14:53:20,138 | INFO | utils.loggers | File 'raju_sabji.txt' queued | owner: user@example.com
+2026-04-17 14:53:20,138 | INFO | utils.loggers | Success response generated with status code: 202 | Message: File uploaded successfully. Processing in background.
+2026-04-17 14:53:20,140 | INFO | utils.loggers | Processing file: raju_sabji.txt for owner: 69e1faeaa69c6fb195a9f077
+2026-04-17 14:53:20,142 | INFO | utils.loggers | HF API key loaded successfully
+2026-04-17 14:53:20,934 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2?expand=inferenceProviderMapping "HTTP/1.1 200 OK"
+2026-04-17 14:53:21,188 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2 "HTTP/1.1 200 OK"
+2026-04-17 14:53:21,549 | INFO | httpx | HTTP Request: POST https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2/pipeline/feature-extraction "HTTP/1.1 200 OK"
+2026-04-17 14:53:21,735 | INFO | utils.loggers | Embedded 3 chunks into MongoDB | file: raju_sabji.txt | owner: 69e1faeaa69c6fb195a9f077
+2026-04-17 14:53:52,405 | INFO | utils.loggers | Current user token validation started
+2026-04-17 14:53:52,405 | INFO | utils.loggers | Current user token validated successfully for user@example.com
+2026-04-17 14:53:52,405 | INFO | utils.loggers | Upload request from user@example.com | db_id=None
+2026-04-17 14:53:52,421 | INFO | utils.loggers | File 'raju_sabji.txt' queued | owner: user@example.com
+2026-04-17 14:53:52,421 | INFO | utils.loggers | Success response generated with status code: 202 | Message: File uploaded successfully. Processing in background.
+2026-04-17 14:53:52,425 | INFO | utils.loggers | Processing file: raju_sabji.txt for owner: 69e1faeaa69c6fb195a9f077
+2026-04-17 14:53:52,429 | INFO | utils.loggers | HF API key loaded successfully
+2026-04-17 14:53:52,740 | INFO | httpx | HTTP Request: POST https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2/pipeline/feature-extraction "HTTP/1.1 200 OK"
+2026-04-17 14:53:52,775 | INFO | utils.loggers | Embedded 3 chunks into MongoDB | file: raju_sabji.txt | owner: 69e1faeaa69c6fb195a9f077
+2026-04-17 14:55:18,869 | INFO | utils.loggers | Current user token validation started
+2026-04-17 14:55:18,870 | INFO | utils.loggers | Current user token validated successfully for user@example.com
+2026-04-17 14:55:18,870 | INFO | utils.loggers | Upload request from user@example.com | db_id=69e1fb77a69c6fb195a9f079
+2026-04-17 14:55:18,900 | INFO | utils.loggers | File 'gopi_hotel.txt' queued | owner: user@example.com
+2026-04-17 14:55:18,901 | INFO | utils.loggers | Success response generated with status code: 202 | Message: File uploaded successfully. Processing in background.
+2026-04-17 14:55:18,904 | INFO | utils.loggers | Processing file: gopi_hotel.txt for owner: 69e1faeaa69c6fb195a9f077
+2026-04-17 14:55:18,922 | INFO | utils.loggers | HF API key loaded successfully
+2026-04-17 14:55:21,004 | INFO | utils.loggers | Connected to custom MongoDB for owner 69e1faeaa69c6fb195a9f077
+2026-04-17 14:55:21,005 | ERROR | utils.loggers | Error processing file gopi_hotel.txt for owner 69e1faeaa69c6fb195a9f077: Collection objects do not implement truth value testing or bool(). Please compare with None instead: collection is not None
+2026-04-17 14:55:54,282 | INFO | utils.loggers | Current user token validation started
+2026-04-17 14:55:54,283 | INFO | utils.loggers | Current user token validated successfully for user@example.com
+2026-04-17 14:55:54,284 | INFO | utils.loggers | Delete KB file request from user@example.com | file: raju_sabji.txt | db_id: None
+2026-04-17 14:55:54,310 | INFO | utils.loggers | Deleted 0 chunks from default DB | file: raju_sabji.txt
+2026-04-17 14:55:54,310 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Deleted 0 chunks for 'raju_sabji.txt' from default DB.
+2026-04-17 14:56:00,817 | INFO | utils.loggers | Current user token validation started
+2026-04-17 14:56:00,818 | INFO | utils.loggers | Current user token validated successfully for user@example.com
+2026-04-17 14:56:00,819 | INFO | utils.loggers | Delete KB file request from user@example.com | file: raju_sabji.txt | db_id: None
+2026-04-17 14:56:00,840 | INFO | utils.loggers | Deleted 0 chunks from default DB | file: raju_sabji.txt
+2026-04-17 14:56:00,841 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Deleted 0 chunks for 'raju_sabji.txt' from default DB.
+2026-04-17 14:56:17,760 | INFO | utils.loggers | Current user token validation started
+2026-04-17 14:56:17,760 | INFO | utils.loggers | Current user token validated successfully for user@example.com
+2026-04-17 14:56:17,761 | INFO | utils.loggers | Delete KB file request from user@example.com | file: 69e1faeaa69c6fb195a9f077_raju_sabji.txt | db_id: None
+2026-04-17 14:56:17,780 | INFO | utils.loggers | Deleted 0 chunks from default DB | file: 69e1faeaa69c6fb195a9f077_raju_sabji.txt
+2026-04-17 14:56:17,780 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Deleted 0 chunks for '69e1faeaa69c6fb195a9f077_raju_sabji.txt' from default DB.
+2026-04-17 14:56:25,562 | INFO | utils.loggers | Current user token validation started
+2026-04-17 14:56:25,563 | INFO | utils.loggers | Current user token validated successfully for user@example.com
+2026-04-17 14:56:25,564 | INFO | utils.loggers | Delete KB file request from user@example.com | file: raju_sabji.txt | db_id: None
+2026-04-17 14:56:25,587 | INFO | utils.loggers | Deleted 0 chunks from default DB | file: raju_sabji.txt
+2026-04-17 14:56:25,588 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Deleted 0 chunks for 'raju_sabji.txt' from default DB.

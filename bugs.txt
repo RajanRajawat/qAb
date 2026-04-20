@@ -2,3 +2,9 @@
 2. In `app/backend/src/agent.py` under the `delete_agent` function, the query searches for `"owner_id": str(current_user["_id"])` when deleting from `agents_collection`. Agents are originally created with `"owner_id": ObjectId(current_user["_id"])`. This will prevent users from deleting their agents.
 3. In `app/backend/src/agent.py` under the `update_agent` function, the `$set` payload misses updating some fields if they are `None` due to `exclude_none=True`, but when generating the return dictionary, it attempts to access `updated["updated_at"]` etc., but if the agent wasn't found it returns earlier, so this is partially fine, except if some data inherently holds `None` it won't be cleared. But primarily the object ID search is handled well here.
 4. `need to check pg!` logic in `knowledge_base.py` hints that PGVector uploading might need testing/validation.
+
+
+>kb/upload
+custom db upload failing
+/delete also not working
+

@@ -41,6 +41,7 @@ logger.info(f"Async MongoDB client initialized for database: qab")
 
 users_collection = db['users']
 agents_collection = db['agents']
+db_collection = db['custom_db']
 logger.info(f"MongoDB collections initialized: users, agents")
 
 # SYNC CLIENT

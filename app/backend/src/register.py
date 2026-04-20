@@ -34,9 +34,7 @@ async def register_user(user:UserRegister, bt:BackgroundTasks):
     user_data.update({
         'password' : hash_password(user.password),
         'created_at' : datetime.datetime.now(datetime.timezone.utc),
-        'custom_db' : {
-            'linked' : False
-        }
+        'custom_db' : []
     })
 
     created_user = await users_collection.insert_one(user_data)

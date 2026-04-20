@@ -1,18 +1,12 @@
 
-#~ Main                                                 
-#: Todo:                                                
-#! Bugs:                                                
-#- Notes:                                               
-
-
-
 
 
 from fastapi import FastAPI
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
+from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
-import os
+import os, pathlib
 from contextlib import asynccontextmanager
 from src.register import register_router
 from src.login import login_router
@@ -24,6 +18,7 @@ from utils.loggers import logger
 load_dotenv()
 
 
+FRONTEND_DIR = pathlib.Path(__file__).parent.parent / "frontend"
 
 app = FastAPI()
 
@@ -42,10 +37,12 @@ app.include_router(runner_router)
 app.include_router(db_router)
 app.include_router(kb_router)
 
+app.mount("/static", StaticFiles(directory=str(FRONTEND_DIR)), name="static")
+
 @app.get("/")
 def root():
     logger.info(f"Root route accessed")
-    return FileResponse("index.html")
+    return FileResponse(str(FRONTEND_DIR / "index.html"))
 
 
 @app.get("/health")

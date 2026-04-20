@@ -130,6 +130,11 @@ compatibility_map: dict[LLMProvider, set[LLMModel]] = {
 
 #- Agent
 
+# Add this class above AgentCreation
+class KBFile(BaseModel):
+    file_name: str
+    db_id: str  # "default" or a custom DB ObjectId string
+
 class AgentCreation(BaseModel):
     name: str = Field(min_length=3, max_length=20)
     description: str
@@ -139,6 +144,7 @@ class AgentCreation(BaseModel):
     llm_model: LLMModel
     temperature: float = Field(ge=0.0, le=1.0)
     knowledge_base: bool
+    kb_files: list[KBFile] = Field(default_factory=list)   # <-- added
     tools: list[AgentTool] = Field(default_factory=list)
 
     model_config = ConfigDict(extra="forbid")
@@ -168,6 +174,7 @@ class AgentUpdate(BaseModel):
     llm_model: Optional[LLMModel] = None
     temperature: Optional[float] = Field(None, ge=0.0, le=1.0)
     knowledge_base: Optional[bool] = None
+    kb_files: Optional[list[KBFile]] = None                # <-- added
     tools: Optional[list[AgentTool]] = None
 
     model_config = ConfigDict(extra="forbid")
@@ -195,6 +202,14 @@ class AgentRunRequest(BaseModel):
 
 
 #DB
+class ListDB(str, Enum):
+    MongoDB = "mongo"
+    Postgres    = "postgres"
 
-class URILink(BaseModel):
+class AddDB(BaseModel):
+    name : str = Field(min_length=3, max_length=20)
+    db : ListDB
     connection_uri: str 
+    #need to add validations!
+
+    
