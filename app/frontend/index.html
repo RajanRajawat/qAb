@@ -1,0 +1,142 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>QAB | Premium Knowledge Base Console</title>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <div class="page-shell">
+        <header class="hero glass">
+            <div class="hero-content">
+                <p class="eyebrow">Project QAB</p>
+                <h1>AI Knowledge Console</h1>
+                <p class="hero-copy">
+                    Seamlessly manage auth, custom databases, vector knowledge bases, and intelligent agents in one unified dashboard.
+                </p>
+            </div>
+            <div class="session-box">
+                <div id="sessionStatus">Not logged in</div>
+                <button id="logoutBtn" class="ghost-btn">Logout</button>
+            </div>
+        </header>
+
+        <main class="grid">
+            <section class="panel glass">
+                <div class="section-title">
+                    <h2>Authentication</h2>
+                </div>
+                
+                <form id="registerForm" class="stack">
+                    <h3 class="meta">Create Account</h3>
+                    <input name="name" placeholder="Full Name" required>
+                    <input name="email" type="email" placeholder="Email Address" required>
+                    <input name="mobile" placeholder="Mobile Number" required>
+                    <input name="password" type="password" placeholder="Password" required>
+                    <button type="submit">Get Started</button>
+                </form>
+
+                <div style="height: 1px; background: var(--glass-border); margin: 1rem 0;"></div>
+
+                <form id="loginForm" class="stack">
+                    <h3 class="meta">Sign In</h3>
+                    <input name="email" type="email" placeholder="Email Address" required>
+                    <input name="password" type="password" placeholder="Password" required>
+                    <button type="submit">Sign In</button>
+                </form>
+            </section>
+
+            <section class="panel glass">
+                <div class="section-title">
+                    <h2>Database Link</h2>
+                    <button id="refreshDbBtn" class="ghost-btn">Refresh</button>
+                </div>
+
+                <form id="dbForm" class="stack">
+                    <input name="name" placeholder="Database Name (Internal)" required>
+                    <select name="db">
+                        <option value="mongo">MongoDB Atlas</option>
+                        <option value="postgres">PostgreSQL (PGVector)</option>
+                    </select>
+                    <textarea name="connection_uri" placeholder="Connection Connection URI" rows="3" required></textarea>
+                    <button type="submit">Link Database</button>
+                </form>
+
+                <div id="dbList" class="list"></div>
+            </section>
+
+            <section class="panel glass">
+                <div class="section-title">
+                    <h2>Knowledge Base</h2>
+                    <button id="refreshKbBtn" class="ghost-btn">Refresh</button>
+                </div>
+
+                <form id="kbForm" class="stack">
+                    <input name="name" placeholder="Knowledge Base Name" required>
+                    <select id="kbDbSelect" name="db_id"></select>
+                    <button type="submit">Initialize KB</button>
+                </form>
+
+                <div id="kbList" class="list"></div>
+            </section>
+
+            <section class="panel panel-wide glass">
+                <div class="section-title">
+                    <h2>Agents & Orchestration</h2>
+                    <button id="refreshAgentBtn" class="ghost-btn">Refresh</button>
+                </div>
+
+                <div class="two-col" style="gap: 2rem;">
+                    <form id="agentForm" class="stack">
+                        <h3 class="meta">Configure New Agent</h3>
+                        <input name="name" placeholder="Agent Identity Name" required>
+                        <input name="description" placeholder="Brief description (what it does)" required>
+                        <input name="role" placeholder="Defined Role (e.g. Sales Expert)" required>
+                        <textarea name="instruction" placeholder="Core System Instructions" rows="3" required></textarea>
+
+                        <div class="two-col">
+                            <select id="providerSelect" name="llm_provider">
+                                <option value="groq">Groq (Ultra Fast)</option>
+                                <option value="gemini">Gemini (Advanced)</option>
+                            </select>
+                            <select id="modelSelect" name="llm_model"></select>
+                        </div>
+
+                        <div class="two-col" style="align-items: center;">
+                            <label class="checkbox-row">
+                                <input id="knowledgeBaseToggle" name="knowledge_base" type="checkbox">
+                                <span>Inject Knowledge</span>
+                            </label>
+                            <input name="temperature" type="number" min="0" max="1" step="0.1" value="0.2" placeholder="Temp">
+                        </div>
+
+                        <select id="agentKbSelect" name="knowledge_base_id" disabled>
+                            <option value="">Select Knowledge Base</option>
+                        </select>
+
+                        <div class="tool-box">
+                            <label class="checkbox-row"><input type="checkbox" name="tools" value="web_search"><span>Web</span></label>
+                            <label class="checkbox-row"><input type="checkbox" name="tools" value="weather"><span>Weather</span></label>
+                            <label class="checkbox-row"><input type="checkbox" name="tools" value="datetime"><span>Time</span></label>
+                            <label class="checkbox-row"><input type="checkbox" name="tools" value="wikipedia"><span>Wiki</span></label>
+                        </div>
+
+                        <button type="submit">Deploy Agent</button>
+                    </form>
+
+                    <div id="agentList" class="card-grid" style="grid-template-columns: 1fr;">
+                        <!-- Agents will appear here in a vertical scrollable list or cards -->
+                    </div>
+                </div>
+            </section>
+        </main>
+    </div>
+
+    <div id="toast" class="toast hidden"></div>
+    <script src="/static/app.js"></script>
+</body>
+</html>

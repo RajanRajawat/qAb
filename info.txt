@@ -1,0 +1,136 @@
+# Project QAB Backend Documentation
+
+## Overview
+QAB (Query-driven Agent Builder) is a backend system designed to create, manage, and run AI agents with RAG (Retrieval-Augmented Generation) capabilities. It allows users to link their own databases (MongoDB/Postgres), upload documents to a Knowledge Base, and chat with agents that can search through these documents.
+
+---
+
+## Authentication Endpoints (Prefix: `/auth`)
+
+### 1. Register User
+- **Endpoint:** `POST /auth/register`
+- **Description:** Creates a new user account.
+- **Payload:** `UserRegister` (name, email, mobile, password)
+- **Flow:** Hashes password -> Checks for duplicate email -> Saves user data -> Sends welcome email.
+
+### 2. Login User
+- **Endpoint:** `POST /auth/login`
+- **Description:** Authenticates user and returns JWT tokens.
+- **Payload:** `UserLogin` (email, password)
+- **Flow:** Verifies credentials -> Generates Access (3h) and Refresh (24h) tokens -> Sends login notification email.
+
+---
+
+## Agent Management Endpoints (Prefix: `/agent`)
+
+### 3. Create Agent
+- **Endpoint:** `POST /agent/create`
+- **Description:** Configures a new AI agent.
+- **Payload:** `AgentCreation` (name, description, role, instruction, provider, model, temperature, kb_link, etc.)
+- **Flow:** Validates KB selection -> Saves agent doc -> Updates user's agent list.
+
+### 4. Fetch All Agents
+- **Endpoint:** `GET /agent/all`
+- **Description:** Retrieves all agents belonging to the current user.
+
+### 5. Fetch Single Agent
+- **Endpoint:** `GET /agent/{agent_id}`
+- **Description:** Retrieves details for a specific agent.
+
+### 6. Update Agent
+- **Endpoint:** `PATCH /agent/update/{agent_id}`
+- **Description:** Modifies existing agent configuration.
+
+### 7. Delete Agent
+- **Endpoint:** `DELETE /agent/delete/{agent_id}`
+- **Description:** Removes an agent and its reference from the user profile.
+
+---
+
+## Knowledge Base Endpoints (Prefix: `/knowledge-base`)
+
+### 8. Create Knowledge Base
+- **Endpoint:** `POST /knowledge-base/create`
+- **Description:** Creates a logical container for documents.
+- **Payload:** `CreateKnowledgeBase` (name, db_id)
+- **Flow:** Links KB to a specific DB (defaults to system MongoDB) -> Saves KB metadata.
+
+### 9. Add File to Knowledge Base
+- **Endpoint:** `POST /knowledge-base/add-file/{kb_id}`
+- **Description:** Uploads a file (.txt, .pdf), splits it into chunks, and embeds it into the vector store.
+- **Flow:** Saves file locally -> Adds filename to KB -> Starts background embedding task.
+
+### 10. Remove File
+- **Endpoint:** `DELETE /knowledge-base/remove-file/{kb_id}?file_name={name}`
+- **Description:** Deletes a specific file's embeddings and removes it from the KB list.
+
+### 11. Delete Knowledge Base
+- **Endpoint:** `DELETE /knowledge-base/delete/{kb_id}`
+- **Description:** Deletes all embeddings associated with the KB and removes the KB entry.
+
+---
+
+## Database Management Endpoints (Prefix: `/custom-db`)
+
+### 12. Link Custom DB
+- **Endpoint:** `POST /custom-db/add`
+- **Description:** Allows users to link their own MongoDB or Postgres instance for vector storage.
+- **Payload:** `AddDB` (name, provider, connection_uri)
+
+### 13. Fetch My DBs
+- **Endpoint:** `GET /custom-db/mydb`
+- **Description:** Lists all databases linked by the user.
+
+### 14. Unlink Database
+- **Endpoint:** `DELETE /custom-db/delete/{db_id}`
+- **Description:** Removes the database link and cleans up all associated Knowledge Bases and embeddings stored in that DB.
+
+---
+
+## Chat / Execution Endpoints (Prefix: `/chat`)
+
+### 15. Run Agent
+- **Endpoint:** `POST /chat/run/{agent_id}`
+- **Description:** Sends a message to an agent and gets a response.
+- **Payload:** `AgentRunRequest` (query, thread_id)
+- **Flow:** 
+    1. Fetches Agent config.
+    2. If KB is linked, performs similarity search on documents.
+    3. Injects document context into the prompt (RAG).
+    4. Calls LLM (Groq/Gemini).
+    5. Returns agent output and preserves conversation history via LangGraph.
+
+---
+
+## Use Case Flow Diagram
+
+1. **Setup:** 
+   - User Registers and Logins.
+   - (Optional) User links a custom Database via `/custom-db/add`.
+   
+2. **KB Creation:**
+   - User creates a Knowledge Base via `/knowledge-base/create`, selecting either 'default' or their linked custom DB.
+   - User uploads documents (PDF/TXT) via `/knowledge-base/add-file/{kb_id}`.
+   - System automatically processes, chunks, and embeds documents in the background.
+
+3. **Agent Creation:**
+   - User creates an Agent via `/agent/create`.
+   - User links the Agent to one of their Knowledge Bases.
+
+4. **Interaction:**
+   - User chats with the Agent via `/chat/run/{agent_id}`.
+   - The Agent uses RAG to provide answers based on the uploaded documents.
+   - Conversation history is maintained for multi-turn dialogue.
+
+---
+
+## Developer Notes
+- **Logs:** All activities are logged in `qab_logs.txt`.
+- **Async:** Backend uses FastAPI with asynchronous drivers (Motor for MongoDB).
+- **Security:** JWT (Bearer token) is required for most endpoints.
+- **Vector Search:** Powered by HuggingFace Transformers for embeddings and MongoDB Atlas/Postgres (PGVector) for storage.
+
+
+
+
+#: My Bugs:

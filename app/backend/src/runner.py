@@ -148,18 +148,14 @@ def agent_builder(agent_config: dict):
 
 
 def fetch_rag_context(query: str, owner_id: str, kb_entry: dict, db_entry: dict | None = None):
-
-    #- RAG  Fetch data from vector store
-    # embeddings = HuggingFaceEmbeddings(model_name="all-MiniLM-L6-v2") #replace with hf inference api
-    embeddings = HuggingFaceEndpointEmbeddings(
-            model="sentence-transformers/all-MiniLM-L6-v2",
-            huggingfacehub_api_token=(load_hf_api()),
-        )
-
     kb_id = str(kb_entry["_id"])
+    try:
+        embeddings = HuggingFaceEndpointEmbeddings(
+                model="sentence-transformers/all-MiniLM-L6-v2",
+                huggingfacehub_api_token=(load_hf_api()),
+            )
 
-    if db_entry and db_entry.get("provider") == "postgres":
-        try:
+        if db_entry and db_entry.get("provider") == "postgres":
             logger.info(f"RAG: Using custom Postgres for kb {kb_id}")
             vector_store = PGVector(
                 embeddings=embeddings,
@@ -178,27 +174,17 @@ def fetch_rag_context(query: str, owner_id: str, kb_entry: dict, db_entry: dict 
             if docs:
                 return "\n\n".join([doc.page_content for doc in docs])
             return ""
-        except Exception as e:
-            logger.error(f"RAG: Postgres retrieval failed for kb {kb_id}: {e}")
-            return ""
 
-    #- MongoDB path (custom or default)
-    target_collection = None
-
-    if db_entry and db_entry.get("provider") == "mongo":
-        try:
+        target_collection = None
+        if db_entry and db_entry.get("provider") == "mongo":
             target_collection = get_mongo_collection_from_entry(db_entry)
             logger.info(f"RAG: Using custom MongoDB for kb {kb_id}")
-        except Exception as e:
-            logger.error(f"RAG: Failed to connect to custom MongoDB for kb {kb_id}: {e}")
-            target_collection = None
 
-    if target_collection is None:
-        target_collection = vector_collection
-        logger.info(f"RAG: Using default vector collection for kb {kb_id}")
+        if target_collection is None:
+            target_collection = vector_collection
+            logger.info(f"RAG: Using default vector collection for kb {kb_id}")
 
-    #- Check collection has data for this owner before querying
-    try:
+        # Check if index exists or at least if we have documents
         doc_count = target_collection.count_documents({
             'metadata.owner_id': owner_id,
             'metadata.knowledge_base_id': kb_id,
@@ -206,31 +192,32 @@ def fetch_rag_context(query: str, owner_id: str, kb_entry: dict, db_entry: dict 
         if doc_count == 0:
             logger.info(f"RAG: No documents found for kb {kb_id}, skipping KB injection")
             return ""
-    except Exception as e:
-        logger.error(f"RAG: Count check failed for kb {kb_id}: {e}")
-        return ""
 
-    vector_store = MongoDBAtlasVectorSearch(
-        collection=target_collection,
-        embedding=embeddings,
-        index_name="vector_index_qab"
-    )
+        vector_store = MongoDBAtlasVectorSearch(
+            collection=target_collection,
+            embedding=embeddings,
+            index_name="vector_index_qab"
+        )
 
-    retriever = vector_store.as_retriever(
-        search_type="similarity",
-        search_kwargs={
-            "k": 3,
-            "pre_filter": {
+        # Use similarity search directly to handle possible index errors more gracefully
+        docs = vector_store.similarity_search(
+            query,
+            k=3,
+            pre_filter={
                 "metadata.owner_id": {"$eq": owner_id},
                 "metadata.knowledge_base_id": {"$eq": kb_id},
             }
-        }
-    )
+        )
+        
+        if docs:
+            return "\n\n".join([doc.page_content for doc in docs])
 
-    docs = retriever.invoke(query)
-    if docs:
-        return "\n\n".join([doc.page_content for doc in docs])
-
+    except Exception as e:
+        logger.error(f"RAG retrieval failed for kb {kb_id}: {str(e)}")
+        # If it's a JSON decode error, it's likely the embedding API
+        if "Expecting value" in str(e):
+             logger.error("Hugging Face API returned non-JSON response. Check API status or token.")
+    
     return ""
 
 

@@ -24,3 +24,5 @@ vector_index_qab
 
 
 postgresql+psycopg2://postgres.bnzahq................supabase.com:5432/postgres
+
+

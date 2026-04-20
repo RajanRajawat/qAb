@@ -117,7 +117,7 @@ def delete_embeddings_from_default(owner_id: str, kb_id: str, file_name: str | N
 
 def delete_embeddings_from_custom_mongo(db_entry: dict, owner_id: str, kb_id: str, file_name: str | None = None):
     target_collection = get_mongo_collection_from_entry(db_entry)
-    if not target_collection:
+    if target_collection is None:
         return None
 
     query = {
@@ -157,7 +157,7 @@ def delete_embeddings_from_postgres(db_entry: dict, owner_id: str, kb_id: str, f
         return result.rowcount
     except Exception as e:
         logger.error(f"Could not delete embeddings from Postgres: {e}")
-        return None
+        return 0  # Return 0 instead of None to avoid further errors in delete_embeddings_for_kb
 
 
 def delete_embeddings_for_kb(owner_id: str, kb_id: str, db_entry: dict | None, file_name: str | None = None):
@@ -180,7 +180,7 @@ def delete_all_embeddings_for_custom_db(owner_id: str, db_entry: dict):
 
     if provider == "mongo":
         target_collection = get_mongo_collection_from_entry(db_entry)
-        if not target_collection:
+        if target_collection is None:
             return None
         result = target_collection.delete_many({
             "metadata.owner_id": owner_id
@@ -231,10 +231,23 @@ def process_file_and_embed(file_path: str, file_name: str, owner_id: str, kb_id:
 
         if file_name.endswith(".pdf"):
             loader = PyPDFLoader(file_path)
+            documents = loader.load()
         else:
-            loader = TextLoader(file_path, encoding="utf-8")
+            # Try multiple encodings for text files
+            encodings = ["utf-8", "latin-1", "cp1252"]
+            documents = None
+            for encoding in encodings:
+                try:
+                    loader = TextLoader(file_path, encoding=encoding)
+                    documents = loader.load()
+                    logger.info(f"Successfully loaded {file_name} with {encoding} encoding")
+                    break
+                except UnicodeDecodeError:
+                    continue
+            
+            if documents is None:
+                raise ValueError(f"Could not decode file {file_name} with supported encodings.")
 
-        documents = loader.load()
         splitter = RecursiveCharacterTextSplitter(chunk_size=500, chunk_overlap=50)
         chunks = splitter.split_documents(documents)
 
@@ -246,28 +259,33 @@ def process_file_and_embed(file_path: str, file_name: str, owner_id: str, kb_id:
         embeddings = get_embedding_client()
 
         if not db_entry:
+            logger.info(f"Embedding {len(chunks)} chunks into default MongoDB collection for kb {kb_id}")
             MongoDBAtlasVectorSearch.from_documents(
                 documents=chunks,
                 embedding=embeddings,
                 collection=vector_collection,
                 index_name="vector_index_qab"
             )
+            logger.info(f"Successfully embedded chunks for kb {kb_id} into default store")
             return
 
         if db_entry.get("provider") == "mongo":
             target_collection = get_mongo_collection_from_entry(db_entry)
-            if not target_collection:
+            if target_collection is None:
                 raise ValueError("Could not connect to custom MongoDB.")
 
+            logger.info(f"Embedding {len(chunks)} chunks into custom MongoDB for kb {kb_id}")
             MongoDBAtlasVectorSearch.from_documents(
                 documents=chunks,
                 embedding=embeddings,
                 collection=target_collection,
                 index_name="vector_index_qab"
             )
+            logger.info(f"Successfully embedded chunks for kb {kb_id} into custom MongoDB")
             return
 
         if db_entry.get("provider") == "postgres":
+            logger.info(f"Embedding {len(chunks)} chunks into custom Postgres for kb {kb_id}")
             PGVector.from_documents(
                 documents=chunks,
                 embedding=embeddings,
@@ -275,12 +293,24 @@ def process_file_and_embed(file_path: str, file_name: str, owner_id: str, kb_id:
                 connection=db_entry["config"]["connection_string"],
                 use_jsonb=True,
             )
+            logger.info(f"Successfully embedded chunks for kb {kb_id} into custom Postgres")
             return
 
         raise ValueError("Unsupported DB provider.")
 
     except Exception as e:
-        logger.error(f"File embedding failed for kb {kb_id}: {e}")
+        logger.error(f"File embedding failed for kb {kb_id}: {str(e)}")
+        # Remove the file from the KB entry since embedding failed
+        try:
+            from database.db import vec_db
+            sync_kb_collection = vec_db["kb"]
+            sync_kb_collection.update_one(
+                {"_id": ObjectId(kb_id)},
+                {"$pull": {"files": file_name}}
+            )
+            logger.info(f"Removed {file_name} from kb {kb_id} due to embedding failure")
+        except Exception as cleanup_error:
+            logger.error(f"Failed to cleanup KB entry after embedding failure: {cleanup_error}")
     finally:
         if os.path.exists(file_path):
             os.remove(file_path)
