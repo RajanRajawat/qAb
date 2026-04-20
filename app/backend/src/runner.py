@@ -186,8 +186,8 @@ def fetch_rag_context(query: str, owner_id: str, kb_entry: dict, db_entry: dict 
 
         # Check if index exists or at least if we have documents
         doc_count = target_collection.count_documents({
-            'metadata.owner_id': owner_id,
-            'metadata.knowledge_base_id': kb_id,
+            'owner_id': owner_id,
+            'knowledge_base_id': kb_id,
         })
         if doc_count == 0:
             logger.info(f"RAG: No documents found for kb {kb_id}, skipping KB injection")
@@ -204,8 +204,8 @@ def fetch_rag_context(query: str, owner_id: str, kb_entry: dict, db_entry: dict 
             query,
             k=3,
             pre_filter={
-                "metadata.owner_id": {"$eq": owner_id},
-                "metadata.knowledge_base_id": {"$eq": kb_id},
+                "owner_id": {"$eq": owner_id},
+                "knowledge_base_id": {"$eq": kb_id},
             }
         )
         

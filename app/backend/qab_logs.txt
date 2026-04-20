@@ -3167,3 +3167,317 @@ NotImplementedError: Collection objects do not implement truth value testing or 
 2026-04-20 15:03:40,321 | INFO | utils.loggers | Web search tool executed successfully for query: IPL tonight match
 2026-04-20 15:03:41,567 | INFO | utils.loggers | Agent run completed successfully for agent id: 69e5f277a02fa66a90ccc9be
 2026-04-20 15:03:41,568 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent response generated successfully!
+2026-04-20 15:06:12,591 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:06:12,592 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:06:12,592 | INFO | utils.loggers | Delete knowledge base request for kb 69e5f1a2a02fa66a90ccc9b6 from work4rajan@gmail.com
+2026-04-20 15:06:12,647 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge base deleted successfully. Deleted 0 embeddings.
+2026-04-20 15:06:12,673 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:06:12,673 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:06:12,673 | INFO | utils.loggers | Fetching linked DBs for work4rajan@gmail.com
+2026-04-20 15:06:12,690 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Linked DBs fetched successfully.
+2026-04-20 15:06:12,698 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:06:12,700 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:06:12,700 | INFO | utils.loggers | Knowledge base list request from work4rajan@gmail.com
+2026-04-20 15:06:12,708 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge bases fetched successfully.
+2026-04-20 15:06:12,712 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:06:12,713 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:06:12,713 | INFO | utils.loggers | Fetch all agents request from work4rajan@gmail.com
+2026-04-20 15:06:12,726 | INFO | utils.loggers | Fetched 1 agents for work4rajan@gmail.com
+2026-04-20 15:06:12,726 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-20 15:06:57,737 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:06:57,737 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:06:57,737 | INFO | utils.loggers | Fetch all agents request from work4rajan@gmail.com
+2026-04-20 15:06:57,749 | INFO | utils.loggers | Fetched 1 agents for work4rajan@gmail.com
+2026-04-20 15:06:57,751 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-20 15:06:58,741 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:06:58,741 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:06:58,741 | INFO | utils.loggers | Fetch all agents request from work4rajan@gmail.com
+2026-04-20 15:06:58,752 | INFO | utils.loggers | Fetched 1 agents for work4rajan@gmail.com
+2026-04-20 15:06:58,752 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-20 15:06:59,807 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:06:59,807 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:06:59,807 | INFO | utils.loggers | Agent delete request | id: 69e5f277a02fa66a90ccc9be | owner: work4rajan@gmail.com
+2026-04-20 15:06:59,831 | INFO | utils.loggers | Agent deleted | id: 69e5f277a02fa66a90ccc9be | owner: work4rajan@gmail.com
+2026-04-20 15:06:59,832 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent deleted successfully!
+2026-04-20 15:06:59,839 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:06:59,839 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:06:59,840 | INFO | utils.loggers | Fetch all agents request from work4rajan@gmail.com
+2026-04-20 15:06:59,849 | INFO | utils.loggers | Fetched 0 agents for work4rajan@gmail.com
+2026-04-20 15:06:59,849 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-20 15:07:19,928 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:07:19,929 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:07:19,929 | INFO | utils.loggers | DB unlink request received from work4rajan@gmail.com for db_id: 69e5f20aa02fa66a90ccc9bb
+2026-04-20 15:07:23,080 | INFO | utils.loggers | DB 69e5f20aa02fa66a90ccc9bb unlinked successfully for work4rajan@gmail.com
+2026-04-20 15:07:23,080 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Database has been unlinked successfully.
+2026-04-20 15:07:23,092 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:07:23,092 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:07:23,092 | INFO | utils.loggers | Fetching linked DBs for work4rajan@gmail.com
+2026-04-20 15:07:23,093 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:07:23,095 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:07:23,095 | INFO | utils.loggers | Knowledge base list request from work4rajan@gmail.com
+2026-04-20 15:07:23,107 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge bases fetched successfully.
+2026-04-20 15:07:23,111 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:07:23,111 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:07:23,112 | INFO | utils.loggers | Fetch all agents request from work4rajan@gmail.com
+2026-04-20 15:07:23,114 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Linked DBs fetched successfully.
+2026-04-20 15:07:23,123 | INFO | utils.loggers | Fetched 0 agents for work4rajan@gmail.com
+2026-04-20 15:07:23,124 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-20 15:07:26,321 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='work4rajan', email='work4rajan@gmail.com')] | Subject: QAB - DB Unlink Successful
+2026-04-20 15:08:10,606 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:08:10,606 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:08:10,606 | INFO | utils.loggers | Knowledge base create request from work4rajan@gmail.com
+2026-04-20 15:08:10,626 | INFO | utils.loggers | Success response generated with status code: 201 | Message: Knowledge base created successfully.
+2026-04-20 15:08:10,636 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:08:10,637 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:08:10,637 | INFO | utils.loggers | Knowledge base list request from work4rajan@gmail.com
+2026-04-20 15:08:10,645 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge bases fetched successfully.
+2026-04-20 15:10:26,543 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:10:26,544 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:10:26,545 | INFO | utils.loggers | Knowledge base create request from work4rajan@gmail.com
+2026-04-20 15:10:26,573 | INFO | utils.loggers | Success response generated with status code: 201 | Message: Knowledge base created successfully.
+2026-04-20 15:10:26,597 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:10:26,597 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:10:26,597 | INFO | utils.loggers | Knowledge base list request from work4rajan@gmail.com
+2026-04-20 15:10:26,677 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge bases fetched successfully.
+2026-04-20 15:11:23,297 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:11:23,297 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:11:23,297 | INFO | utils.loggers | Delete knowledge base request for kb 69e5f402a02fa66a90ccc9c2 from work4rajan@gmail.com
+2026-04-20 15:11:23,500 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge base deleted successfully. Deleted 0 embeddings.
+2026-04-20 15:11:23,508 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:11:23,509 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:11:23,509 | INFO | utils.loggers | Fetching linked DBs for work4rajan@gmail.com
+2026-04-20 15:11:23,575 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Linked DBs fetched successfully.
+2026-04-20 15:11:23,580 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:11:23,581 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:11:23,581 | INFO | utils.loggers | Knowledge base list request from work4rajan@gmail.com
+2026-04-20 15:11:23,662 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge bases fetched successfully.
+2026-04-20 15:11:23,667 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:11:23,667 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:11:23,667 | INFO | utils.loggers | Fetch all agents request from work4rajan@gmail.com
+2026-04-20 15:11:23,683 | INFO | utils.loggers | Fetched 0 agents for work4rajan@gmail.com
+2026-04-20 15:11:23,684 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-20 15:11:24,795 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:11:24,795 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:11:24,795 | INFO | utils.loggers | Delete knowledge base request for kb 69e5f14da02fa66a90ccc9b0 from work4rajan@gmail.com
+2026-04-20 15:11:27,316 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:11:27,317 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:11:27,317 | INFO | utils.loggers | Delete knowledge base request for kb 69e5f48aa02fa66a90ccc9c3 from work4rajan@gmail.com
+2026-04-20 15:11:27,345 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge base deleted successfully. Deleted 0 embeddings.
+2026-04-20 15:11:27,352 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:11:27,353 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:11:27,353 | INFO | utils.loggers | Fetching linked DBs for work4rajan@gmail.com
+2026-04-20 15:11:27,353 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:11:27,353 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:11:27,353 | INFO | utils.loggers | Knowledge base list request from work4rajan@gmail.com
+2026-04-20 15:11:27,362 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge base deleted successfully. Deleted 0 embeddings.
+2026-04-20 15:11:27,370 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:11:27,370 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:11:27,370 | INFO | utils.loggers | Fetch all agents request from work4rajan@gmail.com
+2026-04-20 15:11:27,381 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Linked DBs fetched successfully.
+2026-04-20 15:11:27,383 | INFO | utils.loggers | Fetched 0 agents for work4rajan@gmail.com
+2026-04-20 15:11:27,383 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-20 15:11:27,386 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:11:27,386 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:11:27,386 | INFO | utils.loggers | Fetching linked DBs for work4rajan@gmail.com
+2026-04-20 15:11:27,387 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:11:27,387 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:11:27,387 | INFO | utils.loggers | Fetch all agents request from work4rajan@gmail.com
+2026-04-20 15:11:27,400 | INFO | utils.loggers | Fetched 0 agents for work4rajan@gmail.com
+2026-04-20 15:11:27,401 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-20 15:11:27,407 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Linked DBs fetched successfully.
+2026-04-20 15:11:27,495 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge bases fetched successfully.
+2026-04-20 15:11:27,501 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:11:27,501 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:11:27,501 | INFO | utils.loggers | Knowledge base list request from work4rajan@gmail.com
+2026-04-20 15:11:27,512 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge bases fetched successfully.
+2026-04-20 15:11:27,815 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:11:27,815 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:11:27,816 | INFO | utils.loggers | DB unlink request received from work4rajan@gmail.com for db_id: 69e5f142a02fa66a90ccc9af
+2026-04-20 15:11:29,297 | INFO | utils.loggers | DB 69e5f142a02fa66a90ccc9af unlinked successfully for work4rajan@gmail.com
+2026-04-20 15:11:29,298 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Database has been unlinked successfully.
+2026-04-20 15:11:29,343 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:11:29,345 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:11:29,345 | INFO | utils.loggers | Fetching linked DBs for work4rajan@gmail.com
+2026-04-20 15:11:29,347 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:11:29,347 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:11:29,347 | INFO | utils.loggers | Knowledge base list request from work4rajan@gmail.com
+2026-04-20 15:11:29,348 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:11:29,348 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:11:29,349 | INFO | utils.loggers | Fetch all agents request from work4rajan@gmail.com
+2026-04-20 15:11:29,412 | INFO | utils.loggers | Success response generated with status code: 200 | Message: No custom DBs linked.
+2026-04-20 15:11:29,415 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge bases fetched successfully.
+2026-04-20 15:11:29,419 | INFO | utils.loggers | Fetched 0 agents for work4rajan@gmail.com
+2026-04-20 15:11:29,419 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-20 15:11:32,491 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='work4rajan', email='work4rajan@gmail.com')] | Subject: QAB - DB Unlink Successful
+2026-04-20 15:23:40,688 | INFO | uvicorn.error | Shutting down
+2026-04-20 15:23:40,917 | INFO | uvicorn.error | Waiting for application shutdown.
+2026-04-20 15:23:40,946 | INFO | uvicorn.error | Application shutdown complete.
+2026-04-20 15:23:40,957 | INFO | uvicorn.error | Finished server process [12372]
+2026-04-20 15:24:38,249 | INFO | database.db | MongoDB connection string loaded successfully
+2026-04-20 15:24:38,489 | INFO | database.db | Async MongoDB client initialized for database: qab
+2026-04-20 15:24:38,489 | INFO | database.db | MongoDB collections initialized: users, agents
+2026-04-20 15:24:39,385 | INFO | database.db | Sync MongoDB vector collection initialized: vector_store
+2026-04-20 15:24:39,706 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-20 15:24:39,713 | INFO | utils.loggers | JWT secret key loaded successfully
+2026-04-20 15:26:30,053 | INFO | uvicorn.error | Started server process [11856]
+2026-04-20 15:26:30,054 | INFO | uvicorn.error | Waiting for application startup.
+2026-04-20 15:26:30,056 | INFO | uvicorn.error | Application startup complete.
+2026-04-20 15:26:30,060 | INFO | uvicorn.error | Uvicorn running on http://0.0.0.0:8000 (Press CTRL+C to quit)
+2026-04-20 15:26:34,706 | INFO | utils.loggers | Root route accessed
+2026-04-20 15:26:34,854 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:26:34,855 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:26:34,856 | INFO | utils.loggers | Knowledge base list request from work4rajan@gmail.com
+2026-04-20 15:26:34,868 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:26:34,868 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:26:34,868 | INFO | utils.loggers | Fetching linked DBs for work4rajan@gmail.com
+2026-04-20 15:26:34,873 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:26:34,873 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:26:34,873 | INFO | utils.loggers | Fetch all agents request from work4rajan@gmail.com
+2026-04-20 15:26:35,630 | INFO | utils.loggers | Success response generated with status code: 200 | Message: No custom DBs linked.
+2026-04-20 15:26:35,635 | INFO | utils.loggers | Fetched 0 agents for work4rajan@gmail.com
+2026-04-20 15:26:35,636 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-20 15:26:35,646 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge bases fetched successfully.
+2026-04-20 15:26:43,404 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:26:43,404 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:26:43,404 | INFO | utils.loggers | Fetching linked DBs for work4rajan@gmail.com
+2026-04-20 15:26:43,412 | INFO | utils.loggers | Success response generated with status code: 200 | Message: No custom DBs linked.
+2026-04-20 15:26:44,444 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:26:44,444 | INFO | utils.loggers | Current user token validated successfully for work4rajan@gmail.com
+2026-04-20 15:26:44,444 | INFO | utils.loggers | Knowledge base list request from work4rajan@gmail.com
+2026-04-20 15:26:44,453 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge bases fetched successfully.
+2026-04-20 15:28:15,595 | INFO | utils.loggers | New user registration request received from s@s.g
+2026-04-20 15:28:15,595 | INFO | utils.loggers | Fetching user by email: s@s.g
+2026-04-20 15:28:15,605 | WARNING | utils.loggers | User not found for email: s@s.g
+2026-04-20 15:28:15,619 | INFO | utils.loggers | Password hashing started
+2026-04-20 15:28:15,961 | INFO | utils.loggers | Registration successful for s@s.g with id: 69e5f8b722b121c8cd216275
+2026-04-20 15:28:15,962 | INFO | utils.loggers | Success response generated with status code: 201 | Message: Saschin is now registered.
+2026-04-20 15:28:19,638 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='s', email='s@s.g')] | Subject: QAB - Registration Successful
+2026-04-20 15:28:20,921 | INFO | utils.loggers | Login request received from s@s.g
+2026-04-20 15:28:20,921 | INFO | utils.loggers | Fetching user by email: s@s.g
+2026-04-20 15:28:20,929 | INFO | utils.loggers | User found for email: s@s.g
+2026-04-20 15:28:20,929 | INFO | utils.loggers | Password verification started
+2026-04-20 15:28:21,370 | INFO | utils.loggers | Access token generation started for s@s.g
+2026-04-20 15:28:21,370 | INFO | utils.loggers | Access token generated successfully for s@s.g
+2026-04-20 15:28:21,370 | INFO | utils.loggers | Refresh token generation started for s@s.g
+2026-04-20 15:28:21,370 | INFO | utils.loggers | Refresh token generated successfully for s@s.g
+2026-04-20 15:28:21,371 | INFO | utils.loggers | JWT tokens generated
+2026-04-20 15:28:21,371 | INFO | utils.loggers | Success response generated with status code: 200 | Message: You are now logged in.
+2026-04-20 15:28:21,377 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:28:21,377 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:28:21,377 | INFO | utils.loggers | Fetching linked DBs for s@s.g
+2026-04-20 15:28:21,377 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:28:21,377 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:28:21,377 | INFO | utils.loggers | Knowledge base list request from s@s.g
+2026-04-20 15:28:21,392 | INFO | utils.loggers | Success response generated with status code: 200 | Message: No custom DBs linked.
+2026-04-20 15:28:21,395 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:28:21,395 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:28:21,395 | INFO | utils.loggers | Fetch all agents request from s@s.g
+2026-04-20 15:28:21,405 | INFO | utils.loggers | Fetched 0 agents for s@s.g
+2026-04-20 15:28:21,405 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-20 15:28:21,479 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge bases fetched successfully.
+2026-04-20 15:28:24,399 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='s', email='s@s.g')] | Subject: QAB - Login Successful
+2026-04-20 15:28:42,159 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:28:42,159 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:28:42,162 | INFO | utils.loggers | DB link request received from s@s.g for ListDB.MongoDB
+2026-04-20 15:28:42,191 | INFO | utils.loggers | ListDB.MongoDB linked successfully for s@s.g
+2026-04-20 15:28:42,191 | INFO | utils.loggers | Success response generated with status code: 201 | Message: MongoDB has been linked successfully.
+2026-04-20 15:28:42,202 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:28:42,202 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:28:42,202 | INFO | utils.loggers | Fetching linked DBs for s@s.g
+2026-04-20 15:28:42,224 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Linked DBs fetched successfully.
+2026-04-20 15:28:45,305 | INFO | utils.loggers | Email sent successfully to: [NameEmail(name='s', email='s@s.g')] | Subject: QAB - DB Link Successful
+2026-04-20 15:28:52,358 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:28:52,359 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:28:52,359 | INFO | utils.loggers | Knowledge base create request from s@s.g
+2026-04-20 15:28:52,387 | INFO | utils.loggers | Success response generated with status code: 201 | Message: Knowledge base created successfully.
+2026-04-20 15:28:52,395 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:28:52,396 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:28:52,396 | INFO | utils.loggers | Knowledge base list request from s@s.g
+2026-04-20 15:28:52,404 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge bases fetched successfully.
+2026-04-20 15:28:58,918 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:28:58,919 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:28:58,922 | INFO | utils.loggers | Add file request for kb 69e5f8dc22b121c8cd216277 from s@s.g
+2026-04-20 15:28:58,957 | INFO | utils.loggers | Success response generated with status code: 202 | Message: File added successfully. Processing started.
+2026-04-20 15:28:58,960 | INFO | utils.loggers | Processing file raju_sabji.txt for kb 69e5f8dc22b121c8cd216277
+2026-04-20 15:28:58,968 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:28:58,969 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:28:58,970 | INFO | utils.loggers | Knowledge base list request from s@s.g
+2026-04-20 15:28:58,980 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge bases fetched successfully.
+2026-04-20 15:28:58,994 | INFO | utils.loggers | Successfully loaded raju_sabji.txt with utf-8 encoding
+2026-04-20 15:28:58,996 | INFO | utils.loggers | HF API key loaded successfully
+2026-04-20 15:28:59,810 | INFO | utils.loggers | Embedding 3 chunks into custom MongoDB for kb 69e5f8dc22b121c8cd216277
+2026-04-20 15:29:00,602 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2?expand=inferenceProviderMapping "HTTP/1.1 200 OK"
+2026-04-20 15:29:00,847 | INFO | httpx | HTTP Request: GET https://huggingface.co/api/models/sentence-transformers/all-MiniLM-L6-v2 "HTTP/1.1 200 OK"
+2026-04-20 15:29:01,186 | INFO | httpx | HTTP Request: POST https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2/pipeline/feature-extraction "HTTP/1.1 200 OK"
+2026-04-20 15:29:01,321 | INFO | utils.loggers | Successfully embedded chunks for kb 69e5f8dc22b121c8cd216277 into custom MongoDB
+2026-04-20 15:29:11,348 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:29:11,349 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:29:11,349 | INFO | utils.loggers | Remove file request for kb 69e5f8dc22b121c8cd216277 from s@s.g
+2026-04-20 15:29:11,990 | INFO | utils.loggers | Success response generated with status code: 200 | Message: File removed successfully. Deleted 3 embeddings.
+2026-04-20 15:29:11,997 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:29:11,997 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:29:11,997 | INFO | utils.loggers | Knowledge base list request from s@s.g
+2026-04-20 15:29:12,008 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge bases fetched successfully.
+2026-04-20 15:29:23,840 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:29:23,841 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:29:23,841 | INFO | utils.loggers | Add file request for kb 69e5f8dc22b121c8cd216277 from s@s.g
+2026-04-20 15:29:23,876 | INFO | utils.loggers | Success response generated with status code: 202 | Message: File added successfully. Processing started.
+2026-04-20 15:29:23,877 | INFO | utils.loggers | Processing file raju_sabji.txt for kb 69e5f8dc22b121c8cd216277
+2026-04-20 15:29:23,880 | INFO | utils.loggers | Successfully loaded raju_sabji.txt with utf-8 encoding
+2026-04-20 15:29:23,881 | INFO | utils.loggers | HF API key loaded successfully
+2026-04-20 15:29:23,884 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:29:23,886 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:29:23,886 | INFO | utils.loggers | Knowledge base list request from s@s.g
+2026-04-20 15:29:23,897 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge bases fetched successfully.
+2026-04-20 15:29:24,043 | INFO | utils.loggers | Embedding 3 chunks into custom MongoDB for kb 69e5f8dc22b121c8cd216277
+2026-04-20 15:29:24,328 | INFO | httpx | HTTP Request: POST https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2/pipeline/feature-extraction "HTTP/1.1 200 OK"
+2026-04-20 15:29:24,463 | INFO | utils.loggers | Successfully embedded chunks for kb 69e5f8dc22b121c8cd216277 into custom MongoDB
+2026-04-20 15:29:28,451 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:29:28,451 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:29:28,451 | INFO | utils.loggers | Add file request for kb 69e5f8dc22b121c8cd216277 from s@s.g
+2026-04-20 15:29:28,481 | INFO | utils.loggers | Success response generated with status code: 202 | Message: File added successfully. Processing started.
+2026-04-20 15:29:28,485 | INFO | utils.loggers | Processing file gopi_hotel.txt for kb 69e5f8dc22b121c8cd216277
+2026-04-20 15:29:28,487 | INFO | utils.loggers | Successfully loaded gopi_hotel.txt with utf-8 encoding
+2026-04-20 15:29:28,487 | INFO | utils.loggers | HF API key loaded successfully
+2026-04-20 15:29:28,488 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:29:28,488 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:29:28,488 | INFO | utils.loggers | Knowledge base list request from s@s.g
+2026-04-20 15:29:28,499 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge bases fetched successfully.
+2026-04-20 15:29:28,625 | INFO | utils.loggers | Embedding 4 chunks into custom MongoDB for kb 69e5f8dc22b121c8cd216277
+2026-04-20 15:29:28,900 | INFO | httpx | HTTP Request: POST https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2/pipeline/feature-extraction "HTTP/1.1 200 OK"
+2026-04-20 15:29:29,050 | INFO | utils.loggers | Successfully embedded chunks for kb 69e5f8dc22b121c8cd216277 into custom MongoDB
+2026-04-20 15:29:34,897 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:29:34,897 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:29:34,898 | INFO | utils.loggers | Remove file request for kb 69e5f8dc22b121c8cd216277 from s@s.g
+2026-04-20 15:29:35,277 | INFO | utils.loggers | Success response generated with status code: 200 | Message: File removed successfully. Deleted 4 embeddings.
+2026-04-20 15:29:35,284 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:29:35,284 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:29:35,284 | INFO | utils.loggers | Knowledge base list request from s@s.g
+2026-04-20 15:29:35,294 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Knowledge bases fetched successfully.
+2026-04-20 15:30:15,072 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:30:15,072 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:30:15,112 | INFO | utils.loggers | Agent creation request from s@s.g
+2026-04-20 15:30:15,220 | INFO | utils.loggers | Agent created | id: 69e5f92f22b121c8cd216287 | owner: s@s.g
+2026-04-20 15:30:15,220 | INFO | utils.loggers | Success response generated with status code: 201 | Message: Agent created successfully!
+2026-04-20 15:30:15,225 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:30:15,225 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:30:15,226 | INFO | utils.loggers | Fetch all agents request from s@s.g
+2026-04-20 15:30:15,265 | INFO | utils.loggers | Fetched 1 agents for s@s.g
+2026-04-20 15:30:15,265 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agents fetched successfully!
+2026-04-20 15:30:24,166 | INFO | utils.loggers | Current user token validation started
+2026-04-20 15:30:24,166 | INFO | utils.loggers | Current user token validated successfully for s@s.g
+2026-04-20 15:30:24,166 | INFO | utils.loggers | Agent run request received for agent id: 69e5f92f22b121c8cd216287 from s@s.g
+2026-04-20 15:30:24,177 | INFO | utils.loggers | Agent builder started for agent: Sabji
+2026-04-20 15:30:24,178 | INFO | utils.loggers | Initializing Gemini LLM with model: gemini-2.5-flash
+2026-04-20 15:30:24,178 | INFO | utils.loggers | GOOGLE API key loaded successfully
+2026-04-20 15:30:25,475 | INFO | utils.loggers | Resolving tools for agent: ['web_search']
+2026-04-20 15:30:25,521 | INFO | utils.loggers | Agent built successfully for agent: Sabji
+2026-04-20 15:30:25,548 | INFO | utils.loggers | HF API key loaded successfully
+2026-04-20 15:30:25,965 | INFO | utils.loggers | RAG: Using custom MongoDB for kb 69e5f8dc22b121c8cd216277
+2026-04-20 15:30:26,478 | INFO | httpx | HTTP Request: POST https://router.huggingface.co/hf-inference/models/sentence-transformers/all-MiniLM-L6-v2/pipeline/feature-extraction "HTTP/1.1 200 OK"
+2026-04-20 15:30:26,503 | ERROR | utils.loggers | RAG retrieval failed for kb 69e5f8dc22b121c8cd216277: PlanExecutor error during aggregation :: caused by :: Path 'knowledge_base_id' needs to be indexed as filter, full error: {'ok': 0.0, 'errmsg': "PlanExecutor error during aggregation :: caused by :: Path 'knowledge_base_id' needs to be indexed as filter", 'code': 8, 'codeName': 'UnknownError', '$clusterTime': {'clusterTime': Timestamp(1776679225, 2), 'signature': {'hash': b'\x95{\xa1h\x1fW5\xe2\xeb\xc7~S\xc534?\x7fr5l', 'keyId': 7581612344053071876}}, 'operationTime': Timestamp(1776679225, 2)}
+2026-04-20 15:30:26,503 | INFO | utils.loggers | No KB context found, running agent without RAG for agent id: 69e5f92f22b121c8cd216287
+2026-04-20 15:30:26,503 | INFO | utils.loggers | Running agent id: 69e5f92f22b121c8cd216287 with thread id: 6ce732d4-c50b-444a-9e81-b8b2032ffef5
+2026-04-20 15:30:29,003 | INFO | google_genai._api_client | Retrying google.genai._api_client.BaseApiClient._async_request_once in 1.81 seconds as it raised ServerError: 503 UNAVAILABLE. {'error': {'code': 503, 'message': 'This model is currently experiencing high demand. Spikes in demand are usually temporary. Please try again later.', 'status': 'UNAVAILABLE'}}.
+2026-04-20 15:30:33,303 | INFO | utils.loggers | Agent run completed successfully for agent id: 69e5f92f22b121c8cd216287
+2026-04-20 15:30:33,303 | INFO | utils.loggers | Success response generated with status code: 200 | Message: Agent response generated successfully!

@@ -106,11 +106,11 @@ async def delete_kb_reference_from_agents(kb_id: str, owner_id: str):
 
 def delete_embeddings_from_default(owner_id: str, kb_id: str, file_name: str | None = None):
     query = {
-        "metadata.owner_id": owner_id,
-        "metadata.knowledge_base_id": kb_id,
+        "owner_id": owner_id,
+        "knowledge_base_id": kb_id,
     }
     if file_name:
-        query["metadata.file_name"] = file_name
+        query["file_name"] = file_name
     result = vector_collection.delete_many(query)
     return result.deleted_count
 
@@ -121,11 +121,11 @@ def delete_embeddings_from_custom_mongo(db_entry: dict, owner_id: str, kb_id: st
         return None
 
     query = {
-        "metadata.owner_id": owner_id,
-        "metadata.knowledge_base_id": kb_id,
+        "owner_id": owner_id,
+        "knowledge_base_id": kb_id,
     }
     if file_name:
-        query["metadata.file_name"] = file_name
+        query["file_name"] = file_name
 
     result = target_collection.delete_many(query)
     return result.deleted_count
@@ -183,7 +183,7 @@ def delete_all_embeddings_for_custom_db(owner_id: str, db_entry: dict):
         if target_collection is None:
             return None
         result = target_collection.delete_many({
-            "metadata.owner_id": owner_id
+            "owner_id": owner_id
         })
         return result.deleted_count
 
