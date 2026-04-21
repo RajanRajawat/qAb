@@ -10,12 +10,11 @@ from utils.general import strip_string
 class UserRegister(BaseModel):
     name: str = Field(min_length=3, max_length=20)
     email: EmailStr
-    mobile: str
     password: str
 
     model_config = ConfigDict(extra="forbid")
 
-    @field_validator("name", "mobile", "password", mode="before")
+    @field_validator("name", "password", mode="before")
     @classmethod
     def strip_strings(cls, v):
         return strip_string(v)
@@ -53,15 +52,6 @@ class UserRegister(BaseModel):
                 "Password must contain at least one uppercase letter, one lowercase letter, one number, and one special character."
             )
         return v
-
-    @field_validator("mobile")
-    @classmethod
-    def validate_mobile(cls, v):
-        v = str(v)
-        if not v.isdigit() or len(v) != 10:
-            raise ValueError("Mobile number must be exactly 10 digits.")
-        return v
-
 
 class UserLogin(BaseModel):
     email: EmailStr
@@ -255,7 +245,6 @@ class UpdateDB(BaseModel):
     @classmethod
     def strip_name(cls, v):
         return strip_string(v)
-
 
 
 

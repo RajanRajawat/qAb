@@ -1,5 +1,25 @@
 const API_BASE_URL = window.location.origin;
 
+function formatErrorMessage(data) {
+    const detail = data?.detail;
+
+    if (typeof detail?.message === "string") {
+        return detail.message;
+    }
+
+    if (Array.isArray(detail) && detail.length > 0) {
+        return detail
+            .map((item) => {
+                const location = Array.isArray(item?.loc) ? item.loc.slice(1).join(".") : "";
+                return location ? `${location}: ${item.msg}` : item.msg;
+            })
+            .filter(Boolean)
+            .join(" | ");
+    }
+
+    return data?.message || "Request failed";
+}
+
 
 class ApiClient {
     constructor() {
@@ -53,9 +73,7 @@ class ApiClient {
                 window.dispatchEvent(new CustomEvent("qab-unauthorized"));
             }
 
-            const detail = data?.detail;
-            const detailMessage = typeof detail?.message === "string" ? detail.message : null;
-            const message = data?.message || detailMessage || "Request failed";
+            const message = formatErrorMessage(data);
             throw new Error(message);
         }
 
@@ -81,10 +99,10 @@ class ApiClient {
         return response;
     }
 
-    async register(name, email, mobile, password) {
+    async register(name, email, password) {
         return this.request("/auth/register", {
             method: "POST",
-            body: { name, email, mobile, password }
+            body: { name, email, password }
         });
     }
 

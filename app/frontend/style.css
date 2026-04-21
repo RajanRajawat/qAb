@@ -227,6 +227,9 @@ pre {
 }
 
 .nav-link {
+    display: flex;
+    align-items: center;
+    gap: 12px;
     padding: 14px 16px;
     border-radius: 14px;
     color: var(--muted);
@@ -251,6 +254,12 @@ pre {
     padding: 16px;
     border-radius: 16px;
     background: rgba(125, 103, 216, 0.08);
+}
+
+.user-chip strong {
+    display: inline-flex;
+    align-items: center;
+    gap: 10px;
 }
 
 .user-chip span {
@@ -376,6 +385,9 @@ pre {
 }
 
 .stat-label {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
     color: var(--muted);
     text-transform: uppercase;
     letter-spacing: 0.08em;
@@ -521,6 +533,7 @@ textarea:focus {
     padding: 12px 18px;
     border-radius: 14px;
     font-weight: 600;
+    gap: 10px;
 }
 
 .button:hover,
@@ -563,6 +576,31 @@ textarea:focus {
 .button-danger:hover {
     background: rgba(223, 54, 87, 0.18);
     color: var(--danger-dark);
+}
+
+.ui-icon {
+    width: 18px;
+    height: 18px;
+    flex: 0 0 18px;
+}
+
+.inline-icon {
+    width: 16px;
+    height: 16px;
+    flex-basis: 16px;
+}
+
+.user-chip-icon {
+    width: 16px;
+    height: 16px;
+    flex-basis: 16px;
+}
+
+.panel-head a,
+.card-menu-action {
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
 }
 
 .status-pill,

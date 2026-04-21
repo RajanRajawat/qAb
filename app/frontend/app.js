@@ -1,4 +1,15 @@
-import { api } from "./api.js";
+import { api } from "./api.js?v=20260421b";
+
+window.refreshIcons = window.refreshIcons || (() => {
+    if (window.lucide?.createIcons) {
+        window.lucide.createIcons();
+        return;
+    }
+
+    if (window.feather?.replace) {
+        window.feather.replace();
+    }
+});
 
 
 const state = {
@@ -69,6 +80,40 @@ function navigate(hash) {
     window.location.hash = hash;
 }
 
+function icon(name, className = "ui-icon") {
+    const icons = {
+        dashboard: `<path d="M3 13.2h8.2V3H3z"/><path d="M12.8 21H21v-11.2h-8.2z"/><path d="M12.8 10.2H21V3h-8.2z"/><path d="M3 21h8.2v-6.2H3z"/>`,
+        bot: `<path d="M9 7V4h6v3"/><rect x="4" y="7" width="16" height="11" rx="3"/><path d="M9 18v2"/><path d="M15 18v2"/><path d="M9 12h.01"/><path d="M15 12h.01"/>`,
+        database: `<ellipse cx="12" cy="5" rx="7" ry="3"/><path d="M5 5v6c0 1.7 3.1 3 7 3s7-1.3 7-3V5"/><path d="M5 11v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/>`,
+        book: `<path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H19v18H7.5A2.5 2.5 0 0 0 5 22"/><path d="M5 4.5V22"/><path d="M9 6h7"/><path d="M9 10h7"/>`,
+        user: `<path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="8" r="4"/>`,
+        logout: `<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/>`,
+        close: `<path d="M18 6 6 18"/><path d="m6 6 12 12"/>`,
+        login: `<path d="M15 3h4a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2h-4"/><path d="M10 17l5-5-5-5"/><path d="M15 12H3"/>`,
+        register: `<path d="M16 21v-2a4 4 0 0 0-4-4H7a4 4 0 0 0-4 4v2"/><circle cx="9.5" cy="7" r="4"/><path d="M19 8v6"/><path d="M16 11h6"/>`,
+        plus: `<path d="M12 5v14"/><path d="M5 12h14"/>`,
+        message: `<path d="M7 10h10"/><path d="M7 14h6"/><path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>`,
+        eye: `<path d="M2 12s3.5-6 10-6 10 6 10 6-3.5 6-10 6-10-6-10-6Z"/><circle cx="12" cy="12" r="3"/>`,
+        edit: `<path d="M12 20h9"/><path d="M16.5 3.5a2.1 2.1 0 0 1 3 3L7 19l-4 1 1-4Z"/>`,
+        trash: `<path d="M3 6h18"/><path d="M8 6V4h8v2"/><path d="M19 6l-1 14H6L5 6"/><path d="M10 11v6"/><path d="M14 11v6"/>`,
+        search: `<circle cx="11" cy="11" r="7"/><path d="m21 21-4.3-4.3"/>`,
+        upload: `<path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M20 16.5V19a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2.5"/>`,
+        back: `<path d="m15 18-6-6 6-6"/><path d="M21 12H9"/>`,
+        send: `<path d="M22 2 11 13"/><path d="m22 2-7 20-4-9-9-4Z"/>`,
+        folder: `<path d="M3 6a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/>`,
+        link: `<path d="M10 13a5 5 0 0 0 7.1 0l2.8-2.8a5 5 0 0 0-7.1-7.1L11 5"/><path d="M14 11a5 5 0 0 0-7.1 0l-2.8 2.8a5 5 0 0 0 7.1 7.1L13 19"/>`,
+        settings: `<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.2a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.2a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3h.1A1.7 1.7 0 0 0 10 3.2V3a2 2 0 1 1 4 0v.2a1.7 1.7 0 0 0 1 1.5h.1a1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8v.1a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.2a1.7 1.7 0 0 0-1.5 1Z"/>`,
+        file: `<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15h6"/><path d="M9 11h3"/>`,
+        retry: `<path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/>`
+    };
+
+    return `
+        <svg class="${className}" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.85" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            ${icons[name] || icons.folder}
+        </svg>
+    `;
+}
+
 function showToast(message, type = "success") {
     const root = document.getElementById("toast-root");
     const toast = document.createElement("div");
@@ -103,17 +148,17 @@ function getLayout(content, active = "") {
                     </div>
                 </div>
                 <nav class="nav">
-                    <a href="#dashboard" class="nav-link ${active === "dashboard" ? "active" : ""}">Dashboard</a>
-                    <a href="#agents" class="nav-link ${active === "agents" ? "active" : ""}">Agents</a>
-                    <a href="#knowledge-bases" class="nav-link ${active === "knowledge-bases" ? "active" : ""}">Knowledge Bases</a>
-                    <a href="#databases" class="nav-link ${active === "databases" ? "active" : ""}">Databases</a>
+                    <a href="#dashboard" class="nav-link ${active === "dashboard" ? "active" : ""}">${icon("dashboard")}<span>Dashboard</span></a>
+                    <a href="#agents" class="nav-link ${active === "agents" ? "active" : ""}">${icon("bot")}<span>Agents</span></a>
+                    <a href="#knowledge-bases" class="nav-link ${active === "knowledge-bases" ? "active" : ""}">${icon("book")}<span>Knowledge Bases</span></a>
+                    <a href="#databases" class="nav-link ${active === "databases" ? "active" : ""}">${icon("database")}<span>Databases</span></a>
                 </nav>
                 <div class="sidebar-footer">
                     <div class="user-chip">
-                        <strong>${escapeHtml(state.user?.name || "User")}</strong>
+                        <strong>${icon("user", "ui-icon user-chip-icon")}${escapeHtml(state.user?.name || "User")}</strong>
                         <span>${escapeHtml(state.user?.email || "")}</span>
                     </div>
-                    <button class="button button-secondary" id="logout-btn">Logout</button>
+                    <button class="button button-secondary" id="logout-btn">${icon("logout")}<span>Logout</span></button>
                 </div>
             </aside>
             <main class="main-panel">
@@ -146,7 +191,7 @@ function openModal(title, content) {
                     <div>
                         <h3>${escapeHtml(title)}</h3>
                     </div>
-                    <button class="icon-button" id="modal-close">Close</button>
+                    <button class="icon-button" id="modal-close" aria-label="Close">${icon("close")}</button>
                 </div>
                 <div class="modal-body">${content}</div>
             </div>
@@ -238,7 +283,7 @@ async function renderLogin() {
             <div class="auth-card auth-card-themed">
                 <div class="auth-topbar-link">
                     <span>Need an account?</span>
-                    <a class="button button-primary" href="#register">Register</a>
+                    <a class="button button-primary" href="#register">${icon("register")}<span>Register</span></a>
                 </div>
                 <h2>Welcome Back</h2>
                 <p class="muted auth-copy">Please enter your credentials to access your account.</p>
@@ -251,7 +296,7 @@ async function renderLogin() {
                         <span>Password</span>
                         <input id="login-password" type="password" required placeholder="Password">
                     </label>
-                    <button class="button button-dark wide-button" type="submit">Sign In</button>
+                    <button class="button button-dark wide-button" type="submit">${icon("login")}<span>Sign In</span></button>
                 </form>
             </div>
         </section>
@@ -287,7 +332,7 @@ async function renderRegister() {
             <div class="auth-card auth-card-themed">
                 <div class="auth-topbar-link">
                     <span>Already registered?</span>
-                    <a class="button button-primary" href="#login">Login</a>
+                    <a class="button button-primary" href="#login">${icon("login")}<span>Login</span></a>
                 </div>
                 <h2>Create Account</h2>
                 <p class="muted auth-copy">Let's get started with your journey.</p>
@@ -301,14 +346,10 @@ async function renderRegister() {
                         <input id="register-email" type="email" required placeholder="name@example.com">
                     </label>
                     <label class="field">
-                        <span>Mobile</span>
-                        <input id="register-mobile" type="text" required placeholder="10-digit number">
-                    </label>
-                    <label class="field">
                         <span>Password</span>
                         <input id="register-password" type="password" required placeholder="Strong password">
                     </label>
-                    <button class="button button-dark wide-button" type="submit">Create Account</button>
+                    <button class="button button-dark wide-button" type="submit">${icon("register")}<span>Create Account</span></button>
                 </form>
             </div>
         </section>
@@ -321,7 +362,6 @@ async function renderRegister() {
             await api.register(
                 document.getElementById("register-name").value,
                 document.getElementById("register-email").value,
-                document.getElementById("register-mobile").value,
                 document.getElementById("register-password").value
             );
             showToast("Registration successful");
@@ -335,14 +375,11 @@ async function renderRegister() {
 async function renderDashboard() {
     setLoading("Loading dashboard");
 
-    const [health, agentsRes, kbRes, dbRes] = await Promise.all([
-        api.getHealth().catch(() => ({ status: "offline" })),
+    const [agentsRes, kbRes, dbRes] = await Promise.all([
         api.getAgents(),
         api.getKBs(),
         api.getDBs()
     ]);
-
-    state.health = health;
 
     getApp().innerHTML = getLayout(`
         <section class="page-head">
@@ -351,31 +388,18 @@ async function renderDashboard() {
                 <h2>Dashboard</h2>
                 <p class="muted">Live status and quick entry points.</p>
             </div>
-            <div class="status-pill ${health.status === "ok" ? "online" : "offline"}">
-                Backend ${escapeHtml(health.status || "offline")}
-            </div>
-        </section>
-        <section class="hero-card hero-card-themed">
-            <div>
-                <h3>Everything wired to the backend</h3>
-                <p>Health, auth, agent CRUD, KB CRUD, DB CRUD, vector testing, chat history, and markdown chat rendering are all available from this UI.</p>
-            </div>
-            <div class="hero-actions">
-                <a class="button button-secondary" href="#knowledge-bases">Create KB</a>
-                <a class="button button-primary" href="#agents">Create Agent</a>
-            </div>
         </section>
         <section class="stats-grid">
             <article class="stat-card">
-                <span class="stat-label">Agents</span>
+                <span class="stat-label">${icon("bot")}<span>Agents</span></span>
                 <strong>${agentsRes.data.length}</strong>
             </article>
             <article class="stat-card">
-                <span class="stat-label">Knowledge Bases</span>
+                <span class="stat-label">${icon("book")}<span>Knowledge Bases</span></span>
                 <strong>${kbRes.data.length}</strong>
             </article>
             <article class="stat-card">
-                <span class="stat-label">Databases</span>
+                <span class="stat-label">${icon("database")}<span>Databases</span></span>
                 <strong>${dbRes.data.length}</strong>
             </article>
         </section>
@@ -383,7 +407,7 @@ async function renderDashboard() {
             <article class="panel">
                 <div class="panel-head">
                     <h3>Recent Knowledge Bases</h3>
-                    <a href="#knowledge-bases">Open all</a>
+                    <a href="#knowledge-bases">${icon("book", "ui-icon inline-icon")}<span>Open all</span></a>
                 </div>
                 <div class="list-stack">
                     ${kbRes.data.slice(0, 4).map((kb) => `
@@ -400,7 +424,7 @@ async function renderDashboard() {
             <article class="panel">
                 <div class="panel-head">
                     <h3>Recent Agents</h3>
-                    <a href="#agents">Manage</a>
+                    <a href="#agents">${icon("settings", "ui-icon inline-icon")}<span>Manage</span></a>
                 </div>
                 <div class="list-stack">
                     ${agentsRes.data.slice(0, 4).map((agent) => `
@@ -501,7 +525,7 @@ function getAgentFormMarkup(agent, kbs) {
                     `).join("")}
                 </select>
             </label>
-            <button class="button button-primary" type="submit">${isEdit ? "Save changes" : "Create agent"}</button>
+            <button class="button button-primary" type="submit">${icon(isEdit ? "edit" : "plus")}<span>${isEdit ? "Save changes" : "Create agent"}</span></button>
         </form>
     `;
 }
@@ -572,7 +596,7 @@ async function renderAgents() {
                 <h2>Agent management</h2>
                 <p class="muted">Create, inspect, update, delete, and chat with each agent.</p>
             </div>
-            <button class="button button-primary" id="create-agent-button">Create agent</button>
+            <button class="button button-primary" id="create-agent-button">${icon("plus")}<span>Create agent</span></button>
         </section>
         <section class="card-grid">
             ${agents.map((agent) => `
@@ -585,8 +609,8 @@ async function renderAgents() {
                         <details class="card-menu">
                             <summary>•••</summary>
                             <div class="card-menu-list">
-                                <button class="card-menu-action edit-agent" data-id="${agent._id}">Edit</button>
-                                <button class="card-menu-action delete-agent delete" data-id="${agent._id}">Delete</button>
+                                <button class="card-menu-action edit-agent" data-id="${agent._id}">${icon("edit", "ui-icon inline-icon")}<span>Edit</span></button>
+                                <button class="card-menu-action delete-agent delete" data-id="${agent._id}">${icon("trash", "ui-icon inline-icon")}<span>Delete</span></button>
                             </div>
                         </details>
                     </div>
@@ -597,8 +621,8 @@ async function renderAgents() {
                         <div><span>Created</span><strong>${escapeHtml(formatDate(agent.created_at))}</strong></div>
                     </div>
                     <div class="panel-actions">
-                        <button class="button button-secondary chat-agent" data-id="${agent._id}">Chat</button>
-                        <button class="button button-secondary view-agent" data-id="${agent._id}">View</button>
+                        <button class="button button-secondary chat-agent" data-id="${agent._id}">${icon("message")}<span>Chat</span></button>
+                        <button class="button button-secondary view-agent" data-id="${agent._id}">${icon("eye")}<span>View</span></button>
                     </div>
                 </article>
             `).join("") || `<div class="empty-card">No agents created yet.</div>`}
@@ -698,7 +722,7 @@ async function openCreateKBModal(onDone) {
                     `).join("")}
                 </select>
             </label>
-            <button class="button button-primary" type="submit">Create knowledge base</button>
+            <button class="button button-primary" type="submit">${icon("plus")}<span>Create knowledge base</span></button>
         </form>
     `);
 
@@ -746,8 +770,8 @@ async function renderKnowledgeBases() {
                 <p class="muted">Each KB persists its own embedding model and can be tested with live vector search.</p>
             </div>
             <div class="hero-actions">
-                <button class="button button-secondary" id="kb-guide-page">Setup Guide</button>
-                <button class="button button-primary" id="create-kb-button">Create KB</button>
+                <button class="button button-secondary" id="kb-guide-page">${icon("book")}<span>Setup Guide</span></button>
+                <button class="button button-primary" id="create-kb-button">${icon("plus")}<span>Create KB</span></button>
             </div>
         </section>
         <section class="card-grid">
@@ -761,8 +785,8 @@ async function renderKnowledgeBases() {
                         <details class="card-menu">
                             <summary>•••</summary>
                             <div class="card-menu-list">
-                                <button class="card-menu-action rename-kb" data-id="${kb.kb_id}" data-name="${escapeHtml(kb.name)}">Edit</button>
-                                <button class="card-menu-action delete-kb delete" data-id="${kb.kb_id}">Delete</button>
+                                <button class="card-menu-action rename-kb" data-id="${kb.kb_id}" data-name="${escapeHtml(kb.name)}">${icon("edit", "ui-icon inline-icon")}<span>Edit</span></button>
+                                <button class="card-menu-action delete-kb delete" data-id="${kb.kb_id}">${icon("trash", "ui-icon inline-icon")}<span>Delete</span></button>
                             </div>
                         </details>
                     </div>
@@ -771,8 +795,8 @@ async function renderKnowledgeBases() {
                         <span class="tag">${escapeHtml(kb.embedding_model)}</span>
                     </div>
                     <div class="panel-actions">
-                        <button class="button button-secondary open-kb-detail" data-id="${kb.kb_id}">Open</button>
-                        <button class="button button-secondary kb-test" data-id="${kb.kb_id}">Test Search</button>
+                        <button class="button button-secondary open-kb-detail" data-id="${kb.kb_id}">${icon("folder")}<span>Open</span></button>
+                        <button class="button button-secondary kb-test" data-id="${kb.kb_id}">${icon("search")}<span>Test Search</span></button>
                     </div>
                 </article>
             `).join("") || `<div class="empty-card">No knowledge bases created yet.</div>`}
@@ -805,7 +829,7 @@ async function renderKnowledgeBases() {
                         <span>Name</span>
                         <input id="rename-kb-name" required value="${button.dataset.name}">
                     </label>
-                    <button class="button button-primary" type="submit">Save name</button>
+                    <button class="button button-primary" type="submit">${icon("edit")}<span>Save name</span></button>
                 </form>
             `);
 
@@ -859,15 +883,15 @@ async function renderKnowledgeBaseDetail(kbId) {
                 <p class="muted">${escapeHtml(kb.embedding_label)} stored in ${escapeHtml(kb.db_name)}</p>
             </div>
             <div class="hero-actions">
-                <a class="button button-secondary" href="#knowledge-bases">Back</a>
-                <button class="button button-secondary" id="rename-kb-detail">Edit name</button>
+                <a class="button button-secondary" href="#knowledge-bases">${icon("back")}<span>Back</span></a>
+                <button class="button button-secondary" id="rename-kb-detail">${icon("edit")}<span>Edit name</span></button>
             </div>
         </section>
         <section class="two-col detail-layout">
             <article class="panel">
                 <div class="panel-head">
                     <h3>Files</h3>
-                    <label class="button button-primary upload-label" for="kb-upload-input">Upload file</label>
+                    <label class="button button-primary upload-label" for="kb-upload-input">${icon("upload")}<span>Upload file</span></label>
                     <input id="kb-upload-input" type="file" hidden accept=".txt,.pdf">
                 </div>
                 <div class="list-stack">
@@ -877,7 +901,7 @@ async function renderKnowledgeBaseDetail(kbId) {
                                 <strong>${escapeHtml(file)}</strong>
                                 <span>${escapeHtml(kb.embedding_label)}</span>
                             </div>
-                            <button class="button button-danger remove-kb-file" data-file="${escapeHtml(file)}">Remove</button>
+                            <button class="button button-danger remove-kb-file" data-file="${escapeHtml(file)}">${icon("trash")}<span>Remove</span></button>
                         </div>
                     `).join("") || `<div class="empty-card">No files uploaded yet.</div>`}
                 </div>
@@ -896,7 +920,7 @@ async function renderKnowledgeBaseDetail(kbId) {
                         <span>Limit</span>
                         <input id="kb-search-limit" type="number" min="1" max="10" value="3">
                     </label>
-                    <button class="button button-primary" type="submit">Test search</button>
+                    <button class="button button-primary" type="submit">${icon("search")}<span>Test search</span></button>
                 </form>
                 <div id="kb-search-results" class="search-results muted">No test run yet.</div>
             </article>
@@ -920,7 +944,7 @@ async function renderKnowledgeBaseDetail(kbId) {
                     <span>Name</span>
                     <input id="rename-kb-detail-name" required value="${escapeHtml(kb.name)}">
                 </label>
-                <button class="button button-primary" type="submit">Save</button>
+                <button class="button button-primary" type="submit">${icon("edit")}<span>Save</span></button>
             </form>
         `);
 
@@ -1018,7 +1042,7 @@ async function renderDatabases() {
                 <h2>Custom vector stores</h2>
                 <p class="muted">Link a database, rename it later, or unlink it with cleanup.</p>
             </div>
-            <button class="button button-primary" id="link-db-button">Link database</button>
+            <button class="button button-primary" id="link-db-button">${icon("link")}<span>Link database</span></button>
         </section>
         <section class="card-grid">
             ${dbs.map((db) => `
@@ -1031,8 +1055,8 @@ async function renderDatabases() {
                         <span class="tag">Linked</span>
                     </div>
                     <div class="panel-actions">
-                        <button class="button button-secondary edit-db" data-id="${db.db_id}" data-name="${escapeHtml(db.name)}">Edit</button>
-                        <button class="button button-danger unlink-db" data-id="${db.db_id}">Unlink</button>
+                        <button class="button button-secondary edit-db" data-id="${db.db_id}" data-name="${escapeHtml(db.name)}">${icon("edit")}<span>Edit</span></button>
+                        <button class="button button-danger unlink-db" data-id="${db.db_id}">${icon("trash")}<span>Unlink</span></button>
                     </div>
                 </article>
             `).join("") || `<div class="empty-card">No custom databases linked yet.</div>`}
@@ -1059,7 +1083,7 @@ async function renderDatabases() {
                     <span>Connection URI</span>
                     <input id="db-uri" required placeholder="mongodb+srv://... or postgres://...">
                 </label>
-                <button class="button button-primary" type="submit">Link database</button>
+                <button class="button button-primary" type="submit">${icon("link")}<span>Link database</span></button>
             </form>
         `);
 
@@ -1089,7 +1113,7 @@ async function renderDatabases() {
                         <span>Name</span>
                         <input id="edit-db-name" required value="${button.dataset.name}">
                     </label>
-                    <button class="button button-primary" type="submit">Save name</button>
+                    <button class="button button-primary" type="submit">${icon("edit")}<span>Save name</span></button>
                 </form>
             `);
 
@@ -1146,7 +1170,7 @@ async function renderChat(agentId) {
                 <h2>${escapeHtml(agent.name)}</h2>
                 <p class="muted">${escapeHtml(agent.llm_model)} • ${agent.knowledge_base ? "Knowledge base attached" : "No knowledge base"}</p>
             </div>
-            <a class="button button-secondary" href="#agents">Back to agents</a>
+            <a class="button button-secondary" href="#agents">${icon("back")}<span>Back to agents</span></a>
         </section>
         <section class="chat-panel">
             <div class="chat-stream" id="chat-stream">
@@ -1154,7 +1178,7 @@ async function renderChat(agentId) {
             </div>
             <form class="chat-form" id="chat-form">
                 <textarea id="chat-input" rows="2" placeholder="Type your message"></textarea>
-                <button class="button button-primary" type="submit">Send</button>
+                <button class="button button-primary" type="submit">${icon("send")}<span>Send</span></button>
             </form>
         </section>
     `, "agents");
@@ -1275,7 +1299,7 @@ async function route() {
             <div class="screen-center">
                 <h2>Something failed</h2>
                 <p class="muted">${escapeHtml(error.message)}</p>
-                <button class="button button-secondary" id="retry-route">Retry</button>
+                <button class="button button-secondary" id="retry-route">${icon("retry")}<span>Retry</span></button>
             </div>
         `;
 

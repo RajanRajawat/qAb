@@ -10,7 +10,7 @@ QAB (Query-driven Agent Builder) is a backend system designed to create, manage,
 ### 1. Register User
 - **Endpoint:** `POST /auth/register`
 - **Description:** Creates a new user account.
-- **Payload:** `UserRegister` (name, email, mobile, password)
+- **Payload:** `UserRegister` (name, email, password)
 - **Flow:** Hashes password -> Checks for duplicate email -> Saves user data -> Sends welcome email.
 
 ### 2. Login User

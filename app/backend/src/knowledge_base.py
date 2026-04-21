@@ -21,7 +21,6 @@ import datetime
 kb_router = APIRouter(prefix="/knowledge-base", tags=["Knowledge Base"])
 
 
-#- Embeddings
 DEFAULT_EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
 EMBEDDING_MODEL_OPTIONS = {
@@ -695,3 +694,6 @@ async def delete_knowledge_base(kb_id: str, current_user: dict = Depends(get_cur
         200,
         message=f"Knowledge base deleted successfully. Deleted {deleted_count} embeddings."
     )
+
+
+
