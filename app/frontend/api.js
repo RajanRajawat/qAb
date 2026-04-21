@@ -227,6 +227,40 @@ class ApiClient {
             method: "DELETE"
         });
     }
+
+    async inspectDBSources(dbId) {
+        return this.request(`/data-query/inspect/${dbId}`, {
+            method: "POST"
+        });
+    }
+
+    async getDataQueries() {
+        return this.request("/data-query/all");
+    }
+
+    async getDataQuery(dataQueryId) {
+        return this.request(`/data-query/${dataQueryId}`);
+    }
+
+    async createDataQuery(payload) {
+        return this.request("/data-query/create", {
+            method: "POST",
+            body: payload
+        });
+    }
+
+    async updateDataQuery(dataQueryId, payload) {
+        return this.request(`/data-query/update/${dataQueryId}`, {
+            method: "PATCH",
+            body: payload
+        });
+    }
+
+    async deleteDataQuery(dataQueryId) {
+        return this.request(`/data-query/delete/${dataQueryId}`, {
+            method: "DELETE"
+        });
+    }
 }
 
 

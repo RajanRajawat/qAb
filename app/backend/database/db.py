@@ -36,6 +36,7 @@ users_collection = db['users']
 agents_collection = db['agents']
 db_collection = db['custom_db']
 kb_collection = db['kb']
+data_query_collection = db['data_queries']
 chat_history_collection = db['chat_history']
 logger.info(f"MongoDB collections initialized: users, agents")
 
@@ -44,4 +45,3 @@ vec_client = MongoClient(os.getenv("MONGO_URI"))
 vec_db = vec_client["qab"]
 vector_collection = vec_db["embeddings"]  # sync (for LangChain)
 logger.info(f"Sync MongoDB vector collection initialized: vector_store")
-

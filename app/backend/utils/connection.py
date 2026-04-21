@@ -1,5 +1,5 @@
-
 from pymongo import MongoClient
+import psycopg2
 
 def validate_mongo(uri):
     try:
@@ -9,8 +9,6 @@ def validate_mongo(uri):
     except:
         return False
     
-import psycopg2
-
 def validate_postgres(uri):
     try:
         # Standardize URI for psycopg2: strip SQLAlchemy driver suffix if present

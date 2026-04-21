@@ -1,6 +1,3 @@
-
-
-
 from fastapi import FastAPI
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
@@ -14,6 +11,7 @@ from src.agent import agent_router
 from src.runner import runner_router
 from src.custom_db import db_router
 from src.knowledge_base import kb_router
+from src.data_query import data_query_router
 from utils.loggers import logger
 load_dotenv()
 
@@ -36,6 +34,7 @@ app.include_router(agent_router)
 app.include_router(runner_router)
 app.include_router(db_router)
 app.include_router(kb_router)
+app.include_router(data_query_router)
 
 app.mount("/static", StaticFiles(directory=str(FRONTEND_DIR)), name="static")
 

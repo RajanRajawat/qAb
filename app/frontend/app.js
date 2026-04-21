@@ -1,4 +1,4 @@
-import { api } from "./api.js?v=20260421b";
+﻿import { api } from "./api.js?v=20260421d";
 
 window.refreshIcons = window.refreshIcons || (() => {
     if (window.lucide?.createIcons) {
@@ -39,6 +39,10 @@ const toolOptions = [
 
 function getApp() {
     return document.getElementById("app");
+}
+
+function brandBadge(className = "") {
+    return `<div class="qab-brand-badge ${className}">qAb</div>`;
 }
 
 function escapeHtml(value = "") {
@@ -85,6 +89,7 @@ function icon(name, className = "ui-icon") {
         dashboard: `<path d="M3 13.2h8.2V3H3z"/><path d="M12.8 21H21v-11.2h-8.2z"/><path d="M12.8 10.2H21V3h-8.2z"/><path d="M3 21h8.2v-6.2H3z"/>`,
         bot: `<path d="M9 7V4h6v3"/><rect x="4" y="7" width="16" height="11" rx="3"/><path d="M9 18v2"/><path d="M15 18v2"/><path d="M9 12h.01"/><path d="M15 12h.01"/>`,
         database: `<ellipse cx="12" cy="5" rx="7" ry="3"/><path d="M5 5v6c0 1.7 3.1 3 7 3s7-1.3 7-3V5"/><path d="M5 11v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/>`,
+        table: `<path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2"/><path d="M3 10h18"/><path d="M3 15h18"/><path d="M8 3v18"/><path d="M16 3v18"/><path d="M3 19a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2"/>`,
         book: `<path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H19v18H7.5A2.5 2.5 0 0 0 5 22"/><path d="M5 4.5V22"/><path d="M9 6h7"/><path d="M9 10h7"/>`,
         user: `<path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="8" r="4"/>`,
         logout: `<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/>`,
@@ -104,7 +109,8 @@ function icon(name, className = "ui-icon") {
         link: `<path d="M10 13a5 5 0 0 0 7.1 0l2.8-2.8a5 5 0 0 0-7.1-7.1L11 5"/><path d="M14 11a5 5 0 0 0-7.1 0l-2.8 2.8a5 5 0 0 0 7.1 7.1L13 19"/>`,
         settings: `<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.2a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.2a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3h.1A1.7 1.7 0 0 0 10 3.2V3a2 2 0 1 1 4 0v.2a1.7 1.7 0 0 0 1 1.5h.1a1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8v.1a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.2a1.7 1.7 0 0 0-1.5 1Z"/>`,
         file: `<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15h6"/><path d="M9 11h3"/>`,
-        retry: `<path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/>`
+        retry: `<path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/>`,
+        more: `<circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/><circle cx="5" cy="12" r="1.5"/>`
     };
 
     return `
@@ -136,22 +142,42 @@ function setLoading(message) {
     `;
 }
 
+function setButtonLoading(button, isLoading, loadingLabel = "Loading...") {
+    if (!button) {
+        return;
+    }
+
+    if (isLoading) {
+        if (!button.dataset.originalHtml) {
+            button.dataset.originalHtml = button.innerHTML;
+        }
+        button.disabled = true;
+        button.classList.add("button-loading");
+        button.innerHTML = `<span class="button-spinner" aria-hidden="true"></span><span>${escapeHtml(loadingLabel)}</span>`;
+        return;
+    }
+
+    button.disabled = false;
+    button.classList.remove("button-loading");
+    if (button.dataset.originalHtml) {
+        button.innerHTML = button.dataset.originalHtml;
+        delete button.dataset.originalHtml;
+    }
+}
+
 function getLayout(content, active = "") {
     return `
         <div class="shell">
             <aside class="sidebar">
                 <div class="brand">
-                    <div class="brand-mark">Q</div>
-                    <div>
-                        <h1>QAB</h1>
-                        <p>Agent workspace</p>
-                    </div>
+                    <div class="brand-mark brand-mark-solo">${brandBadge("qab-brand-badge-sidebar")}</div>
                 </div>
                 <nav class="nav">
                     <a href="#dashboard" class="nav-link ${active === "dashboard" ? "active" : ""}">${icon("dashboard")}<span>Dashboard</span></a>
                     <a href="#agents" class="nav-link ${active === "agents" ? "active" : ""}">${icon("bot")}<span>Agents</span></a>
                     <a href="#knowledge-bases" class="nav-link ${active === "knowledge-bases" ? "active" : ""}">${icon("book")}<span>Knowledge Bases</span></a>
                     <a href="#databases" class="nav-link ${active === "databases" ? "active" : ""}">${icon("database")}<span>Databases</span></a>
+                    <a href="#data-queries" class="nav-link ${active === "data-queries" ? "active" : ""}">${icon("table")}<span>Data Queries</span></a>
                 </nav>
                 <div class="sidebar-footer">
                     <div class="user-chip">
@@ -272,11 +298,95 @@ function getKbSetupGuideMarkup() {
     `;
 }
 
+function hydrateDataQuerySources(inspectedSources, savedSources = []) {
+    const savedByName = new Map(savedSources.map((source) => [source.name, source]));
+
+    return inspectedSources.map((source) => {
+        const saved = savedByName.get(source.name);
+        const savedColumns = new Map((saved?.columns || []).map((column) => [column.name, column]));
+
+        return {
+            ...source,
+            selected: Boolean(saved),
+            expanded: Boolean(saved),
+            description: saved?.description || "",
+            columns: (source.columns || []).map((column) => ({
+                ...column,
+                description: savedColumns.get(column.name)?.description || ""
+            }))
+        };
+    });
+}
+
+function getDataQuerySourcesMarkup(sources) {
+    if (!sources.length) {
+        return `<div class="empty-card">No tables or collections found for this database.</div>`;
+    }
+
+    return sources.map((source, index) => `
+        <article class="source-card ${source.selected ? "selected" : ""}">
+            <div class="source-card-head">
+                <label class="source-select">
+                    <input class="dq-source-toggle" type="checkbox" data-index="${index}" ${source.selected ? "checked" : ""}>
+                    <div>
+                        <strong>${escapeHtml(source.name)}</strong>
+                        <span>${escapeHtml(source.source_type)} &bull; ${source.column_count} columns</span>
+                    </div>
+                </label>
+                <button class="button button-secondary dq-config-toggle" type="button" data-index="${index}">
+                    ${icon("settings")}
+                    <span>Configure</span>
+                </button>
+            </div>
+            ${source.expanded ? `
+                <div class="source-config-panel">
+                    <label class="field">
+                        <span>Description</span>
+                        <textarea class="dq-source-description" data-index="${index}" rows="2" placeholder="Describe what this ${escapeHtml(source.source_type)} contains">${escapeHtml(source.description || "")}</textarea>
+                    </label>
+                    <div class="column-config-list">
+                        ${source.columns.map((column) => `
+                            <label class="field column-config-row">
+                                <span>${escapeHtml(column.name)}${column.data_type ? ` (${escapeHtml(column.data_type)})` : ""}</span>
+                                <input class="dq-column-description" data-index="${index}" data-column="${escapeHtml(column.name)}" value="${escapeHtml(column.description || "")}" placeholder="What should the agent know about this field?">
+                            </label>
+                        `).join("")}
+                    </div>
+                    ${source.preview_rows?.length ? `
+                        <div class="preview-block">
+                            <span>Preview rows</span>
+                            <pre>${escapeHtml(JSON.stringify(source.preview_rows, null, 2))}</pre>
+                        </div>
+                    ` : ""}
+                </div>
+            ` : ""}
+        </article>
+    `).join("");
+}
+
+function getSelectedDataQuerySources(sources) {
+    return sources
+        .filter((source) => source.selected)
+        .map((source) => ({
+            name: source.name,
+            source_type: source.source_type,
+            description: source.description || "",
+            columns: source.columns.map((column) => ({
+                name: column.name,
+                data_type: column.data_type || null,
+                description: column.description || ""
+            }))
+        }));
+}
+
 async function renderLogin() {
     getApp().innerHTML = `
         <section class="auth-shell">
             <div class="auth-hero">
-                <div class="eyebrow">Blue and white, rebuilt cleanly</div>
+                <div class="auth-brand-lockup">
+                    <div class="auth-brand-badge">${brandBadge("qab-brand-badge-auth")}</div>
+                </div>
+                <div class="eyebrow">project by Rajan Rajawat</div>
                 <h1>Query-driven agent builder with KB-aware retrieval.</h1>
                 <p>Sign in to manage agents, databases, embeddings, and vector search tests from one UI.</p>
             </div>
@@ -325,6 +435,9 @@ async function renderRegister() {
     getApp().innerHTML = `
         <section class="auth-shell">
             <div class="auth-hero">
+                <div class="auth-brand-lockup">
+                    <div class="auth-brand-badge">${brandBadge("qab-brand-badge-auth")}</div>
+                </div>
                 <div class="eyebrow">Create your workspace</div>
                 <h1>Register once, then manage the full QAB backend from the browser.</h1>
                 <p>The frontend talks directly to auth, agent, KB, DB, health, and chat endpoints.</p>
@@ -375,10 +488,11 @@ async function renderRegister() {
 async function renderDashboard() {
     setLoading("Loading dashboard");
 
-    const [agentsRes, kbRes, dbRes] = await Promise.all([
+    const [agentsRes, kbRes, dbRes, dataQueryRes] = await Promise.all([
         api.getAgents(),
         api.getKBs(),
-        api.getDBs()
+        api.getDBs(),
+        api.getDataQueries()
     ]);
 
     getApp().innerHTML = getLayout(`
@@ -402,6 +516,10 @@ async function renderDashboard() {
                 <span class="stat-label">${icon("database")}<span>Databases</span></span>
                 <strong>${dbRes.data.length}</strong>
             </article>
+            <article class="stat-card">
+                <span class="stat-label">${icon("table")}<span>Data Queries</span></span>
+                <strong>${dataQueryRes.data.length}</strong>
+            </article>
         </section>
         <section class="two-col">
             <article class="panel">
@@ -414,7 +532,7 @@ async function renderDashboard() {
                         <button class="list-card list-button open-kb" data-id="${kb.kb_id}">
                             <div>
                                 <strong>${escapeHtml(kb.name)}</strong>
-                                <span>${escapeHtml(kb.embedding_label)} • ${escapeHtml(kb.db_name)}</span>
+                                <span>${escapeHtml(kb.embedding_label)} &bull; ${escapeHtml(kb.db_name)}</span>
                             </div>
                             <small>${kb.file_count} files</small>
                         </button>
@@ -431,7 +549,7 @@ async function renderDashboard() {
                         <button class="list-card list-button open-chat" data-id="${agent._id}">
                             <div>
                                 <strong>${escapeHtml(agent.name)}</strong>
-                                <span>${escapeHtml(agent.llm_provider)} • ${escapeHtml(agent.llm_model)}</span>
+                                <span>${escapeHtml(agent.llm_provider)} &bull; ${escapeHtml(agent.llm_model)}</span>
                             </div>
                             <small>${agent.knowledge_base ? "RAG on" : "RAG off"}</small>
                         </button>
@@ -452,7 +570,7 @@ async function renderDashboard() {
     bindLayoutEvents();
 }
 
-function getAgentFormMarkup(agent, kbs) {
+function getAgentFormMarkup(agent, kbs, dataQueries) {
     const isEdit = Boolean(agent);
     const selectedTools = new Set(agent?.tools || []);
 
@@ -525,16 +643,34 @@ function getAgentFormMarkup(agent, kbs) {
                     `).join("")}
                 </select>
             </label>
+            <div class="inline-check">
+                <input id="agent-dq-enabled" type="checkbox" ${agent?.data_query ? "checked" : ""}>
+                <span>Attach a Data Query</span>
+            </div>
+            <label class="field">
+                <span>Data Query</span>
+                <select id="agent-dq-id" ${agent?.data_query ? "" : "disabled"}>
+                    <option value="">Select Data Query</option>
+                    ${dataQueries.map((item) => `
+                        <option value="${item.data_query_id}" ${agent?.data_query_id === item.data_query_id ? "selected" : ""}>
+                            ${escapeHtml(item.name)}
+                        </option>
+                    `).join("")}
+                </select>
+            </label>
             <button class="button button-primary" type="submit">${icon(isEdit ? "edit" : "plus")}<span>${isEdit ? "Save changes" : "Create agent"}</span></button>
         </form>
     `;
 }
 
 async function openAgentModal(agent = null, onDone) {
-    const kbs = (await api.getKBs()).data;
+    const [kbs, dataQueries] = await Promise.all([
+        api.getKBs().then((response) => response.data),
+        api.getDataQueries().then((response) => response.data)
+    ]);
     const title = agent ? "Edit Agent" : "Create Agent";
 
-    openModal(title, getAgentFormMarkup(agent, kbs));
+    openModal(title, getAgentFormMarkup(agent, kbs, dataQueries));
     bindProviderModelSelects("agent-provider", "agent-model", agent?.llm_model);
 
     const kbEnabled = document.getElementById("agent-kb-enabled");
@@ -543,6 +679,15 @@ async function openAgentModal(agent = null, onDone) {
         kbSelect.disabled = !kbEnabled.checked;
         if (!kbEnabled.checked) {
             kbSelect.value = "";
+        }
+    };
+
+    const dqEnabled = document.getElementById("agent-dq-enabled");
+    const dqSelect = document.getElementById("agent-dq-id");
+    dqEnabled.onchange = () => {
+        dqSelect.disabled = !dqEnabled.checked;
+        if (!dqEnabled.checked) {
+            dqSelect.value = "";
         }
     };
 
@@ -563,6 +708,8 @@ async function openAgentModal(agent = null, onDone) {
             temperature: Number(document.getElementById("agent-temperature").value),
             knowledge_base: kbEnabled.checked,
             knowledge_base_id: kbEnabled.checked ? document.getElementById("agent-kb-id").value || null : null,
+            data_query: dqEnabled.checked,
+            data_query_id: dqEnabled.checked ? document.getElementById("agent-dq-id").value || null : null,
             tools: selectedTools
         };
 
@@ -607,7 +754,7 @@ async function renderAgents() {
                             <p class="muted">${escapeHtml(agent.description)}</p>
                         </div>
                         <details class="card-menu">
-                            <summary>•••</summary>
+                            <summary aria-label="More actions">${icon("more", "ui-icon inline-icon")}</summary>
                             <div class="card-menu-list">
                                 <button class="card-menu-action edit-agent" data-id="${agent._id}">${icon("edit", "ui-icon inline-icon")}<span>Edit</span></button>
                                 <button class="card-menu-action delete-agent delete" data-id="${agent._id}">${icon("trash", "ui-icon inline-icon")}<span>Delete</span></button>
@@ -651,6 +798,8 @@ async function renderAgents() {
                         <div class="detail-card"><span>Description</span><strong>${escapeHtml(agent.description)}</strong></div>
                         <div class="detail-card"><span>Role</span><strong>${escapeHtml(agent.role)}</strong></div>
                         <div class="detail-card"><span>Instructions</span><strong>${escapeHtml(agent.instruction)}</strong></div>
+                        <div class="detail-card"><span>Knowledge Base</span><strong>${agent.knowledge_base_id ? escapeHtml(agent.knowledge_base_id) : "None"}</strong></div>
+                        <div class="detail-card"><span>Data Query</span><strong>${agent.data_query_id ? escapeHtml(agent.data_query_id) : "None"}</strong></div>
                         <div class="detail-card"><span>Tools</span><strong>${escapeHtml((agent.tools || []).join(", ") || "No tools selected")}</strong></div>
                     </div>
                 `);
@@ -780,10 +929,10 @@ async function renderKnowledgeBases() {
                     <div class="panel-head">
                         <div>
                             <h3>${escapeHtml(kb.name)}</h3>
-                            <p class="muted">${escapeHtml(kb.embedding_label)} • ${escapeHtml(kb.db_name)}</p>
+                            <p class="muted">${escapeHtml(kb.embedding_label)} &bull; ${escapeHtml(kb.db_name)}</p>
                         </div>
                         <details class="card-menu">
-                            <summary>•••</summary>
+                            <summary aria-label="More actions">${icon("more", "ui-icon inline-icon")}</summary>
                             <div class="card-menu-list">
                                 <button class="card-menu-action rename-kb" data-id="${kb.kb_id}" data-name="${escapeHtml(kb.name)}">${icon("edit", "ui-icon inline-icon")}<span>Edit</span></button>
                                 <button class="card-menu-action delete-kb delete" data-id="${kb.kb_id}">${icon("trash", "ui-icon inline-icon")}<span>Delete</span></button>
@@ -1015,7 +1164,7 @@ async function renderKnowledgeBaseDetail(kbId) {
                             <strong>Chunk ${index + 1}</strong>
                             <span>${item.score !== null ? `Score: ${Number(item.score).toFixed(4)}` : "Score unavailable"}</span>
                         </div>
-                        <div class="search-meta">${escapeHtml(item.metadata.file_name || "Unknown file")} • ${escapeHtml(item.metadata.embedding_model || "")}</div>
+                        <div class="search-meta">${escapeHtml(item.metadata.file_name || "Unknown file")} &bull; ${escapeHtml(item.metadata.embedding_model || "")}</div>
                         <pre>${escapeHtml(item.content)}</pre>
                     </article>
                 `).join("")
@@ -1024,6 +1173,276 @@ async function renderKnowledgeBaseDetail(kbId) {
             resultsNode.textContent = error.message;
             resultsNode.classList.remove("muted");
         }
+    };
+
+    bindLayoutEvents();
+}
+
+async function openDataQueryModal(dataQuery = null, onDone) {
+    const dbs = (await api.getDBs()).data;
+
+    openModal(dataQuery ? "Edit Data Query" : "Create Data Query", `
+        <form id="data-query-form" class="stack">
+            <label class="field">
+                <span>Name</span>
+                <input id="data-query-name" required value="${escapeHtml(dataQuery?.name || "")}" placeholder="Customer DB">
+            </label>
+            <label class="field">
+                <span>Linked database</span>
+                <select id="data-query-db" ${dataQuery ? "disabled" : ""}>
+                    <option value="">Select a linked database</option>
+                    ${dbs.map((db) => `
+                        <option value="${db.db_id}" ${dataQuery?.db_id === db.db_id ? "selected" : ""}>
+                            ${escapeHtml(db.name)} (${escapeHtml(db.provider)})
+                        </option>
+                    `).join("")}
+                </select>
+            </label>
+            <div class="modal-inline-actions">
+                <button class="button button-secondary" id="load-data-query-sources" type="button">${icon("database")}<span>Load sources</span></button>
+                <span class="field-note">The agent will only get read-only access to the selected tables or collections.</span>
+            </div>
+            <div id="data-query-sources" class="stack"></div>
+            <button class="button button-primary" type="submit">${icon(dataQuery ? "edit" : "plus")}<span>${dataQuery ? "Save Data Query" : "Create Data Query"}</span></button>
+        </form>
+    `);
+
+    const dbSelect = document.getElementById("data-query-db");
+    const loadButton = document.getElementById("load-data-query-sources");
+    const sourcesRoot = document.getElementById("data-query-sources");
+    let sourceState = [];
+
+    const bindSourceEvents = () => {
+        document.querySelectorAll(".dq-source-toggle").forEach((input) => {
+            input.onchange = () => {
+                const source = sourceState[Number(input.dataset.index)];
+                source.selected = input.checked;
+                if (source.selected) {
+                    source.expanded = true;
+                }
+                renderSources();
+            };
+        });
+
+        document.querySelectorAll(".dq-config-toggle").forEach((button) => {
+            button.onclick = () => {
+                const source = sourceState[Number(button.dataset.index)];
+                source.expanded = !source.expanded;
+                renderSources();
+            };
+        });
+
+        document.querySelectorAll(".dq-source-description").forEach((textarea) => {
+            textarea.oninput = () => {
+                sourceState[Number(textarea.dataset.index)].description = textarea.value;
+            };
+        });
+
+        document.querySelectorAll(".dq-column-description").forEach((input) => {
+            input.oninput = () => {
+                const source = sourceState[Number(input.dataset.index)];
+                const column = source.columns.find((item) => item.name === input.dataset.column);
+                if (column) {
+                    column.description = input.value;
+                }
+            };
+        });
+    };
+
+    const renderSources = () => {
+        sourcesRoot.innerHTML = getDataQuerySourcesMarkup(sourceState);
+        bindSourceEvents();
+    };
+
+    const loadSources = async () => {
+        const dbId = dataQuery?.db_id || dbSelect.value;
+        if (!dbId) {
+            showToast("Select a linked database first", "error");
+            return;
+        }
+
+        sourcesRoot.innerHTML = `<div class="loader-inline"></div>`;
+
+        try {
+            const inspection = await api.inspectDBSources(dbId);
+            sourceState = hydrateDataQuerySources(inspection.data.sources, dataQuery?.sources || []);
+            renderSources();
+        } catch (error) {
+            sourcesRoot.innerHTML = `<div class="empty-card">${escapeHtml(error.message)}</div>`;
+        }
+    };
+
+    loadButton.onclick = loadSources;
+
+    if (dataQuery?.db_id) {
+        await loadSources();
+    }
+
+    document.getElementById("data-query-form").onsubmit = async (event) => {
+        event.preventDefault();
+
+        const selectedSources = getSelectedDataQuerySources(sourceState);
+        if (!selectedSources.length) {
+            showToast("Select at least one table or collection", "error");
+            return;
+        }
+
+        const payload = {
+            name: document.getElementById("data-query-name").value,
+            db_id: dataQuery?.db_id || dbSelect.value,
+            sources: selectedSources
+        };
+
+        try {
+            if (dataQuery) {
+                await api.updateDataQuery(dataQuery.data_query_id, {
+                    name: payload.name,
+                    sources: payload.sources
+                });
+                showToast("Data Query updated");
+            } else {
+                await api.createDataQuery(payload);
+                showToast("Data Query created");
+            }
+
+            closeModal();
+            await onDone();
+        } catch (error) {
+            showToast(error.message, "error");
+        }
+    };
+}
+
+async function renderDataQueries() {
+    setLoading("Loading data queries");
+
+    const response = await api.getDataQueries();
+    const dataQueries = response.data;
+
+    getApp().innerHTML = getLayout(`
+        <section class="page-head">
+            <div>
+                <div class="eyebrow">Data Queries</div>
+                <h2>Read-only database contexts</h2>
+                <p class="muted">Select tables or collections from a linked database and describe their schema for the agent.</p>
+            </div>
+            <button class="button button-primary" id="create-data-query-button">${icon("plus")}<span>Create Data Query</span></button>
+        </section>
+        <section class="card-grid">
+            ${dataQueries.map((item) => `
+                <article class="panel card-panel">
+                    <div class="panel-head">
+                        <div>
+                            <h3>${escapeHtml(item.name)}</h3>
+                            <p class="muted">${escapeHtml(item.db_name)} &bull; ${escapeHtml(item.provider)}</p>
+                        </div>
+                        <details class="card-menu">
+                            <summary aria-label="More actions">${icon("more", "ui-icon inline-icon")}</summary>
+                            <div class="card-menu-list">
+                                <button class="card-menu-action edit-data-query" data-id="${item.data_query_id}">${icon("edit", "ui-icon inline-icon")}<span>Edit</span></button>
+                                <button class="card-menu-action delete-data-query delete" data-id="${item.data_query_id}">${icon("trash", "ui-icon inline-icon")}<span>Delete</span></button>
+                            </div>
+                        </details>
+                    </div>
+                    <div class="kb-tags">
+                        <span class="tag">${item.sources.length} sources</span>
+                        <span class="tag">${escapeHtml(item.provider)}</span>
+                    </div>
+                    <div class="panel-actions">
+                        <button class="button button-secondary open-data-query" data-id="${item.data_query_id}">${icon("folder")}<span>Open</span></button>
+                    </div>
+                </article>
+            `).join("") || `<div class="empty-card">No Data Queries created yet.</div>`}
+        </section>
+    `, "data-queries");
+
+    const refresh = async () => renderDataQueries();
+
+    document.getElementById("create-data-query-button").onclick = async () => {
+        await openDataQueryModal(null, refresh);
+    };
+
+    document.querySelectorAll(".open-data-query").forEach((button) => {
+        button.onclick = () => navigate(`#data-queries/${button.dataset.id}`);
+    });
+
+    document.querySelectorAll(".edit-data-query").forEach((button) => {
+        button.onclick = async () => {
+            try {
+                const responseDetail = await api.getDataQuery(button.dataset.id);
+                await openDataQueryModal(responseDetail.data, refresh);
+            } catch (error) {
+                showToast(error.message, "error");
+            }
+        };
+    });
+
+    document.querySelectorAll(".delete-data-query").forEach((button) => {
+        button.onclick = async () => {
+            if (!window.confirm("Delete this Data Query? Agents using it will be detached from it.")) {
+                return;
+            }
+
+            try {
+                await api.deleteDataQuery(button.dataset.id);
+                showToast("Data Query deleted");
+                await refresh();
+            } catch (error) {
+                showToast(error.message, "error");
+            }
+        };
+    });
+
+    bindLayoutEvents();
+}
+
+async function renderDataQueryDetail(dataQueryId) {
+    setLoading("Loading data query");
+
+    const response = await api.getDataQuery(dataQueryId);
+    const dataQuery = response.data;
+
+    getApp().innerHTML = getLayout(`
+        <section class="page-head">
+            <div>
+                <div class="eyebrow">Data Query Detail</div>
+                <h2>${escapeHtml(dataQuery.name)}</h2>
+                <p class="muted">${escapeHtml(dataQuery.db_name)} &bull; ${escapeHtml(dataQuery.provider)}</p>
+            </div>
+            <div class="hero-actions">
+                <a class="button button-secondary" href="#data-queries">${icon("back")}<span>Back</span></a>
+                <button class="button button-secondary" id="edit-data-query-detail">${icon("edit")}<span>Edit</span></button>
+            </div>
+        </section>
+        <section class="stack">
+            ${dataQuery.sources.map((source) => `
+                <article class="panel">
+                    <div class="panel-head">
+                        <div>
+                            <h3>${escapeHtml(source.name)}</h3>
+                            <p class="muted">${escapeHtml(source.source_type)}</p>
+                        </div>
+                        <span class="tag">${source.columns.length} columns</span>
+                    </div>
+                    <div class="detail-card">
+                        <span>Description</span>
+                        <strong>${escapeHtml(source.description || "No description added.")}</strong>
+                    </div>
+                    <div class="column-summary-grid">
+                        ${source.columns.map((column) => `
+                            <div class="detail-card">
+                                <span>${escapeHtml(column.name)}${column.data_type ? ` (${escapeHtml(column.data_type)})` : ""}</span>
+                                <strong>${escapeHtml(column.description || "No description added.")}</strong>
+                            </div>
+                        `).join("")}
+                    </div>
+                </article>
+            `).join("") || `<div class="empty-card">No configured sources.</div>`}
+        </section>
+    `, "data-queries");
+
+    document.getElementById("edit-data-query-detail").onclick = async () => {
+        await openDataQueryModal(dataQuery, async () => renderDataQueryDetail(dataQueryId));
     };
 
     bindLayoutEvents();
@@ -1089,8 +1508,10 @@ async function renderDatabases() {
 
         document.getElementById("link-db-form").onsubmit = async (event) => {
             event.preventDefault();
+            const submitButton = event.currentTarget.querySelector('button[type="submit"]');
 
             try {
+                setButtonLoading(submitButton, true, "Verifying connection...");
                 await api.linkDB({
                     name: document.getElementById("db-name").value,
                     db: document.getElementById("db-provider").value,
@@ -1101,6 +1522,8 @@ async function renderDatabases() {
                 await refresh();
             } catch (error) {
                 showToast(error.message, "error");
+            } finally {
+                setButtonLoading(submitButton, false);
             }
         };
     };
@@ -1168,7 +1591,7 @@ async function renderChat(agentId) {
             <div>
                 <div class="eyebrow">Chat</div>
                 <h2>${escapeHtml(agent.name)}</h2>
-                <p class="muted">${escapeHtml(agent.llm_model)} • ${agent.knowledge_base ? "Knowledge base attached" : "No knowledge base"}</p>
+                <p class="muted">${escapeHtml(agent.llm_model)} &bull; ${agent.knowledge_base ? "Knowledge base attached" : "No knowledge base"}</p>
             </div>
             <a class="button button-secondary" href="#agents">${icon("back")}<span>Back to agents</span></a>
         </section>
@@ -1284,6 +1707,16 @@ async function route() {
 
         if (hash === "#databases") {
             await renderDatabases();
+            return;
+        }
+
+        if (hash === "#data-queries") {
+            await renderDataQueries();
+            return;
+        }
+
+        if (hash.startsWith("#data-queries/")) {
+            await renderDataQueryDetail(hash.split("/")[1]);
             return;
         }
 

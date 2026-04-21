@@ -1,204 +1,29 @@
 from uuid import uuid4
-from langchain_google_genai import ChatGoogleGenerativeAI
-from langchain_groq import ChatGroq
-from langchain.agents import create_agent
-from fastapi import APIRouter, Depends, HTTPException
+
 from bson import ObjectId
 from bson.errors import InvalidId
-from utils.env_loaders import load_groq_api, load_gemini_api
-from utils.loggers import logger
-from utils.users import get_current_user
-from utils.response import success_response, error_response
-from database.db import agents_collection, kb_collection, db_collection, chat_history_collection
-from src.tools import get_tools_for_agent
+from fastapi import APIRouter, Depends, HTTPException
+
+from database.db import agents_collection, kb_collection, db_collection, data_query_collection
 from database.models import AgentRunRequest
-from pydantic import SecretStr
-from src.knowledge_base import search_kb_chunks
-import datetime
+from utils.general import ensure_object_id
+from utils.loggers import logger
+from utils.response import error_response, success_response
+from utils.runner_helpers import (
+    agent_builder,
+    build_history_messages,
+    extract_agent_response_content,
+    fetch_rag_context,
+    get_agent_history,
+    get_latest_thread_id,
+    serialize_agent_messages,
+    serialize_chat_history_item,
+    store_chat_message,
+)
+from utils.users import get_current_user
 
 
 runner_router = APIRouter(prefix="/chat", tags=["Agent Runner"])
-
-
-def get_llm(provider: str, model: str, temp):
-    provider = provider.lower()
-
-    if provider == "groq":
-        logger.info(f"Initializing Groq LLM with model: {model}")
-        return ChatGroq(
-            model=model,
-            temperature=temp,
-            api_key=SecretStr(load_groq_api())
-        )
-
-    if provider == "gemini":
-        logger.info(f"Initializing Gemini LLM with model: {model}")
-        return ChatGoogleGenerativeAI(
-            model=model,
-            temperature=temp,
-            google_api_key=load_gemini_api()
-        )
-
-    logger.error(f"Unsupported LLM provider: {provider}")
-    raise ValueError(f"Unsupported provider: {provider}")
-
-
-def extract_agent_response_content(result):
-    messages = result.get("messages", [])
-
-    for message in reversed(messages):
-        if getattr(message, "type", "") == "ai":
-            content = message.content
-
-            if isinstance(content, str):
-                return content
-
-            if isinstance(content, list):
-                output = []
-
-                for item in content:
-                    if isinstance(item, dict) and item.get("type") == "text":
-                        output.append(item.get("text", ""))
-
-                if output:
-                    return "\n".join(output)
-
-                return str(content)
-
-            return str(content)
-
-    return ""
-
-
-def serialize_agent_messages(result):
-    serialized_messages = []
-    messages = result.get("messages", [])
-
-    for message in messages:
-        serialized_messages.append(
-            {
-                "type": getattr(message, "type", ""),
-                "content": message.content
-            }
-        )
-
-    return serialized_messages
-
-
-def serialize_chat_history_item(item: dict):
-    return {
-        "id": str(item["_id"]),
-        "agent_id": item.get("agent_id"),
-        "thread_id": item.get("thread_id"),
-        "role": item.get("role"),
-        "content": item.get("content"),
-        "created_at": str(item.get("created_at")),
-    }
-
-
-def build_history_messages(history_items: list[dict]):
-    messages = []
-
-    for item in history_items:
-        if item.get("role") not in {"user", "assistant"}:
-            continue
-
-        messages.append({
-            "role": item["role"],
-            "content": item.get("content", "")
-        })
-
-    return messages
-
-
-async def get_agent_history(owner_id: str, agent_id: str, thread_id: str | None = None, limit: int = 15):
-    query = {
-        "owner_id": owner_id,
-        "agent_id": agent_id,
-    }
-
-    if thread_id:
-        query["thread_id"] = thread_id
-
-    history = await chat_history_collection.find(query).sort("created_at", -1).limit(limit).to_list(length=limit)
-    history.reverse()
-    return history
-
-
-async def get_latest_thread_id(owner_id: str, agent_id: str):
-    latest_item = await chat_history_collection.find_one(
-        {
-            "owner_id": owner_id,
-            "agent_id": agent_id,
-        },
-        sort=[("created_at", -1)]
-    )
-
-    if not latest_item:
-        return None
-
-    return latest_item.get("thread_id")
-
-
-async def store_chat_message(owner_id: str, agent_id: str, thread_id: str, role: str, content: str):
-    await chat_history_collection.insert_one({
-        "owner_id": owner_id,
-        "agent_id": agent_id,
-        "thread_id": thread_id,
-        "role": role,
-        "content": content,
-        "created_at": datetime.datetime.now(datetime.timezone.utc),
-    })
-
-
-def agent_builder(agent_config: dict):
-    logger.info(f"Agent builder started for agent: {agent_config['name']}")
-
-    llm = get_llm(agent_config['llm_provider'], agent_config['llm_model'], agent_config['temperature'])
-    tools = get_tools_for_agent(agent_config.get('tools', []))
-
-    provider_specific_prompt = ''
-    if agent_config['llm_provider'] == 'groq':
-        provider_specific_prompt = """When you are supposed to do web search please use web_search tool. The web search tool takes string as input and will give you a list of results, what you need to do is pass the user query as string input and what you get in return is a list, so based on that please give appropriate answer to the user."""
-
-    system_promt_instructions = f"""
-                Your name is "{agent_config['name']}", and this is what your description is given to the user "{agent_config['description']}".
-                Your Role is {agent_config['role']}
-
-                Your instructions:
-                - Be Polite, Helpful, and assist user with queries.
-                - {agent_config['instruction']}
-
-
-                You are an AI assistant with access to tools.
-                -{provider_specific_prompt}
-
-"""
-
-    agent = create_agent(
-        llm,
-        tools=tools,
-        system_prompt=system_promt_instructions,
-    )
-
-    logger.info(f"Agent built successfully for agent: {agent_config['name']}")
-    return agent
-
-
-def fetch_rag_context(query: str, owner_id: str, kb_entry: dict, db_entry: dict | None = None):
-    kb_id = str(kb_entry["_id"])
-    try:
-        results = search_kb_chunks(query, owner_id, kb_entry, db_entry, 3)
-
-        if results:
-            return "\n\n".join([item[0].page_content for item in results])
-
-    except Exception as e:
-        logger.error(f"RAG retrieval failed for kb {kb_id}: {str(e)}")
-        if "Expecting value" in str(e):
-            logger.error("Hugging Face API returned non-JSON response. Check API status or token.")
-
-    return ""
 
 
 @runner_router.get("/load-old-chat/{agent_id}")
@@ -256,7 +81,28 @@ async def run_agent(agent_id: str, request: AgentRunRequest, current_user: dict 
             logger.warning(f"Agent not found for agent id: {agent_id} and user: {current_user['email']}")
             return error_response(status_code=404, message="Agent not found")
 
-        agent = agent_builder(agent_data)
+        data_query_entry = None
+        data_query_db_entry = None
+        if agent_data.get("data_query") is True:
+            data_query_id = agent_data.get("data_query_id")
+            if not data_query_id:
+                return error_response(status_code=400, message="Agent does not have a Data Query selected.")
+
+            data_query_entry = await data_query_collection.find_one({
+                "_id": ensure_object_id(data_query_id),
+                "owner_id": ObjectId(current_user["_id"])
+            })
+            if not data_query_entry:
+                return error_response(status_code=404, message="Data Query not found for this agent.")
+
+            data_query_db_entry = await db_collection.find_one({
+                "_id": ensure_object_id(data_query_entry["db_id"]),
+                "owner_id": ObjectId(current_user["_id"])
+            })
+            if not data_query_db_entry:
+                return error_response(status_code=404, message="Database linked to this Data Query was not found.")
+
+        agent = agent_builder(agent_data, data_query_entry, data_query_db_entry)
         thread_id = request.thread_id or str(uuid4())
 
         rag_message = request.query
@@ -268,7 +114,7 @@ async def run_agent(agent_id: str, request: AgentRunRequest, current_user: dict 
                     return error_response(status_code=400, message="Agent does not have a knowledge base selected.")
 
                 kb_entry = await kb_collection.find_one({
-                    "_id": ObjectId(kb_id),
+                    "_id": ensure_object_id(kb_id),
                     "owner_id": ObjectId(current_user["_id"])
                 })
                 if not kb_entry:
@@ -277,7 +123,7 @@ async def run_agent(agent_id: str, request: AgentRunRequest, current_user: dict 
                 db_entry = None
                 if kb_entry.get("db_id") != "default":
                     db_entry = await db_collection.find_one({
-                        "_id": ObjectId(kb_entry["db_id"]),
+                        "_id": ensure_object_id(kb_entry["db_id"]),
                         "owner_id": ObjectId(current_user["_id"])
                     })
                     if not db_entry:

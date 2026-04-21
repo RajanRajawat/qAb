@@ -1,6 +1,6 @@
 from pydantic import BaseModel, EmailStr, Field, ConfigDict, field_validator, model_validator
 from bson import ObjectId
-from typing import Optional
+from typing import Optional, Literal
 from enum import Enum
 from utils.general import strip_string
 
@@ -159,6 +159,8 @@ class AgentCreation(BaseModel):
     temperature: float = Field(ge=0.0, le=1.0)
     knowledge_base: bool
     knowledge_base_id: Optional[str] = None
+    data_query: bool = False
+    data_query_id: Optional[str] = None
     tools: list[AgentTool] = Field(default_factory=list)
 
     model_config = ConfigDict(extra="forbid")
@@ -180,6 +182,10 @@ class AgentCreation(BaseModel):
             raise ValueError("knowledge_base_id is required when knowledge_base is true.")
         if not self.knowledge_base and self.knowledge_base_id:
             raise ValueError("knowledge_base_id should be empty when knowledge_base is false.")
+        if self.data_query and not self.data_query_id:
+            raise ValueError("data_query_id is required when data_query is true.")
+        if not self.data_query and self.data_query_id:
+            raise ValueError("data_query_id should be empty when data_query is false.")
         return self
 
 
@@ -193,6 +199,8 @@ class AgentUpdate(BaseModel):
     temperature: Optional[float] = Field(None, ge=0.0, le=1.0)
     knowledge_base: Optional[bool] = None
     knowledge_base_id: Optional[str] = None
+    data_query: Optional[bool] = None
+    data_query_id: Optional[str] = None
     tools: Optional[list[AgentTool]] = None
 
     model_config = ConfigDict(extra="forbid")
@@ -246,6 +254,57 @@ class UpdateDB(BaseModel):
     def strip_name(cls, v):
         return strip_string(v)
 
+
+class DataQueryColumnConfig(BaseModel):
+    name: str = Field(min_length=1, max_length=100)
+    data_type: Optional[str] = None
+    description: Optional[str] = None
+
+    model_config = ConfigDict(extra="forbid")
+
+    @field_validator("name", "data_type", "description", mode="before")
+    @classmethod
+    def strip_strings(cls, v):
+        return strip_string(v) if v is not None else v
+
+
+class DataQuerySourceConfig(BaseModel):
+    name: str = Field(min_length=1, max_length=100)
+    source_type: Literal["table", "collection"]
+    description: Optional[str] = None
+    columns: list[DataQueryColumnConfig] = Field(default_factory=list)
+
+    model_config = ConfigDict(extra="forbid")
+
+    @field_validator("name", "description", mode="before")
+    @classmethod
+    def strip_strings(cls, v):
+        return strip_string(v) if v is not None else v
+
+
+class CreateDataQuery(BaseModel):
+    name: str = Field(min_length=3, max_length=50)
+    db_id: str
+    sources: list[DataQuerySourceConfig] = Field(min_length=1)
+
+    model_config = ConfigDict(extra="forbid")
+
+    @field_validator("name", "db_id", mode="before")
+    @classmethod
+    def strip_strings(cls, v):
+        return strip_string(v)
+
+
+class UpdateDataQuery(BaseModel):
+    name: str = Field(min_length=3, max_length=50)
+    sources: list[DataQuerySourceConfig] = Field(min_length=1)
+
+    model_config = ConfigDict(extra="forbid")
+
+    @field_validator("name", mode="before")
+    @classmethod
+    def strip_strings(cls, v):
+        return strip_string(v)
 
 
 
