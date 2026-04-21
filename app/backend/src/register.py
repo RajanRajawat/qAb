@@ -1,11 +1,4 @@
 
-
-#~ Register                                             
-#: Todo:                                                
-#! Bugs:                                                
-#- Notes:                                               
-
-
 #- Imports
 from fastapi import APIRouter, BackgroundTasks
 from database.db import users_collection

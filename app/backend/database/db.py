@@ -1,11 +1,4 @@
 
-
-#~ DataBase Connections                                 
-#: Todo:                                                
-#! Bugs:                                                
-#- Notes:                                               
-
-
 from dotenv import load_dotenv
 from motor.motor_asyncio import AsyncIOMotorClient
 from pymongo import MongoClient
@@ -43,6 +36,7 @@ users_collection = db['users']
 agents_collection = db['agents']
 db_collection = db['custom_db']
 kb_collection = db['kb']
+chat_history_collection = db['chat_history']
 logger.info(f"MongoDB collections initialized: users, agents")
 
 # SYNC CLIENT

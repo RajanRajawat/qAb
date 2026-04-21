@@ -1,14 +1,3 @@
-
-
-
-#~ Models                                               
-#: Todo:                                                
-#! Bugs:                                                
-#- Notes:                                               
-
-
-
-
 from pydantic import BaseModel, EmailStr, Field, ConfigDict, field_validator, model_validator
 from bson import ObjectId
 from typing import Optional
@@ -133,12 +122,41 @@ compatibility_map: dict[LLMProvider, set[LLMModel]] = {
 class CreateKnowledgeBase(BaseModel):
     name: str = Field(min_length=3, max_length=50)
     db_id: Optional[str] = None
+    embedding_model: Optional[str] = "sentence-transformers/all-MiniLM-L6-v2"
 
     model_config = ConfigDict(extra="forbid")
 
     @field_validator("name", mode="before")
     @classmethod
     def strip_kb_name(cls, v):
+        return strip_string(v)
+
+    @field_validator("embedding_model", mode="before")
+    @classmethod
+    def strip_embedding_model(cls, v):
+        return strip_string(v)
+
+
+class UpdateKnowledgeBase(BaseModel):
+    name: str = Field(min_length=3, max_length=50)
+
+    model_config = ConfigDict(extra="forbid")
+
+    @field_validator("name", mode="before")
+    @classmethod
+    def strip_kb_name(cls, v):
+        return strip_string(v)
+
+
+class KnowledgeBaseVectorSearchRequest(BaseModel):
+    query: str = Field(min_length=1, max_length=2000)
+    limit: int = Field(default=3, ge=1, le=10)
+
+    model_config = ConfigDict(extra="forbid")
+
+    @field_validator("query", mode="before")
+    @classmethod
+    def strip_query(cls, v):
         return strip_string(v)
 
 class AgentCreation(BaseModel):
@@ -221,6 +239,22 @@ class AddDB(BaseModel):
     db : ListDB
     connection_uri: str 
     #need to add validations!
+
+    @field_validator("name", "connection_uri", mode="before")
+    @classmethod
+    def strip_strings(cls, v):
+        return strip_string(v)
+
+
+class UpdateDB(BaseModel):
+    name: str = Field(min_length=3, max_length=20)
+
+    model_config = ConfigDict(extra="forbid")
+
+    @field_validator("name", mode="before")
+    @classmethod
+    def strip_name(cls, v):
+        return strip_string(v)
 
 
 

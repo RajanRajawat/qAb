@@ -3,7 +3,7 @@
 
 from fastapi import APIRouter, BackgroundTasks, Depends
 from database.db import users_collection, db_collection
-from database.models import AddDB
+from database.models import AddDB, UpdateDB
 from utils.users import get_current_user
 from utils.emails import send_email
 from utils.response import success_response, error_response
@@ -13,6 +13,7 @@ from utils.connection import validate_mongo, validate_postgres
 from bson import ObjectId
 from database.models import ListDB
 from src.knowledge_base import delete_all_embeddings_for_custom_db, cleanup_kbs_for_custom_db
+from pymongo import ReturnDocument
 
 
 db_router = APIRouter(prefix="/custom-db", tags=["DB"])
@@ -121,6 +122,43 @@ async def unlink_db(db_id: str, bt: BackgroundTasks, current_user: dict = Depend
     )
 
 
+
+
+@db_router.patch('/update/{db_id}')
+async def update_db(db_id: str, payload: UpdateDB, current_user: dict = Depends(get_current_user)):
+    logger.info(f"DB update request received from {current_user['email']} for db_id: {db_id}")
+
+    try:
+        db_object_id = ObjectId(db_id)
+    except Exception:
+        return error_response(400, message="Invalid DB ID format.")
+
+    updated_db = await db_collection.find_one_and_update(
+        {
+            "_id": db_object_id,
+            "owner_id": ObjectId(current_user["_id"])
+        },
+        {
+            "$set": {
+                "name": payload.name,
+                "updated_at": datetime.datetime.now(datetime.timezone.utc)
+            }
+        },
+        return_document=ReturnDocument.AFTER
+    )
+
+    if not updated_db:
+        return error_response(404, message="DB not found or you do not have permission to update it.")
+
+    return success_response(
+        status_code=200,
+        message="Database updated successfully.",
+        data={
+            "db_id": str(updated_db["_id"]),
+            "name": updated_db.get("name"),
+            "provider": updated_db.get("provider"),
+        }
+    )
 
 
 @db_router.get('/mydb')

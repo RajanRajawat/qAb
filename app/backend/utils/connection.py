@@ -1,5 +1,4 @@
 
-
 from pymongo import MongoClient
 
 def validate_mongo(uri):
@@ -10,8 +9,6 @@ def validate_mongo(uri):
     except:
         return False
     
-
-
 import psycopg2
 
 def validate_postgres(uri):

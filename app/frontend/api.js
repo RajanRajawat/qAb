@@ -1,181 +1,215 @@
-/**
- * API Utility for QAB
- * Handles fetch requests, authorization headers, and global error handling.
- */
-
 const API_BASE_URL = window.location.origin;
+
 
 class ApiClient {
     constructor() {
-        this.token = localStorage.getItem('qab_token') || null;
+        this.token = localStorage.getItem("qab_token") || null;
     }
 
     setToken(token) {
         this.token = token;
-        localStorage.setItem('qab_token', token);
+        localStorage.setItem("qab_token", token);
     }
 
     clearToken() {
         this.token = null;
-        localStorage.removeItem('qab_token');
+        localStorage.removeItem("qab_token");
     }
 
     async request(endpoint, options = {}) {
         const url = `${API_BASE_URL}${endpoint}`;
         const headers = {
-            'Content-Type': 'application/json',
             ...(options.headers || {})
         };
 
-        if (this.token) {
-            headers['Authorization'] = `Bearer ${this.token}`;
+        if (!options.isFormData) {
+            headers["Content-Type"] = headers["Content-Type"] || "application/json";
         }
 
-        // Special handling for multipart/form-data (uploads)
-        if (options.isFormData) {
-            delete headers['Content-Type'];
-        } else if (options.body && typeof options.body === 'object') {
-            options.body = JSON.stringify(options.body);
+        if (this.token) {
+            headers["Authorization"] = `Bearer ${this.token}`;
         }
+
+        const nextOptions = {
+            ...options,
+            headers
+        };
+
+        if (!options.isFormData && nextOptions.body && typeof nextOptions.body === "object") {
+            nextOptions.body = JSON.stringify(nextOptions.body);
+        }
+
+        const response = await fetch(url, nextOptions);
+        let data = null;
 
         try {
-            const response = await fetch(url, {
-                ...options,
-                headers
-            });
+            data = await response.json();
+        } catch (error) {
+            data = null;
+        }
 
-            const data = await response.json();
-
-            if (!response.ok) {
-                // Handle unauthorized
-                if (response.status === 401 && !url.includes('/auth/login')) {
-                    window.dispatchEvent(new CustomEvent('qab-unauthorized'));
-                }
-                
-                let errorMessage = data.message || 'Something went wrong';
-                if (data.detail) {
-                    if (typeof data.detail === 'string') {
-                        errorMessage = data.detail;
-                    } else if (Array.isArray(data.detail)) {
-                        errorMessage = data.detail.map(d => d.msg || JSON.stringify(d)).join(', ');
-                    } else {
-                        errorMessage = JSON.stringify(data.detail);
-                    }
-                }
-                throw new Error(errorMessage);
+        if (!response.ok) {
+            if (response.status === 401 && !endpoint.startsWith("/auth/login")) {
+                window.dispatchEvent(new CustomEvent("qab-unauthorized"));
             }
 
-            return data;
-        } catch (error) {
-            console.error(`API Error [${endpoint}]:`, error);
-            throw error;
+            const detail = data?.detail;
+            const detailMessage = typeof detail?.message === "string" ? detail.message : null;
+            const message = data?.message || detailMessage || "Request failed";
+            throw new Error(message);
         }
+
+        return data;
     }
 
-    // Auth
+    async getHealth() {
+        return this.request("/health");
+    }
+
     async login(email, password) {
-        const res = await this.request('/auth/login', {
-            method: 'POST',
+        const response = await this.request("/auth/login", {
+            method: "POST",
             body: { email, password }
         });
-        if (res.data?.jwt_tokens?.access_token) {
-            this.setToken(res.data.jwt_tokens.access_token);
-            localStorage.setItem('qab_user', JSON.stringify(res.data.user_info));
+
+        const accessToken = response?.data?.jwt_tokens?.access_token;
+        if (accessToken) {
+            this.setToken(accessToken);
+            localStorage.setItem("qab_user", JSON.stringify(response.data.user_info));
         }
-        return res;
+
+        return response;
     }
 
     async register(name, email, mobile, password) {
-        return await this.request('/auth/register', {
-            method: 'POST',
+        return this.request("/auth/register", {
+            method: "POST",
             body: { name, email, mobile, password }
         });
     }
 
-    // Agents
     async getAgents() {
-        return await this.request('/agent/all');
+        return this.request("/agent/all");
     }
 
-    async createAgent(agentData) {
-        return await this.request('/agent/create', {
-            method: 'POST',
-            body: agentData
+    async getAgent(agentId) {
+        return this.request(`/agent/${agentId}`);
+    }
+
+    async createAgent(payload) {
+        return this.request("/agent/create", {
+            method: "POST",
+            body: payload
         });
     }
 
-    async updateAgent(id, agentData) {
-        return await this.request(`/agent/update/${id}`, {
-            method: 'PATCH',
-            body: agentData
+    async updateAgent(agentId, payload) {
+        return this.request(`/agent/update/${agentId}`, {
+            method: "PATCH",
+            body: payload
         });
     }
 
-    async deleteAgent(id) {
-        return await this.request(`/agent/delete/${id}`, {
-            method: 'DELETE'
+    async deleteAgent(agentId) {
+        return this.request(`/agent/delete/${agentId}`, {
+            method: "DELETE"
         });
     }
 
-    // Knowledge Base
+    async runAgent(agentId, query, threadId) {
+        return this.request(`/chat/run/${agentId}`, {
+            method: "POST",
+            body: {
+                query,
+                thread_id: threadId
+            }
+        });
+    }
+
+    async loadOldChat(agentId) {
+        return this.request(`/chat/load-old-chat/${agentId}`);
+    }
+
     async getKBs() {
-        return await this.request('/knowledge-base/all');
+        return this.request("/knowledge-base/all");
     }
 
-    async createKB(kbData) {
-        return await this.request('/knowledge-base/create', {
-            method: 'POST',
-            body: kbData
+    async getKB(kbId) {
+        return this.request(`/knowledge-base/${kbId}`);
+    }
+
+    async getEmbeddingOptions() {
+        return this.request("/knowledge-base/embedding-options");
+    }
+
+    async createKB(payload) {
+        return this.request("/knowledge-base/create", {
+            method: "POST",
+            body: payload
         });
     }
 
-    async deleteKB(id) {
-        return await this.request(`/knowledge-base/delete/${id}`, {
-            method: 'DELETE'
+    async updateKB(kbId, payload) {
+        return this.request(`/knowledge-base/update/${kbId}`, {
+            method: "PATCH",
+            body: payload
         });
     }
 
     async addFileToKB(kbId, file) {
         const formData = new FormData();
-        formData.append('file', file);
-        return await this.request(`/knowledge-base/add-file/${kbId}`, {
-            method: 'POST',
+        formData.append("file", file);
+
+        return this.request(`/knowledge-base/add-file/${kbId}`, {
+            method: "POST",
             body: formData,
             isFormData: true
         });
     }
 
     async removeFileFromKB(kbId, fileName) {
-        return await this.request(`/knowledge-base/remove-file/${kbId}?file_name=${encodeURIComponent(fileName)}`, {
-            method: 'DELETE'
+        return this.request(`/knowledge-base/remove-file/${kbId}?file_name=${encodeURIComponent(fileName)}`, {
+            method: "DELETE"
         });
     }
 
-    // Databases
+    async testKBSearch(kbId, payload) {
+        return this.request(`/knowledge-base/test-search/${kbId}`, {
+            method: "POST",
+            body: payload
+        });
+    }
+
+    async deleteKB(kbId) {
+        return this.request(`/knowledge-base/delete/${kbId}`, {
+            method: "DELETE"
+        });
+    }
+
     async getDBs() {
-        return await this.request('/custom-db/mydb');
+        return this.request("/custom-db/mydb");
     }
 
-    async linkDB(dbData) {
-        return await this.request('/custom-db/add', {
-            method: 'POST',
-            body: dbData
+    async linkDB(payload) {
+        return this.request("/custom-db/add", {
+            method: "POST",
+            body: payload
         });
     }
 
-    async unlinkDB(id) {
-        return await this.request(`/custom-db/delete/${id}`, {
-            method: 'DELETE'
+    async updateDB(dbId, payload) {
+        return this.request(`/custom-db/update/${dbId}`, {
+            method: "PATCH",
+            body: payload
         });
     }
 
-    // Chat
-    async runAgent(agentId, query, threadId) {
-        return await this.request(`/chat/run/${agentId}`, {
-            method: 'POST',
-            body: { query, thread_id: threadId }
+    async unlinkDB(dbId) {
+        return this.request(`/custom-db/delete/${dbId}`, {
+            method: "DELETE"
         });
     }
 }
+
 
 export const api = new ApiClient();

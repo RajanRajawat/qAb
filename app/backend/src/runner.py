@@ -1,49 +1,25 @@
-
-
-#~ Agent Runner                                         
-#: Todo:                                                
-#:  Embedding Model Inference                           
-#! Bugs:                                                
-#- Notes:                                               
-
-
-from dotenv import load_dotenv
-import os
 from uuid import uuid4
-from pydantic import BaseModel
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_groq import ChatGroq
 from langchain.agents import create_agent
-from langchain_core.messages import ToolMessage
-
-from langgraph.checkpoint.memory import MemorySaver
 from fastapi import APIRouter, Depends, HTTPException
 from bson import ObjectId
 from bson.errors import InvalidId
-from utils.env_loaders import load_groq_api, load_gemini_api, load_hf_api
+from utils.env_loaders import load_groq_api, load_gemini_api
 from utils.loggers import logger
 from utils.users import get_current_user
 from utils.response import success_response, error_response
-from database.db import agents_collection, users_collection, vector_collection, kb_collection, db_collection
+from database.db import agents_collection, kb_collection, db_collection, chat_history_collection
 from src.tools import get_tools_for_agent
 from database.models import AgentRunRequest
 from pydantic import SecretStr
-
-from langchain_mongodb import MongoDBAtlasVectorSearch
-from langchain_postgres import PGVector
-from langchain_huggingface import HuggingFaceEndpointEmbeddings
-# from langchain_community.embeddings import HuggingFaceInferenceAPIEmbeddings
-from pymongo import MongoClient
-from src.knowledge_base import get_mongo_collection_from_entry
+from src.knowledge_base import search_kb_chunks
+import datetime
 
 
 runner_router = APIRouter(prefix="/chat", tags=["Agent Runner"])
 
 
-#- Agent Runner 
-
-
-#llm selectr
 def get_llm(provider: str, model: str, temp):
     provider = provider.lower()
 
@@ -55,7 +31,7 @@ def get_llm(provider: str, model: str, temp):
             api_key=SecretStr(load_groq_api())
         )
 
-    elif provider == "gemini":
+    if provider == "gemini":
         logger.info(f"Initializing Gemini LLM with model: {model}")
         return ChatGoogleGenerativeAI(
             model=model,
@@ -63,12 +39,11 @@ def get_llm(provider: str, model: str, temp):
             google_api_key=load_gemini_api()
         )
 
-    else:
-        logger.error(f"Unsupported LLM provider: {provider}")
-        raise ValueError(f"Unsupported provider: {provider}")
+    logger.error(f"Unsupported LLM provider: {provider}")
+    raise ValueError(f"Unsupported provider: {provider}")
 
 
-def extract_agent_response_content(result): #extrating only msgs
+def extract_agent_response_content(result):
     messages = result.get("messages", [])
 
     for message in reversed(messages):
@@ -110,6 +85,72 @@ def serialize_agent_messages(result):
     return serialized_messages
 
 
+def serialize_chat_history_item(item: dict):
+    return {
+        "id": str(item["_id"]),
+        "agent_id": item.get("agent_id"),
+        "thread_id": item.get("thread_id"),
+        "role": item.get("role"),
+        "content": item.get("content"),
+        "created_at": str(item.get("created_at")),
+    }
+
+
+def build_history_messages(history_items: list[dict]):
+    messages = []
+
+    for item in history_items:
+        if item.get("role") not in {"user", "assistant"}:
+            continue
+
+        messages.append({
+            "role": item["role"],
+            "content": item.get("content", "")
+        })
+
+    return messages
+
+
+async def get_agent_history(owner_id: str, agent_id: str, thread_id: str | None = None, limit: int = 15):
+    query = {
+        "owner_id": owner_id,
+        "agent_id": agent_id,
+    }
+
+    if thread_id:
+        query["thread_id"] = thread_id
+
+    history = await chat_history_collection.find(query).sort("created_at", -1).limit(limit).to_list(length=limit)
+    history.reverse()
+    return history
+
+
+async def get_latest_thread_id(owner_id: str, agent_id: str):
+    latest_item = await chat_history_collection.find_one(
+        {
+            "owner_id": owner_id,
+            "agent_id": agent_id,
+        },
+        sort=[("created_at", -1)]
+    )
+
+    if not latest_item:
+        return None
+
+    return latest_item.get("thread_id")
+
+
+async def store_chat_message(owner_id: str, agent_id: str, thread_id: str, role: str, content: str):
+    await chat_history_collection.insert_one({
+        "owner_id": owner_id,
+        "agent_id": agent_id,
+        "thread_id": thread_id,
+        "role": role,
+        "content": content,
+        "created_at": datetime.datetime.now(datetime.timezone.utc),
+    })
+
+
 def agent_builder(agent_config: dict):
     logger.info(f"Agent builder started for agent: {agent_config['name']}")
 
@@ -134,13 +175,10 @@ def agent_builder(agent_config: dict):
 
 """
 
-    memory = MemorySaver()
-
     agent = create_agent(
         llm,
         tools=tools,
         system_prompt=system_promt_instructions,
-        checkpointer=memory,
     )
 
     logger.info(f"Agent built successfully for agent: {agent_config['name']}")
@@ -150,75 +188,50 @@ def agent_builder(agent_config: dict):
 def fetch_rag_context(query: str, owner_id: str, kb_entry: dict, db_entry: dict | None = None):
     kb_id = str(kb_entry["_id"])
     try:
-        embeddings = HuggingFaceEndpointEmbeddings(
-                model="sentence-transformers/all-MiniLM-L6-v2",
-                huggingfacehub_api_token=(load_hf_api()),
-            )
+        results = search_kb_chunks(query, owner_id, kb_entry, db_entry, 3)
 
-        if db_entry and db_entry.get("provider") == "postgres":
-            logger.info(f"RAG: Using custom Postgres for kb {kb_id}")
-            vector_store = PGVector(
-                embeddings=embeddings,
-                collection_name="embeddings",
-                connection=db_entry["config"]["connection_string"],
-                use_jsonb=True,
-            )
-            docs = vector_store.similarity_search(
-                query,
-                k=3,
-                filter={
-                    "owner_id": owner_id,
-                    "knowledge_base_id": kb_id,
-                }
-            )
-            if docs:
-                return "\n\n".join([doc.page_content for doc in docs])
-            return ""
-
-        target_collection = None
-        if db_entry and db_entry.get("provider") == "mongo":
-            target_collection = get_mongo_collection_from_entry(db_entry)
-            logger.info(f"RAG: Using custom MongoDB for kb {kb_id}")
-
-        if target_collection is None:
-            target_collection = vector_collection
-            logger.info(f"RAG: Using default vector collection for kb {kb_id}")
-
-        # Check if index exists or at least if we have documents
-        doc_count = target_collection.count_documents({
-            'owner_id': owner_id,
-            'knowledge_base_id': kb_id,
-        })
-        if doc_count == 0:
-            logger.info(f"RAG: No documents found for kb {kb_id}, skipping KB injection")
-            return ""
-
-        vector_store = MongoDBAtlasVectorSearch(
-            collection=target_collection,
-            embedding=embeddings,
-            index_name="vector_index_qab"
-        )
-
-        # Use similarity search directly to handle possible index errors more gracefully
-        docs = vector_store.similarity_search(
-            query,
-            k=3,
-            pre_filter={
-                "owner_id": {"$eq": owner_id},
-                "knowledge_base_id": {"$eq": kb_id},
-            }
-        )
-        
-        if docs:
-            return "\n\n".join([doc.page_content for doc in docs])
+        if results:
+            return "\n\n".join([item[0].page_content for item in results])
 
     except Exception as e:
         logger.error(f"RAG retrieval failed for kb {kb_id}: {str(e)}")
-        # If it's a JSON decode error, it's likely the embedding API
         if "Expecting value" in str(e):
-             logger.error("Hugging Face API returned non-JSON response. Check API status or token.")
-    
+            logger.error("Hugging Face API returned non-JSON response. Check API status or token.")
+
     return ""
+
+
+@runner_router.get("/load-old-chat/{agent_id}")
+async def load_old_chat(agent_id: str, current_user: dict = Depends(get_current_user)):
+    logger.info(f"Load old chat request received for agent id: {agent_id} from {current_user['email']}")
+
+    try:
+        obj_id = ObjectId(agent_id)
+    except InvalidId:
+        return error_response(status_code=400, message="Invalid agent ID format")
+
+    agent_data = await agents_collection.find_one(
+        {
+            "_id": obj_id,
+            "owner_id": ObjectId(current_user["_id"])
+        }
+    )
+
+    if not agent_data:
+        return error_response(status_code=404, message="Agent not found")
+
+    thread_id = await get_latest_thread_id(str(current_user["_id"]), agent_id)
+    history = await get_agent_history(str(current_user["_id"]), agent_id, thread_id, 15) if thread_id else []
+
+    return success_response(
+        200,
+        data={
+            "agent_id": agent_id,
+            "thread_id": thread_id,
+            "messages": [serialize_chat_history_item(item) for item in history]
+        },
+        message="Old chat loaded successfully!"
+    )
 
 
 @runner_router.post("/run/{agent_id}")
@@ -246,10 +259,9 @@ async def run_agent(agent_id: str, request: AgentRunRequest, current_user: dict 
         agent = agent_builder(agent_data)
         thread_id = request.thread_id or str(uuid4())
 
-
         rag_message = request.query
-        
-        if agent_data.get('knowledge_base') is True:    #- RAG Inject context if kb > True
+
+        if agent_data.get('knowledge_base') is True:
             try:
                 kb_id = agent_data.get("knowledge_base_id")
                 if not kb_id:
@@ -286,16 +298,20 @@ async def run_agent(agent_id: str, request: AgentRunRequest, current_user: dict 
 
             except Exception as e:
                 logger.error(f"Knowledge base retrieval failed for agent id: {agent_id} | Error: {str(e)}")
-                #fallback
+
+        history = await get_agent_history(str(current_user["_id"]), agent_id, thread_id, 15)
+        history_messages = build_history_messages(history)
 
         logger.info(f"Running agent id: {agent_id} with thread id: {thread_id}")
         result = await agent.ainvoke(
-            {"messages": [{"role": "user", "content": rag_message}]},
-            config={"configurable": {"thread_id": thread_id}}
+            {"messages": [*history_messages, {"role": "user", "content": rag_message}]}
         )
 
         response = extract_agent_response_content(result)
         serialized_messages = serialize_agent_messages(result)
+
+        await store_chat_message(str(current_user["_id"]), agent_id, thread_id, "user", request.query)
+        await store_chat_message(str(current_user["_id"]), agent_id, thread_id, "assistant", response)
 
         logger.info(f"Agent run completed successfully for agent id: {agent_id}")
         return success_response(

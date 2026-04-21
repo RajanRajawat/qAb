@@ -4,10 +4,11 @@ from database.models import AgentCreation, AgentUpdate
 from utils.response import success_response, error_response
 from utils.users import get_current_user
 from utils.loggers import logger
-from database.db import users_collection, agents_collection, kb_collection
+from database.db import users_collection, agents_collection, kb_collection, chat_history_collection
 from bson import ObjectId
 from bson.errors import InvalidId
 import datetime
+from pymongo import ReturnDocument
 
 
 agent_router = APIRouter(prefix="/agent", tags=["Agent"])
@@ -155,7 +156,7 @@ async def update_agent(agent_id: str, agent: AgentUpdate, current_user: dict = D
             "owner_id": ObjectId(current_user["_id"])
         },
         {"$set": update_data},
-        return_document=True
+        return_document=ReturnDocument.AFTER
     )
 
     if not updated:
@@ -187,6 +188,11 @@ async def delete_agent(agent_id: str, current_user: dict = Depends(get_current_u
         {"_id": ObjectId(current_user["_id"])},
         {"$pull": {"agents": obj_id}}
     )
+
+    await chat_history_collection.delete_many({
+        "agent_id": agent_id,
+        "owner_id": str(current_user["_id"])
+    })
 
     logger.info(f"Agent deleted | id: {agent_id} | owner: {current_user['email']}")
     return success_response(200, message="Agent deleted successfully!")
