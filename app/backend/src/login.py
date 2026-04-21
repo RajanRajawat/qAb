@@ -1,16 +1,15 @@
 
-from fastapi import APIRouter, BackgroundTasks, HTTPException, Depends
+from fastapi import APIRouter, HTTPException, Depends
 from database.models import UserLogin
 from utils.security import  verify_password, generate_token
 from utils.loggers import logger
-from utils.emails import send_email
 from utils.users import get_user_by_email, get_current_user
 from utils.response import success_response, error_response
 
 login_router = APIRouter(prefix="/auth" , tags=["Auth"])
 
 @login_router.post("/login")
-async def validate_login(user: UserLogin, bt: BackgroundTasks):
+async def validate_login(user: UserLogin):
     try:
         logger.info(f"Login request received from {user.email}")
         user_data = await get_user_by_email(user.email)
@@ -21,8 +20,6 @@ async def validate_login(user: UserLogin, bt: BackgroundTasks):
             access_token = generate_token(user_data, "access", 3)
             refresh_token = generate_token(user_data, "refresh", 24)
             logger.info(f"JWT tokens generated")
-            #: beautify email later.
-            bt.add_task(send_email, "QAB - Login Successful", user.email, "You have successfully logged in!")
             return success_response(
                 status_code=200,
                 message="You are now logged in.",

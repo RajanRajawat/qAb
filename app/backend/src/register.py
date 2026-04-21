@@ -1,11 +1,10 @@
 
 #- Imports
-from fastapi import APIRouter, BackgroundTasks
+from fastapi import APIRouter
 from database.db import users_collection
 from database.models import UserRegister
 from utils.security import hash_password
 from utils.users import get_user_by_email
-from utils.emails import send_email
 from utils.loggers import logger
 from utils.response import success_response, error_response
 import datetime
@@ -15,7 +14,7 @@ register_router = APIRouter(prefix="/auth", tags=["Auth"])
 
 #- Register Endpoint
 @register_router.post('/register')
-async def register_user(user:UserRegister, bt:BackgroundTasks):
+async def register_user(user:UserRegister):
 
     logger.info(f"New user registration request received from {user.email}")
 
@@ -32,9 +31,6 @@ async def register_user(user:UserRegister, bt:BackgroundTasks):
 
     created_user = await users_collection.insert_one(user_data)
 
-    #: beautify emails.
-    bt.add_task(send_email, "QAB - Registration Successful", user.email, "You have successfully registered!")
     logger.info(f"Registration successful for {user.email} with id: {str(created_user.inserted_id)}")
     return success_response(status_code=201, message=f'{user.name} is now registered.')
-
 

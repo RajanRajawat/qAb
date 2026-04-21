@@ -1,9 +1,8 @@
 
-from fastapi import APIRouter, BackgroundTasks, Depends
+from fastapi import APIRouter, Depends
 from database.db import users_collection, db_collection, data_query_collection
 from database.models import AddDB, UpdateDB
 from utils.users import get_current_user
-from utils.emails import send_email
 from utils.response import success_response, error_response
 from utils.loggers import logger
 import datetime
@@ -33,7 +32,7 @@ def build_db_name_match_query(owner_id: str, name: str):
 
 #new code:
 @db_router.post('/add')
-async def link_db(db: AddDB, bt: BackgroundTasks, current_user: dict = Depends(get_current_user)):
+async def link_db(db: AddDB, current_user: dict = Depends(get_current_user)):
     logger.info(f"DB link request received from {current_user['email']} for {db.db}")
     
     user_data = await users_collection.find_one({'_id': ObjectId(current_user['_id'])})
@@ -91,7 +90,6 @@ async def link_db(db: AddDB, bt: BackgroundTasks, current_user: dict = Depends(g
         }}
     )
 
-    bt.add_task(send_email, "QAB - DB Link Successful", current_user['email'], f"You have successfully linked your {db.db}!")
     logger.info(f"{db.db} linked successfully for {current_user['email']}")
 
     return success_response(status_code=201, message=f"{db.db.capitalize()} has been linked successfully.")
@@ -99,7 +97,7 @@ async def link_db(db: AddDB, bt: BackgroundTasks, current_user: dict = Depends(g
 
 
 @db_router.delete('/delete/{db_id}')
-async def unlink_db(db_id: str, bt: BackgroundTasks, current_user: dict = Depends(get_current_user)):
+async def unlink_db(db_id: str, current_user: dict = Depends(get_current_user)):
     logger.info(f"DB unlink request received from {current_user['email']} for db_id: {db_id}")
 
     user_data = await users_collection.find_one({'_id': ObjectId(current_user['_id'])})
@@ -132,7 +130,6 @@ async def unlink_db(db_id: str, bt: BackgroundTasks, current_user: dict = Depend
         {'$pull': {'custom_db': db_object_id}}
     )
 
-    bt.add_task(send_email, "QAB - DB Unlink Successful", current_user['email'], f"You have successfully unlinked your {db_entry['provider']}!")
     logger.info(f"DB {db_id} unlinked successfully for {current_user['email']}")
 
     return success_response(
@@ -228,7 +225,6 @@ async def get_my_dbs(current_user: dict = Depends(get_current_user)):
         })
 
     return success_response(200, message="Linked DBs fetched successfully.", data=dbs)
-
 
 
 

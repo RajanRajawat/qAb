@@ -41,8 +41,8 @@ function getApp() {
     return document.getElementById("app");
 }
 
-function brandBadge(className = "") {
-    return `<div class="qab-brand-badge ${className}">qAb</div>`;
+function brandWordmark(className = "") {
+    return `<div class="${className}">qAb</div>`;
 }
 
 function escapeHtml(value = "") {
@@ -110,7 +110,10 @@ function icon(name, className = "ui-icon") {
         settings: `<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.2a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.2a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3h.1A1.7 1.7 0 0 0 10 3.2V3a2 2 0 1 1 4 0v.2a1.7 1.7 0 0 0 1 1.5h.1a1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8v.1a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.2a1.7 1.7 0 0 0-1.5 1Z"/>`,
         file: `<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15h6"/><path d="M9 11h3"/>`,
         retry: `<path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/>`,
-        more: `<circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/><circle cx="5" cy="12" r="1.5"/>`
+        more: `<circle cx="12" cy="12" r="1.5"/><circle cx="19" cy="12" r="1.5"/><circle cx="5" cy="12" r="1.5"/>`,
+        github: `<path d="M9 19c-5 1.5-5-2.5-7-3m14 6v-3.9a3.4 3.4 0 0 0-.9-2.6c3-.3 6.1-1.5 6.1-6.8A5.3 5.3 0 0 0 20 4.8 4.9 4.9 0 0 0 19.9 1S18.7.7 16 2.5a13.4 13.4 0 0 0-7 0C6.3.7 5.1 1 5.1 1A4.9 4.9 0 0 0 5 4.8a5.3 5.3 0 0 0-1.2 3.9c0 5.3 3.1 6.5 6.1 6.8A3.4 3.4 0 0 0 9 18.1V22"/>`,
+        linkedin: `<path d="M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-4 0v7h-4v-7a6 6 0 0 1 6-6Z"/><rect x="2" y="9" width="4" height="12"/><circle cx="4" cy="4" r="2"/>`,
+        portfolio: `<circle cx="12" cy="12" r="10"/><path d="M2 12h20"/><path d="M12 2a15.3 15.3 0 0 1 4 10 15.3 15.3 0 0 1-4 10 15.3 15.3 0 0 1-4-10 15.3 15.3 0 0 1 4-10"/>`
     };
 
     return `
@@ -165,12 +168,31 @@ function setButtonLoading(button, isLoading, loadingLabel = "Loading...") {
     }
 }
 
+function getAuthSocialLinksMarkup() {
+    const links = [
+        { href: "https://www.linkedin.com/in/rajanrajawat/", label: "LinkedIn", iconName: "linkedin" },
+        { href: "https://github.com/RajanRajawat/", label: "GitHub", iconName: "github" },
+        { href: "https://www.rajanrajawat.in/", label: "Portfolio", iconName: "portfolio" }
+    ];
+
+    return `
+        <div class="auth-social-links">
+            ${links.map((item) => `
+                <a class="auth-social-link" href="${item.href}" target="_blank" rel="noopener noreferrer">
+                    ${icon(item.iconName, "ui-icon")}
+                    <span>${item.label}</span>
+                </a>
+            `).join("")}
+        </div>
+    `;
+}
+
 function getLayout(content, active = "") {
     return `
         <div class="shell">
             <aside class="sidebar">
                 <div class="brand">
-                    <div class="brand-mark brand-mark-solo">${brandBadge("qab-brand-badge-sidebar")}</div>
+                    <div class="brand-mark brand-mark-solo">${brandWordmark("sidebar-brand-wordmark")}</div>
                 </div>
                 <nav class="nav">
                     <a href="#dashboard" class="nav-link ${active === "dashboard" ? "active" : ""}">${icon("dashboard")}<span>Dashboard</span></a>
@@ -383,12 +405,10 @@ async function renderLogin() {
     getApp().innerHTML = `
         <section class="auth-shell">
             <div class="auth-hero">
-                <div class="auth-brand-lockup">
-                    <div class="auth-brand-badge">${brandBadge("qab-brand-badge-auth")}</div>
-                </div>
-                <div class="eyebrow">project by Rajan Rajawat</div>
-                <h1>Query-driven agent builder with KB-aware retrieval.</h1>
-                <p>Sign in to manage agents, databases, embeddings, and vector search tests from one UI.</p>
+                <h1>Quick Agent Builder - Build Agents at with ease.</h1>
+                <p>Sign in to create custom agents, connect databases, and unlock advanced capabilities.</p>
+                <div class="eyebrow">project by @RajanRajawat</div>
+                ${getAuthSocialLinksMarkup()}
             </div>
             <div class="auth-card auth-card-themed">
                 <div class="auth-topbar-link">
@@ -435,12 +455,10 @@ async function renderRegister() {
     getApp().innerHTML = `
         <section class="auth-shell">
             <div class="auth-hero">
-                <div class="auth-brand-lockup">
-                    <div class="auth-brand-badge">${brandBadge("qab-brand-badge-auth")}</div>
-                </div>
-                <div class="eyebrow">Create your workspace</div>
-                <h1>Register once, then manage the full QAB backend from the browser.</h1>
-                <p>The frontend talks directly to auth, agent, KB, DB, health, and chat endpoints.</p>
+                <h1>Register once, then manage the full qAb backend from the browser.</h1>
+                <p>Your one-stop solution for building and managing custom agents.</p>
+                <div class="eyebrow">project by @RajanRajawat</div>
+                ${getAuthSocialLinksMarkup()}
             </div>
             <div class="auth-card auth-card-themed">
                 <div class="auth-topbar-link">
@@ -500,7 +518,7 @@ async function renderDashboard() {
             <div>
                 <div class="eyebrow">Overview</div>
                 <h2>Dashboard</h2>
-                <p class="muted">Live status and quick entry points.</p>
+                <p class="muted">Overview and quick entry points.</p>
             </div>
         </section>
         <section class="stats-grid">
@@ -915,7 +933,7 @@ async function renderKnowledgeBases() {
         <section class="page-head">
             <div>
                 <div class="eyebrow">Knowledge Bases</div>
-                <h2>Embedding-aware document stores</h2>
+                <h2>RAG Knowledge Base</h2>
                 <p class="muted">Each KB persists its own embedding model and can be tested with live vector search.</p>
             </div>
             <div class="hero-actions">
@@ -1352,7 +1370,7 @@ async function renderDataQueries() {
                         <button class="button button-secondary open-data-query" data-id="${item.data_query_id}">${icon("folder")}<span>Open</span></button>
                     </div>
                 </article>
-            `).join("") || `<div class="empty-card">No Data Queries created yet.</div>`}
+            `).join("") || `<div class="empty-card">No data queries created yet.</div>`}
         </section>
     `, "data-queries");
 
@@ -1458,7 +1476,7 @@ async function renderDatabases() {
         <section class="page-head">
             <div>
                 <div class="eyebrow">Databases</div>
-                <h2>Custom vector stores</h2>
+                <h2>Custom DB / Vector Stores</h2>
                 <p class="muted">Link a database, rename it later, or unlink it with cleanup.</p>
             </div>
             <button class="button button-primary" id="link-db-button">${icon("link")}<span>Link database</span></button>
