@@ -1,6 +1,6 @@
 # QAB
 
-QAB is a full-stack Query-driven Agent Builder. It lets you:
+QAB is a full-stack Quick Agent Builder. It lets you:
 
 - register and log in from a browser UI
 - create agents backed by Groq or Gemini
