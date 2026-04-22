@@ -28,7 +28,7 @@ from utils.loggers import logger
 from utils.response import error_response, success_response
 from utils.users import get_current_user
 
-
+#! when a custom db is deleted, all the data from that db is deleted, it should be deleted of that specific kb name data removal only.
 kb_router = APIRouter(prefix="/knowledge-base", tags=["Knowledge Base"])
 
 

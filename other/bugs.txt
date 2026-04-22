@@ -127,7 +127,7 @@ Recommendation:
 - Add response-size guards before serializing results back to the model.
 
 ### 6. Medium-High: the same physical custom database can be linked multiple times, but deleting one link can wipe data used by the others
-Severity: Medium-High
+Severity: Medium-High 
 
 Evidence:
 - `app/backend/src/custom_db.py:43-45`
@@ -136,7 +136,7 @@ Evidence:
 
 Why this is a bug:
 - Duplicate prevention only checks the display name, not the normalized connection target.
-- A user can link the same Mongo/Postgres database multiple times under different names.
+- A user can link the same Mongo/Postgres database multiple times under different names. 
 - Unlink cleanup works against the underlying vector store, not against a unique logical link identifier.
 
 Impact:
