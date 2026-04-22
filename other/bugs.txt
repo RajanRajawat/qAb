@@ -1,0 +1,221 @@
+# QAB Senior Review Bug Report
+
+Review date: 2026-04-21
+
+Scope reviewed:
+- `app/backend/main.py`
+- `app/backend/database/*`
+- `app/backend/src/*`
+- `app/backend/utils/*`
+- `app/frontend/*`
+- project dependencies and basic repo structure
+
+Review notes:
+- This was a static code review only.
+- No automated test suite was found in the repo.
+- I did not change application code; this file is the only edit.
+
+## Findings
+
+### 1. Critical: missing `SECRET_VALUE` silently downgrades JWT signing to the literal string `"None"`
+Severity: Critical
+
+Evidence:
+- `app/backend/utils/env_loaders.py:19-25`
+- `app/backend/utils/users.py:22-23`
+- `app/backend/utils/security.py:17-28`
+
+Why this is a bug:
+- `load_jwt_secret_key()` returns `None` when the env var is missing.
+- Both auth modules immediately do `SECRET_KEY = str(load_jwt_secret_key())`.
+- That converts `None` into the predictable secret `"None"` instead of failing startup.
+
+Impact:
+- Tokens can still be generated and verified with a known shared secret.
+- A misconfigured deployment does not fail closed.
+- Anyone aware of this behavior can forge valid JWTs in environments missing `SECRET_VALUE`.
+
+Recommendation:
+- Fail application startup if `SECRET_VALUE` is missing.
+- Never coerce missing secrets with `str(...)`.
+
+### 2. High: missing `MONGO_URI` can connect the app to the default local Mongo instance instead of stopping
+Severity: High
+
+Evidence:
+- `app/backend/database/db.py:15-24`
+- `app/backend/database/db.py:36-38`
+
+Why this is a bug:
+- `load_mongo_uri()` returns `None` when `MONGO_URI` is absent.
+- The module still constructs `AsyncIOMotorClient(uri)` and `MongoClient(os.getenv("MONGO_URI"))`.
+- With PyMongo/Motor, a missing URI can fall back to the default localhost connection rather than failing immediately.
+
+Impact:
+- The app may appear to work while reading/writing to an unintended local database.
+- Production misconfiguration becomes hard to detect.
+- Data can land in the wrong environment and create confusing “works on my machine” behavior.
+
+Recommendation:
+- Raise on startup when `MONGO_URI` is missing or invalid.
+- Validate connectivity once during boot and stop the app if it fails.
+
+### 3. High: knowledge-base file uploads are marked successful before embedding succeeds, and failures are swallowed
+Severity: High
+
+Evidence:
+- `app/backend/src/knowledge_base.py:175-199`
+- `app/backend/utils/knowledge_base_helpers.py:278-358`
+
+Why this is a bug:
+- The API writes the file name into the KB document before the background embedding task finishes.
+- `process_file_and_embed(...)` catches every exception, logs it, and does not update KB state or notify the caller.
+- The endpoint still returns `202 File added successfully. Processing started.`
+
+Impact:
+- A file can show up in the KB even when no embeddings were stored.
+- Re-upload is blocked by the duplicate filename check in `app/backend/src/knowledge_base.py:168-169`.
+- Search quality becomes inconsistent because the UI says the file exists while retrieval has no data behind it.
+
+Recommendation:
+- Track ingestion status per file: `pending`, `ready`, `failed`.
+- Only treat a file as usable after embeddings are written successfully.
+- Surface background-task failures to the UI and allow retry.
+
+### 4. High: PostgreSQL embedding cleanup can fail silently while delete/unlink endpoints still report success
+Severity: High
+
+Evidence:
+- `app/backend/utils/knowledge_base_helpers.py:179-207`
+- `app/backend/utils/knowledge_base_helpers.py:225-253`
+- `app/backend/src/knowledge_base.py:221-236`
+- `app/backend/src/custom_db.py:119-143`
+
+Why this is a bug:
+- `delete_embeddings_from_postgres()` returns `0` on exception.
+- `delete_all_embeddings_for_custom_db()` also returns `0` on exception.
+- Callers only treat `None` as failure, so `0` is interpreted as a valid successful deletion.
+
+Impact:
+- KB delete, file delete, and DB unlink can claim success while leaving embeddings behind.
+- This creates orphaned vector data and false operator confidence.
+- The problem is especially dangerous for cleanup flows, because failures become invisible to the user.
+
+Recommendation:
+- Return an explicit failure signal on exceptions and propagate it to the API response.
+- Distinguish `0 rows deleted` from `cleanup failed`.
+
+### 5. High: Mongo Data Query aggregate operations are unbounded and can dump very large result sets
+Severity: High
+
+Evidence:
+- `app/backend/utils/data_query_helpers.py:352-373`
+
+Why this is a bug:
+- `find` operations are capped with `limit=min(..., 50)`.
+- `aggregate` operations have no equivalent cap.
+- The only blocked stages are `$out` and `$merge`.
+
+Impact:
+- An agent can request a huge aggregation result and exhaust memory, token budget, or API response size.
+- Large collections can be dumped far beyond the intended “read-only helper” use case.
+- This becomes a reliability and data-exposure problem, not just a performance issue.
+
+Recommendation:
+- Enforce a hard row limit for aggregate results.
+- Validate or inject a terminal `$limit`.
+- Add response-size guards before serializing results back to the model.
+
+### 6. Medium-High: the same physical custom database can be linked multiple times, but deleting one link can wipe data used by the others
+Severity: Medium-High
+
+Evidence:
+- `app/backend/src/custom_db.py:43-45`
+- `app/backend/src/custom_db.py:119-143`
+- `app/backend/utils/knowledge_base_helpers.py:225-255`
+
+Why this is a bug:
+- Duplicate prevention only checks the display name, not the normalized connection target.
+- A user can link the same Mongo/Postgres database multiple times under different names.
+- Unlink cleanup works against the underlying vector store, not against a unique logical link identifier.
+
+Impact:
+- Removing one alias can delete embeddings still expected by KBs attached to another alias pointing at the same database.
+- This creates cross-link data loss that the UI does not warn about.
+
+Recommendation:
+- Detect duplicate links by normalized connection target, not only by name.
+- Scope cleanup to KB ownership metadata and the specific linked DB record wherever possible.
+
+### 7. Medium: Data Query validation performs a full live inspection of the linked database on every create/update
+Severity: Medium
+
+Evidence:
+- `app/backend/src/data_query.py:63-66`
+- `app/backend/src/data_query.py:133-136`
+- `app/backend/utils/data_query_helpers.py:151-226`
+- `app/backend/utils/data_query_helpers.py:238-250`
+
+Why this is a bug:
+- `validate_selected_sources()` calls `inspect_database_sources()`.
+- Inspection enumerates every table/collection and fetches preview rows from each source.
+- This happens during both create and update, even if the user selected only a small subset.
+
+Impact:
+- Saving a Data Query can become unexpectedly slow or fail on large databases.
+- Validation work scales with total database size rather than selected scope.
+- The code also reads sample data from unrelated sources during validation, which is broader access than necessary.
+
+Recommendation:
+- Cache inspection results briefly or validate only the selected source names/columns.
+- Separate “browse schema” behavior from “save configuration” behavior.
+
+### 8. Medium: chat sessions are sticky by local storage and there is no clean server-side “new conversation” reset path
+Severity: Medium
+
+Evidence:
+- `app/frontend/app.js:1627-1671`
+- `app/backend/src/runner.py:48-49`
+- `app/backend/src/runner.py:106`
+
+Why this is a bug:
+- The frontend automatically reuses `thread_<agentId>` from `localStorage`.
+- The backend also loads the latest thread for the agent.
+- There is no explicit UI action or backend route to start a fresh thread while keeping history intact.
+
+Impact:
+- Users can think they are starting a new chat, but old context continues to affect responses.
+- This is especially confusing when debugging prompts, KB retrieval, or Data Query behavior.
+
+Recommendation:
+- Add an explicit “New chat” action that clears the active thread id.
+- Make the current thread state visible in the UI.
+
+## suggestions.txt
+
+### Priority 0: fail closed on configuration
+- Make app startup abort if `SECRET_VALUE` or `MONGO_URI` is missing.
+- Centralize env validation in one boot-time settings module.
+- Add a startup health log that confirms which critical providers are configured.
+
+### Priority 1: fix correctness gaps in stateful features
+- Add ingestion state tracking for KB files and surface failures in the UI.
+- Make vector cleanup APIs return real success/failure status.
+- Add a dedicated “new chat thread” flow instead of silently reusing old ids.
+
+### Priority 2: tighten data-access controls
+- Put hard limits on Mongo aggregate output.
+- Reduce Data Query validation to selected sources only.
+- Prevent duplicate custom DB links that target the same backend database.
+
+### Priority 3: security hardening
+- Replace permissive CORS in `app/backend/main.py:21-28` with explicit origins.
+- Avoid storing long-lived auth state in browser storage if you later add richer HTML rendering or third-party scripts.
+- Consider encrypting custom DB connection strings at rest; `app/backend/src/custom_db.py:65-67` currently stores them directly.
+
+### Suggested next implementation order
+1. Fix JWT/Mongo boot validation.
+2. Fix KB ingestion state and cleanup error handling.
+3. Add Data Query aggregate limits.
+4. Prevent duplicate DB links by normalized target.
+5. Add tests around auth bootstrapping, KB ingestion failure, cleanup failure, and Data Query limits.

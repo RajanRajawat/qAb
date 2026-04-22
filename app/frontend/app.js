@@ -405,7 +405,7 @@ async function renderLogin() {
     getApp().innerHTML = `
         <section class="auth-shell">
             <div class="auth-hero">
-                <h1>Quick Agent Builder - Build Agents at with ease.</h1>
+                <h1>Quick Agent Builder - Build Agents with ease.</h1>
                 <p>Sign in to create custom agents, connect databases, and unlock advanced capabilities.</p>
                 <div class="eyebrow">project by @RajanRajawat</div>
                 ${getAuthSocialLinksMarkup()}
@@ -455,7 +455,7 @@ async function renderRegister() {
     getApp().innerHTML = `
         <section class="auth-shell">
             <div class="auth-hero">
-                <h1>Register once, then manage the full qAb backend from the browser.</h1>
+                <h1>Register today to build your own custom agents.</h1>
                 <p>Your one-stop solution for building and managing custom agents.</p>
                 <div class="eyebrow">project by @RajanRajawat</div>
                 ${getAuthSocialLinksMarkup()}

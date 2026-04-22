@@ -1,9 +1,7 @@
 import datetime
-
 from bson import ObjectId
 from fastapi import APIRouter, Depends
 from pymongo import ReturnDocument
-
 from database.db import data_query_collection, users_collection
 from database.models import CreateDataQuery, UpdateDataQuery
 from utils.data_query_helpers import (

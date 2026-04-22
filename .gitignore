@@ -6,3 +6,5 @@ node_modules/
 .env
 .venv
 app/backend/qab_logs.txt
+/other
+other/

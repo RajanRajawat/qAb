@@ -1,15 +1,10 @@
-import datetime
-import ast
-import json
+import datetime, ast, json, psycopg2
 from collections.abc import Mapping
-
-import psycopg2
 from bson import ObjectId
 from psycopg2 import sql
 from psycopg2.extras import RealDictCursor
 from pymongo import MongoClient
 from pymongo.uri_parser import parse_uri
-
 from database.db import agents_collection, data_query_collection, db_collection, users_collection
 from utils.general import ensure_object_id, object_id_match
 
@@ -384,3 +379,4 @@ def execute_data_query_source(data_query: dict, db_entry: dict, source_name: str
     if provider == "mongo":
         return execute_mongo_data_query(db_entry, source_name, query)
     raise ValueError("Unsupported database provider.")
+

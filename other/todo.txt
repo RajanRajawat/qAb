@@ -1,7 +1,7 @@
 /Tools
 Need to add more Tools
 
-To Do:
+To Do: ()
 Frontend:
 Create new Tools Section just like Knowledge bases and Databases.
 Here the user can configure tools, like currently available Talivly, Add 2-3 more tools also, like attached image (Notion, Gmail, Calendar)
@@ -76,7 +76,7 @@ postgresql+psycopg2://postgres.bnzahq................supabase.com:5432/postgres
 
 
 
-
+fix pending bugs / remove old useless code / helpers
 
 
 
