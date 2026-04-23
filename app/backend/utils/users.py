@@ -20,7 +20,7 @@ from utils.env_loaders import load_jwt_secret_key
 
 
 security = HTTPBearer()
-SECRET_KEY = str(load_jwt_secret_key())
+SECRET_KEY = str(load_jwt_secret_key)
 
 
 

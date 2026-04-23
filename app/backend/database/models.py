@@ -89,6 +89,7 @@ class LLMModel(str, Enum):
 
 class AgentTool(str, Enum):
     WEB_SEARCH = "web_search"
+    GMAIL      = "gmail"
     WEATHER    = "weather"
     DATETIME   = "datetime"
     WIKIPEDIA  = "wikipedia"
@@ -305,7 +306,6 @@ class UpdateDataQuery(BaseModel):
     @classmethod
     def strip_strings(cls, v):
         return strip_string(v)
-
 
 
 

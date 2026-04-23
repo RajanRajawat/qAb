@@ -1,13 +1,11 @@
 import datetime
 import json
 from uuid import uuid4
-
 from langchain.agents import create_agent
 from langchain_core.tools import StructuredTool
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_groq import ChatGroq
 from pydantic import SecretStr
-
 from database.db import chat_history_collection
 from src.tools import get_tools_for_agent
 from utils.data_query_helpers import build_data_query_schema_text, execute_data_query_source
@@ -15,7 +13,6 @@ from utils.env_loaders import load_gemini_api, load_groq_api
 from utils.general import ensure_object_id, object_id_match
 from utils.knowledge_base_helpers import search_kb_chunks
 from utils.loggers import logger
-
 
 def get_llm(provider: str, model: str, temp):
     provider = provider.lower()
@@ -25,7 +22,7 @@ def get_llm(provider: str, model: str, temp):
         return ChatGroq(
             model=model,
             temperature=temp,
-            api_key=SecretStr(load_groq_api()),
+            api_key=SecretStr(load_groq_api),
         )
 
     if provider == "gemini":
@@ -33,12 +30,11 @@ def get_llm(provider: str, model: str, temp):
         return ChatGoogleGenerativeAI(
             model=model,
             temperature=temp,
-            google_api_key=load_gemini_api(),
+            google_api_key=load_gemini_api,
         )
 
     logger.error(f"Unsupported LLM provider: {provider}")
     raise ValueError(f"Unsupported provider: {provider}")
-
 
 def extract_agent_response_content(result):
     messages = result.get("messages", [])
@@ -66,7 +62,6 @@ def extract_agent_response_content(result):
 
     return ""
 
-
 def serialize_agent_messages(result):
     serialized_messages = []
     messages = result.get("messages", [])
@@ -78,7 +73,6 @@ def serialize_agent_messages(result):
         })
 
     return serialized_messages
-
 
 def serialize_chat_history_item(item: dict):
     return {
@@ -151,7 +145,7 @@ def build_data_query_tool(data_query_entry: dict, db_entry: dict):
 
     def query_data_query(source_name: str, query: str) -> str:
         try:
-            rows = execute_data_query_source(data_query_entry, db_entry, source_name, query)
+            rows = execute_data_query_source(data_query_entry, db_entry, source_name, query) #y
             return json.dumps(rows, ensure_ascii=False, default=str)
         except ValueError as exc:
             return f"Data Query tool error: {exc}"
@@ -174,11 +168,16 @@ def build_data_query_tool(data_query_entry: dict, db_entry: dict):
     )
 
 
-def agent_builder(agent_config: dict, data_query_entry: dict | None = None, data_query_db_entry: dict | None = None):
+def agent_builder(
+    agent_config: dict,
+    tool_configs: dict | None = None,
+    data_query_entry: dict | None = None,
+    data_query_db_entry: dict | None = None,
+):
     logger.info(f"Agent builder started for agent: {agent_config['name']}")
 
     llm = get_llm(agent_config["llm_provider"], agent_config["llm_model"], agent_config["temperature"])
-    tools = get_tools_for_agent(agent_config.get("tools", []))
+    tools = get_tools_for_agent(agent_config.get("tools", []), tool_configs or {})
     data_query_schema = ""
     if data_query_entry and data_query_db_entry:
         tools.append(build_data_query_tool(data_query_entry, data_query_db_entry))

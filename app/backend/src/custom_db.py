@@ -14,6 +14,7 @@ from pymongo.uri_parser import parse_uri
 from utils.general import object_id_match
 from utils.data_query_helpers import cleanup_data_queries_for_custom_db
 from utils.knowledge_base_helpers import cleanup_kbs_for_custom_db, delete_all_embeddings_for_custom_db
+import hashlib
 import re
 
 
@@ -30,6 +31,43 @@ def build_db_name_match_query(owner_id: str, name: str):
     }
 
 
+def normalize_connection_uri(provider: str, connection_uri: str) -> str:
+    normalized = connection_uri.strip()
+
+    if provider == ListDB.Postgres:
+        if "://" in normalized:
+            scheme, rest = normalized.split("://", 1)
+            if "+" in scheme:
+                normalized = f"{scheme.split('+')[0]}://{rest}"
+
+    return normalized
+
+
+def build_connection_fingerprint(provider: str, connection_uri: str) -> str:
+    normalized_uri = normalize_connection_uri(provider, connection_uri)
+    raw = f"{provider}:{normalized_uri}"
+    return hashlib.sha256(raw.encode("utf-8")).hexdigest()
+
+
+async def find_existing_connection(owner_id: str, provider: str, connection_uri: str):
+    fingerprint = build_connection_fingerprint(provider, connection_uri)
+
+    existing = await db_collection.find_one({
+        "owner_id": ObjectId(owner_id),
+        "provider": provider,
+        "connection_fingerprint": fingerprint,
+    })
+    if existing:
+        return existing
+
+    normalized_uri = normalize_connection_uri(provider, connection_uri)
+    return await db_collection.find_one({
+        "owner_id": ObjectId(owner_id),
+        "provider": provider,
+        "config.connection_string": normalized_uri,
+    })
+
+
 #new code:
 @db_router.post('/add')
 async def link_db(db: AddDB, current_user: dict = Depends(get_current_user)):
@@ -43,19 +81,23 @@ async def link_db(db: AddDB, current_user: dict = Depends(get_current_user)):
     existing_db = await db_collection.find_one(build_db_name_match_query(current_user["_id"], db.name))
     if existing_db:
         return error_response(409, message="A database with this name already exists.")
+
+    duplicate_connection = await find_existing_connection(current_user["_id"], db.db, db.connection_uri)
+    if duplicate_connection:
+        return error_response(409, message="This database connection is already linked.")
     
     # if user_data['custom_db']['linked']:
     #     return error_response(405, message="A DB is already linked. Please remove the current DB before adding a new one.")
 
-
+    normalized_connection_uri = normalize_connection_uri(db.db, db.connection_uri)
 
     #- Verifing Connection
 
     if db.db == "mongo":
-        if not validate_mongo(db.connection_uri):
+        if not validate_mongo(normalized_connection_uri):
             return error_response(400, message="Invalid MongoDB connection string.")
     elif db.db == 'postgres':
-        if not validate_postgres(db.connection_uri):
+        if not validate_postgres(normalized_connection_uri):
             return error_response(400, message="Invalid PostgreSQL connection string.")
 
 
@@ -63,15 +105,16 @@ async def link_db(db: AddDB, current_user: dict = Depends(get_current_user)):
         'name' : db.name,
         'provider' : db.db,
         'config' : {    
-                "connection_string" : db.connection_uri, #can be encrypted
+                "connection_string" : normalized_connection_uri, #can be encrypted
             },
-        'owner_id' : ObjectId(current_user['_id'])
+        'owner_id' : ObjectId(current_user['_id']),
+        'connection_fingerprint': build_connection_fingerprint(db.db, normalized_connection_uri),
         }
 
     if db.db == ListDB.MongoDB:
         query_db_name = None
         try:
-            query_db_name = parse_uri(db.connection_uri).get("database")
+            query_db_name = parse_uri(normalized_connection_uri).get("database")
         except Exception:
             query_db_name = None
 
@@ -218,16 +261,18 @@ async def get_my_dbs(current_user: dict = Depends(get_current_user)):
 
     dbs = []
     async for db_entry in db_collection.find({'_id': {'$in': db_ids}}):
+        connection_string = db_entry.get("config", {}).get("connection_string", "")
         dbs.append({
             'db_id': str(db_entry['_id']),
             'name': db_entry.get('name'),
             'provider': db_entry.get('provider'),
+            'connection_fingerprint': db_entry.get('connection_fingerprint') or build_connection_fingerprint(
+                db_entry.get('provider'),
+                connection_string,
+            ),
         })
 
     return success_response(200, message="Linked DBs fetched successfully.", data=dbs)
-
-
-
 
 
 

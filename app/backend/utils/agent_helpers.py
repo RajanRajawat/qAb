@@ -1,5 +1,4 @@
 import datetime
-
 from bson import ObjectId
 from database.db import data_query_collection, kb_collection
 from utils.general import ensure_object_id

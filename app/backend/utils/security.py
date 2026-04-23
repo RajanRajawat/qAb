@@ -14,7 +14,7 @@ def verify_password(plain_password: str, hashed_password: str) -> bool:
     logger.info(f"Password verification started")
     return bcrypt.checkpw(plain_password.encode('utf-8'), hashed_password.encode('utf-8'))
 
-SECRET_KEY = str(load_jwt_secret_key())
+SECRET_KEY = str(load_jwt_secret_key)
 def generate_token(user_data, token_type: str, time):
     logger.info(f"{token_type.capitalize()} token generation started for {user_data['email']}")
     payload = {

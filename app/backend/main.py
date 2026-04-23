@@ -12,6 +12,7 @@ from src.runner import runner_router
 from src.custom_db import db_router
 from src.knowledge_base import kb_router
 from src.data_query import data_query_router
+from src.tool_config import tool_config_router
 from utils.loggers import logger
 load_dotenv()
 
@@ -35,6 +36,7 @@ app.include_router(runner_router)
 app.include_router(db_router)
 app.include_router(kb_router)
 app.include_router(data_query_router)
+app.include_router(tool_config_router)
 
 app.mount("/static", StaticFiles(directory=str(FRONTEND_DIR)), name="static")
 
@@ -48,3 +50,5 @@ def root():
 def health():
     logger.info(f"Health check route accessed")
     return {"status": "ok"}
+
+

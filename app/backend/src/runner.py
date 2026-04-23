@@ -20,6 +20,7 @@ from utils.runner_helpers import (
     serialize_chat_history_item,
     store_chat_message,
 )
+from utils.tool_helpers import get_user_tool_configs, validate_agent_tools
 from utils.users import get_current_user
 
 
@@ -81,6 +82,10 @@ async def run_agent(agent_id: str, request: AgentRunRequest, current_user: dict 
             logger.warning(f"Agent not found for agent id: {agent_id} and user: {current_user['email']}")
             return error_response(status_code=404, message="Agent not found")
 
+        tool_err = await validate_agent_tools(agent_data.get("tools", []), current_user["_id"])
+        if tool_err:
+            return error_response(status_code=400, message=tool_err)
+
         data_query_entry = None
         data_query_db_entry = None
         if agent_data.get("data_query") is True:
@@ -102,7 +107,8 @@ async def run_agent(agent_id: str, request: AgentRunRequest, current_user: dict 
             if not data_query_db_entry:
                 return error_response(status_code=404, message="Database linked to this Data Query was not found.")
 
-        agent = agent_builder(agent_data, data_query_entry, data_query_db_entry)
+        tool_configs = await get_user_tool_configs(current_user["_id"])
+        agent = agent_builder(agent_data, tool_configs, data_query_entry, data_query_db_entry)
         thread_id = request.thread_id or str(uuid4())
 
         rag_message = request.query

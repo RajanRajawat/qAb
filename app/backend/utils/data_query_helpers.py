@@ -12,6 +12,8 @@ from utils.general import ensure_object_id, object_id_match
 POSTGRES_INTERNAL_TABLES = {"langchain_pg_collection", "langchain_pg_embedding"}
 
 
+
+#! need to replace this, will store normalized uri in DB.
 def normalize_postgres_uri(uri: str) -> str:
     if "://" in uri:
         scheme, rest = uri.split("://", 1)

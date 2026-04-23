@@ -1,19 +1,6 @@
-
-
-#~ Response                                             
-#: Todo:                                                
-#! Bugs:                                                
-#- Notes:                                               
-
-
-
-
-
-
 from fastapi import HTTPException
 from fastapi.responses import JSONResponse
 from utils.loggers import logger
-
 
 def success_response(status_code:int, data=None, message="Success"):
     logger.info(f"Success response generated with status code: {status_code} | Message: {message}")

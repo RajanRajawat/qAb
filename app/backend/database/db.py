@@ -38,6 +38,7 @@ db_collection = db['custom_db']
 kb_collection = db['kb']
 data_query_collection = db['data_queries']
 chat_history_collection = db['chat_history']
+tools_collection = db['tools']
 logger.info(f"MongoDB collections initialized: users, agents")
 
 # SYNC CLIENT

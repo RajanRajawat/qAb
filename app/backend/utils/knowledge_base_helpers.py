@@ -1,6 +1,5 @@
 import datetime
 import os
-
 from bson import ObjectId
 from langchain_community.document_loaders import TextLoader, PyPDFLoader
 from langchain_huggingface import HuggingFaceEndpointEmbeddings
@@ -8,12 +7,10 @@ from langchain_mongodb import MongoDBAtlasVectorSearch
 from langchain_postgres import PGVector
 from langchain_text_splitters import RecursiveCharacterTextSplitter
 from pymongo import MongoClient
-
 from database.db import agents_collection, db_collection, kb_collection, users_collection, vector_collection
 from utils.env_loaders import load_hf_api
 from utils.general import ensure_object_id, object_id_match
 from utils.loggers import logger
-
 
 DEFAULT_EMBEDDING_MODEL = "sentence-transformers/all-MiniLM-L6-v2"
 
@@ -51,19 +48,16 @@ def resolve_embedding_model_name(model_name: str | None):
         return model_name
     return DEFAULT_EMBEDDING_MODEL
 
-
 def get_embedding_client(model_name: str | None):
     resolved_model_name = resolve_embedding_model_name(model_name)
     return HuggingFaceEndpointEmbeddings(
         model=resolved_model_name,
-        huggingfacehub_api_token=load_hf_api(),
+        huggingfacehub_api_token=load_hf_api,
     )
-
 
 def get_embedding_model_label(model_name: str | None):
     resolved_model_name = resolve_embedding_model_name(model_name)
     return EMBEDDING_MODEL_OPTIONS[resolved_model_name]["label"]
-
 
 def serialize_kb(kb: dict):
     embedding_model = resolve_embedding_model_name(kb.get("embedding_model"))

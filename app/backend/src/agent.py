@@ -16,6 +16,7 @@ from utils.agent_helpers import (
 from utils.general import ensure_object_id
 from utils.loggers import logger
 from utils.response import error_response, success_response
+from utils.tool_helpers import validate_agent_tools
 from utils.users import get_current_user
 
 
@@ -37,6 +38,10 @@ async def create_agent(agent: AgentCreation, current_user: dict = Depends(get_cu
     data_query_err = await validate_data_query(agent.data_query, agent.data_query_id, current_user["_id"])
     if data_query_err:
         return error_response(400, message=data_query_err)
+
+    tool_err = await validate_agent_tools([tool.value for tool in agent.tools], current_user["_id"])
+    if tool_err:
+        return error_response(400, message=tool_err)
 
     agent_data = agent.model_dump()
     if agent_data.get("knowledge_base_id"):
@@ -149,6 +154,11 @@ async def update_agent(agent_id: str, agent: AgentUpdate, current_user: dict = D
         )
         if data_query_err:
             return error_response(400, message=data_query_err)
+
+    if "tools" in update_data:
+        tool_err = await validate_agent_tools([tool.value for tool in update_data["tools"]], current_user["_id"])
+        if tool_err:
+            return error_response(400, message=tool_err)
 
     update_data = normalize_agent_reference_updates(update_data)
 
