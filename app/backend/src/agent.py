@@ -5,7 +5,7 @@ from pymongo import ReturnDocument
 
 import datetime
 
-from database.db import agents_collection, chat_history_collection, users_collection
+from database.db import agents_collection, users_collection
 from database.models import AgentCreation, AgentUpdate
 from utils.agent_helpers import (
     normalize_agent_reference_updates,
@@ -199,11 +199,6 @@ async def delete_agent(agent_id: str, current_user: dict = Depends(get_current_u
         {"_id": ObjectId(current_user["_id"])},
         {"$pull": {"agents": obj_id}},
     )
-
-    await chat_history_collection.delete_many({
-        "agent_id": ensure_object_id(agent_id),
-        "owner_id": ObjectId(current_user["_id"]),
-    })
 
     logger.info(f"Agent deleted | id: {agent_id} | owner: {current_user['email']}")
     return success_response(200, message="Agent deleted successfully!")

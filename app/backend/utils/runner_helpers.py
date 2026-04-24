@@ -1,16 +1,12 @@
-import datetime
 import json
-from uuid import uuid4
 from langchain.agents import create_agent
 from langchain_core.tools import StructuredTool
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_groq import ChatGroq
 from pydantic import SecretStr
-from database.db import chat_history_collection
 from src.tools import get_tools_for_agent
 from utils.data_query_helpers import build_data_query_schema_text, execute_data_query_source
 from utils.env_loaders import load_gemini_api, load_groq_api
-from utils.general import ensure_object_id, object_id_match
 from utils.knowledge_base_helpers import search_kb_chunks
 from utils.loggers import logger
 
@@ -74,17 +70,6 @@ def serialize_agent_messages(result):
 
     return serialized_messages
 
-def serialize_chat_history_item(item: dict):
-    return {
-        "id": str(item["_id"]),
-        "agent_id": str(item.get("agent_id")) if item.get("agent_id") is not None else None,
-        "thread_id": item.get("thread_id"),
-        "role": item.get("role"),
-        "content": item.get("content"),
-        "created_at": str(item.get("created_at")),
-    }
-
-
 def build_history_messages(history_items: list[dict]):
     messages = []
 
@@ -98,46 +83,6 @@ def build_history_messages(history_items: list[dict]):
         })
 
     return messages
-
-
-async def get_agent_history(owner_id: str, agent_id: str, thread_id: str | None = None, limit: int = 15):
-    query = {
-        "owner_id": object_id_match(owner_id),
-        "agent_id": object_id_match(agent_id),
-    }
-
-    if thread_id:
-        query["thread_id"] = thread_id
-
-    history = await chat_history_collection.find(query).sort("created_at", -1).limit(limit).to_list(length=limit)
-    history.reverse()
-    return history
-
-
-async def get_latest_thread_id(owner_id: str, agent_id: str):
-    latest_item = await chat_history_collection.find_one(
-        {
-            "owner_id": object_id_match(owner_id),
-            "agent_id": object_id_match(agent_id),
-        },
-        sort=[("created_at", -1)],
-    )
-
-    if not latest_item:
-        return None
-
-    return latest_item.get("thread_id")
-
-
-async def store_chat_message(owner_id: str, agent_id: str, thread_id: str, role: str, content: str):
-    await chat_history_collection.insert_one({
-        "owner_id": ensure_object_id(owner_id),
-        "agent_id": ensure_object_id(agent_id),
-        "thread_id": thread_id,
-        "role": role,
-        "content": content,
-        "created_at": datetime.datetime.now(datetime.timezone.utc),
-    })
 
 
 def build_data_query_tool(data_query_entry: dict, db_entry: dict):

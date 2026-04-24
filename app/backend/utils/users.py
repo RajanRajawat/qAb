@@ -11,11 +11,12 @@
 import jwt
 from pydantic import EmailStr
 from database.db import users_collection
-from fastapi import Depends, HTTPException
+from fastapi import Depends
 from fastapi.security import HTTPBearer, HTTPAuthorizationCredentials
 from jwt import ExpiredSignatureError, InvalidTokenError
 from utils.loggers import logger
 from utils.env_loaders import load_jwt_secret_key
+from utils.response import raise_error_response
 
 
 
@@ -44,9 +45,8 @@ async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(s
         return payload
     except ExpiredSignatureError:
         logger.warning(f"Current user token validation failed because token expired")
-        raise HTTPException(status_code=401, detail={"message": "Token has expired, please login again."})
+        raise_error_response(status_code=401, message="Token has expired, please login again.")
     except InvalidTokenError:
         logger.warning(f"Current user token validation failed because token was invalid")
-        raise HTTPException(status_code=401, detail={"message": "Invalid token."})
+        raise_error_response(status_code=401, message="Invalid token.")
     
-

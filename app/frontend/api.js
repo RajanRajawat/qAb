@@ -1,20 +1,32 @@
 const API_BASE_URL = window.location.origin;
 
+function formatValidationItems(items) {
+    return items
+        .map((item) => {
+            const location = Array.isArray(item?.loc) ? item.loc.slice(1).join(".") : "";
+            return location ? `${location}: ${item.msg}` : item?.msg;
+        })
+        .filter(Boolean)
+        .join(" | ");
+}
+
 function formatErrorMessage(data) {
     const detail = data?.detail;
+    const errorItems = Array.isArray(data?.data) ? data.data : null;
+
+    if (typeof data?.message === "string" && errorItems?.length) {
+        const formattedItems = formatValidationItems(errorItems);
+        if (formattedItems) {
+            return formattedItems;
+        }
+    }
 
     if (typeof detail?.message === "string") {
         return detail.message;
     }
 
     if (Array.isArray(detail) && detail.length > 0) {
-        return detail
-            .map((item) => {
-                const location = Array.isArray(item?.loc) ? item.loc.slice(1).join(".") : "";
-                return location ? `${location}: ${item.msg}` : item.msg;
-            })
-            .filter(Boolean)
-            .join(" | ");
+        return formatValidationItems(detail);
     }
 
     return data?.message || "Request failed";
@@ -134,18 +146,14 @@ class ApiClient {
         });
     }
 
-    async runAgent(agentId, query, threadId) {
+    async runAgent(agentId, query, history = []) {
         return this.request(`/chat/run/${agentId}`, {
             method: "POST",
             body: {
                 query,
-                thread_id: threadId
+                history
             }
         });
-    }
-
-    async loadOldChat(agentId) {
-        return this.request(`/chat/load-old-chat/${agentId}`);
     }
 
     async getKBs() {
@@ -258,6 +266,20 @@ class ApiClient {
 
     async deleteDataQuery(dataQueryId) {
         return this.request(`/data-query/delete/${dataQueryId}`, {
+            method: "DELETE"
+        });
+    }
+
+    async getToolsCatalog() {
+        return this.request("/tools/catalog");
+    }
+
+    async getGoogleConnectUrl() {
+        return this.request("/tools/google/connect-url");
+    }
+
+    async disconnectTool(toolKey) {
+        return this.request(`/tools/disconnect/${toolKey}`, {
             method: "DELETE"
         });
     }

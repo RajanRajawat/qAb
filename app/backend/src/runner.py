@@ -1,5 +1,3 @@
-from uuid import uuid4
-
 from bson import ObjectId
 from bson.errors import InvalidId
 from fastapi import APIRouter, Depends, HTTPException
@@ -8,56 +6,19 @@ from database.db import agents_collection, kb_collection, db_collection, data_qu
 from database.models import AgentRunRequest
 from utils.general import ensure_object_id
 from utils.loggers import logger
-from utils.response import error_response, success_response
+from utils.response import error_response, raise_error_response, success_response
 from utils.runner_helpers import (
     agent_builder,
     build_history_messages,
     extract_agent_response_content,
     fetch_rag_context,
-    get_agent_history,
-    get_latest_thread_id,
     serialize_agent_messages,
-    serialize_chat_history_item,
-    store_chat_message,
 )
 from utils.tool_helpers import get_user_tool_configs, validate_agent_tools
 from utils.users import get_current_user
 
 
 runner_router = APIRouter(prefix="/chat", tags=["Agent Runner"])
-
-
-@runner_router.get("/load-old-chat/{agent_id}")
-async def load_old_chat(agent_id: str, current_user: dict = Depends(get_current_user)):
-    logger.info(f"Load old chat request received for agent id: {agent_id} from {current_user['email']}")
-
-    try:
-        obj_id = ObjectId(agent_id)
-    except InvalidId:
-        return error_response(status_code=400, message="Invalid agent ID format")
-
-    agent_data = await agents_collection.find_one(
-        {
-            "_id": obj_id,
-            "owner_id": ObjectId(current_user["_id"])
-        }
-    )
-
-    if not agent_data:
-        return error_response(status_code=404, message="Agent not found")
-
-    thread_id = await get_latest_thread_id(str(current_user["_id"]), agent_id)
-    history = await get_agent_history(str(current_user["_id"]), agent_id, thread_id, 15) if thread_id else []
-
-    return success_response(
-        200,
-        data={
-            "agent_id": agent_id,
-            "thread_id": thread_id,
-            "messages": [serialize_chat_history_item(item) for item in history]
-        },
-        message="Old chat loaded successfully!"
-    )
 
 
 @runner_router.post("/run/{agent_id}")
@@ -69,7 +30,7 @@ async def run_agent(agent_id: str, request: AgentRunRequest, current_user: dict 
             obj_id = ObjectId(agent_id)
         except InvalidId:
             logger.warning(f"Agent run rejected due to invalid agent id format: {agent_id}")
-            raise HTTPException(status_code=400, detail="Invalid agent ID format")
+            raise_error_response(status_code=400, message="Invalid agent ID format")
 
         agent_data = await agents_collection.find_one(
             {
@@ -109,7 +70,6 @@ async def run_agent(agent_id: str, request: AgentRunRequest, current_user: dict 
 
         tool_configs = await get_user_tool_configs(current_user["_id"])
         agent = agent_builder(agent_data, tool_configs, data_query_entry, data_query_db_entry)
-        thread_id = request.thread_id or str(uuid4())
 
         rag_message = request.query
 
@@ -151,10 +111,9 @@ async def run_agent(agent_id: str, request: AgentRunRequest, current_user: dict 
             except Exception as e:
                 logger.error(f"Knowledge base retrieval failed for agent id: {agent_id} | Error: {str(e)}")
 
-        history = await get_agent_history(str(current_user["_id"]), agent_id, thread_id, 15)
-        history_messages = build_history_messages(history)
+        history_messages = build_history_messages([item.model_dump() for item in request.history][-12:])
 
-        logger.info(f"Running agent id: {agent_id} with thread id: {thread_id}")
+        logger.info(f"Running agent id: {agent_id} with session history count: {len(history_messages)}")
         result = await agent.ainvoke(
             {"messages": [*history_messages, {"role": "user", "content": rag_message}]}
         )
@@ -162,15 +121,11 @@ async def run_agent(agent_id: str, request: AgentRunRequest, current_user: dict 
         response = extract_agent_response_content(result)
         serialized_messages = serialize_agent_messages(result)
 
-        await store_chat_message(str(current_user["_id"]), agent_id, thread_id, "user", request.query)
-        await store_chat_message(str(current_user["_id"]), agent_id, thread_id, "assistant", response)
-
         logger.info(f"Agent run completed successfully for agent id: {agent_id}")
         return success_response(
             200,
             data={
                 "agent_id": agent_id,
-                "thread_id": thread_id,
                 "response": response,
                 "messages": serialized_messages
             },

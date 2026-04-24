@@ -1,4 +1,4 @@
-﻿import { api } from "./api.js?v=20260421d";
+﻿import { api } from "./api.js?v=20260422a";
 
 window.refreshIcons = window.refreshIcons || (() => {
     if (window.lucide?.createIcons) {
@@ -15,7 +15,7 @@ window.refreshIcons = window.refreshIcons || (() => {
 const state = {
     user: JSON.parse(localStorage.getItem("qab_user") || "null"),
     isAuthenticated: Boolean(localStorage.getItem("qab_token")),
-    currentHash: window.location.hash || "#dashboard",
+    currentHash: window.location.hash || "#home",
     health: null
 };
 
@@ -28,13 +28,7 @@ const llmOptions = {
     ]
 };
 
-const toolOptions = [
-    {
-        value: "web_search",
-        label: "Web Search",
-        description: "Lets the agent search the web using the current Tavily-backed tool."
-    }
-];
+const SESSION_CHAT_HISTORY_LIMIT = 12;
 
 
 function getApp() {
@@ -67,6 +61,28 @@ function renderMarkdown(value = "") {
     return html;
 }
 
+function getTypingIndicatorMarkup() {
+    return `
+        <div class="typing-indicator-wrap" aria-label="AI is typing" title="AI is typing">
+            <div class="typing-indicator">
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+                <span class="typing-dot"></span>
+            </div>
+            <div class="typing-timer" data-role="thinking-timer">Thinking 0s</div>
+        </div>
+    `;
+}
+
+function formatExecutionTime(ms) {
+    const seconds = ms / 1000;
+    if (seconds < 10) {
+        return `${seconds.toFixed(1)}s`;
+    }
+
+    return `${Math.round(seconds)}s`;
+}
+
 function formatDate(value) {
     if (!value) {
         return "Not available";
@@ -84,12 +100,113 @@ function navigate(hash) {
     window.location.hash = hash;
 }
 
+function getChatSessionKey(agentId) {
+    return `qab_chat_session_${agentId}`;
+}
+
+function loadChatSession(agentId) {
+    try {
+        const raw = sessionStorage.getItem(getChatSessionKey(agentId));
+        if (!raw) {
+            return [];
+        }
+
+        const parsed = JSON.parse(raw);
+        if (!Array.isArray(parsed)) {
+            return [];
+        }
+
+        return parsed.filter((item) =>
+            item &&
+            (item.role === "user" || item.role === "assistant") &&
+            typeof item.content === "string"
+        );
+    } catch (_error) {
+        return [];
+    }
+}
+
+function saveChatSession(agentId, messages) {
+    const trimmedMessages = messages.slice(-SESSION_CHAT_HISTORY_LIMIT);
+    sessionStorage.setItem(
+        getChatSessionKey(agentId),
+        JSON.stringify(trimmedMessages)
+    );
+    return trimmedMessages;
+}
+
+function clearChatSession(agentId) {
+    sessionStorage.removeItem(getChatSessionKey(agentId));
+}
+
+function clearAllChatSessions() {
+    const keysToRemove = [];
+
+    for (let index = 0; index < sessionStorage.length; index += 1) {
+        const key = sessionStorage.key(index);
+        if (key && key.startsWith("qab_chat_session_")) {
+            keysToRemove.push(key);
+        }
+    }
+
+    keysToRemove.forEach((key) => sessionStorage.removeItem(key));
+}
+
+function getHashParts(hash = window.location.hash || "#home") {
+    const [path, queryString = ""] = hash.split("?");
+    return {
+        path: path || "#home",
+        params: new URLSearchParams(queryString)
+    };
+}
+
+function replaceHash(path) {
+    const baseUrl = `${window.location.pathname}${window.location.search}`;
+    window.history.replaceState(null, "", `${baseUrl}${path}`);
+}
+
+function decodeBase64Url(value = "") {
+    const normalized = value.replace(/-/g, "+").replace(/_/g, "/");
+    const padding = normalized.length % 4 === 0 ? "" : "=".repeat(4 - (normalized.length % 4));
+    return atob(`${normalized}${padding}`);
+}
+
+function normalizeDbConnectionUri(provider, value = "") {
+    const trimmed = value.trim();
+
+    if (provider === "postgres" && trimmed.includes("://")) {
+        const [scheme, rest] = trimmed.split("://");
+        if (scheme.includes("+")) {
+            return `${scheme.split("+")[0]}://${rest}`;
+        }
+    }
+
+    return trimmed;
+}
+
+async function sha256Hex(value) {
+    if (!window.crypto?.subtle?.digest) {
+        return null;
+    }
+
+    const encoded = new TextEncoder().encode(value);
+    const digest = await window.crypto.subtle.digest("SHA-256", encoded);
+    return Array.from(new Uint8Array(digest))
+        .map((byte) => byte.toString(16).padStart(2, "0"))
+        .join("");
+}
+
+async function buildDbConnectionFingerprint(provider, connectionUri) {
+    const normalizedUri = normalizeDbConnectionUri(provider, connectionUri);
+    return sha256Hex(`${provider}:${normalizedUri}`);
+}
+
 function icon(name, className = "ui-icon") {
     const icons = {
         dashboard: `<path d="M3 13.2h8.2V3H3z"/><path d="M12.8 21H21v-11.2h-8.2z"/><path d="M12.8 10.2H21V3h-8.2z"/><path d="M3 21h8.2v-6.2H3z"/>`,
         bot: `<path d="M9 7V4h6v3"/><rect x="4" y="7" width="16" height="11" rx="3"/><path d="M9 18v2"/><path d="M15 18v2"/><path d="M9 12h.01"/><path d="M15 12h.01"/>`,
         database: `<ellipse cx="12" cy="5" rx="7" ry="3"/><path d="M5 5v6c0 1.7 3.1 3 7 3s7-1.3 7-3V5"/><path d="M5 11v6c0 1.7 3.1 3 7 3s7-1.3 7-3v-6"/>`,
-        table: `<path d="M3 5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2"/><path d="M3 10h18"/><path d="M3 15h18"/><path d="M8 3v18"/><path d="M16 3v18"/><path d="M3 19a2 2 0 0 0 2 2h14a2 2 0 0 0 2-2"/>`,
+        table: `<rect x="3" y="5" width="18" height="14" rx="2"/><path d="M3 10h18"/><path d="M9 5v14"/><path d="M15 5v14"/>`,
         book: `<path d="M5 4.5A2.5 2.5 0 0 1 7.5 2H19v18H7.5A2.5 2.5 0 0 0 5 22"/><path d="M5 4.5V22"/><path d="M9 6h7"/><path d="M9 10h7"/>`,
         user: `<path d="M20 21a8 8 0 0 0-16 0"/><circle cx="12" cy="8" r="4"/>`,
         logout: `<path d="M9 21H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h4"/><path d="M16 17l5-5-5-5"/><path d="M21 12H9"/>`,
@@ -107,6 +224,8 @@ function icon(name, className = "ui-icon") {
         send: `<path d="M22 2 11 13"/><path d="m22 2-7 20-4-9-9-4Z"/>`,
         folder: `<path d="M3 6a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/>`,
         link: `<path d="M10 13a5 5 0 0 0 7.1 0l2.8-2.8a5 5 0 0 0-7.1-7.1L11 5"/><path d="M14 11a5 5 0 0 0-7.1 0l-2.8 2.8a5 5 0 0 0 7.1 7.1L13 19"/>`,
+        wrench: `<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-3 3-3-3 3-3Z"/>`,
+        mail: `<rect x="3" y="5" width="18" height="14" rx="2"/><path d="m3 7 9 6 9-6"/>`,
         settings: `<circle cx="12" cy="12" r="3"/><path d="M19.4 15a1.7 1.7 0 0 0 .3 1.8l.1.1a2 2 0 1 1-2.8 2.8l-.1-.1a1.7 1.7 0 0 0-1.8-.3 1.7 1.7 0 0 0-1 1.5V21a2 2 0 1 1-4 0v-.2a1.7 1.7 0 0 0-1-1.5 1.7 1.7 0 0 0-1.8.3l-.1.1a2 2 0 1 1-2.8-2.8l.1-.1a1.7 1.7 0 0 0 .3-1.8 1.7 1.7 0 0 0-1.5-1H3a2 2 0 1 1 0-4h.2a1.7 1.7 0 0 0 1.5-1 1.7 1.7 0 0 0-.3-1.8l-.1-.1a2 2 0 1 1 2.8-2.8l.1.1a1.7 1.7 0 0 0 1.8.3h.1A1.7 1.7 0 0 0 10 3.2V3a2 2 0 1 1 4 0v.2a1.7 1.7 0 0 0 1 1.5h.1a1.7 1.7 0 0 0 1.8-.3l.1-.1a2 2 0 1 1 2.8 2.8l-.1.1a1.7 1.7 0 0 0-.3 1.8v.1a1.7 1.7 0 0 0 1.5 1H21a2 2 0 1 1 0 4h-.2a1.7 1.7 0 0 0-1.5 1Z"/>`,
         file: `<path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6"/><path d="M9 15h6"/><path d="M9 11h3"/>`,
         retry: `<path d="M21 12a9 9 0 1 1-2.64-6.36"/><path d="M21 3v6h-6"/>`,
@@ -192,13 +311,14 @@ function getLayout(content, active = "") {
         <div class="shell">
             <aside class="sidebar">
                 <div class="brand">
-                    <div class="brand-mark brand-mark-solo">${brandWordmark("sidebar-brand-wordmark")}</div>
+                    <img class="sidebar-brand-logo" src="/static/media/qab_rectangle_logo.png" alt="qAb Quick Agent Builder">
                 </div>
                 <nav class="nav">
                     <a href="#dashboard" class="nav-link ${active === "dashboard" ? "active" : ""}">${icon("dashboard")}<span>Dashboard</span></a>
                     <a href="#agents" class="nav-link ${active === "agents" ? "active" : ""}">${icon("bot")}<span>Agents</span></a>
                     <a href="#knowledge-bases" class="nav-link ${active === "knowledge-bases" ? "active" : ""}">${icon("book")}<span>Knowledge Bases</span></a>
                     <a href="#databases" class="nav-link ${active === "databases" ? "active" : ""}">${icon("database")}<span>Databases</span></a>
+                    <a href="#tools" class="nav-link ${active === "tools" ? "active" : ""}">${icon("wrench")}<span>Tools</span></a>
                     <a href="#data-queries" class="nav-link ${active === "data-queries" ? "active" : ""}">${icon("table")}<span>Data Queries</span></a>
                 </nav>
                 <div class="sidebar-footer">
@@ -222,6 +342,7 @@ function bindLayoutEvents() {
         logoutButton.onclick = () => {
             api.clearToken();
             localStorage.removeItem("qab_user");
+            clearAllChatSessions();
             state.user = null;
             state.isAuthenticated = false;
             showToast("Logged out");
@@ -399,6 +520,173 @@ function getSelectedDataQuerySources(sources) {
                 description: column.description || ""
             }))
         }));
+}
+
+function getLandingFeatureCard(iconName, title, copy) {
+    return `
+        <article class="landing-feature-card">
+            <div class="landing-feature-icon">${icon(iconName)}</div>
+            <h3>${escapeHtml(title)}</h3>
+            <p>${escapeHtml(copy)}</p>
+        </article>
+    `;
+}
+
+async function renderHome() {
+    getApp().innerHTML = `
+        <section class="landing-shell">
+            <header class="landing-topbar">
+                <a class="landing-brand" href="#home">
+                    <img class="landing-brand-logo" src="/static/media/qab_rectangle_logo.png" alt="qAb Quick Agent Builder">
+                </a>
+                <nav class="landing-nav">
+                    <a href="#home">Home</a>
+                    <a href="#login">Login</a>
+                    <a href="#register" class="button button-primary landing-cta-nav">${icon("register")}<span>Get Started</span></a>
+                </nav>
+            </header>
+
+            <section class="landing-hero">
+                <div class="landing-copy">
+                    <div class="landing-chip">Agent building workspace for your real app flow</div>
+                    <h1>Build custom AI agents, connect your data, and chat with them in one place.</h1>
+                    <p>
+                        qAb helps you create agents, attach knowledge bases, connect databases, define data queries,
+                        and enable practical tools like Gmail and web search from a single workspace.
+                    </p>
+                    <div class="landing-actions">
+                        <a class="button button-primary" href="#register">${icon("register")}<span>Create Account</span></a>
+                        <a class="button button-secondary" href="#login">${icon("login")}<span>Login</span></a>
+                    </div>
+                    <div class="landing-proof">
+                        <span>${icon("bot", "ui-icon inline-icon")} Custom Agents</span>
+                        <span>${icon("book", "ui-icon inline-icon")} Knowledge Bases</span>
+                        <span>${icon("database", "ui-icon inline-icon")} Linked Databases</span>
+                    </div>
+                </div>
+
+                <div class="landing-visual">
+                    <div class="landing-stack-card landing-stack-top">
+                        <div class="landing-stack-title">Your qAb Workspace</div>
+                        <div class="landing-stack-grid">
+                            <div class="landing-stack-pill">${icon("bot", "ui-icon inline-icon")} Agents</div>
+                            <div class="landing-stack-pill">${icon("book", "ui-icon inline-icon")} KBs</div>
+                            <div class="landing-stack-pill">${icon("table", "ui-icon inline-icon")} Data Queries</div>
+                            <div class="landing-stack-pill">${icon("database", "ui-icon inline-icon")} Databases</div>
+                            <div class="landing-stack-pill">${icon("wrench", "ui-icon inline-icon")} Tools</div>
+                            <div class="landing-stack-pill">${icon("message", "ui-icon inline-icon")} Chat</div>
+                        </div>
+                    </div>
+                    <div class="landing-stack-card landing-stack-mid">
+                        <div class="landing-flow-line"></div>
+                        <div class="landing-mini-card">
+                            <strong>Agent Builder</strong>
+                            <span>Configure model, instructions, KB, Data Query, and tools.</span>
+                        </div>
+                        <div class="landing-mini-card">
+                            <strong>Knowledge Base + Data Query</strong>
+                            <span>Ground replies with uploaded files and linked databases.</span>
+                        </div>
+                        <div class="landing-mini-card">
+                            <strong>Agent Chat</strong>
+                            <span>Run the agent, keep session memory, and iterate quickly.</span>
+                        </div>
+                    </div>
+                    <div class="landing-stack-card landing-stack-bottom">
+                        <div class="landing-stack-row">
+                            <span class="landing-stack-badge">Groq</span>
+                            <span class="landing-stack-badge">Gemini</span>
+                            <span class="landing-stack-badge">Gmail</span>
+                            <span class="landing-stack-badge">Web Search</span>
+                        </div>
+                        <p>Everything shown here already exists inside this project.</p>
+                    </div>
+                </div>
+            </section>
+
+            <section class="landing-section">
+                <div class="landing-section-head">
+                    <div>
+                        <div class="eyebrow landing-eyebrow">What You Can Do</div>
+                        <h2>Built around the features qAb already supports</h2>
+                    </div>
+                    <p>No placeholder platform claims. Just the actual workflows available in your current product.</p>
+                </div>
+                <div class="landing-feature-grid">
+                    ${getLandingFeatureCard("bot", "Create and manage agents", "Set instructions, provider, model, temperature, tools, and optional knowledge sources.")}
+                    ${getLandingFeatureCard("book", "Attach knowledge bases", "Upload text or PDF files and use semantic retrieval to ground agent responses.")}
+                    ${getLandingFeatureCard("database", "Connect custom databases", "Link MongoDB or PostgreSQL databases and manage them from the workspace.")}
+                    ${getLandingFeatureCard("table", "Define data queries", "Choose approved tables or collections and expose safe read-only context to agents.")}
+                    ${getLandingFeatureCard("wrench", "Enable tools", "Connect Gmail and use built-in tools like web search, weather, datetime, and Wikipedia.")}
+                    ${getLandingFeatureCard("message", "Chat with your agent", "Run your configured agent with session-based memory and see responses in a focused chat view.")}
+                </div>
+            </section>
+
+            <section class="landing-section landing-workflow">
+                <div class="landing-section-head">
+                    <div>
+                        <div class="eyebrow landing-eyebrow">Workflow</div>
+                        <h2>From setup to usable agent in a few clear steps</h2>
+                    </div>
+                </div>
+                <div class="landing-steps">
+                    <article class="landing-step">
+                        <span>01</span>
+                        <h3>Create your agent</h3>
+                        <p>Pick the model, define the role, and add instructions.</p>
+                    </article>
+                    <article class="landing-step">
+                        <span>02</span>
+                        <h3>Connect context</h3>
+                        <p>Attach a knowledge base, a read-only data query, or both.</p>
+                    </article>
+                    <article class="landing-step">
+                        <span>03</span>
+                        <h3>Turn on tools</h3>
+                        <p>Use built-in capabilities and external integrations that are configured in qAb.</p>
+                    </article>
+                    <article class="landing-step">
+                        <span>04</span>
+                        <h3>Start chatting</h3>
+                        <p>Open chat, test responses, and refine the setup based on real usage.</p>
+                    </article>
+                </div>
+            </section>
+
+            <section class="landing-bottom-cta">
+                <div>
+                    <div class="eyebrow landing-eyebrow">Ready</div>
+                    <h2>Start building inside qAb</h2>
+                    <p>Create an account to begin building agents, or sign in and continue from your dashboard.</p>
+                </div>
+                <div class="landing-actions">
+                    <a class="button button-primary" href="#register">${icon("register")}<span>Create Account</span></a>
+                    <a class="button button-secondary" href="#login">${icon("login")}<span>Login</span></a>
+                </div>
+            </section>
+
+            <footer class="landing-footer">
+                <div class="landing-footer-copy">
+                    <strong>project by RajanRajawat</strong>
+                    <p>Quick Agent Builder for creating agents, connecting data, and chatting with them in one focused workspace.</p>
+                </div>
+                <div class="landing-footer-links">
+                    <a class="landing-footer-link" href="https://www.linkedin.com/in/rajanrajawat/" target="_blank" rel="noopener noreferrer">
+                        ${icon("linkedin")}
+                        <span>LinkedIn</span>
+                    </a>
+                    <a class="landing-footer-link" href="https://github.com/RajanRajawat/" target="_blank" rel="noopener noreferrer">
+                        ${icon("github")}
+                        <span>GitHub</span>
+                    </a>
+                    <a class="landing-footer-link" href="https://www.rajanrajawat.in/" target="_blank" rel="noopener noreferrer">
+                        ${icon("portfolio")}
+                        <span>Portfolio</span>
+                    </a>
+                </div>
+            </footer>
+        </section>
+    `;
 }
 
 async function renderLogin() {
@@ -588,9 +876,180 @@ async function renderDashboard() {
     bindLayoutEvents();
 }
 
-function getAgentFormMarkup(agent, kbs, dataQueries) {
+function getToolStatusMarkup(tool) {
+    if (tool.connected) {
+        return `<span class="status-pill success">Connected</span>`;
+    }
+
+    if (tool.config_required) {
+        return `<span class="status-pill warning">Needs setup</span>`;
+    }
+
+    return `<span class="status-pill online">Ready</span>`;
+}
+
+function getToolCardMarkup(tool) {
+    const iconName = tool.key === "gmail" ? "mail" : "search";
+    const actionLabel = tool.connected ? "Manage" : (tool.config_required ? "Connect" : "Included");
+
+    return `
+        <article class="panel card-panel tool-card" data-tool-key="${tool.key}">
+            <div class="panel-head">
+                <div class="tool-card-headline">
+                    <div class="tool-avatar">${icon(iconName, "ui-icon")}</div>
+                    <div>
+                        <h3>${escapeHtml(tool.label)}</h3>
+                        <p class="muted">${escapeHtml(tool.provider)}</p>
+                    </div>
+                </div>
+                ${getToolStatusMarkup(tool)}
+            </div>
+            <p class="tool-card-copy">${escapeHtml(tool.description)}</p>
+            <div class="kb-tags">
+                <span class="tag">${escapeHtml(tool.category)}</span>
+                <span class="tag">${tool.capabilities.length} capabilities</span>
+            </div>
+            <div class="panel-actions">
+                <button class="button button-secondary open-tool-detail" data-tool-key="${tool.key}">
+                    ${icon("settings")}
+                    <span>${escapeHtml(actionLabel)}</span>
+                </button>
+            </div>
+        </article>
+    `;
+}
+
+async function openToolDetailsModal(tool, onChange) {
+    const canDisconnect = tool.key === "gmail" && tool.connected;
+    const canConnect = tool.key === "gmail" && !tool.connected;
+
+    openModal(tool.label, `
+        <div class="stack">
+            <div class="tool-detail-top">
+                <div>
+                    <div class="tool-detail-head">
+                        <h3>${escapeHtml(tool.label)}</h3>
+                        ${getToolStatusMarkup(tool)}
+                    </div>
+                    <p class="muted">${escapeHtml(tool.description)}</p>
+                </div>
+                ${tool.configuration?.account_email ? `
+                    <div class="detail-card">
+                        <span>Connected account</span>
+                        <strong>${escapeHtml(tool.configuration.account_email)}</strong>
+                    </div>
+                ` : ""}
+            </div>
+            <div class="detail-card">
+                <span>Capabilities</span>
+                <div class="capability-list">
+                    ${tool.capabilities.map((capability) => `
+                        <div class="capability-item">
+                            <span class="capability-check">✓</span>
+                            <strong>${escapeHtml(capability)}</strong>
+                        </div>
+                    `).join("")}
+                </div>
+            </div>
+            <div class="detail-card">
+                <span>Agent availability</span>
+                <strong>${tool.connected || !tool.config_required ? "This tool can be added to agents right now." : "Connect this tool first, then it becomes selectable in agent setup."}</strong>
+            </div>
+            <div class="modal-inline-actions tool-modal-actions">
+                <button class="button button-secondary" id="tool-modal-close">${icon("close")}<span>Close</span></button>
+                ${canConnect ? `<button class="button button-primary" id="tool-connect-google">${icon("link")}<span>Connect Google</span></button>` : ""}
+                ${canDisconnect ? `<button class="button button-danger" id="tool-disconnect-google">${icon("trash")}<span>Disconnect</span></button>` : ""}
+            </div>
+        </div>
+    `);
+
+    document.getElementById("tool-modal-close").onclick = closeModal;
+
+    const connectButton = document.getElementById("tool-connect-google");
+    if (connectButton) {
+        connectButton.onclick = async () => {
+            try {
+                setButtonLoading(connectButton, true, "Redirecting...");
+                const response = await api.getGoogleConnectUrl();
+                window.location.href = response.data.auth_url;
+            } catch (error) {
+                setButtonLoading(connectButton, false);
+                showToast(error.message, "error");
+            }
+        };
+    }
+
+    const disconnectButton = document.getElementById("tool-disconnect-google");
+    if (disconnectButton) {
+        disconnectButton.onclick = async () => {
+            try {
+                setButtonLoading(disconnectButton, true, "Disconnecting...");
+                await api.disconnectTool(tool.key);
+                closeModal();
+                showToast("Gmail disconnected");
+                await onChange();
+            } catch (error) {
+                showToast(error.message, "error");
+            } finally {
+                setButtonLoading(disconnectButton, false);
+            }
+        };
+    }
+}
+
+async function renderTools() {
+    setLoading("Loading tools");
+
+    const response = await api.getToolsCatalog();
+    const tools = response.data;
+    const { params } = getHashParts();
+    const googleStatus = params.get("google_status");
+    const encodedMessage = params.get("message");
+    let decodedMessage = null;
+
+    if (encodedMessage) {
+        try {
+            decodedMessage = decodeBase64Url(encodedMessage);
+        } catch (_error) {
+            decodedMessage = null;
+        }
+    }
+
+    if (googleStatus && decodedMessage) {
+        showToast(decodedMessage, googleStatus === "connected" ? "success" : "error");
+        replaceHash("#tools");
+    }
+
+    getApp().innerHTML = getLayout(`
+        <section class="page-head">
+            <div>
+                <div class="eyebrow">Tools</div>
+                <h2>External tool connections</h2>
+                <p class="muted">Configure shared tools here first, then add only ready tools to your agents.</p>
+            </div>
+        </section>
+        <section class="card-grid">
+            ${tools.map((tool) => getToolCardMarkup(tool)).join("") || `<div class="empty-card">No tools available yet.</div>`}
+        </section>
+    `, "tools");
+
+    const refresh = async () => renderTools();
+    document.querySelectorAll(".open-tool-detail").forEach((button) => {
+        button.onclick = async () => {
+            const tool = tools.find((item) => item.key === button.dataset.toolKey);
+            if (tool) {
+                await openToolDetailsModal(tool, refresh);
+            }
+        };
+    });
+
+    bindLayoutEvents();
+}
+
+function getAgentFormMarkup(agent, kbs, dataQueries, toolsCatalog) {
     const isEdit = Boolean(agent);
     const selectedTools = new Set(agent?.tools || []);
+    const selectableToolCount = toolsCatalog.filter((tool) => tool.connected || !tool.config_required).length;
 
     return `
         <form id="${isEdit ? "edit-agent-form" : "create-agent-form"}" class="stack">
@@ -629,19 +1088,21 @@ function getAgentFormMarkup(agent, kbs, dataQueries) {
             </label>
             <div class="field">
                 <span>Tools</span>
+                <small class="field-note">${selectableToolCount ? "Only ready tools can be attached to agents." : "Set up a tool from the Tools page to make it available here."}</small>
                 <div class="tool-grid">
-                    ${toolOptions.map((tool) => `
+                    ${toolsCatalog.map((tool) => `
                         <label class="tool-option">
                             <div class="tool-option-head">
                                 <input
                                     class="agent-tool-checkbox"
                                     type="checkbox"
-                                    value="${tool.value}"
-                                    ${selectedTools.has(tool.value) ? "checked" : ""}
+                                    value="${tool.key}"
+                                    ${selectedTools.has(tool.key) ? "checked" : ""}
+                                    ${(tool.connected || !tool.config_required) ? "" : "disabled"}
                                 >
                                 <strong>${escapeHtml(tool.label)}</strong>
                             </div>
-                            <small>${escapeHtml(tool.description)}</small>
+                            <small>${escapeHtml(tool.connected || !tool.config_required ? tool.description : `${tool.description} Configure it in Tools first.`)}</small>
                         </label>
                     `).join("")}
                 </div>
@@ -682,13 +1143,14 @@ function getAgentFormMarkup(agent, kbs, dataQueries) {
 }
 
 async function openAgentModal(agent = null, onDone) {
-    const [kbs, dataQueries] = await Promise.all([
+    const [kbs, dataQueries, toolsCatalog] = await Promise.all([
         api.getKBs().then((response) => response.data),
-        api.getDataQueries().then((response) => response.data)
+        api.getDataQueries().then((response) => response.data),
+        api.getToolsCatalog().then((response) => response.data)
     ]);
     const title = agent ? "Edit Agent" : "Create Agent";
 
-    openModal(title, getAgentFormMarkup(agent, kbs, dataQueries));
+    openModal(title, getAgentFormMarkup(agent, kbs, dataQueries, toolsCatalog));
     bindProviderModelSelects("agent-provider", "agent-model", agent?.llm_model);
 
     const kbEnabled = document.getElementById("agent-kb-enabled");
@@ -1520,6 +1982,7 @@ async function renderDatabases() {
                     <span>Connection URI</span>
                     <input id="db-uri" required placeholder="mongodb+srv://... or postgres://...">
                 </label>
+                <small class="field-note">Each database connection can only be linked once.</small>
                 <button class="button button-primary" type="submit">${icon("link")}<span>Link database</span></button>
             </form>
         `);
@@ -1527,13 +1990,27 @@ async function renderDatabases() {
         document.getElementById("link-db-form").onsubmit = async (event) => {
             event.preventDefault();
             const submitButton = event.currentTarget.querySelector('button[type="submit"]');
+            const provider = document.getElementById("db-provider").value;
+            const connectionUri = document.getElementById("db-uri").value;
 
             try {
+                const fingerprint = await buildDbConnectionFingerprint(provider, connectionUri);
+                const alreadyLinked = fingerprint
+                    ? dbs.some((item) =>
+                        item.provider === provider && item.connection_fingerprint === fingerprint
+                    )
+                    : false;
+
+                if (alreadyLinked) {
+                    showToast("This database connection is already linked.", "error");
+                    return;
+                }
+
                 setButtonLoading(submitButton, true, "Verifying connection...");
                 await api.linkDB({
                     name: document.getElementById("db-name").value,
-                    db: document.getElementById("db-provider").value,
-                    connection_uri: document.getElementById("db-uri").value
+                    db: provider,
+                    connection_uri: connectionUri
                 });
                 closeModal();
                 showToast("Database linked");
@@ -1576,18 +2053,35 @@ async function renderDatabases() {
     });
 
     document.querySelectorAll(".unlink-db").forEach((button) => {
-        button.onclick = async () => {
-            if (!window.confirm("Unlink this DB? Any KBs stored in it will also be cleaned up.")) {
-                return;
-            }
+        button.onclick = () => {
+            openModal("Unlink Database", `
+                <div class="stack">
+                    <p class="modal-copy">Unlink this DB? Any KBs stored in it will also be cleaned up.</p>
+                    <div class="modal-footer">
+                        <button class="button button-secondary" type="button" id="cancel-unlink-db">Cancel</button>
+                        <button class="button button-danger" type="button" id="confirm-unlink-db">${icon("trash")}<span>Unlink</span></button>
+                    </div>
+                </div>
+            `);
 
-            try {
-                await api.unlinkDB(button.dataset.id);
-                showToast("Database unlinked");
-                await refresh();
-            } catch (error) {
-                showToast(error.message, "error");
-            }
+            document.getElementById("cancel-unlink-db").onclick = () => {
+                closeModal();
+            };
+
+            document.getElementById("confirm-unlink-db").onclick = async (event) => {
+                const confirmButton = event.currentTarget;
+
+                try {
+                    setButtonLoading(confirmButton, true, "Unlinking...");
+                    await api.unlinkDB(button.dataset.id);
+                    closeModal();
+                    showToast("Database unlinked");
+                    await refresh();
+                } catch (error) {
+                    showToast(error.message, "error");
+                    setButtonLoading(confirmButton, false);
+                }
+            };
         };
     });
 
@@ -1597,34 +2091,39 @@ async function renderDatabases() {
 async function renderChat(agentId) {
     setLoading("Loading chat");
 
-    const [agentResponse, oldChatResponse] = await Promise.all([
-        api.getAgent(agentId),
-        api.loadOldChat(agentId)
-    ]);
+    const agentResponse = await api.getAgent(agentId);
     const agent = agentResponse.data;
-    const oldChat = oldChatResponse.data;
+    let sessionMessages = loadChatSession(agentId);
 
     getApp().innerHTML = getLayout(`
-        <section class="page-head">
-            <div>
-                <div class="eyebrow">Chat</div>
-                <h2>${escapeHtml(agent.name)}</h2>
-                <p class="muted">${escapeHtml(agent.llm_model)} &bull; ${agent.knowledge_base ? "Knowledge base attached" : "No knowledge base"}</p>
-            </div>
-            <a class="button button-secondary" href="#agents">${icon("back")}<span>Back to agents</span></a>
-        </section>
-        <section class="chat-panel">
-            <div class="chat-stream" id="chat-stream">
-                <div class="message assistant-message">Ask anything. If the agent has a KB selected, the backend will inject retrieved context from that KB's embedding model.</div>
-            </div>
-            <form class="chat-form" id="chat-form">
-                <textarea id="chat-input" rows="2" placeholder="Type your message"></textarea>
-                <button class="button button-primary" type="submit">${icon("send")}<span>Send</span></button>
-            </form>
-        </section>
+        <div class="chat-view">
+            <section class="page-head chat-page-head">
+                <div>
+                    <div class="eyebrow">Chat</div>
+                    <h2>${escapeHtml(agent.name)}</h2>
+                    <p class="muted">${escapeHtml(agent.llm_model)} &bull; ${agent.knowledge_base ? "Knowledge base attached" : "No knowledge base"}</p>
+                </div>
+                <div class="hero-actions">
+                    <button class="button button-secondary" type="button" id="clear-chat-button">${icon("trash")}<span>Clear chat</span></button>
+                    <a class="button button-secondary" href="#agents">${icon("back")}<span>Back to agents</span></a>
+                </div>
+            </section>
+            <section class="chat-panel">
+                <div class="chat-stream" id="chat-stream"></div>
+                <form class="chat-form" id="chat-form">
+                    <div class="chat-input-shell">
+                        <textarea id="chat-input" rows="1" placeholder="Type your message"></textarea>
+                        <button class="chat-send-button" type="submit" aria-label="Send message" title="Send">
+                            ${icon("send")}
+                        </button>
+                    </div>
+                </form>
+            </section>
+        </div>
     `, "agents");
 
-    let threadId = oldChat.thread_id || localStorage.getItem(`thread_${agentId}`) || null;
+    document.querySelector(".main-panel")?.classList.add("main-panel-chat");
+
     const chatStream = document.getElementById("chat-stream");
 
     const addMessage = (text, type) => {
@@ -1636,41 +2135,100 @@ async function renderChat(agentId) {
         return node;
     };
 
-    if (threadId) {
-        localStorage.setItem(`thread_${agentId}`, threadId);
-    }
+    const addTypingMessage = () => {
+        const node = document.createElement("div");
+        node.className = "message assistant-message assistant-message-typing";
+        node.innerHTML = getTypingIndicatorMarkup();
+        chatStream.appendChild(node);
+        chatStream.scrollTop = chatStream.scrollHeight;
+        return node;
+    };
 
-    if (oldChat.messages.length > 0) {
+    if (sessionMessages.length > 0) {
         chatStream.innerHTML = "";
-        oldChat.messages.forEach((message) => {
+        sessionMessages.forEach((message) => {
             addMessage(message.content, message.role);
         });
     }
 
-    document.getElementById("chat-form").onsubmit = async (event) => {
+    const chatForm = document.getElementById("chat-form");
+    const input = document.getElementById("chat-input");
+    const clearChatButton = document.getElementById("clear-chat-button");
+
+    const resizeChatInput = () => {
+        input.style.height = "auto";
+        input.style.height = `${Math.min(input.scrollHeight, 180)}px`;
+    };
+
+    resizeChatInput();
+    input.focus();
+
+    input.addEventListener("input", resizeChatInput);
+    input.addEventListener("keydown", (event) => {
+        if (event.key === "Enter" && !event.shiftKey) {
+            event.preventDefault();
+            chatForm.requestSubmit();
+        }
+    });
+
+    clearChatButton.onclick = () => {
+        clearChatSession(agentId);
+        sessionMessages = [];
+        chatStream.innerHTML = "";
+        input.focus();
+        showToast("Chat cleared");
+    };
+
+    chatForm.onsubmit = async (event) => {
         event.preventDefault();
 
-        const input = document.getElementById("chat-input");
         const query = input.value.trim();
         if (!query) {
             return;
         }
 
         addMessage(query, "user");
-        input.value = "";
+        sessionMessages.push({
+            role: "user",
+            content: query
+        });
+        sessionMessages = saveChatSession(agentId, sessionMessages);
 
-        const pending = addMessage("Thinking...", "assistant");
+        input.value = "";
+        resizeChatInput();
+
+        const pending = addTypingMessage();
+        const startedAt = Date.now();
+        const timerNode = pending.querySelector('[data-role="thinking-timer"]');
+        const timer = window.setInterval(() => {
+            const elapsedMs = Date.now() - startedAt;
+            if (timerNode) {
+                timerNode.textContent = `Thinking ${formatExecutionTime(elapsedMs)}`;
+            }
+        }, 100);
 
         try {
-            const response = await api.runAgent(agentId, query, threadId);
-            pending.innerHTML = renderMarkdown(response.data.response);
-
-            if (response.data.thread_id) {
-                threadId = response.data.thread_id;
-                localStorage.setItem(`thread_${agentId}`, threadId);
-            }
+            const history = sessionMessages.slice(0, -1).slice(-SESSION_CHAT_HISTORY_LIMIT);
+            const response = await api.runAgent(agentId, query, history);
+            const elapsedMs = Date.now() - startedAt;
+            pending.innerHTML = `
+                ${renderMarkdown(response.data.response)}
+                <div class="message-meta">Executed in ${formatExecutionTime(elapsedMs)}</div>
+            `;
+            pending.classList.remove("assistant-message-typing");
+            sessionMessages.push({
+                role: "assistant",
+                content: response.data.response
+            });
+            sessionMessages = saveChatSession(agentId, sessionMessages);
         } catch (error) {
-            pending.innerHTML = renderMarkdown(`Error: ${error.message}`);
+            pending.innerHTML = renderMarkdown("Aw, Snap! Something went wrong, please try again later.");
+            pending.classList.remove("assistant-message-typing");
+            sessionMessages = sessionMessages.slice(0, -1);
+            sessionMessages = saveChatSession(agentId, sessionMessages);
+        } finally {
+            window.clearInterval(timer);
+            input.focus();
         }
     };
 
@@ -1678,68 +2236,79 @@ async function renderChat(agentId) {
 }
 
 async function route() {
-    const hash = window.location.hash || "#dashboard";
-    state.currentHash = hash;
+    const hash = window.location.hash || "#home";
+    const { path } = getHashParts(hash);
+    state.currentHash = path;
 
-    const publicRoutes = new Set(["#login", "#register"]);
-    if (!state.isAuthenticated && !publicRoutes.has(hash)) {
-        navigate("#login");
+    const publicRoutes = new Set(["#home", "#login", "#register"]);
+    if (!state.isAuthenticated && !publicRoutes.has(path)) {
+        navigate("#home");
         return;
     }
 
-    if (state.isAuthenticated && publicRoutes.has(hash)) {
+    if (state.isAuthenticated && publicRoutes.has(path)) {
         navigate("#dashboard");
         return;
     }
 
     try {
-        if (hash === "#login") {
+        if (path === "#home") {
+            await renderHome();
+            return;
+        }
+
+        if (path === "#login") {
             await renderLogin();
             return;
         }
 
-        if (hash === "#register") {
+        if (path === "#register") {
             await renderRegister();
             return;
         }
 
-        if (hash === "#dashboard") {
+        if (path === "#dashboard") {
             await renderDashboard();
             return;
         }
 
-        if (hash === "#agents") {
+        if (path === "#agents") {
             await renderAgents();
             return;
         }
 
-        if (hash === "#knowledge-bases") {
+        if (path === "#knowledge-bases") {
             await renderKnowledgeBases();
             return;
         }
 
-        if (hash.startsWith("#knowledge-bases/")) {
-            await renderKnowledgeBaseDetail(hash.split("/")[1]);
+        if (path.startsWith("#knowledge-bases/")) {
+            await renderKnowledgeBaseDetail(path.split("/")[1]);
             return;
         }
 
-        if (hash === "#databases") {
+        if (path === "#databases") {
             await renderDatabases();
             return;
         }
 
-        if (hash === "#data-queries") {
+        if (path === "#tools") {
+            await renderTools();
+            return;
+        }
+
+        if (path === "#data-queries") {
             await renderDataQueries();
             return;
         }
 
-        if (hash.startsWith("#data-queries/")) {
-            await renderDataQueryDetail(hash.split("/")[1]);
+        if (path.startsWith("#data-queries/")) {
+            await renderDataQueryDetail(path.split("/")[1]);
             return;
         }
 
-        if (hash.startsWith("#chat/")) {
-            await renderChat(hash.split("/")[1]);
+        if (path.startsWith("#chat/")) {
+            await renderChat(path.split("/")[1]);
             return;
         }
 
@@ -1766,6 +2335,7 @@ window.addEventListener("hashchange", route);
 window.addEventListener("qab-unauthorized", () => {
     api.clearToken();
     localStorage.removeItem("qab_user");
+    clearAllChatSessions();
     state.user = null;
     state.isAuthenticated = false;
     navigate("#login");

@@ -223,9 +223,28 @@ class AgentUpdate(BaseModel):
                 )
         return self
     
+class AgentSessionMessage(BaseModel):
+    role: Literal["user", "assistant"]
+    content: str
+
+    model_config = ConfigDict(extra="forbid")
+
+    @field_validator("content", mode="before")
+    @classmethod
+    def strip_content(cls, v):
+        return strip_string(v)
+
+
 class AgentRunRequest(BaseModel):
     query: str
-    thread_id: str | None = None
+    history: list[AgentSessionMessage] = Field(default_factory=list)
+
+    model_config = ConfigDict(extra="forbid")
+
+    @field_validator("query", mode="before")
+    @classmethod
+    def strip_query(cls, v):
+        return strip_string(v)
 
 
 #DB
@@ -306,6 +325,4 @@ class UpdateDataQuery(BaseModel):
     @classmethod
     def strip_strings(cls, v):
         return strip_string(v)
-
-
 
