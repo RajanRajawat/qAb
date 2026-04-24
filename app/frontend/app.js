@@ -610,7 +610,6 @@ async function renderHome() {
                         <div class="eyebrow landing-eyebrow">What You Can Do</div>
                         <h2>Built around the features qAb already supports</h2>
                     </div>
-                    <p>No placeholder platform claims. Just the actual workflows available in your current product.</p>
                 </div>
                 <div class="landing-feature-grid">
                     ${getLandingFeatureCard("bot", "Create and manage agents", "Set instructions, provider, model, temperature, tools, and optional knowledge sources.")}
