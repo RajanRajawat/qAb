@@ -1,32 +1,67 @@
-# QAB
+# qAb
 
-QAB is a full-stack Quick Agent Builder. It lets you:
+qAb stands for **Quick Agent Builder**.
 
-- register and log in from a browser UI
-- create agents backed by Groq or Gemini
-- attach a Knowledge Base to an agent for RAG
-- link custom MongoDB or PostgreSQL/Supabase databases for vector storage
-- create Data Queries from linked databases so agents can read selected tables or collections
-- run chat sessions against agents from the built-in frontend
+It is a full-stack app for building practical AI agents with:
 
-The frontend is served directly by the FastAPI backend, so one backend process runs the whole app.
+- user auth
+- agent creation and management
+- knowledge bases for RAG
+- linked MongoDB / PostgreSQL databases
+- read-only data queries
+- tool connections like Gmail and web search
+- a built-in browser chat UI
 
-## Table of Contents
+The backend is **FastAPI**, the frontend is **plain HTML/CSS/JavaScript**, and the frontend is served directly by the backend.
 
-1. Project Structure
-2. What You Need Before Running
-3. Environment Variables
-4. Installation
-5. How to Run the Project
-6. First-Time Setup Flow
-7. Custom DB Setup
-8. MongoDB Atlas Vector Search Setup
-9. PostgreSQL / Supabase Setup
-10. Knowledge Base Notes
-11. Data Query Notes
-12. Tooling Notes
-13. Troubleshooting
-14. Security Notes
+## Screenshots
+
+### Home
+![Home](other/images/homepage.png)
+
+### Dashboard
+![Dashboard](other/images/dashboard.png)
+
+### Tools
+![Tools](other/images/tools.png)
+
+### Knowledge Bases
+![Knowledge Bases](other/images/kb.png)
+
+### Data Queries
+![Data Queries](other/images/dataquery.png)
+
+## What qAb Can Do
+
+- register and log in users
+- create agents using Groq or Gemini models
+- attach a knowledge base to an agent
+- upload `.txt` and `.pdf` files for RAG
+- connect custom MongoDB and PostgreSQL databases
+- create read-only data queries from selected tables or collections
+- connect Gmail through Google OAuth
+- use built-in web search through Tavily
+- chat with agents from the built-in UI
+
+## Tech Stack
+
+### Backend
+
+- FastAPI
+- Motor / PyMongo
+- LangChain
+- LangGraph
+- Groq
+- Google Gemini
+- Hugging Face embeddings
+- MongoDB Atlas Vector Search
+- PGVector / PostgreSQL
+
+### Frontend
+
+- HTML
+- CSS
+- vanilla JavaScript
 
 ## Project Structure
 
@@ -36,93 +71,238 @@ app/
     main.py
     requirements.txt
     database/
+      db.py
+      models.py
     src/
+      agent.py
+      custom_db.py
+      data_query.py
+      knowledge_base.py
+      login.py
+      register.py
+      runner.py
+      tool_config.py
+      tools.py
     utils/
+      agent_helpers.py
+      connection.py
+      data_query_helpers.py
+      env_loaders.py
+      general.py
+      knowledge_base_helpers.py
+      loggers.py
+      response.py
+      runner_helpers.py
+      security.py
+      tool_helpers.py
+      users.py
   frontend/
     index.html
     app.js
+    api.js
     style.css
+    media/
+other/
+  images/
+  report/
 ```
 
-Important backend modules:
+## How the App Works
 
-- `app/backend/main.py`: FastAPI entrypoint
-- `app/backend/database/db.py`: MongoDB app database and default vector store connections
-- `app/backend/src/knowledge_base.py`: Knowledge Base routes
-- `app/backend/src/custom_db.py`: linked database routes
-- `app/backend/src/data_query.py`: Data Query routes
-- `app/backend/src/runner.py`: chat execution routes
-- `app/backend/src/tools.py`: agent tool registry
+### Main backend entry
 
-## What You Need Before Running
+- `app/backend/main.py`
 
-Install the following on your machine:
+This file:
 
-- Python 3.11 recommended
-- pip
-- access to a MongoDB database for the app's primary storage
-- at least one LLM API key:
-  - `GROQ_API_KEY`, or
-  - `GOOGLE_API_KEY`
-- `HF_TOKEN` for embeddings if you want Knowledge Base features
-- `TAVILY_API_KEY` if you want the web search tool
+- creates the FastAPI app
+- mounts the frontend static files
+- registers all route modules
+- adds global validation / HTTP / unhandled exception handlers
 
-Optional but strongly recommended for custom vector storage:
+### Main frontend entry
 
-- MongoDB Atlas cluster if you want custom MongoDB vector storage
-- PostgreSQL or Supabase if you want PGVector-backed storage
+- `app/frontend/index.html`
+- `app/frontend/app.js`
+- `app/frontend/api.js`
+
+The frontend is a single-page app with hash-based routing.
+
+## Core Features
+
+### 1. Agents
+
+Agents are configured with:
+
+- name
+- description
+- role
+- instructions
+- LLM provider
+- LLM model
+- temperature
+- optional knowledge base
+- optional data query
+- optional tools
+
+Current provider / model combinations exposed in the app:
+
+- `groq` -> `llama-3.1-8b-instant`
+- `gemini` -> `gemini-2.5-flash`
+
+### 2. Knowledge Bases
+
+Knowledge bases let you upload:
+
+- `.txt`
+- `.pdf`
+
+Each KB stores:
+
+- metadata in the app Mongo database
+- embeddings in either:
+  - the default Mongo vector store, or
+  - a linked custom Mongo / PostgreSQL database
+
+Current embedding model options:
+
+- `sentence-transformers/all-MiniLM-L6-v2`
+- `sentence-transformers/paraphrase-MiniLM-L3-v2`
+
+### 3. Custom Databases
+
+Users can link:
+
+- MongoDB
+- PostgreSQL / Supabase
+
+These linked databases are used for:
+
+- knowledge base vector storage
+- data query inspection and read-only access
+
+### 4. Data Queries
+
+Data Queries let you:
+
+- inspect a linked database
+- select only the tables / collections an agent should see
+- describe sources and columns
+- give the agent safe read-only structured access
+
+### 5. Tools
+
+Current tool catalog in the app:
+
+- `web_search`
+- `gmail`
+
+`web_search` is available through Tavily.
+
+`gmail` is connected through Google OAuth and supports:
+
+- `GMAIL_FETCH_EMAILS`
+- `GMAIL_REPLY_TO_THREAD`
+- `GMAIL_SEND_EMAIL`
+
+### 6. Agent Chat
+
+Agent chat is available in the built-in UI.
+
+Important:
+
+- chat memory is **session-based**
+- it is stored in the browser `sessionStorage`
+- it is **not** persisted to MongoDB anymore
+
+That means:
+
+- refresh keeps it in the same browser session
+- logout clears it
+- closing the tab/session clears it
+
+## Runtime Storage
+
+### App Mongo database
+
+The app always needs a primary MongoDB connection through `MONGO_URI`.
+
+Current internal Mongo database / collection usage:
+
+- database: `qab`
+- default vector collection: `qab.embeddings`
+
+Mongo stores:
+
+- users
+- agents
+- custom DB metadata
+- knowledge base metadata
+- data query metadata
+- tool connections
+
+### Custom Mongo vector store
+
+When a KB uses a linked Mongo database for vectors, embeddings are written to:
+
+- database: `qab_test`
+- collection: `embeddings`
+
+### PostgreSQL vector store
+
+When a KB uses PostgreSQL / Supabase for vectors, embeddings are handled through PGVector / LangChain integration.
 
 ## Environment Variables
 
 Create a `.env` file at the repo root.
 
-Minimum variables used by the current codebase:
+### Required for the app to start correctly
 
 ```env
 SECRET_VALUE=replace_with_a_long_random_secret
 MONGO_URI=mongodb+srv://username:password@cluster.mongodb.net/?appName=YourApp
+```
 
+### Required depending on the features you use
+
+```env
 GROQ_API_KEY=your_groq_key
 GOOGLE_API_KEY=your_google_ai_key
 TAVILY_API_KEY=your_tavily_key
 HF_TOKEN=your_huggingface_token
+GOOGLE_CLIENT_ID=your_google_oauth_client_id
+GOOGLE_CLIENT_SECRET=your_google_oauth_client_secret
 ```
 
-Variable meaning:
+### Meaning
 
 - `SECRET_VALUE`: JWT signing secret
-- `MONGO_URI`: base Mongo connection used by the app for users, agents, KB metadata, Data Queries, chat history, and the default vector collection
-- `GROQ_API_KEY`: needed if you use Groq models
-- `GOOGLE_API_KEY`: needed if you use Gemini models
-- `TAVILY_API_KEY`: needed if agents use the web search tool
-- `HF_TOKEN`: needed for document embeddings and Knowledge Base vector search
-
-Notes:
-
-- the backend stores its core application data in Mongo database `qab`
-- the default vector collection is `qab.embeddings`
-- if you do not use Gemini, the Google key can stay unset
-- if you do not use web search, the Tavily key can stay unset
-- if you do not use Knowledge Bases, the Hugging Face token can stay unset
+- `MONGO_URI`: primary Mongo connection for the app itself
+- `GROQ_API_KEY`: needed for Groq-backed agents
+- `GOOGLE_API_KEY`: needed for Gemini-backed agents
+- `TAVILY_API_KEY`: needed for web search
+- `HF_TOKEN`: needed for embeddings / KB vector search
+- `GOOGLE_CLIENT_ID`: needed for Gmail OAuth
+- `GOOGLE_CLIENT_SECRET`: needed for Gmail OAuth
 
 ## Installation
 
 From the repo root:
 
-```bash
+```powershell
 cd app/backend
 python -m venv .venv
 ```
 
-Activate the virtual environment.
+Activate the environment.
 
-Windows PowerShell:
+### Windows PowerShell
 
 ```powershell
 .venv\Scripts\Activate.ps1
 ```
 
-macOS / Linux:
+### macOS / Linux
 
 ```bash
 source .venv/bin/activate
@@ -134,7 +314,7 @@ Install dependencies:
 pip install -r requirements.txt
 ```
 
-## How to Run the Project
+## Run the App
 
 From `app/backend`:
 
@@ -142,127 +322,45 @@ From `app/backend`:
 uvicorn main:app --reload
 ```
 
-The application will be available at:
+The app will be available at:
 
-- App UI: `http://localhost:8000/`
+- UI: `http://localhost:8000/`
 - Health check: `http://localhost:8000/health`
 
-Because the frontend is mounted as static files by FastAPI, you do not need a separate frontend server.
+No separate frontend dev server is required.
 
-## First-Time Setup Flow
+## First-Time Flow
 
-Once the app is running:
+1. Start the backend
+2. Open `http://localhost:8000/`
+3. Register
+4. Log in
+5. Link a database if needed
+6. Create a knowledge base if you want document RAG
+7. Create a data query if you want read-only DB access
+8. Create an agent
+9. Attach KB / Data Query / tools as needed
+10. Open chat and test it
 
-1. Open `http://localhost:8000/`
-2. Register a user
-3. Log in
-4. Link a custom database if needed
-5. Create a Knowledge Base if you want document-based RAG
-6. Create a Data Query if you want an agent to read selected DB tables or collections
-7. Create an agent
-8. Attach:
-   - a Knowledge Base, and/or
-   - a Data Query, and/or
-   - the web search tool
-9. Open chat and test the agent
+## MongoDB Setup Notes
 
-## Custom DB Setup
+If you want MongoDB-based Data Query access, the linked Mongo URI must include a database name.
 
-The app supports linking:
-
-- MongoDB
-- PostgreSQL
-
-These linked databases are used for two different features:
-
-1. Knowledge Base vector storage
-2. Data Query source inspection and read-only agent access
-
-### Important Difference Between the App Database and Linked Databases
-
-The app always needs `MONGO_URI` in `.env` for its own internal storage.
-
-Linked databases are separate user-managed databases added from the UI under `Databases`.
-
-### Valid MongoDB Connection URI
-
-For MongoDB, use a real connection string such as:
+Example:
 
 ```text
 mongodb+srv://username:password@cluster.mongodb.net/YourDatabaseName?appName=YourApp
 ```
 
-or
-
-```text
-mongodb://username:password@host:27017/YourDatabaseName
-```
-
-Important:
-
-- If you want to use MongoDB for Data Query, the URI must include a database name.
-- Example:
-  - valid: `mongodb+srv://user:pass@cluster.mongodb.net/Ecom_Prod?appName=MyApp`
-  - not good for Data Query: `mongodb+srv://user:pass@cluster.mongodb.net/?appName=MyApp`
-
-Why this matters:
-
-- the backend inspects Mongo collections from the database name embedded in the URI
-- without that database name, Mongo Data Query cannot know which DB to browse
-
-### Valid PostgreSQL / Supabase Connection URI
-
-Examples:
-
-```text
-postgresql://postgres:password@host:5432/postgres
-```
-
-```text
-postgres://postgres:password@host:5432/postgres
-```
-
-```text
-postgresql+psycopg2://postgres:password@host:5432/postgres
-```
-
-The backend normalizes SQLAlchemy-style driver suffixes, so `postgresql+psycopg2://...` is accepted.
-
-### What Happens When You Link a MongoDB Custom DB
-
-For custom Mongo Knowledge Base storage, the backend writes embeddings into:
-
-```text
-qab_test.embeddings
-```
-
-inside the linked Mongo cluster.
-
-That means your linked Mongo DB must allow:
-
-- creating or using database `qab_test`
-- creating or using collection `embeddings`
-- vector search on that collection
+If the database name is missing, Data Query inspection will not know which Mongo database to browse.
 
 ## MongoDB Atlas Vector Search Setup
 
-If you use MongoDB Atlas for vector storage, create a vector search index on the collection used for embeddings.
+For vector search, the app expects the index name:
 
-Current backend expectation:
+- `vector_index`
 
-- database: `qab_test` for linked Mongo custom vector storage
-- collection: `embeddings`
-- index name: `vector_index`
-
-For the default built-in Mongo vector store used by the app itself:
-
-- database: `qab`
-- collection: `embeddings`
-- index name: `vector_index`
-
-### Atlas Vector Search JSON
-
-Use this JSON in the Atlas Search / Vector Search index editor:
+Use this index JSON:
 
 ```json
 {
@@ -285,259 +383,29 @@ Use this JSON in the Atlas Search / Vector Search index editor:
 }
 ```
 
-### Why `384` Dimensions
-
-The current embedding models configured in the backend are:
-
-- `sentence-transformers/all-MiniLM-L6-v2`
-- `sentence-transformers/paraphrase-MiniLM-L3-v2`
-
-Both are used as 384-dimensional embeddings in this project.
-
 ## PostgreSQL / Supabase Setup
 
-If you want to use PostgreSQL or Supabase for vector storage, you need `pgvector`.
-
-### Required SQL
-
-Run this first:
+Enable pgvector first:
 
 ```sql
 create extension if not exists vector with schema extensions;
 ```
 
-If your environment expects the extension without schema qualification, also verify what your Postgres provider supports.
-
-### Supabase Notes
-
-Supabase works as long as:
-
-- the connection string is valid
-- the user can create and write to the required tables
-- the vector extension is enabled
-
-Use a connection string like:
+Use a valid PostgreSQL connection string, for example:
 
 ```text
-postgresql+psycopg2://postgres:password@your-project.pooler.supabase.com:5432/postgres
+postgresql://postgres:password@host:5432/postgres
 ```
 
-or a direct Postgres URL if you prefer.
-
-### PGVector Notes for This Project
-
-The backend uses `langchain-postgres` and manages embedding storage through PGVector integration.
-
-For Postgres-backed Knowledge Bases:
-
-- embeddings are written through `PGVector.from_documents(...)`
-- similarity search is done through `PGVector(...)`
-
-You do not need to manually create the LangChain tables before first use if the DB user has the right permissions, but the vector extension must exist.
-
-## Knowledge Base Notes
-
-Knowledge Bases support:
-
-- `.txt`
-- `.pdf`
-
-Flow:
-
-1. Create a Knowledge Base
-2. Choose:
-   - default Mongo vector store, or
-   - a linked custom DB
-3. Upload files
-4. The backend chunks and embeds them in a background task
-5. Agents can then use that KB during chat
-
-### Embedding Models Available in the UI
-
-- `sentence-transformers/all-MiniLM-L6-v2`
-- `sentence-transformers/paraphrase-MiniLM-L3-v2`
-
-### Default Storage Behavior
-
-If you choose the default DB for a Knowledge Base:
-
-- KB metadata is stored in app Mongo database `qab`
-- embeddings are stored in `qab.embeddings`
-
-## Data Query Notes
-
-Data Query gives an agent read-only access to selected tables or collections from a linked DB.
-
-Flow:
-
-1. Link a database
-2. Open `Data Queries`
-3. Create a Data Query
-4. Select a linked DB
-5. Load tables or collections
-6. Select only the sources you want the agent to access
-7. Add source descriptions and column or field descriptions
-8. Attach the Data Query to an agent
-
-### MongoDB Data Query Requirements
-
-- the linked Mongo URI must include the database name
-- the agent only reads the selected collections
-- the tool expects a Mongo query payload
-
-Accepted Mongo payload patterns are now more forgiving:
-
-- valid JSON
-- fenced JSON blocks
-- Python-style dict syntax that can be safely parsed
-
-Example Mongo `find` payload:
-
-```json
-{
-  "operation": "find",
-  "filter": {},
-  "projection": {
-    "name": 1,
-    "email": 1
-  },
-  "limit": 20
-}
-```
-
-Example Mongo `aggregate` payload:
-
-```json
-{
-  "operation": "aggregate",
-  "pipeline": [
-    { "$match": {} },
-    { "$limit": 20 }
-  ]
-}
-```
-
-### PostgreSQL Data Query Rules
-
-- only read-only SQL is allowed
-- queries must start with `SELECT` or `WITH`
-- write operations such as `INSERT`, `UPDATE`, `DELETE`, `DROP`, `ALTER`, `TRUNCATE`, `CREATE`, `GRANT`, `REVOKE` are blocked
-- the query must reference only allowed tables from the Data Query configuration
-
-## Tooling Notes
-
-Current agent tool support in the UI/backend:
-
-- `web_search`
-
-The web search tool uses Tavily and reads:
-
-```env
-TAVILY_API_KEY=your_tavily_key
-```
-
-## Models Supported
-
-Current LLM providers and models exposed by the backend:
-
-- Groq
-  - `llama-3.1-8b-instant`
-- Gemini
-  - `gemini-2.5-flash`
-
-## How to Use the App End to End
-
-### Option A: Default Mongo for KB
-
-1. set `MONGO_URI`
-2. start the app
-3. register and log in
-4. create a Knowledge Base with `Default DB`
-5. upload files
-6. create an agent
-7. attach the Knowledge Base
-8. chat with the agent
-
-### Option B: Custom Mongo for KB and Data Query
-
-1. prepare a MongoDB Atlas cluster
-2. create vector search index `vector_index` on `qab_test.embeddings`
-3. link Mongo from the UI using a URI that includes a database name
-4. create a Knowledge Base using that linked DB
-5. create a Data Query from the same linked DB if you want collection access
-6. attach the KB and/or Data Query to an agent
-7. chat with the agent
-
-### Option C: PostgreSQL / Supabase for KB and Data Query
-
-1. create or choose a Postgres database
-2. enable `pgvector`
-3. link the DB from the UI
-4. create a Knowledge Base using that linked DB
-5. create a Data Query from the same linked DB if you want table access
-6. attach the KB and/or Data Query to an agent
-7. chat with the agent
-
-## Troubleshooting
-
-### App opens but actions fail with auth or API errors
-
-Check:
-
-- `.env` values are present
-- backend is running from `app/backend`
-- browser is opening `http://localhost:8000/`
-
-### MongoDB custom DB links successfully but Data Query fails
-
-Most likely cause:
-
-- the Mongo URI does not include a database name
-
-Use:
+or
 
 ```text
-mongodb+srv://user:pass@cluster.mongodb.net/YourDatabaseName?appName=YourApp
+postgresql+psycopg2://postgres:password@host:5432/postgres
 ```
 
-### MongoDB vector search fails
+The backend normalizes SQLAlchemy-style suffixes when needed.
 
-Check:
-
-- the collection really contains embeddings
-- the Atlas index name is `vector_index`
-- the index JSON includes filters for `owner_id` and `knowledge_base_id`
-- the embedding dimension is `384`
-
-### Supabase / Postgres KB storage fails
-
-Check:
-
-- `vector` extension is enabled
-- the connection URI is valid
-- the DB user has create/read/write permissions
-
-### Agent chat crashes when using Mongo Data Query
-
-This usually means the tool input was malformed.
-
-The backend now tries to parse:
-
-- plain JSON
-- fenced JSON
-- Python-style dict text
-
-If it still fails, inspect the backend logs and compare the tool payload with the Mongo examples in this README.
-
-### Frontend looks stale after changes
-
-Do a hard refresh:
-
-- Windows: `Ctrl + F5`
-
-The frontend assets are cache-busted through versioned static paths.
-
-## API Summary
+## API Route Groups
 
 Main route groups:
 
@@ -547,38 +415,112 @@ Main route groups:
 - `/custom-db`
 - `/data-query`
 - `/chat`
+- `/tools`
 - `/health`
+
+## Response Format
+
+The backend uses a shared response envelope:
+
+### Success
+
+```json
+{
+  "success": true,
+  "status": 200,
+  "data": {},
+  "message": "Success"
+}
+```
+
+### Error
+
+```json
+{
+  "success": false,
+  "status": 400,
+  "data": null,
+  "message": "Error"
+}
+```
+
+Validation errors also use the same envelope, with validation details inside `data`.
+
+## Notes About the Frontend
+
+- the frontend is not React / Vue
+- routing is hash-based
+- `app.js` is the main controller
+- `api.js` centralizes HTTP handling
+- assets are served from `/static`
 
 ## Security Notes
 
-Do not commit real secrets to source control.
+This repo should not contain real production secrets.
 
-If this repo has ever contained live values for:
+If any real credentials were ever used in:
 
-- MongoDB URIs
+- Mongo URIs
 - JWT secret
-- Groq keys
-- Google keys
-- Tavily keys
-- Hugging Face tokens
-- Supabase credentials
+- Groq key
+- Google API key
+- Tavily key
+- Hugging Face token
+- Google OAuth credentials
+- Supabase / Postgres URIs
 
 rotate them.
 
-Recommended production improvements:
+Current production-hardening gaps worth keeping in mind:
 
-- restrict CORS to known frontend origins
-- use a separate production `.env`
-- use least-privilege DB users
-- store secrets in a proper secrets manager
-- remove any development credentials from tracked files
+- CORS is still open with `allow_origins=["*"]`
+- linked external DB connection strings are not encrypted at rest
+- database-level unique indexes should be added for stronger integrity
+
+## Troubleshooting
+
+### App starts but auth / API calls fail
+
+Check:
+
+- `.env` exists
+- `SECRET_VALUE` is set
+- `MONGO_URI` is valid
+- backend is running from `app/backend`
+
+### Knowledge base upload works but search fails
+
+Check:
+
+- `HF_TOKEN` is set
+- the vector index exists
+- the vector dimension is `384`
+- the right DB was chosen for the KB
+
+### Mongo Data Query inspection fails
+
+Most common cause:
+
+- linked Mongo URI does not include a database name
+
+### Gmail connect flow fails
+
+Check:
+
+- `GOOGLE_CLIENT_ID`
+- `GOOGLE_CLIENT_SECRET`
+- callback URL matches the app URL
+- Google OAuth consent and Gmail scopes are configured correctly
+
+### Frontend changes do not appear
+
+Do a hard refresh in the browser.
 
 ## Development Notes
 
-- the frontend is plain static HTML/CSS/JS served by FastAPI
-- the backend is FastAPI plus MongoDB, LangChain, Hugging Face embeddings, and optional PGVector
-- Knowledge Base file processing runs in the background
-- background email notifications have been removed from the current codebase
+- backend logs are written to `app/backend/qab_logs.txt`
+- knowledge base file processing runs in a background task
+- the frontend and backend are deployed together from the FastAPI app
 
 ## Quick Start Checklist
 
@@ -589,9 +531,9 @@ Recommended production improvements:
    - `GROQ_API_KEY` or `GOOGLE_API_KEY`
 5. Set `HF_TOKEN` if using Knowledge Bases
 6. Set `TAVILY_API_KEY` if using web search
-7. `cd app/backend`
-8. create and activate a virtual environment
-9. `pip install -r requirements.txt`
-10. `uvicorn main:app --reload`
-11. open `http://localhost:8000/`
-
+7. Set Google OAuth vars if using Gmail
+8. `cd app/backend`
+9. create / activate virtual environment
+10. `pip install -r requirements.txt`
+11. `uvicorn main:app --reload`
+12. open `http://localhost:8000/`

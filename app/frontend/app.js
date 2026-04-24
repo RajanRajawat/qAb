@@ -548,7 +548,7 @@ async function renderHome() {
 
             <section class="landing-hero">
                 <div class="landing-copy">
-                    <div class="landing-chip">Agent building workspace for your real app flow</div>
+                    <div class="landing-chip">A complete workspace to build and run real AI agents</div>
                     <h1>Build custom AI agents, connect your data, and chat with them in one place.</h1>
                     <p>
                         qAb helps you create agents, attach knowledge bases, connect databases, define data queries,
@@ -608,7 +608,7 @@ async function renderHome() {
                 <div class="landing-section-head">
                     <div>
                         <div class="eyebrow landing-eyebrow">What You Can Do</div>
-                        <h2>Built around the features qAb already supports</h2>
+                        <h2>A complete toolkit for building AI agents</h2>
                     </div>
                 </div>
                 <div class="landing-feature-grid">
@@ -939,17 +939,17 @@ async function openToolDetailsModal(tool, onChange) {
                     </div>
                 ` : ""}
             </div>
-            <div class="detail-card">
-                <span>Capabilities</span>
-                <div class="capability-list">
-                    ${tool.capabilities.map((capability) => `
+                    <div class="detail-card">
+                        <span>Capabilities</span>
+                        <div class="capability-list">
+                            ${tool.capabilities.map((capability) => `
                         <div class="capability-item">
-                            <span class="capability-check">✓</span>
+                            <span class="capability-bullet" aria-hidden="true"></span>
                             <strong>${escapeHtml(capability)}</strong>
                         </div>
                     `).join("")}
-                </div>
-            </div>
+                        </div>
+                    </div>
             <div class="detail-card">
                 <span>Agent availability</span>
                 <strong>${tool.connected || !tool.config_required ? "This tool can be added to agents right now." : "Connect this tool first, then it becomes selectable in agent setup."}</strong>
@@ -1424,7 +1424,6 @@ async function renderKnowledgeBases() {
                     </div>
                     <div class="panel-actions">
                         <button class="button button-secondary open-kb-detail" data-id="${kb.kb_id}">${icon("folder")}<span>Open</span></button>
-                        <button class="button button-secondary kb-test" data-id="${kb.kb_id}">${icon("search")}<span>Test Search</span></button>
                     </div>
                 </article>
             `).join("") || `<div class="empty-card">No knowledge bases created yet.</div>`}
@@ -1950,7 +1949,7 @@ async function renderDatabases() {
                             <h3>${escapeHtml(db.name)}</h3>
                             <p class="muted">${escapeHtml(db.provider)}</p>
                         </div>
-                        <span class="tag">Linked</span>
+                        <span class="status-pill success">Linked</span>
                     </div>
                     <div class="panel-actions">
                         <button class="button button-secondary edit-db" data-id="${db.db_id}" data-name="${escapeHtml(db.name)}">${icon("edit")}<span>Edit</span></button>
