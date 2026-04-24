@@ -85,8 +85,8 @@ app/
     api.js
     style.css
     media/
+images/
 other/
-  images/
   report/
 ```
 
@@ -324,6 +324,62 @@ No separate frontend dev server is required.
 8. Create an agent
 9. Attach KB / Data Query / tools as needed
 10. Open chat and test it
+
+## Step-By-Step UI Walkthrough
+
+### 1. Home page
+
+The public home page introduces qAb and links users into login / registration.
+
+![qAb home page](images/homepage.png)
+
+### 2. Home page overview section
+
+The landing page also highlights the main workspace areas available in the product.
+
+![qAb home page overview](images/homepage_about.png)
+
+### 3. Dashboard
+
+After login, the dashboard acts as the main workspace entry point.
+
+![qAb dashboard](images/dashboard.png)
+
+### 4. Link a database
+
+Before using structured data or custom vector storage, users can connect MongoDB or PostgreSQL / Supabase.
+
+![Link database view](images/linkdb.png)
+
+### 5. Create a knowledge base
+
+Knowledge bases support uploaded documents and embedding-backed retrieval.
+
+![Knowledge base view](images/kb.png)
+
+### 6. Create a data query
+
+Data Queries expose selected database tables or collections to an agent in a controlled read-only way.
+
+![Data query view](images/dataquery.png)
+
+### 7. Configure tools
+
+Shared tool connections like web search and Gmail are managed in the Tools workspace.
+
+![Tools view](images/tools.png)
+
+### 8. Create an agent
+
+Agents are configured with provider, model, instructions, optional KB, optional Data Query, and optional tools.
+
+![Create agent view](images/create%20agent.png)
+
+### 9. Run an agent in chat
+
+The built-in chat UI lets users run the agent with session-based browser memory and attached workspace resources.
+
+![Run agent chat view](images/run%20agent.png)
 
 ## MongoDB Setup Notes
 
