@@ -14,23 +14,6 @@ It is a full-stack app for building practical AI agents with:
 
 The backend is **FastAPI**, the frontend is **plain HTML/CSS/JavaScript**, and the frontend is served directly by the backend.
 
-## Screenshots
-
-### Home
-![Home](other/images/homepage.png)
-
-### Dashboard
-![Dashboard](other/images/dashboard.png)
-
-### Tools
-![Tools](other/images/tools.png)
-
-### Knowledge Bases
-![Knowledge Bases](other/images/kb.png)
-
-### Data Queries
-![Data Queries](other/images/dataquery.png)
-
 ## What qAb Can Do
 
 - register and log in users
