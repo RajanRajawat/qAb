@@ -1,6 +1,7 @@
 import datetime
 import os
 from bson import ObjectId
+from langchain_core.documents import Document
 from langchain_community.document_loaders import TextLoader, PyPDFLoader
 from langchain_huggingface import HuggingFaceEndpointEmbeddings
 from langchain_mongodb import MongoDBAtlasVectorSearch
@@ -116,6 +117,127 @@ def get_db_name(db_entry: dict | None):
     return db_entry.get("name", "Custom DB")
 
 
+def build_root_embedding_query(owner_id: str, kb_id: str, file_name: str | None = None):
+    query = {
+        "owner_id": owner_id,
+        "knowledge_base_id": kb_id,
+    }
+
+    if file_name:
+        query["file_name"] = file_name
+
+    return query
+
+
+def build_metadata_embedding_query(owner_id: str, kb_id: str, file_name: str | None = None):
+    query = {
+        "metadata.owner_id": owner_id,
+        "metadata.knowledge_base_id": kb_id,
+    }
+
+    if file_name:
+        query["metadata.file_name"] = file_name
+
+    return query
+
+
+def build_mongo_embedding_delete_query(owner_id: str, kb_id: str, file_name: str | None = None):
+    return {
+        "$or": [
+            build_root_embedding_query(owner_id, kb_id, file_name),
+            build_metadata_embedding_query(owner_id, kb_id, file_name),
+        ]
+    }
+
+
+def doc_matches_kb(doc, owner_id: str, kb_id: str):
+    metadata = getattr(doc, "metadata", {}) or {}
+
+    if metadata.get("owner_id") == owner_id and metadata.get("knowledge_base_id") == kb_id:
+        return True
+
+    return (
+        getattr(doc, "owner_id", None) == owner_id
+        and getattr(doc, "knowledge_base_id", None) == kb_id
+    )
+
+
+def get_mongo_embedding_find_query(owner_id: str, kb_id: str):
+    return {
+        "$or": [
+            build_root_embedding_query(owner_id, kb_id),
+            build_metadata_embedding_query(owner_id, kb_id),
+        ]
+    }
+
+
+def cosine_similarity(left: list[float], right: list[float]):
+    if not left or not right or len(left) != len(right):
+        return None
+
+    dot_product = 0.0
+    left_norm = 0.0
+    right_norm = 0.0
+
+    for left_value, right_value in zip(left, right):
+        dot_product += left_value * right_value
+        left_norm += left_value * left_value
+        right_norm += right_value * right_value
+
+    if left_norm == 0.0 or right_norm == 0.0:
+        return None
+
+    return dot_product / ((left_norm ** 0.5) * (right_norm ** 0.5))
+
+
+def build_document_from_mongo_record(record: dict):
+    metadata = {}
+
+    if isinstance(record.get("metadata"), dict):
+        metadata.update(record["metadata"])
+
+    for key in ["owner_id", "file_name", "knowledge_base_id", "embedding_model", "source"]:
+        if record.get(key) is not None and key not in metadata:
+            metadata[key] = record.get(key)
+
+    return Document(
+        page_content=record.get("text", ""),
+        metadata=metadata,
+    )
+
+
+def manual_mongo_similarity_search(target_collection, query_vector: list[float], owner_id: str, kb_id: str, limit: int):
+    records = list(target_collection.find(
+        get_mongo_embedding_find_query(owner_id, kb_id),
+        {
+            "_id": 0,
+            "text": 1,
+            "embedding": 1,
+            "metadata": 1,
+            "owner_id": 1,
+            "file_name": 1,
+            "knowledge_base_id": 1,
+            "embedding_model": 1,
+            "source": 1,
+        }
+    ))
+
+    scored_results = []
+
+    for record in records:
+        similarity_score = cosine_similarity(query_vector, record.get("embedding") or [])
+        if similarity_score is None:
+            continue
+
+        scored_results.append((
+            build_document_from_mongo_record(record),
+            similarity_score,
+        ))
+
+    scored_results.sort(key=lambda item: item[1], reverse=True)
+    return scored_results[:limit]
+
+
 def get_mongo_collection_from_entry(db_entry: dict):
     config = db_entry.get("config", {})
 
@@ -144,13 +266,7 @@ async def delete_kb_reference_from_agents(kb_id: str, owner_id: str):
 
 
 def delete_embeddings_from_default(owner_id: str, kb_id: str, file_name: str | None = None):
-    query = {
-        "owner_id": owner_id,
-        "knowledge_base_id": kb_id,
-    }
-    if file_name:
-        query["file_name"] = file_name
-    result = vector_collection.delete_many(query)
+    result = vector_collection.delete_many(build_mongo_embedding_delete_query(owner_id, kb_id, file_name))
     return result.deleted_count
 
 
@@ -159,14 +275,7 @@ def delete_embeddings_from_custom_mongo(db_entry: dict, owner_id: str, kb_id: st
     if target_collection is None:
         return None
 
-    query = {
-        "owner_id": owner_id,
-        "knowledge_base_id": kb_id,
-    }
-    if file_name:
-        query["file_name"] = file_name
-
-    result = target_collection.delete_many(query)
+    result = target_collection.delete_many(build_mongo_embedding_delete_query(owner_id, kb_id, file_name))
     return result.deleted_count
 
 
@@ -224,7 +333,10 @@ def delete_all_embeddings_for_custom_db(owner_id: str, db_entry: dict):
         if target_collection is None:
             return None
         result = target_collection.delete_many({
-            "owner_id": owner_id,
+            "$or": [
+                {"owner_id": owner_id},
+                {"metadata.owner_id": owner_id},
+            ]
         })
         return result.deleted_count
 
@@ -356,6 +468,10 @@ def search_kb_chunks(query: str, owner_id: str, kb_entry: dict, db_entry: dict |
     kb_id = str(kb_entry["_id"])
     embedding_model = resolve_embedding_model_name(kb_entry.get("embedding_model"))
     embeddings = get_embedding_client(embedding_model)
+    query_vector = embeddings.embed_query(query)
+    mongo_root_pre_filter = build_root_embedding_query(owner_id, kb_id)
+    mongo_metadata_pre_filter = build_metadata_embedding_query(owner_id, kb_id)
+    fallback_limit = max(limit * 8, 20)
 
     if not db_entry:
         vector_store = MongoDBAtlasVectorSearch(
@@ -363,14 +479,34 @@ def search_kb_chunks(query: str, owner_id: str, kb_entry: dict, db_entry: dict |
             embedding=embeddings,
             index_name="vector_index",
         )
-        return vector_store.similarity_search_with_score(
-            query=query,
-            k=limit,
-            pre_filter={
-                "owner_id": owner_id,
-                "knowledge_base_id": kb_id,
-            },
-        )
+        for pre_filter, label in [
+            (mongo_root_pre_filter, "root"),
+            (mongo_metadata_pre_filter, "metadata"),
+        ]:
+            try:
+                results = vector_store.similarity_search_with_score(
+                    query=query,
+                    k=limit,
+                    pre_filter=pre_filter,
+                )
+                if results:
+                    return results
+            except Exception as e:
+                logger.warning(f"Default Mongo vector search {label} pre-filter failed for kb {kb_id}: {str(e)}")
+
+        try:
+            results = vector_store.similarity_search_with_score(
+                query=query,
+                k=fallback_limit,
+            )
+            filtered_results = [(doc, score) for doc, score in results if doc_matches_kb(doc, owner_id, kb_id)][:limit]
+            if filtered_results:
+                return filtered_results
+        except Exception as e:
+            logger.warning(f"Default Mongo vector search fallback failed for kb {kb_id}: {str(e)}")
+
+        logger.info(f"Falling back to manual Mongo similarity search for kb {kb_id}")
+        return manual_mongo_similarity_search(vector_collection, query_vector, owner_id, kb_id, limit)
 
     provider = db_entry.get("provider")
 
@@ -384,14 +520,34 @@ def search_kb_chunks(query: str, owner_id: str, kb_entry: dict, db_entry: dict |
             embedding=embeddings,
             index_name="vector_index",
         )
-        return vector_store.similarity_search_with_score(
-            query=query,
-            k=limit,
-            pre_filter={
-                "owner_id": owner_id,
-                "knowledge_base_id": kb_id,
-            },
-        )
+        for pre_filter, label in [
+            (mongo_root_pre_filter, "root"),
+            (mongo_metadata_pre_filter, "metadata"),
+        ]:
+            try:
+                results = vector_store.similarity_search_with_score(
+                    query=query,
+                    k=limit,
+                    pre_filter=pre_filter,
+                )
+                if results:
+                    return results
+            except Exception as e:
+                logger.warning(f"Custom Mongo vector search {label} pre-filter failed for kb {kb_id}: {str(e)}")
+
+        try:
+            results = vector_store.similarity_search_with_score(
+                query=query,
+                k=fallback_limit,
+            )
+            filtered_results = [(doc, score) for doc, score in results if doc_matches_kb(doc, owner_id, kb_id)][:limit]
+            if filtered_results:
+                return filtered_results
+        except Exception as e:
+            logger.warning(f"Custom Mongo vector search fallback failed for kb {kb_id}: {str(e)}")
+
+        logger.info(f"Falling back to manual custom Mongo similarity search for kb {kb_id}")
+        return manual_mongo_similarity_search(target_collection, query_vector, owner_id, kb_id, limit)
 
     if provider == "postgres":
         connection_string = db_entry["config"]["connection_string"].replace("postgres://", "postgresql://")

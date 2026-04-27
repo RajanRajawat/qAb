@@ -1,0 +1,12 @@
+2026-04-27 13:33:32,032 | INFO | database.db | MongoDB connection string loaded successfully
+2026-04-27 13:33:32,077 | INFO | database.db | Async MongoDB client initialized for database: qab
+2026-04-27 13:33:32,078 | INFO | database.db | MongoDB collections initialized: users, agents
+2026-04-27 13:33:32,456 | INFO | database.db | Sync MongoDB vector collection initialized: vector_store
+2026-04-27 13:34:18,836 | INFO | database.db | MongoDB connection string loaded successfully
+2026-04-27 13:34:18,846 | INFO | database.db | Async MongoDB client initialized for database: qab
+2026-04-27 13:34:18,846 | INFO | database.db | MongoDB collections initialized: users, agents
+2026-04-27 13:34:19,167 | INFO | database.db | Sync MongoDB vector collection initialized: vector_store
+2026-04-27 13:34:58,611 | INFO | database.db | MongoDB connection string loaded successfully
+2026-04-27 13:34:58,622 | INFO | database.db | Async MongoDB client initialized for database: qab
+2026-04-27 13:34:58,622 | INFO | database.db | MongoDB collections initialized: users, agents
+2026-04-27 13:34:59,142 | INFO | database.db | Sync MongoDB vector collection initialized: vector_store

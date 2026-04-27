@@ -1016,6 +1016,40 @@ pre {
     font-size: 0.88rem;
 }
 
+.password-input-wrap {
+    position: relative;
+}
+
+.password-input-wrap input {
+    padding-right: 88px;
+}
+
+.password-toggle {
+    position: absolute;
+    top: 50%;
+    right: 10px;
+    transform: translateY(-50%);
+    border: 0;
+    background: transparent;
+    color: var(--primary);
+    font-weight: 700;
+    font-size: 0.92rem;
+    padding: 6px 8px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: background 0.18s ease, color 0.18s ease;
+}
+
+.password-toggle:hover {
+    background: rgba(125, 103, 216, 0.1);
+}
+
+.password-toggle:focus-visible {
+    outline: none;
+    background: rgba(125, 103, 216, 0.12);
+    box-shadow: 0 0 0 3px rgba(125, 103, 216, 0.14);
+}
+
 input,
 select,
 textarea {

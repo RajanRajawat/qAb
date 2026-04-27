@@ -236,7 +236,8 @@ async def remove_file_from_knowledge_base(
         message=f"File removed successfully. Deleted {deleted_count} embeddings."
     )
 
-
+#! bugged mongo test not working    
+#~ FIXED
 @kb_router.post("/test-search/{kb_id}")
 async def test_knowledge_base_search(
     kb_id: str,
@@ -253,13 +254,18 @@ async def test_knowledge_base_search(
     if kb_entry.get("db_id") != "default" and not db_entry:
         return error_response(404, message="Linked DB not found for this knowledge base.")
 
-    results = search_kb_chunks(
-        payload.query,
-        str(current_user["_id"]),
-        kb_entry,
-        db_entry,
-        payload.limit
-    )
+    try:
+        results = search_kb_chunks(
+            payload.query,
+            str(current_user["_id"]),
+            kb_entry,
+            db_entry,
+            payload.limit
+        )
+        
+    except Exception as e:
+        logger.error(f"Knowledge base test search failed for kb {kb_id}: {str(e)}")
+        return error_response(500, message="Could not search this knowledge base right now.")
 
     return success_response(
         200,

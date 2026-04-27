@@ -306,6 +306,41 @@ function getAuthSocialLinksMarkup() {
     `;
 }
 
+function getPasswordFieldMarkup(inputId, placeholder) {
+    return `
+        <div class="password-input-wrap">
+            <input id="${inputId}" type="password" required placeholder="${escapeHtml(placeholder)}">
+            <button
+                class="password-toggle"
+                type="button"
+                data-password-target="${inputId}"
+                aria-label="Show password"
+                aria-pressed="false"
+            >
+                <span>Show</span>
+            </button>
+        </div>
+    `;
+}
+
+function bindPasswordToggles() {
+    document.querySelectorAll("[data-password-target]").forEach((button) => {
+        button.onclick = () => {
+            const input = document.getElementById(button.dataset.passwordTarget);
+            if (!input) {
+                return;
+            }
+
+            const isVisible = input.type === "text";
+            input.type = isVisible ? "password" : "text";
+            button.setAttribute("aria-pressed", String(!isVisible));
+            button.setAttribute("aria-label", isVisible ? "Show password" : "Hide password");
+            button.innerHTML = `<span>${isVisible ? "Show" : "Hide"}</span>`;
+            input.focus();
+        };
+    });
+}
+
 function getLayout(content, active = "") {
     return `
         <div class="shell">
@@ -711,7 +746,7 @@ async function renderLogin() {
                     </label>
                     <label class="field">
                         <span>Password</span>
-                        <input id="login-password" type="password" required placeholder="Password">
+                        ${getPasswordFieldMarkup("login-password", "Password")}
                     </label>
                     <button class="button button-dark wide-button" type="submit">${icon("login")}<span>Sign In</span></button>
                 </form>
@@ -736,6 +771,8 @@ async function renderLogin() {
             showToast(error.message, "error");
         }
     };
+
+    bindPasswordToggles();
 }
 
 async function renderRegister() {
@@ -765,7 +802,7 @@ async function renderRegister() {
                     </label>
                     <label class="field">
                         <span>Password</span>
-                        <input id="register-password" type="password" required placeholder="Strong password">
+                        ${getPasswordFieldMarkup("register-password", "Strong password")}
                     </label>
                     <button class="button button-dark wide-button" type="submit">${icon("register")}<span>Create Account</span></button>
                 </form>
@@ -788,6 +825,8 @@ async function renderRegister() {
             showToast(error.message, "error");
         }
     };
+
+    bindPasswordToggles();
 }
 
 async function renderDashboard() {
