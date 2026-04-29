@@ -19,7 +19,7 @@ from utils.users import get_current_user
 
 data_query_router = APIRouter(prefix="/data-query", tags=["Data Query"])
 
-
+#- get data from db
 @data_query_router.post("/inspect/{db_id}")
 async def inspect_sources(db_id: str, current_user: dict = Depends(get_current_user)):
     logger.info(f"Data Query inspect request for db {db_id} from {current_user['email']}")
@@ -45,7 +45,7 @@ async def inspect_sources(db_id: str, current_user: dict = Depends(get_current_u
         message="Database sources fetched successfully.",
     )
 
-
+#- creating data query
 @data_query_router.post("/create")
 async def create_data_query(payload: CreateDataQuery, current_user: dict = Depends(get_current_user)):
     logger.info(f"Data Query creation request from {current_user['email']}")
@@ -83,6 +83,7 @@ async def create_data_query(payload: CreateDataQuery, current_user: dict = Depen
     return success_response(201, message="Data Query created successfully.")
 
 
+#- get all data qury
 @data_query_router.get("/all")
 async def get_all_data_queries(current_user: dict = Depends(get_current_user)):
     logger.info(f"Fetch Data Queries request from {current_user['email']}")
@@ -96,7 +97,7 @@ async def get_all_data_queries(current_user: dict = Depends(get_current_user)):
         message="Data Queries fetched successfully.",
     )
 
-
+#- get dq by id
 @data_query_router.get("/{data_query_id}")
 async def get_data_query(data_query_id: str, current_user: dict = Depends(get_current_user)):
     logger.info(f"Fetch Data Query {data_query_id} request from {current_user['email']}")
@@ -107,7 +108,7 @@ async def get_data_query(data_query_id: str, current_user: dict = Depends(get_cu
 
     return success_response(200, data=serialize_data_query(data_query), message="Data Query fetched successfully.")
 
-
+#- update dq by id
 @data_query_router.patch("/update/{data_query_id}")
 async def update_data_query(data_query_id: str, payload: UpdateDataQuery, current_user: dict = Depends(get_current_user)):
     logger.info(f"Update Data Query {data_query_id} request from {current_user['email']}")
@@ -155,7 +156,7 @@ async def update_data_query(data_query_id: str, payload: UpdateDataQuery, curren
 
     return success_response(200, data=serialize_data_query(updated), message="Data Query updated successfully.")
 
-
+#- delete dq by id
 @data_query_router.delete("/delete/{data_query_id}")
 async def delete_data_query(data_query_id: str, current_user: dict = Depends(get_current_user)):
     logger.info(f"Delete Data Query {data_query_id} request from {current_user['email']}")

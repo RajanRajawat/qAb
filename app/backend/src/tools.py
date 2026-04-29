@@ -1,18 +1,16 @@
 import base64
 from email.message import EmailMessage
 from typing import Literal
-
 import requests
 from langchain_core.tools import BaseTool, StructuredTool, tool
 from pydantic import BaseModel, Field
 from tavily import TavilyClient
-
 from database.models import AgentTool
 from utils.env_loaders import load_tavily_api
 from utils.loggers import logger
 from utils.tool_helpers import GMAIL_TOOL_KEY, WEB_SEARCH_TOOL_KEY, get_valid_gmail_access_token
 
-
+#- tools
 @tool
 async def web_search(query: str) -> str:
     """

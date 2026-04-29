@@ -8,6 +8,7 @@ from utils.response import success_response, error_response
 
 login_router = APIRouter(prefix="/auth" , tags=["Auth"])
 
+#-auth / login
 @login_router.post("/login")
 async def validate_login(user: UserLogin):
     try:

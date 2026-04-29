@@ -1,4 +1,4 @@
-﻿import { api } from "./api.js?v=20260422a";
+﻿import { api } from "./api.js?v=20260428e";
 
 window.refreshIcons = window.refreshIcons || (() => {
     if (window.lucide?.createIcons) {
@@ -222,6 +222,7 @@ function icon(name, className = "ui-icon") {
         upload: `<path d="M12 16V4"/><path d="m7 9 5-5 5 5"/><path d="M20 16.5V19a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2v-2.5"/>`,
         back: `<path d="m15 18-6-6 6-6"/><path d="M21 12H9"/>`,
         send: `<path d="M22 2 11 13"/><path d="m22 2-7 20-4-9-9-4Z"/>`,
+        loader: `<path d="M21 12a9 9 0 1 1-6.2-8.56"/>`,
         folder: `<path d="M3 6a2 2 0 0 1 2-2h5l2 2h7a2 2 0 0 1 2 2v10a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2Z"/>`,
         link: `<path d="M10 13a5 5 0 0 0 7.1 0l2.8-2.8a5 5 0 0 0-7.1-7.1L11 5"/><path d="M14 11a5 5 0 0 0-7.1 0l-2.8 2.8a5 5 0 0 0 7.1 7.1L13 19"/>`,
         wrench: `<path d="M14.7 6.3a4 4 0 0 0-5.4 5.4L3 18v3h3l6.3-6.3a4 4 0 0 0 5.4-5.4l-3 3-3-3 3-3Z"/>`,
@@ -1175,7 +1176,7 @@ function getAgentFormMarkup(agent, kbs, dataQueries, toolsCatalog) {
                     `).join("")}
                 </select>
             </label>
-            <button class="button button-primary" type="submit">${icon(isEdit ? "edit" : "plus")}<span>${isEdit ? "Save changes" : "Create agent"}</span></button>
+            <button class="button button-primary" id="agent-submit-button" type="submit">${icon(isEdit ? "edit" : "plus")}<span>${isEdit ? "Save changes" : "Create agent"}</span></button>
         </form>
     `;
 }
@@ -1209,9 +1210,16 @@ async function openAgentModal(agent = null, onDone) {
         }
     };
 
-    const form = document.querySelector("form");
+    const form = document.getElementById(agent ? "edit-agent-form" : "create-agent-form");
+    const submitButton = document.getElementById("agent-submit-button");
+    let isSaving = false;
+
     form.onsubmit = async (event) => {
         event.preventDefault();
+
+        if (isSaving) {
+            return;
+        }
 
         const selectedTools = Array.from(document.querySelectorAll(".agent-tool-checkbox:checked"))
             .map((node) => node.value);
@@ -1232,6 +1240,9 @@ async function openAgentModal(agent = null, onDone) {
         };
 
         try {
+            isSaving = true;
+            setButtonLoading(submitButton, true, agent ? "Saving..." : "Creating...");
+
             if (agent) {
                 await api.updateAgent(agent._id, payload);
                 showToast("Agent updated");
@@ -1244,6 +1255,9 @@ async function openAgentModal(agent = null, onDone) {
             await onDone();
         } catch (error) {
             showToast(error.message, "error");
+        } finally {
+            isSaving = false;
+            setButtonLoading(submitButton, false);
         }
     };
 }
@@ -1720,14 +1734,16 @@ async function openDataQueryModal(dataQuery = null, onDone) {
                 <span class="field-note">The agent will only get read-only access to the selected tables or collections.</span>
             </div>
             <div id="data-query-sources" class="stack"></div>
-            <button class="button button-primary" type="submit">${icon(dataQuery ? "edit" : "plus")}<span>${dataQuery ? "Save Data Query" : "Create Data Query"}</span></button>
+            <button class="button button-primary" id="data-query-submit" type="submit">${icon(dataQuery ? "edit" : "plus")}<span>${dataQuery ? "Save Data Query" : "Create Data Query"}</span></button>
         </form>
     `);
 
     const dbSelect = document.getElementById("data-query-db");
     const loadButton = document.getElementById("load-data-query-sources");
+    const submitButton = document.getElementById("data-query-submit");
     const sourcesRoot = document.getElementById("data-query-sources");
     let sourceState = [];
+    let isSaving = false;
 
     const bindSourceEvents = () => {
         document.querySelectorAll(".dq-source-toggle").forEach((input) => {
@@ -1798,6 +1814,10 @@ async function openDataQueryModal(dataQuery = null, onDone) {
     document.getElementById("data-query-form").onsubmit = async (event) => {
         event.preventDefault();
 
+        if (isSaving) {
+            return;
+        }
+
         const selectedSources = getSelectedDataQuerySources(sourceState);
         if (!selectedSources.length) {
             showToast("Select at least one table or collection", "error");
@@ -1811,6 +1831,9 @@ async function openDataQueryModal(dataQuery = null, onDone) {
         };
 
         try {
+            isSaving = true;
+            setButtonLoading(submitButton, true, dataQuery ? "Saving..." : "Creating...");
+
             if (dataQuery) {
                 await api.updateDataQuery(dataQuery.data_query_id, {
                     name: payload.name,
@@ -1826,6 +1849,9 @@ async function openDataQueryModal(dataQuery = null, onDone) {
             await onDone();
         } catch (error) {
             showToast(error.message, "error");
+        } finally {
+            isSaving = false;
+            setButtonLoading(submitButton, false);
         }
     };
 }
@@ -2150,7 +2176,7 @@ async function renderChat(agentId) {
                 <form class="chat-form" id="chat-form">
                     <div class="chat-input-shell">
                         <textarea id="chat-input" rows="1" placeholder="Type your message"></textarea>
-                        <button class="chat-send-button" type="submit" aria-label="Send message" title="Send">
+                        <button class="chat-send-button" type="submit" id="chat-send-button" aria-label="Send message" title="Send">
                             ${icon("send")}
                         </button>
                     </div>
@@ -2190,7 +2216,20 @@ async function renderChat(agentId) {
 
     const chatForm = document.getElementById("chat-form");
     const input = document.getElementById("chat-input");
+    const sendButton = document.getElementById("chat-send-button");
     const clearChatButton = document.getElementById("clear-chat-button");
+    let isSending = false;
+
+    const setSendingState = (sending) => {
+        isSending = sending;
+        sendButton.disabled = sending;
+        sendButton.classList.toggle("is-loading", sending);
+        sendButton.setAttribute("aria-label", sending ? "Waiting for response" : "Send message");
+        sendButton.title = sending ? "Waiting for response" : "Send";
+        sendButton.innerHTML = sending
+            ? icon("loader", "ui-icon send-loader-icon")
+            : icon("send");
+    };
 
     const resizeChatInput = () => {
         input.style.height = "auto";
@@ -2204,7 +2243,9 @@ async function renderChat(agentId) {
     input.addEventListener("keydown", (event) => {
         if (event.key === "Enter" && !event.shiftKey) {
             event.preventDefault();
-            chatForm.requestSubmit();
+            if (!isSending) {
+                chatForm.requestSubmit();
+            }
         }
     });
 
@@ -2219,11 +2260,16 @@ async function renderChat(agentId) {
     chatForm.onsubmit = async (event) => {
         event.preventDefault();
 
+        if (isSending) {
+            return;
+        }
+
         const query = input.value.trim();
         if (!query) {
             return;
         }
 
+        setSendingState(true);
         addMessage(query, "user");
         sessionMessages.push({
             role: "user",
@@ -2259,12 +2305,16 @@ async function renderChat(agentId) {
             });
             sessionMessages = saveChatSession(agentId, sessionMessages);
         } catch (error) {
-            pending.innerHTML = renderMarkdown("Aw, Snap! Something went wrong, please try again later.");
+            const errorMessage = error?.message === "Request timed out"
+                ? "Request timed out"
+                : "Aw, Snap! Something went wrong, please try again later.";
+            pending.innerHTML = renderMarkdown(errorMessage);
             pending.classList.remove("assistant-message-typing");
             sessionMessages = sessionMessages.slice(0, -1);
             sessionMessages = saveChatSession(agentId, sessionMessages);
         } finally {
             window.clearInterval(timer);
+            setSendingState(false);
             input.focus();
         }
     };

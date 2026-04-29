@@ -6,7 +6,7 @@ from pymongo import ReturnDocument
 import datetime
 
 from database.db import agents_collection, users_collection
-from database.models import AgentCreation, AgentUpdate
+from database.models import AgentCreation, AgentUpdate, LLMModel, LLMProvider, compatibility_map
 from utils.agent_helpers import (
     normalize_agent_reference_updates,
     serialize_agent,
@@ -23,6 +23,28 @@ from utils.users import get_current_user
 agent_router = APIRouter(prefix="/agent", tags=["Agent"])
 
 
+def enum_value(value):
+    return value.value if hasattr(value, "value") else value
+
+
+def validate_llm_pair(provider, model):
+    try:
+        provider_enum = LLMProvider(enum_value(provider))
+        model_enum = LLMModel(enum_value(model))
+    except ValueError:
+        return "Unsupported provider or model selected."
+
+    allowed_models = compatibility_map.get(provider_enum, set())
+    if model_enum not in allowed_models:
+        return (
+            f"Model '{model_enum.value}' is not supported by provider '{provider_enum.value}'. "
+            f"Allowed models: {sorted(model.value for model in allowed_models)}"
+        )
+
+    return None
+
+
+#- Creating agnet
 @agent_router.post("/create")
 async def create_agent(agent: AgentCreation, current_user: dict = Depends(get_current_user)):
     logger.info(f"Agent creation request from {current_user['email']}")
@@ -64,6 +86,8 @@ async def create_agent(agent: AgentCreation, current_user: dict = Depends(get_cu
     return success_response(201, message="Agent created successfully!")
 
 
+#- get all agents
+
 @agent_router.get("/all")
 async def get_agents(current_user: dict = Depends(get_current_user)):
     logger.info(f"Fetch all agents request from {current_user['email']}")
@@ -78,6 +102,7 @@ async def get_agents(current_user: dict = Depends(get_current_user)):
     return success_response(200, data=agents, message="Agents fetched successfully!")
 
 
+#- get agent by id
 @agent_router.get("/{agent_id}")
 async def get_agent(agent_id: str, current_user: dict = Depends(get_current_user)):
     logger.info(f"Fetch agent {agent_id} request from {current_user['email']}")
@@ -97,7 +122,7 @@ async def get_agent(agent_id: str, current_user: dict = Depends(get_current_user
 
     return success_response(200, data=serialize_agent(agent), message="Agent fetched successfully!")
 
-
+#- update agent (by id)
 @agent_router.patch("/update/{agent_id}")
 async def update_agent(agent_id: str, agent: AgentUpdate, current_user: dict = Depends(get_current_user)):
     logger.info(f"Agent update request | id: {agent_id} | owner: {current_user['email']}")
@@ -111,11 +136,30 @@ async def update_agent(agent_id: str, agent: AgentUpdate, current_user: dict = D
     if not update_data:
         return error_response(400, message="No fields provided to update.")
 
+    existing_agent = None
+
+    async def get_existing_agent():
+        nonlocal existing_agent
+        if existing_agent is None:
+            existing_agent = await agents_collection.find_one({
+                "_id": obj_id,
+                "owner_id": ObjectId(current_user["_id"]),
+            })
+        return existing_agent
+
+    if "llm_provider" in update_data or "llm_model" in update_data:
+        existing_agent = await get_existing_agent()
+        if not existing_agent:
+            return error_response(404, message="Agent not found.")
+
+        next_provider = update_data.get("llm_provider", existing_agent.get("llm_provider"))
+        next_model = update_data.get("llm_model", existing_agent.get("llm_model"))
+        llm_err = validate_llm_pair(next_provider, next_model)
+        if llm_err:
+            return error_response(400, message=llm_err)
+
     if "knowledge_base" in update_data or "knowledge_base_id" in update_data:
-        existing_agent = await agents_collection.find_one({
-            "_id": obj_id,
-            "owner_id": ObjectId(current_user["_id"]),
-        })
+        existing_agent = await get_existing_agent()
         if not existing_agent:
             return error_response(404, message="Agent not found.")
 
@@ -134,10 +178,7 @@ async def update_agent(agent_id: str, agent: AgentUpdate, current_user: dict = D
             return error_response(400, message=err)
 
     if "data_query" in update_data or "data_query_id" in update_data:
-        existing_agent = await agents_collection.find_one({
-            "_id": obj_id,
-            "owner_id": ObjectId(current_user["_id"]),
-        })
+        existing_agent = await get_existing_agent()
         if not existing_agent:
             return error_response(404, message="Agent not found.")
 
@@ -177,7 +218,7 @@ async def update_agent(agent_id: str, agent: AgentUpdate, current_user: dict = D
     logger.info(f"Agent updated | id: {agent_id} | owner: {current_user['email']}")
     return success_response(200, data=serialize_agent(updated), message="Agent updated successfully!")
 
-
+#- delete agent (by id)
 @agent_router.delete("/delete/{agent_id}")
 async def delete_agent(agent_id: str, current_user: dict = Depends(get_current_user)):
     logger.info(f"Agent delete request | id: {agent_id} | owner: {current_user['email']}")

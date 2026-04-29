@@ -23,7 +23,7 @@ from utils.users import get_current_user
 
 tool_config_router = APIRouter(prefix="/tools", tags=["Tools"])
 
-
+#- gmail
 def _redirect_to_tools(status: str, message: str):
     encoded_message = quote(encode_redirect_message(message))
     return RedirectResponse(url=f"/#tools?google_status={status}&message={encoded_message}", status_code=302)

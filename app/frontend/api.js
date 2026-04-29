@@ -1,4 +1,6 @@
 const API_BASE_URL = window.location.origin;
+const CHAT_RUN_TIMEOUT_MS = 120000;
+const REQUEST_TIMEOUT_MESSAGE = "Request timed out";
 
 function formatValidationItems(items) {
     return items
@@ -50,6 +52,9 @@ class ApiClient {
 
     async request(endpoint, options = {}) {
         const url = `${API_BASE_URL}${endpoint}`;
+        const timeoutMs = options.timeoutMs;
+        const timeoutController = timeoutMs ? new AbortController() : null;
+        let timeoutId = null;
         const headers = {
             ...(options.headers || {})
         };
@@ -66,18 +71,35 @@ class ApiClient {
             ...options,
             headers
         };
+        delete nextOptions.timeoutMs;
+
+        if (timeoutController) {
+            nextOptions.signal = timeoutController.signal;
+            timeoutId = window.setTimeout(() => timeoutController.abort(), timeoutMs);
+        }
 
         if (!options.isFormData && nextOptions.body && typeof nextOptions.body === "object") {
             nextOptions.body = JSON.stringify(nextOptions.body);
         }
 
-        const response = await fetch(url, nextOptions);
+        let response = null;
         let data = null;
 
         try {
+            response = await fetch(url, nextOptions);
             data = await response.json();
         } catch (error) {
+            if (error?.name === "AbortError") {
+                throw new Error(REQUEST_TIMEOUT_MESSAGE);
+            }
+            if (!response) {
+                throw error;
+            }
             data = null;
+        } finally {
+            if (timeoutId) {
+                window.clearTimeout(timeoutId);
+            }
         }
 
         if (!response.ok) {
@@ -149,6 +171,7 @@ class ApiClient {
     async runAgent(agentId, query, history = []) {
         return this.request(`/chat/run/${agentId}`, {
             method: "POST",
+            timeoutMs: CHAT_RUN_TIMEOUT_MS,
             body: {
                 query,
                 history

@@ -2,11 +2,9 @@ import datetime
 import os
 import re
 import shutil
-
 from bson import ObjectId
 from fastapi import APIRouter, BackgroundTasks, Depends, File, UploadFile
 from pymongo import ReturnDocument
-
 from database.db import kb_collection
 from database.models import CreateKnowledgeBase, KnowledgeBaseVectorSearchRequest, UpdateKnowledgeBase
 from utils.knowledge_base_helpers import (
@@ -28,6 +26,8 @@ from utils.loggers import logger
 from utils.response import error_response, success_response
 from utils.users import get_current_user
 
+
+#check krna bhai ye lase me
 #! when a custom db is deleted, all the data from that db is deleted, it should be deleted of that specific kb name data removal only.
 kb_router = APIRouter(prefix="/knowledge-base", tags=["Knowledge Base"])
 
@@ -43,6 +43,9 @@ def build_kb_name_match_query(owner_id: str, name: str):
 
 
 #- Routes
+
+
+#-get embedding options
 @kb_router.get("/embedding-options")
 async def get_embedding_options(current_user: dict = Depends(get_current_user)):
     logger.info(f"Embedding options requested by {current_user['email']}")
@@ -53,7 +56,7 @@ async def get_embedding_options(current_user: dict = Depends(get_current_user)):
         data=serialize_embedding_options()
     )
 
-
+#- create kb
 @kb_router.post("/create")
 async def create_knowledge_base(payload: CreateKnowledgeBase, current_user: dict = Depends(get_current_user)):
     logger.info(f"Knowledge base create request from {current_user['email']}")
@@ -94,7 +97,7 @@ async def create_knowledge_base(payload: CreateKnowledgeBase, current_user: dict
         data=serialize_kb(kb_data)
     )
 
-
+#- get all kb
 @kb_router.get("/all")
 async def get_all_knowledge_bases(current_user: dict = Depends(get_current_user)):
     logger.info(f"Knowledge base list request from {current_user['email']}")
@@ -105,6 +108,7 @@ async def get_all_knowledge_bases(current_user: dict = Depends(get_current_user)
 
     return success_response(200, message="Knowledge bases fetched successfully.", data=kbs)
 
+#- get kb by id
 
 @kb_router.get("/{kb_id}")
 async def get_knowledge_base(kb_id: str, current_user: dict = Depends(get_current_user)):
@@ -116,7 +120,7 @@ async def get_knowledge_base(kb_id: str, current_user: dict = Depends(get_curren
 
     return success_response(200, message="Knowledge base fetched successfully.", data=serialize_kb(kb_entry))
 
-
+#- UPDATE KB by id
 @kb_router.patch("/update/{kb_id}")
 async def update_knowledge_base(kb_id: str, payload: UpdateKnowledgeBase, current_user: dict = Depends(get_current_user)):
     logger.info(f"Knowledge base update request for kb {kb_id} from {current_user['email']}")
@@ -148,7 +152,7 @@ async def update_knowledge_base(kb_id: str, payload: UpdateKnowledgeBase, curren
 
     return success_response(200, message="Knowledge base updated successfully.", data=serialize_kb(updated_kb))
 
-
+#- add file to kb
 @kb_router.post("/add-file/{kb_id}")
 async def add_file_to_knowledge_base(
     kb_id: str,
@@ -198,7 +202,7 @@ async def add_file_to_knowledge_base(
 
     return success_response(202, message="File added successfully. Processing started.")
 
-
+#-delte file from kb
 @kb_router.delete("/remove-file/{kb_id}")
 async def remove_file_from_knowledge_base(
     kb_id: str,
@@ -238,6 +242,7 @@ async def remove_file_from_knowledge_base(
 
 #! bugged mongo test not working    
 #~ FIXED
+#- test chunks from kb
 @kb_router.post("/test-search/{kb_id}")
 async def test_knowledge_base_search(
     kb_id: str,
@@ -279,6 +284,7 @@ async def test_knowledge_base_search(
     )
 
 
+#- delete kb by id
 @kb_router.delete("/delete/{kb_id}")
 async def delete_knowledge_base(kb_id: str, current_user: dict = Depends(get_current_user)):
     logger.info(f"Delete knowledge base request for kb {kb_id} from {current_user['email']}")

@@ -10,6 +10,15 @@ from utils.general import ensure_object_id, object_id_match
 
 
 POSTGRES_INTERNAL_TABLES = {"langchain_pg_collection", "langchain_pg_embedding"}
+MONGO_FORBIDDEN_AGGREGATE_OPERATORS = {
+    "$lookup",
+    "$unionWith",
+    "$graphLookup",
+    "$out",
+    "$merge",
+    "$function",
+    "$accumulator",
+}
 
 
 
@@ -144,7 +153,7 @@ def infer_mongo_columns(sample_docs: list[dict]):
         for key, value in sorted(fields.items())
     ]
 
-
+# - get mongo data
 def inspect_mongo_sources(db_entry: dict):
     source_db = get_mongo_source_database(db_entry)
     excluded = {db_entry.get("config", {}).get("collection_name")} if db_entry.get("config", {}).get("collection_name") else set()
@@ -169,6 +178,7 @@ def inspect_mongo_sources(db_entry: dict):
         "sources": sources,
     }
 
+#- get PG data
 
 def inspect_postgres_sources(db_entry: dict):
     connection_uri = normalize_postgres_uri(db_entry["config"]["connection_string"])
@@ -222,6 +232,7 @@ def inspect_postgres_sources(db_entry: dict):
         "sources": sources,
     }
 
+#- get data as per db
 
 def inspect_database_sources(db_entry: dict):
     provider = db_entry.get("provider")
@@ -346,6 +357,41 @@ def execute_postgres_data_query(db_entry: dict, source_name: str, query: str):
             return [serialize_json_safe(dict(row)) for row in rows]
 
 
+def find_forbidden_mongo_operator(value):
+    if isinstance(value, Mapping):
+        for key, nested_value in value.items():
+            if key in MONGO_FORBIDDEN_AGGREGATE_OPERATORS:
+                return key
+
+            forbidden = find_forbidden_mongo_operator(nested_value)
+            if forbidden:
+                return forbidden
+
+    if isinstance(value, list):
+        for item in value:
+            forbidden = find_forbidden_mongo_operator(item)
+            if forbidden:
+                return forbidden
+
+    return None
+
+
+def validate_mongo_aggregate_pipeline(pipeline):
+    if not isinstance(pipeline, list):
+        raise ValueError("Mongo aggregate pipeline must be a JSON array.")
+
+    for stage in pipeline:
+        if not isinstance(stage, Mapping) or not stage:
+            raise ValueError("Each Mongo aggregate stage must be a non-empty JSON object.")
+
+        forbidden = find_forbidden_mongo_operator(stage)
+        if forbidden:
+            raise ValueError(
+                f"Mongo aggregate stage '{forbidden}' is not allowed for Data Query. "
+                "Only read from the selected source."
+            )
+
+
 def execute_mongo_data_query(db_entry: dict, source_name: str, query: str):
     source_db = get_mongo_source_database(db_entry)
     collection = source_db[source_name]
@@ -362,9 +408,7 @@ def execute_mongo_data_query(db_entry: dict, source_name: str, query: str):
 
     if operation == "aggregate":
         pipeline = payload.get("pipeline", [])
-        for stage in pipeline:
-            if "$out" in stage or "$merge" in stage:
-                raise ValueError("Aggregate pipeline must be read-only.")
+        validate_mongo_aggregate_pipeline(pipeline)
         return [serialize_json_safe(item) for item in collection.aggregate(pipeline)]
 
     raise ValueError("Unsupported Mongo operation. Use 'find' or 'aggregate'.")
@@ -381,4 +425,3 @@ def execute_data_query_source(data_query: dict, db_entry: dict, source_name: str
     if provider == "mongo":
         return execute_mongo_data_query(db_entry, source_name, query)
     raise ValueError("Unsupported database provider.")
-

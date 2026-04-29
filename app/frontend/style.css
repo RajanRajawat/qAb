@@ -1528,9 +1528,30 @@ textarea:focus {
     transform: translateY(-1px);
 }
 
+.chat-send-button:disabled {
+    cursor: wait;
+    opacity: 0.78;
+    transform: none;
+}
+
+.chat-send-button:disabled:hover {
+    background: linear-gradient(135deg, var(--primary), #ab60cf);
+    transform: none;
+}
+
 .chat-send-button .ui-icon {
     width: 18px;
     height: 18px;
+}
+
+.send-loader-icon {
+    animation: spin 0.8s linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+    .send-loader-icon {
+        animation-duration: 1.4s;
+    }
 }
 
 .search-results {

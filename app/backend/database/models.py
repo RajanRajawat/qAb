@@ -77,11 +77,8 @@ class LLMProvider(str, Enum):
 
 
 class LLMModel(str, Enum):
-
-        
-        LLAMA_3_1_8B = "llama-3.1-8b-instant"
-
-        GEMINI_2_5_FLASH = "gemini-2.5-flash"
+    LLAMA_3_1_8B = "llama-3.1-8b-instant"
+    GEMINI_2_5_FLASH = "gemini-2.5-flash"
         
 
 
@@ -128,6 +125,8 @@ class CreateKnowledgeBase(BaseModel):
         return strip_string(v)
 
 
+#- KB 
+
 class UpdateKnowledgeBase(BaseModel):
     name: str = Field(min_length=3, max_length=50)
 
@@ -149,6 +148,9 @@ class KnowledgeBaseVectorSearchRequest(BaseModel):
     @classmethod
     def strip_query(cls, v):
         return strip_string(v)
+    
+
+#- Agent 
 
 class AgentCreation(BaseModel):
     name: str = Field(min_length=3, max_length=20)
@@ -247,7 +249,8 @@ class AgentRunRequest(BaseModel):
         return strip_string(v)
 
 
-#DB
+#- DB  connecction
+
 class ListDB(str, Enum):
     MongoDB = "mongo"
     Postgres    = "postgres"
@@ -274,6 +277,8 @@ class UpdateDB(BaseModel):
     def strip_name(cls, v):
         return strip_string(v)
 
+
+#- Data Query   
 
 class DataQueryColumnConfig(BaseModel):
     name: str = Field(min_length=1, max_length=100)

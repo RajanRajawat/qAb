@@ -1,6 +1,6 @@
 
 from fastapi import APIRouter, Depends
-from database.db import users_collection, db_collection, data_query_collection
+from database.db import users_collection, db_collection, data_query_collection, kb_collection
 from database.models import AddDB, UpdateDB
 from utils.users import get_current_user
 from utils.response import success_response, error_response
@@ -68,7 +68,7 @@ async def find_existing_connection(owner_id: str, provider: str, connection_uri:
     })
 
 
-#new code:
+#- adding the custom datbase
 @db_router.post('/add')
 async def link_db(db: AddDB, current_user: dict = Depends(get_current_user)):
     logger.info(f"DB link request received from {current_user['email']} for {db.db}")
@@ -138,7 +138,7 @@ async def link_db(db: AddDB, current_user: dict = Depends(get_current_user)):
     return success_response(status_code=201, message=f"{db.db.capitalize()} has been linked successfully.")
 
 
-
+#- deleteing db by id
 @db_router.delete('/delete/{db_id}')
 async def unlink_db(db_id: str, current_user: dict = Depends(get_current_user)):
     logger.info(f"DB unlink request received from {current_user['email']} for db_id: {db_id}")
@@ -187,7 +187,7 @@ async def unlink_db(db_id: str, current_user: dict = Depends(get_current_user)):
     )
 
 
-
+#- update db
 
 @db_router.patch('/update/{db_id}')
 async def update_db(db_id: str, payload: UpdateDB, current_user: dict = Depends(get_current_user)):
@@ -235,6 +235,19 @@ async def update_db(db_id: str, payload: UpdateDB, current_user: dict = Depends(
         }
     )
 
+    await kb_collection.update_many(
+        {
+            "db_id": object_id_match(db_id),
+            "owner_id": ObjectId(current_user["_id"])
+        },
+        {
+            "$set": {
+                "db_name": payload.name,
+                "updated_at": datetime.datetime.now(datetime.timezone.utc)
+            }
+        }
+    )
+
     return success_response(
         status_code=200,
         message="Database updated successfully.",
@@ -245,7 +258,7 @@ async def update_db(db_id: str, payload: UpdateDB, current_user: dict = Depends(
         }
     )
 
-
+#- get my all db
 @db_router.get('/mydb')
 async def get_my_dbs(current_user: dict = Depends(get_current_user)):
     logger.info(f"Fetching linked DBs for {current_user['email']}")
@@ -273,7 +286,6 @@ async def get_my_dbs(current_user: dict = Depends(get_current_user)):
         })
 
     return success_response(200, message="Linked DBs fetched successfully.", data=dbs)
-
 
 
 
