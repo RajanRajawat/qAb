@@ -4,10 +4,9 @@ from langchain_core.tools import StructuredTool
 from langchain_google_genai import ChatGoogleGenerativeAI
 from langchain_groq import ChatGroq
 from pydantic import SecretStr
-from src.tools import get_tools_for_agent
+from src.tools import build_rag_chunks_tool, get_tools_for_agent
 from utils.data_query_helpers import build_data_query_schema_text, execute_data_query_source
 from utils.env_loaders import load_gemini_api, load_groq_api
-from utils.knowledge_base_helpers import search_kb_chunks
 from utils.loggers import logger
 
 def get_llm(provider: str, model: str, temp):
@@ -118,11 +117,28 @@ def agent_builder(
     tool_configs: dict | None = None,
     data_query_entry: dict | None = None,
     data_query_db_entry: dict | None = None,
+    owner_id: str | None = None,
+    kb_entry: dict | None = None,
+    kb_db_entry: dict | None = None,
 ):
     logger.info(f"Agent builder started for agent: {agent_config['name']}")
 
     llm = get_llm(agent_config["llm_provider"], agent_config["llm_model"], agent_config["temperature"])
     tools = get_tools_for_agent(agent_config.get("tools", []), tool_configs or {})
+    knowledge_base_prompt = "No Knowledge Base attached."
+
+    if kb_entry and owner_id:
+        tools.append(build_rag_chunks_tool(str(owner_id), kb_entry, kb_db_entry))
+        knowledge_base_prompt = (
+            f"Knowledge Base attached: {kb_entry.get('name', 'Selected knowledge base')}.\n"
+            "- Use the get_rag_chunks tool when the user asks about uploaded documents, "
+            "knowledge-base contents, or details that should be grounded in the attached files.\n"
+            "- Do not call get_rag_chunks for casual conversation, general reasoning, or questions "
+            "that do not need knowledge-base context.\n"
+            "- If retrieved chunks are empty or insufficient, say the knowledge base does not contain "
+            "enough information to answer confidently."
+        )
+
     data_query_schema = ""
     if data_query_entry and data_query_db_entry:
         tools.append(build_data_query_tool(data_query_entry, data_query_db_entry))
@@ -145,6 +161,9 @@ def agent_builder(
                 -{provider_specific_prompt}
                 -If a Data Query is attached, only use the query_data_query tool for read-only access and only for the configured sources.
 
+                Attached Knowledge Base:
+                {knowledge_base_prompt}
+
                 Attached Data Query schema:
                 {data_query_schema or "No Data Query attached."}
 
@@ -158,19 +177,3 @@ def agent_builder(
 
     logger.info(f"Agent built successfully for agent: {agent_config['name']}")
     return agent
-
-
-def fetch_rag_context(query: str, owner_id: str, kb_entry: dict, db_entry: dict | None = None):
-    kb_id = str(kb_entry["_id"])
-    try:
-        results = search_kb_chunks(query, owner_id, kb_entry, db_entry, 3)
-
-        if results:
-            return "\n\n".join([item[0].page_content for item in results])
-
-    except Exception as e:
-        logger.error(f"RAG retrieval failed for kb {kb_id}: {str(e)}")
-        if "Expecting value" in str(e):
-            logger.error("Hugging Face API returned non-JSON response. Check API status or token.")
-
-    return ""

@@ -1,3 +1,4 @@
+import asyncio
 import base64
 from email.message import EmailMessage
 from typing import Literal
@@ -7,6 +8,7 @@ from pydantic import BaseModel, Field
 from tavily import TavilyClient
 from database.models import AgentTool
 from utils.env_loaders import load_tavily_api
+from utils.knowledge_base_helpers import search_kb_chunks
 from utils.loggers import logger
 from utils.tool_helpers import GMAIL_TOOL_KEY, WEB_SEARCH_TOOL_KEY, get_valid_gmail_access_token
 
@@ -47,6 +49,86 @@ async def web_search(query: str) -> str:
         logger.error(f"Web search tool execution failed for query: {query} | Error: {str(exc)}")
         return f"Error: {str(exc)}"
 
+#- RAG Tools
+
+class RagChunksInput(BaseModel):
+    query: str = Field(description="Focused search query for the attached knowledge base.")
+    limit: int = Field(default=3, ge=1, le=5, description="Maximum number of relevant chunks to return.")
+
+
+def _format_rag_chunks(results: list) -> str:
+    if not results:
+        return "No relevant knowledge base chunks were found."
+
+    formatted_chunks = []
+
+    for index, item in enumerate(results, start=1):
+        doc, score = item
+        content = getattr(doc, "page_content", "").strip()
+        if not content:
+            continue
+
+        metadata = getattr(doc, "metadata", {}) or {}
+        source = metadata.get("file_name") or metadata.get("source") or "Unknown source"
+        formatted_chunks.append(
+            "\n".join([
+                f"Chunk {index}",
+                f"Source: {source}",
+                f"Score: {score}",
+                "Content:",
+                content,
+            ])
+        )
+
+    if not formatted_chunks:
+        return "No relevant knowledge base chunks were found."
+
+    return "\n\n".join(formatted_chunks)
+
+
+def _search_rag_chunks(query: str, owner_id: str, kb_entry: dict, db_entry: dict | None, limit: int) -> str:
+    kb_id = str(kb_entry["_id"])
+
+    try:
+        results = search_kb_chunks(query, owner_id, kb_entry, db_entry, limit)
+        return _format_rag_chunks(results)
+
+    except Exception as exc:
+        logger.error(f"RAG tool retrieval failed for kb {kb_id}: {exc}")
+        if "Expecting value" in str(exc):
+            logger.error("Hugging Face API returned non-JSON response. Check API status or token.")
+        return "Knowledge base retrieval failed. Try answering from available context or ask the user to retry."
+
+
+def build_rag_chunks_tool(owner_id: str, kb_entry: dict, db_entry: dict | None = None) -> BaseTool:
+    async def get_rag_chunks(query: str, limit: int = 3) -> str:
+        clean_query = query.strip() if query else ""
+        if not clean_query:
+            return "get_rag_chunks requires a non-empty query."
+
+        logger.info(f"RAG chunks tool invoked for kb {kb_entry['_id']} with query: {clean_query}")
+        return await asyncio.to_thread(
+            _search_rag_chunks,
+            clean_query,
+            owner_id,
+            kb_entry,
+            db_entry,
+            limit,
+        )
+
+    return StructuredTool.from_function(
+        coroutine=get_rag_chunks,
+        name="get_rag_chunks",
+        args_schema=RagChunksInput,
+        description=(
+            "Search the agent's attached knowledge base and return the most relevant text chunks. "
+            "Use this only when the user's question likely depends on uploaded knowledge-base files "
+            "or when document-specific details are needed."
+        ),
+    )
+
+
+#-Gmail Tools   
 
 class GmailToolInput(BaseModel):
     action: Literal["fetch_emails", "send_email", "reply_to_thread"] = Field(

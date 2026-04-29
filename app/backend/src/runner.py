@@ -11,7 +11,6 @@ from utils.runner_helpers import (
     agent_builder,
     build_history_messages,
     extract_agent_response_content,
-    fetch_rag_context,
     serialize_agent_messages,
 )
 from utils.tool_helpers import get_user_tool_configs, validate_agent_tools
@@ -22,29 +21,8 @@ runner_router = APIRouter(prefix="/chat", tags=["Agent Runner"])
 AGENT_RUN_TIMEOUT_SECONDS = 120
 
 
-#- run agent by id
-@runner_router.post("/run/{agent_id}")
-async def run_agent(agent_id: str, request: AgentRunRequest, current_user: dict = Depends(get_current_user)):
-    try:
-        return await asyncio.wait_for(
-            _run_agent(agent_id, request, current_user),
-            timeout=AGENT_RUN_TIMEOUT_SECONDS,
-        )
 
-    except asyncio.TimeoutError:
-        logger.warning(
-            f"Agent run timed out after {AGENT_RUN_TIMEOUT_SECONDS}s for agent id: {agent_id}"
-        )
-        return error_response(status_code=504, message="Request timed out")
-
-    except HTTPException:
-        raise
-
-    except Exception as e:
-        logger.error(f"Agent run failed for agent id: {agent_id} | Error: {str(e)}")
-        return error_response(status_code=500, message="Internal server error")
-
-
+#runner func
 async def _run_agent(agent_id: str, request: AgentRunRequest, current_user: dict):
     logger.info(f"Agent run request received for agent id: {agent_id} from {current_user['email']}")
 
@@ -64,10 +42,32 @@ async def _run_agent(agent_id: str, request: AgentRunRequest, current_user: dict
     if not agent_data:
         logger.warning(f"Agent not found for agent id: {agent_id} and user: {current_user['email']}")
         return error_response(status_code=404, message="Agent not found")
-
+    
     tool_err = await validate_agent_tools(agent_data.get("tools", []), current_user["_id"])
     if tool_err:
         return error_response(status_code=400, message=tool_err)
+
+    kb_entry = None
+    kb_db_entry = None
+    if agent_data.get("knowledge_base") is True:
+        kb_id = agent_data.get("knowledge_base_id")
+        if not kb_id:
+            return error_response(status_code=400, message="Agent does not have a knowledge base selected.")
+
+        kb_entry = await kb_collection.find_one({
+            "_id": ensure_object_id(kb_id),
+            "owner_id": ObjectId(current_user["_id"])
+        })
+        if not kb_entry:
+            return error_response(status_code=404, message="Knowledge base not found for this agent.")
+
+        if kb_entry.get("db_id") != "default":
+            kb_db_entry = await db_collection.find_one({
+                "_id": ensure_object_id(kb_entry["db_id"]),
+                "owner_id": ObjectId(current_user["_id"])
+            })
+            if not kb_db_entry:
+                return error_response(status_code=404, message="Knowledge base DB not found.")
 
     data_query_entry = None
     data_query_db_entry = None
@@ -91,59 +91,21 @@ async def _run_agent(agent_id: str, request: AgentRunRequest, current_user: dict
             return error_response(status_code=404, message="Database linked to this Data Query was not found.")
 
     tool_configs = await get_user_tool_configs(current_user["_id"])
-    agent = agent_builder(agent_data, tool_configs, data_query_entry, data_query_db_entry)
-
-    rag_message = request.query
-
-    if agent_data.get('knowledge_base') is True:
-        try:
-            kb_id = agent_data.get("knowledge_base_id")
-            if not kb_id:
-                return error_response(status_code=400, message="Agent does not have a knowledge base selected.")
-
-            kb_entry = await kb_collection.find_one({
-                "_id": ensure_object_id(kb_id),
-                "owner_id": ObjectId(current_user["_id"])
-            })
-            if not kb_entry:
-                return error_response(status_code=404, message="Knowledge base not found for this agent.")
-
-            db_entry = None
-            if kb_entry.get("db_id") != "default":
-                db_entry = await db_collection.find_one({
-                    "_id": ensure_object_id(kb_entry["db_id"]),
-                    "owner_id": ObjectId(current_user["_id"])
-                })
-                if not db_entry:
-                    return error_response(status_code=404, message="Knowledge base DB not found.")
-
-            context = await asyncio.to_thread(
-                fetch_rag_context,
-                request.query,
-                str(current_user['_id']),
-                kb_entry,
-                db_entry,
-            )
-
-            if context:
-                rag_message = f"""Use the following context to answer if needed:
-                    {context}
-
-                    User question:
-                    {request.query}"""
-
-                logger.info(f"RAG context injected for agent id: {agent_id}")
-            else:
-                logger.info(f"No KB context found, running agent without RAG for agent id: {agent_id}")
-
-        except Exception as e:
-            logger.error(f"Knowledge base retrieval failed for agent id: {agent_id} | Error: {str(e)}")
+    agent = agent_builder(
+        agent_data,
+        tool_configs,
+        data_query_entry,
+        data_query_db_entry,
+        owner_id=current_user["_id"],
+        kb_entry=kb_entry,
+        kb_db_entry=kb_db_entry,
+    )
 
     history_messages = build_history_messages([item.model_dump() for item in request.history][-12:])
 
     logger.info(f"Running agent id: {agent_id} with session history count: {len(history_messages)}")
     result = await agent.ainvoke(
-        {"messages": [*history_messages, {"role": "user", "content": rag_message}]}
+        {"messages": [*history_messages, {"role": "user", "content": request.query}]}
     )
 
     response = extract_agent_response_content(result)
@@ -159,3 +121,26 @@ async def _run_agent(agent_id: str, request: AgentRunRequest, current_user: dict
         },
         message="Agent response generated successfully!"
     )
+
+
+#- run agent by id
+@runner_router.post("/run/{agent_id}")
+async def run_agent(agent_id: str, request: AgentRunRequest, current_user: dict = Depends(get_current_user)):
+    try:
+        return await asyncio.wait_for(
+            _run_agent(agent_id, request, current_user),
+            timeout=AGENT_RUN_TIMEOUT_SECONDS,
+        )
+
+    except asyncio.TimeoutError:
+        logger.warning(
+            f"Agent run timed out after {AGENT_RUN_TIMEOUT_SECONDS}s for agent id: {agent_id}"
+        )
+        return error_response(status_code=504, message="Request timed out")
+
+    except HTTPException:
+        raise
+
+    except Exception as e:
+        logger.error(f"Agent run failed for agent id: {agent_id} | Error: {str(e)}")
+        return error_response(status_code=500, message="Internal server error")

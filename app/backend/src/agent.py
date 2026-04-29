@@ -2,9 +2,7 @@ from fastapi import APIRouter, Depends
 from bson import ObjectId
 from bson.errors import InvalidId
 from pymongo import ReturnDocument
-
 import datetime
-
 from database.db import agents_collection, users_collection
 from database.models import AgentCreation, AgentUpdate, LLMModel, LLMProvider, compatibility_map
 from utils.agent_helpers import (
@@ -19,9 +17,7 @@ from utils.response import error_response, success_response
 from utils.tool_helpers import validate_agent_tools
 from utils.users import get_current_user
 
-
 agent_router = APIRouter(prefix="/agent", tags=["Agent"])
-
 
 def enum_value(value):
     return value.value if hasattr(value, "value") else value
