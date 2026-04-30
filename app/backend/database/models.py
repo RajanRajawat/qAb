@@ -77,7 +77,7 @@ class LLMProvider(str, Enum):
 
 
 class LLMModel(str, Enum):
-    LLAMA_3_1_8B = "llama-3.1-8b-instant"
+    LLAMA_3_3_70B = "llama-3.3-70b-versatile"
     GEMINI_2_5_FLASH = "gemini-2.5-flash"
         
 
@@ -97,7 +97,7 @@ class AgentTool(str, Enum):
 
 compatibility_map: dict[LLMProvider, set[LLMModel]] = {
     LLMProvider.GROQ: {
-        LLMModel.LLAMA_3_1_8B,
+        LLMModel.LLAMA_3_3_70B,
     },
     LLMProvider.GEMINI: {
         LLMModel.GEMINI_2_5_FLASH,
@@ -330,4 +330,3 @@ class UpdateDataQuery(BaseModel):
     @classmethod
     def strip_strings(cls, v):
         return strip_string(v)
-

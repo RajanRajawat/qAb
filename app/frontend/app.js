@@ -21,7 +21,7 @@ const state = {
 
 const llmOptions = {
     groq: [
-        { value: "llama-3.1-8b-instant", label: "Llama 3.1 8B Instant" }
+        { value: "llama-3.3-70b-versatile", label: "Llama 3.3 70B Versatile" }
     ],
     gemini: [
         { value: "gemini-2.5-flash", label: "Gemini 2.5 Flash" }

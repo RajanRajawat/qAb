@@ -98,7 +98,7 @@ Chat memory is currently stored in browser `sessionStorage`. It is sent to the b
 
 | Provider | Model |
 | --- | --- |
-| `groq` | `llama-3.1-8b-instant` |
+| `groq` | `llama-3.3-70b-versatile` |
 | `gemini` | `gemini-2.5-flash` |
 
 Provider/model compatibility is validated when agents are created and updated.
