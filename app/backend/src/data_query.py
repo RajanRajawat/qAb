@@ -4,6 +4,9 @@ from fastapi import APIRouter, Depends
 from pymongo import ReturnDocument
 from database.db import data_query_collection, users_collection
 from database.models import CreateDataQuery, UpdateDataQuery
+from utils.loggers import logger
+from utils.response import error_response, success_response
+from utils.users import get_current_user
 from utils.data_query_helpers import (
     get_owned_data_query,
     get_owned_db_entry,
@@ -12,9 +15,6 @@ from utils.data_query_helpers import (
     serialize_data_query,
     validate_selected_sources,
 )
-from utils.loggers import logger
-from utils.response import error_response, success_response
-from utils.users import get_current_user
 
 
 data_query_router = APIRouter(prefix="/data-query", tags=["Data Query"])

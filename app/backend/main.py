@@ -1,10 +1,10 @@
+import pathlib
 from fastapi import FastAPI, HTTPException, Request
 from fastapi.exceptions import RequestValidationError
 from dotenv import load_dotenv
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.staticfiles import StaticFiles
 from fastapi.responses import FileResponse
-import pathlib
 from src.register import register_router
 from src.login import login_router
 from src.agent import agent_router

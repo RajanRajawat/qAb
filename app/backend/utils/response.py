@@ -1,7 +1,6 @@
 from fastapi import HTTPException
 from fastapi.encoders import jsonable_encoder
 from fastapi.responses import JSONResponse
-
 from utils.loggers import logger
 
 

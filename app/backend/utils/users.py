@@ -1,13 +1,3 @@
-
-
-#~ Users                                                
-#: Todo:                                                
-#! Bugs:                                                
-#- Notes:                                               
-
-
-
-
 import jwt
 from pydantic import EmailStr
 from database.db import users_collection

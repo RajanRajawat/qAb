@@ -1,11 +1,9 @@
-
 from fastapi import APIRouter, Depends
 from database.db import users_collection, db_collection, data_query_collection, kb_collection
 from database.models import AddDB, UpdateDB
 from utils.users import get_current_user
 from utils.response import success_response, error_response
 from utils.loggers import logger
-import datetime
 from utils.connection import validate_mongo, validate_postgres
 from bson import ObjectId
 from database.models import ListDB
@@ -14,8 +12,7 @@ from pymongo.uri_parser import parse_uri
 from utils.general import object_id_match
 from utils.data_query_helpers import cleanup_data_queries_for_custom_db
 from utils.knowledge_base_helpers import cleanup_kbs_for_custom_db, delete_all_embeddings_for_custom_db
-import hashlib
-import re
+import hashlib, re, datetime
 
 
 db_router = APIRouter(prefix="/custom-db", tags=["DB"])

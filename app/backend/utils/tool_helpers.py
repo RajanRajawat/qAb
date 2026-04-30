@@ -1,10 +1,5 @@
-import base64
-import datetime
-import os
+import base64, datetime, os, jwt, requests
 from urllib.parse import urlencode
-
-import jwt
-import requests
 from bson import ObjectId
 from database.db import agents_collection, tools_collection
 from utils.env_loaders import load_jwt_secret_key

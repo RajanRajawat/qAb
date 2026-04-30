@@ -1,12 +1,10 @@
 from urllib.parse import quote
-
-import jwt
-import requests
+import jwt, requests
 from fastapi import APIRouter, Depends, HTTPException, Request
 from fastapi.responses import RedirectResponse
-
 from utils.loggers import logger
 from utils.response import error_response, success_response
+from utils.users import get_current_user
 from utils.tool_helpers import (
     GMAIL_TOOL_KEY,
     build_google_auth_url,
@@ -18,7 +16,6 @@ from utils.tool_helpers import (
     fetch_google_gmail_profile,
     save_google_gmail_connection,
 )
-from utils.users import get_current_user
 
 
 tool_config_router = APIRouter(prefix="/tools", tags=["Tools"])

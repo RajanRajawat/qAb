@@ -1,8 +1,6 @@
-import asyncio
-import base64
+import asyncio, base64, requests
 from email.message import EmailMessage
 from typing import Literal
-import requests
 from langchain_core.tools import BaseTool, StructuredTool, tool
 from pydantic import BaseModel, Field
 from tavily import TavilyClient
