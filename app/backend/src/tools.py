@@ -294,7 +294,7 @@ def build_gmail_tool(tool_config: dict):
             "For fetch_emails provide a Gmail search query and optional max_results. "
             "For send_email provide to, subject, and body. "
             "For reply_to_thread provide thread_id and body, plus to or subject when needed."
-        ),
+        ), #descroption can be improved
     )
 
 

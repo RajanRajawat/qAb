@@ -24,8 +24,6 @@ from utils.knowledge_base_helpers import (
 )
 
 
-#check krna bhai ye lase me
-#! when a custom db is deleted, all the data from that db is deleted, it should be deleted of that specific kb name data removal only.
 kb_router = APIRouter(prefix="/knowledge-base", tags=["Knowledge Base"])
 
 

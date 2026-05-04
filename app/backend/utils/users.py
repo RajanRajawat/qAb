@@ -29,9 +29,9 @@ async def get_user_by_email(email: EmailStr):
 
 async def get_current_user(credentials: HTTPAuthorizationCredentials = Depends(security)):
     try:
-        logger.info(f"Current user token validation started")
+        # logger.info(f"Current user token validation started")
         payload = jwt.decode(credentials.credentials, SECRET_KEY, algorithms=["HS256"])
-        logger.info(f"Current user token validated successfully for {payload['email']}")
+        # logger.info(f"Current user token validated successfully for {payload['email']}")
         return payload
     except ExpiredSignatureError:
         logger.warning(f"Current user token validation failed because token expired")

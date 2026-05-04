@@ -1,7 +1,0 @@
-2026-04-28 18:38:23,980 | INFO | database.db | MongoDB connection string loaded successfully
-2026-04-28 18:38:23,997 | INFO | database.db | MongoDB connection string loaded successfully
-2026-04-28 18:38:24,067 | INFO | database.db | Async MongoDB client initialized for database: qab
-2026-04-28 18:38:24,067 | INFO | database.db | MongoDB collections initialized: users, agents
-2026-04-28 18:38:24,067 | INFO | database.db | MongoDB collections initialized: users, agents
-2026-04-28 18:38:24,902 | INFO | database.db | Sync MongoDB vector collection initialized: vector_store
-2026-04-28 18:38:24,905 | INFO | database.db | Sync MongoDB vector collection initialized: vector_store

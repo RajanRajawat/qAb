@@ -77,8 +77,6 @@ app/
     api.js
     style.css
     media/
-other/
-  report/
 README.md
 ```
 
