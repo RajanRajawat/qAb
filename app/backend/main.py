@@ -64,10 +64,15 @@ def build_validation_error_data(exc: RequestValidationError):
 @app.exception_handler(RequestValidationError)
 async def request_validation_exception_handler(request: Request, exc: RequestValidationError):
     logger.warning(f"Validation error on {request.method} {request.url.path}: {exc.errors()}")
+    data = build_validation_error_data(exc)
+    error = exc.errors()[0]
+    field = error["loc"][-1]
+    msg = error["msg"].lower()
+    
     return error_response(
         422,
-        data=build_validation_error_data(exc),
-        message="Validation error.",
+        data=data,
+        message=f"Validation error: {field} {msg}",
     )
 
 
